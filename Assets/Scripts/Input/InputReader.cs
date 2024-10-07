@@ -28,7 +28,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 	public void OnMove(InputAction.CallbackContext context)
 	{
 		Move.Invoke(context.ReadValue<Vector2>());
-		Debug.Log($"{context.ReadValue<Vector2>()} + Move");
+		// Debug.Log($"{context.ReadValue<Vector2>()} + Move");
 	}
 	
 	public void OnJump(InputAction.CallbackContext context)
@@ -48,6 +48,6 @@ public class InputReader : ScriptableObject, IPlayerActions
 					break;
 		}
 		
-		Debug.Log($"{context.phase} + Jump");
+		// Debug.Log($"{context.phase} + Jump");
 	}
 }
