@@ -13,23 +13,25 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] InputReader input;
 	[SerializeField] PlayerControllerStats stats; // TODO rename
 	private Rigidbody2D _rigidbody;
-
 	private CapsuleCollider2D _capsuleCollider;
 	private BoxCollider2D _feetCollider;
 
+
+	// InputReader parameters
 	private Vector2 _moveDirection;
 	private bool _jumpPerforemd;
-	private Vector2 _moveVelocity;
 
-	// TODO Add Region or header
+	// CollisionChecks parameters
 	private RaycastHit2D _groundHit;
 	private RaycastHit2D _headHit;
 	private bool _isGrounded;
 	private bool _bumbedHead;
 
+	//
+	private Vector2 _moveVelocity;
+	private Vector2 targetVelocity;
+
 	//TODO Реализовать дебаг функции для всех вопросов 
-
-
 
 	private void Awake()
 	{
@@ -38,26 +40,28 @@ public class PlayerController : MonoBehaviour
 		_feetCollider = GetComponentInChildren<BoxCollider2D>();
 	}
 
+	private void Update()
+	{
+		Debbuging();
+	}
+
 	private void FixedUpdate()
 	{
 		CollisionChecks();
 		HandleMovement();
 
 		ApplyMovement();
-		
-		Debug.Log(_isGrounded);
-
 	}
 
 	private void ApplyMovement()
 	{
-		// _rigidbody.velocity = _moveVelocity;
-		_rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
+		_rigidbody.velocity = _moveVelocity;
+		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
 	}
 
 	private void HandleMovement()
 	{
-		Vector2 targetVelocity = _moveDirection != Vector2.zero
+		targetVelocity = _moveDirection != Vector2.zero
 			? new Vector2(_moveDirection.x, 0f) * stats.MoveSpeed
 			: Vector2.zero;
 
@@ -65,19 +69,21 @@ public class PlayerController : MonoBehaviour
 			? stats.Acceleration
 			: stats.Deceleration;
 
-		// MoveToWord Test
+		// MoveToWord 
 		_moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime);
 		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
 
 		// Debug.Log(_moveVelocity);
 	}
 
+	#region CollisionChecks
+
 	private void CollisionChecks()
 	{
-		IsGroundedVer2();
+		IsGrounded();
 	}
 
-	private void IsGroundedVer2()
+	private void IsGrounded()
 	{
 		var bounds = _feetCollider.bounds;
 		Vector2 boxCastOrigin = new Vector2(bounds.center.x, bounds.min.y);
@@ -86,41 +92,7 @@ public class PlayerController : MonoBehaviour
 		_isGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer).collider != null;
 	}
 
-	private void IsGrounded()
-	{
-		Vector2 boxCastOrigin = new Vector2(_feetCollider.bounds.center.x, _feetCollider.bounds.min.y);
-		Vector2 boxCastSize = new Vector2(_feetCollider.bounds.size.x, stats.GroundDetectionRayLenght);
-
-		_groundHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer);
-
-		if (_groundHit.collider != null)
-		{
-			_isGrounded = true;
-		}
-		else
-		{
-			_isGrounded = false;
-		}
-
-
-		// Color rayColor;
-		// if (_isGrounded)
-		// {
-		// 	rayColor = Color.green;
-		// }
-		// else
-		// {
-		// 	rayColor = Color.red;
-		// }
-
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * stats.GroundDetectionRayLenght, rayColor);
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * stats.GroundDetectionRayLenght, rayColor);
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - stats.GroundDetectionRayLenght), Vector2.right * boxCastSize.y, rayColor);
-
-
-		// Debug.Log(_groundHit.collider);
-
-	}
+	#endregion
 
 	#region OnEnableDisable
 	void OnEnable()
@@ -152,4 +124,30 @@ public class PlayerController : MonoBehaviour
 		// Debug.Log(performed);
 	}
 	#endregion
+
+
+	//TODO Дебаг для Grounded
+	private void Debbuging()
+	{
+		// Визуализация целевой скорости (Target Velocity)
+		Debug.DrawLine(transform.position, transform.position + new Vector3(targetVelocity.x, 0, 0), Color.red);
+
+		// Визуализация текущего вектора скорости (_moveVelocity)
+		Debug.DrawLine(transform.position, transform.position + new Vector3(_moveVelocity.x, 0, 0), Color.blue);
+
+		// Визуализация направления движения (_moveDirection)
+		if (_moveDirection != Vector2.zero)
+		{
+			Debug.DrawLine(transform.position, transform.position + new Vector3(_moveDirection.x, 0, 0), Color.green);
+		}
+		else
+		{
+			// Визуализация замедления
+			if (_moveVelocity != Vector2.zero)
+			{
+				Debug.DrawLine(transform.position, transform.position + new Vector3(_moveVelocity.x, 0, 0), Color.yellow);
+			}
+		}
+	}
 }
+
