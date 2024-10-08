@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
 	// InputReader parameters
 	private Vector2 _moveDirection;
-	private bool _jumpPerforemd;
+	private bool _jumpPerformed;
 
 	// CollisionChecks parameters
 	private RaycastHit2D _groundHit;
@@ -33,6 +34,15 @@ public class PlayerController : MonoBehaviour
 
 	//TODO Реализовать дебаг функции для всех вопросов 
 
+	// Jump parameters
+	// private bool _isJumping;
+	// private float _jumpTimer;
+	// private float _jumpForce;
+	// [SerializeField] private float maxJumpTime = 0.5f; // Максимальное время прыжка
+	// [SerializeField] private float jumpForce = 10f;
+
+	private float gravity = -(2f * 6.5f) / MathF.Pow(0.35f, 2f);
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
@@ -42,13 +52,22 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		_time += Time.deltaTime;
+		
+		Debug.Log(_moveVelocity);
+
 		Debbuging();
+		// Debug.Log(gravity);
+		// Debug.Log(_moveVelocity);
 	}
 
 	private void FixedUpdate()
 	{
 		CollisionChecks();
 		HandleMovement();
+
+		HandleGravity();
+		HandleJump();
 
 		ApplyMovement();
 	}
@@ -57,6 +76,60 @@ public class PlayerController : MonoBehaviour
 	{
 		_rigidbody.velocity = _moveVelocity;
 		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
+	}
+
+
+	[Range(0f, 200f)][SerializeField] private float FallAcceleration; // Gravity
+	[Range(0f, 200f)][SerializeField] private float MaxFallSpeed;
+	[Range(0f, 200f)][SerializeField] private float JumpPower;
+	[Range(0f, 200f)][SerializeField] private float JumpEndEarlyGravityModifier;
+	[Range(0f, 2f)][SerializeField] private float JumpBuffer;
+
+	private void HandleGravity()
+	{
+		if (_isGrounded && _moveVelocity.y <= 0f)
+		{
+			_moveVelocity.y = -1f; //TODO add var
+		}
+		else
+		{
+			float gravityForce = FallAcceleration;
+
+			if (_endedJumpEarly && _moveVelocity.y > 0) gravityForce *= JumpEndEarlyGravityModifier;
+			_moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -MaxFallSpeed, gravityForce * Time.fixedDeltaTime);
+		}
+	}
+
+	private bool _jumpToConsume = true;
+	private bool _bufferedJumpUsable;
+	private bool _endedJumpEarly;
+	// private bool _coyoteUsable;
+	private float _timeJumpWasPressed;
+	private float _time;
+
+	private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + JumpBuffer;
+	// private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _frameLeftGrounded + _stats.CoyoteTime;
+
+	private void HandleJump()
+	{
+		if (!_endedJumpEarly && !_isGrounded && !_jumpPerformed && _moveVelocity.y > 0) _endedJumpEarly = true;
+		if (!_jumpToConsume && !HasBufferedJump) return;
+
+		if (_isGrounded)
+		{
+			ExecuteJump();
+		}
+
+		_jumpToConsume = false;
+	}
+
+	private void ExecuteJump()
+	{
+		_endedJumpEarly = false;
+		_timeJumpWasPressed = 0;
+		_bufferedJumpUsable = false;
+		// _coyoteUsable = false;
+		_moveVelocity.y = JumpPower;
 	}
 
 	private void HandleMovement()
@@ -70,7 +143,7 @@ public class PlayerController : MonoBehaviour
 			: stats.Deceleration;
 
 		// MoveToWord 
-		_moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime);
+		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
 
 		// Debug.Log(_moveVelocity);
@@ -90,6 +163,11 @@ public class PlayerController : MonoBehaviour
 		Vector2 boxCastSize = new Vector2(bounds.size.x, stats.GroundDetectionRayLenght);
 
 		_isGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer).collider != null;
+
+		if (_isGrounded)
+		{
+			_bufferedJumpUsable = true; // TODO
+		}
 	}
 
 	#endregion
@@ -117,14 +195,19 @@ public class PlayerController : MonoBehaviour
 	private void OnJump(bool performed)
 	{
 		if (performed)
-			_jumpPerforemd = true;
+		{
+			// TODO
+			_jumpPerformed = true;
+			_jumpToConsume = true;
+			_timeJumpWasPressed = _time;
+
+		}
 		else
-			_jumpPerforemd = false;
+			_jumpPerformed = false;
 
 		// Debug.Log(performed);
 	}
 	#endregion
-
 
 	//TODO Дебаг для Grounded
 	private void Debbuging()
@@ -149,5 +232,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+
+	
 }
 

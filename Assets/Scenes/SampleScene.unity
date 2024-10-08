@@ -474,6 +474,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
   stats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
+  FallAcceleration: 120
+  MaxFallSpeed: 40
+  JumpPower: 36
+  JumpEndEarlyGravityModifier: 3
+  JumpBuffer: 0.2
 --- !u!212 &690232520
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -558,7 +563,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7057b7b8007804b7a817b482f290db7e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
