@@ -15,7 +15,6 @@ public class InputReader : ScriptableObject, IPlayerActions
 	
 	private void OnEnable()
 	{
-		Debug.Log("EnableInputReaderScript");
 		if (_inputActions == null)
 		{
 			_inputActions = new PlayerInputActions();
