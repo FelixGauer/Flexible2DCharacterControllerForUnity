@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 using UnityEngine.Scripting.APIUpdating;
 
@@ -15,15 +16,7 @@ public class PlayerController : MonoBehaviour
 	//TODO Создать отдельные скрипты для таймеров
 	//TODO Попробовать реализовать прыжок на таймерах
 	//TODO Траектория для прыжка (Куда прыгать предикт)
-
-	// private float gravity = -(2f * 6.5f) / MathF.Pow(0.35f, 2f);
-	// [Range(0f, 200f)][SerializeField] private float FallAcceleration; // Gravity
-	// [Range(0f, 200f)][SerializeField] private float MaxFallSpeed;
-	// [Range(0f, 200f)][SerializeField] private float JumpPower;
-	// [Range(0f, 200f)][SerializeField] private float JumpEndEarlyGravityModifier;
-	// [Range(0f, 2f)][SerializeField] private float JumpBuffer;
-
-
+	//TODO GroundChecker отдельный класс 
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -32,11 +25,9 @@ public class PlayerController : MonoBehaviour
 	private CapsuleCollider2D _capsuleCollider;
 	private BoxCollider2D _feetCollider;
 
-
 	// InputReader parameters
 	private Vector2 _moveDirection;
 	private bool _jumpPerformed;
-
 
 	// CollisionChecks parameters
 	private RaycastHit2D _groundHit;
@@ -44,60 +35,44 @@ public class PlayerController : MonoBehaviour
 	private bool _isGrounded;
 	private bool _bumbedHead;
 
-
 	// Movement parameters
 	private Vector2 _moveVelocity;
 	private Vector2 targetVelocity;
 
+	//FIXME Jump Var 
+	[SerializeField] private float jumpDuraction = 0.3f;
+	[SerializeField] private float PowerJump = 15f;
+	[SerializeField] private float MaxHeightJump = 3f;
+	[SerializeField] private float GravityMultiplayer = 1.5f;
 
-	// Jump parameters
-	private bool _jumpToConsume = true;
-	private bool _bufferedJumpUsable;
-	private bool _endedJumpEarly;
-	// private bool _coyoteUsable;
-	private float _timeJumpWasPressed;
-	private float _time;
 
-	// В прыжке _bufferedJumpUsable = false, _timeJumpWasPressed когда он нажимает время записывается + JumpBuffer(0.2)
-	// Сохраняет значение в воздухе когда нажт прыжок и он тру, на земле он ставит _bufferedJumpUsable = true и только тогда применяет
-	private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + stats.JumpBuffer;
-	// private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _frameLeftGrounded + _stats.CoyoteTime;
+	// Timers
+	private CountdownTimer _jumpTimer;
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_feetCollider = GetComponentInChildren<BoxCollider2D>();
+
+		// Setup Timers
+		_jumpTimer = new CountdownTimer(jumpDuraction); //FIXME Так как в awake не могу менять
 	}
 
 	private void Update()
 	{
-		_time += Time.deltaTime;
-
-		// Debug.Log($"{_time} < {_timeJumpWasPressed + stats.JumpBuffer}");
-
-		// Debug.Log(_moveVelocity);
-
+		HandleTimers();
 		Debbuging();
-		// Debug.Log(gravity);
-		// Debug.Log(_moveVelocity);	
 	}
 
 	private void FixedUpdate()
 	{
-		// if (_time < _timeJumpWasPressed + stats.JumpBuffer)
-		// {
-		// 	Debug.Log($"{_time} < {_timeJumpWasPressed + stats.JumpBuffer} _bufferedJumpUsable: {_bufferedJumpUsable} ");
-
-		// 	if (_isGrounded)
-		// 		Debug.Log(_time);
-		// }
-
 		CollisionChecks();
 		HandleMovement();
 
-		HandleGravity();
+		// HandleGravity();
 		HandleJump();
+		Jump(); //FIXME
 
 		ApplyMovement();
 	}
@@ -106,6 +81,12 @@ public class PlayerController : MonoBehaviour
 	{
 		_rigidbody.velocity = _moveVelocity;
 	}
+
+	[Header("TEST")]
+	public float jumpHeitgh = 5f;
+	public float timeTillJumpApex = 0.35f;
+	float gravity => (2f * jumpHeitgh) / MathF.Pow(timeTillJumpApex, 2f);
+	// float initialJumpVelocity => MathF.Abs(grav) * timeTillJumpApex;
 
 	private void HandleGravity()
 	{
@@ -117,37 +98,88 @@ public class PlayerController : MonoBehaviour
 		{
 			float gravityForce = stats.FallAcceleration;
 
-			// Срочка отвечает за зависимость прыжка от удержания пробела,
-			// То как меняется гравитация, от отпускания или удержания пробела
-			// Работает только в самый верхней точке, то есть пару кадров
-			// if (_endedJumpEarly && _moveVelocity.y > 0) gravityForce *= stats.JumpEndEarlyGravityModifier;
-
-			// Применять fallMultiplayer / JumpEndEarlyGravityModifier каждый кадр
-			if ((_endedJumpEarly && _moveVelocity.y > 0) || _moveVelocity.y < 0) gravityForce *= stats.JumpEndEarlyGravityModifier;
-			// if (_moveVelocity.y < 0) gravityForce *= stats.JumpEndEarlyGravityModifier; 
-
+			// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, -grav * Time.fixedDeltaTime);
 			_moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravityForce * Time.fixedDeltaTime);
-
-			// Debug.Log(gravityForce);
+			// _moveVelocity.y -= gravityForce * 1.5f *  Time.fixedDeltaTime;
 		}
 	}
 
 	private void HandleJump()
 	{
-		if (!_endedJumpEarly && !_isGrounded && !_jumpPerformed && _moveVelocity.y > 0) _endedJumpEarly = true;
-		if (!_jumpToConsume && !HasBufferedJump) return;
+		if (_jumpPerformed && _isGrounded)
+		{
+			_jumpTimer.Start();
+			// ExecuteJump();
+		}
+		else if (!_jumpPerformed && _jumpTimer.IsRunning)
+		{
+			_jumpTimer.Stop();
+		}
+	}
 
-		if (_isGrounded) { ExecuteJump(); }
+	// [SerializeField] private float launchPoint = 0.9f;
 
-		_jumpToConsume = false;
+
+	private void Jump()
+	{
+		// if (!_jumpTimer.IsRunning && _isGrounded)
+		// {
+		// 	_moveVelocity.y = -1f;
+		// 	return;
+		// }
+
+		// if (!_jumpTimer.IsRunning)
+		// {
+		// 	// Gravity takes over
+		// 	_moveVelocity.y -= stats.FallAcceleration * Time.fixedDeltaTime;
+		// }
+
+		// if (_jumpTimer.IsRunning)
+		// 	_moveVelocity.y = PowerJump;
+
+		if (!_jumpTimer.IsRunning && _isGrounded)
+		{
+			_jumpTimer.Stop();
+			return;
+		}
+
+		if (_jumpPerformed)
+		{
+			_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
+			_jumpPerformed = false;
+			
+		}
+		_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity
+
+
+		// if (_jumpTimer.IsRunning)
+		// {
+
+		// 	// _moveVelocity.y = PowerJump;
+
+		// 	// _moveVelocity.y = Mathf.Sqrt(2 * MaxHeightJump * stats.FallAcceleration);
+		// 	_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
+
+
+		// 	// float launchPoint = 0.9f;
+
+		// 	// if (_jumpTimer.Progress > launchPoint)
+		// 	// {
+		// 	// 	_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
+		// 	// }
+		// 	// else
+		// 	// {
+		// 	// 	_moveVelocity.y += (1 - _jumpTimer.Progress) * PowerJump * Time.fixedDeltaTime;
+		// 	// }
+		// }
+		// else
+		// {
+		// 	_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity
+		// }
 	}
 
 	private void ExecuteJump()
 	{
-		_endedJumpEarly = false;
-		_timeJumpWasPressed = 0;
-		_bufferedJumpUsable = false;
-		// _coyoteUsable = false;
 		_moveVelocity.y = stats.JumpPower;
 	}
 
@@ -168,6 +200,11 @@ public class PlayerController : MonoBehaviour
 		// Debug.Log(_moveVelocity);
 	}
 
+	private void HandleTimers()
+	{
+		_jumpTimer.Tick(Time.deltaTime);
+	}
+
 	#region CollisionChecks
 
 	private void CollisionChecks()
@@ -183,10 +220,10 @@ public class PlayerController : MonoBehaviour
 
 		_isGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer).collider != null;
 
-		if (_isGrounded)
-		{
-			_bufferedJumpUsable = true; // TODO
-		}
+		// if (_isGrounded)
+		// {
+		// 	_bufferedJumpUsable = true; // TODO
+		// }
 	}
 
 	#endregion
@@ -214,16 +251,9 @@ public class PlayerController : MonoBehaviour
 	private void OnJump(bool performed)
 	{
 		if (performed)
-		{
-			// TODO
 			_jumpPerformed = true;
-			_jumpToConsume = true;
-			_timeJumpWasPressed = _time;
-		}
 		else
 			_jumpPerformed = false;
-
-		// Debug.Log(performed);
 	}
 	#endregion
 

@@ -21,3 +21,9 @@ MonoBehaviour:
   GroundDetectionRayLenght: 0.02
   HeadDetectionRayLenght: 0.02
   HeadWidth: 0.75
+  FallAcceleration: 150
+  MaxFallSpeed: 40
+  JumpPower: 36
+  JumpEndEarlyGravityModifier: 2
+  JumpBuffer: 0.15
+  GroundGravity: -1.5

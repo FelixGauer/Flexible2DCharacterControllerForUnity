@@ -474,11 +474,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
   stats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
-  FallAcceleration: 120
-  MaxFallSpeed: 40
-  JumpPower: 36
-  JumpEndEarlyGravityModifier: 3
-  JumpBuffer: 0.2
+  jumpDuraction: 0.15
+  PowerJump: 15
+  MaxHeightJump: 1.5
+  GravityMultiplayer: 1.3
+  jumpHeitgh: 2
+  timeTillJumpApex: 0.18
 --- !u!212 &690232520
 SpriteRenderer:
   m_ObjectHideFlags: 0
