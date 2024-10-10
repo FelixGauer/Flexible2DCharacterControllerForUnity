@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
 	// Timers
 	private CountdownTimer _jumpTimer;
+	private StopwatchTimer _testTimer;
 
 	private void Awake()
 	{
@@ -57,8 +59,9 @@ public class PlayerController : MonoBehaviour
 
 		// Setup Timers
 		_jumpTimer = new CountdownTimer(jumpDuraction); //FIXME Так как в awake не могу менять
+		_testTimer = new StopwatchTimer(); //FIXME DELETE
 	}
-
+	
 	private void Update()
 	{
 		HandleTimers();
@@ -83,11 +86,15 @@ public class PlayerController : MonoBehaviour
 	}
 
 	[Header("TEST")]
-	public float jumpHeitgh = 5f;
+	public float jumpHeight = 5f;
 	public float timeTillJumpApex = 0.35f;
-	float gravity => (2f * jumpHeitgh) / MathF.Pow(timeTillJumpApex, 2f);
-	// float initialJumpVelocity => MathF.Abs(grav) * timeTillJumpApex;
-
+	public float jumpHeightCompensationFactor = 1f;
+	
+	// Максимальная высота прыжка (высотка прыжка при однократном нажатии)
+	float AdjustedJumpHeight => jumpHeight * jumpHeightCompensationFactor; 
+	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
+	float initialJumpVelocity => gravity * timeTillJumpApex;
+	
 	private void HandleGravity()
 	{
 		if (_isGrounded && _moveVelocity.y <= 0f)
@@ -119,9 +126,16 @@ public class PlayerController : MonoBehaviour
 
 	// [SerializeField] private float launchPoint = 0.9f;
 
-
+	private float maxYPosition;
 	private void Jump()
 	{
+		float currentYPosition = transform.position.y;
+		if (currentYPosition > maxYPosition)
+		{
+			maxYPosition = currentYPosition;
+		}
+		Debug.Log(maxYPosition); // TODO
+
 		// if (!_jumpTimer.IsRunning && _isGrounded)
 		// {
 		// 	_moveVelocity.y = -1f;
@@ -143,14 +157,28 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		if (_jumpPerformed)
+		if (_jumpPerformed && _jumpTimer.IsRunning)
+		// if (_jumpPerformed)
 		{
-			_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
+			_testTimer.Start();
+			
+			maxYPosition = transform.position.y; 
+			_moveVelocity.y = Mathf.Sqrt(2 * AdjustedJumpHeight * gravity); 
+			// _moveVelocity.y = initialJumpVelocity;
+			 
+			// _testTimer.Stop();
+			// _jumpPerformed = false;
+		}
+		else 
+		{ 
+			// Debug.Log(_testTimer.GetTime()); 
+			_testTimer.Stop();
 			_jumpPerformed = false;
 			
+			_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
 		}
-		_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity
-
+		
+		// _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -30f, 50f); // TODO Ограничение скорости падения персонажа
 
 		// if (_jumpTimer.IsRunning)
 		// {
@@ -202,7 +230,8 @@ public class PlayerController : MonoBehaviour
 
 	private void HandleTimers()
 	{
-		_jumpTimer.Tick(Time.deltaTime);
+		_jumpTimer.Tick(Time.fixedDeltaTime);
+		_testTimer.Tick(Time.deltaTime);
 	}
 
 	#region CollisionChecks
