@@ -478,8 +478,9 @@ MonoBehaviour:
   PowerJump: 15
   MaxHeightJump: 1.5
   GravityMultiplayer: 1
-  jumpHeight: 5
-  timeTillJumpApex: 0.18
+  maxJumpHeight: 5
+  minJumpHeight: 2
+  timeTillJumpApex: 0.35
   jumpHeightCompensationFactor: 0.9
 --- !u!212 &690232520
 SpriteRenderer:

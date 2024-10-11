@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
@@ -51,6 +52,12 @@ public class PlayerController : MonoBehaviour
 	private CountdownTimer _jumpTimer;
 	private StopwatchTimer _testTimer;
 
+
+	//TETS var
+	private bool _jumpKeyIsPressed; // Нажата
+	private bool _jumpKeyWasPressed; // Была нажата
+	private bool _jumpKeyWasLetGo; // Была отпущена
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
@@ -61,10 +68,11 @@ public class PlayerController : MonoBehaviour
 		_jumpTimer = new CountdownTimer(jumpDuraction); //FIXME Так как в awake не могу менять
 		_testTimer = new StopwatchTimer(); //FIXME DELETE
 	}
-	
+
 	private void Update()
 	{
 		HandleTimers();
+		HandleJump();
 		Debbuging();
 	}
 
@@ -74,7 +82,6 @@ public class PlayerController : MonoBehaviour
 		HandleMovement();
 
 		// HandleGravity();
-		HandleJump();
 		Jump(); //FIXME
 
 		ApplyMovement();
@@ -86,15 +93,17 @@ public class PlayerController : MonoBehaviour
 	}
 
 	[Header("TEST")]
-	public float jumpHeight = 5f;
+	public float maxJumpHeight = 5f;
+	public float minJumpHeight = 2f;
 	public float timeTillJumpApex = 0.35f;
 	public float jumpHeightCompensationFactor = 1f;
-	
+
 	// Максимальная высота прыжка (высотка прыжка при однократном нажатии)
-	float AdjustedJumpHeight => jumpHeight * jumpHeightCompensationFactor; 
-	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
-	float initialJumpVelocity => gravity * timeTillJumpApex;
-	
+	// float AdjustedJumpHeight => jumpHeight * jumpHeightCompensationFactor; 
+	float gravity => 2f * maxJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
+	float maxJumpVelocity => gravity * timeTillJumpApex;
+	float minJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * gravity);
+
 	private void HandleGravity()
 	{
 		if (_isGrounded && _moveVelocity.y <= 0f)
@@ -127,83 +136,95 @@ public class PlayerController : MonoBehaviour
 	// [SerializeField] private float launchPoint = 0.9f;
 
 	private float maxYPosition;
+	private float jumpTimer;
 	private void Jump()
 	{
-		float currentYPosition = transform.position.y;
-		if (currentYPosition > maxYPosition)
+		// float currentYPosition = transform.position.y;
+		// if (currentYPosition > maxYPosition)
+		// {
+		// 	maxYPosition = currentYPosition;
+		// }
+		// Debug.Log(maxYPosition); // TODO
+
+		if (_isGrounded)
 		{
-			maxYPosition = currentYPosition;
+			if (maxYPosition > 0)
+			{
+				Debug.Log("Максимальная высота прыжка: " + maxYPosition);
+				maxYPosition = 0; // Сбрасываем максимальную высоту для следующего прыжка
+			}
+
+			_moveVelocity.y = 0;  // Сбрасываем вертикальную скорость на земле
 		}
-		Debug.Log(maxYPosition); // TODO
+		
+		if (!_isGrounded)
+		{
+			_jumpKeyWasPressed = false;
+		}
+
+		// Начало прыжка
+		if (_jumpKeyWasPressed && _isGrounded)
+		{
+			_moveVelocity.y = maxJumpVelocity;
+			maxYPosition = transform.position.y;
+		}
+
+		if (_jumpKeyWasLetGo)
+		{
+			if (_moveVelocity.y > minJumpVelocity)
+			{
+				_moveVelocity.y = minJumpVelocity;
+			}
+			_jumpKeyWasLetGo = false;
+		}
+
+		if (!_isGrounded && transform.position.y > maxYPosition)
+		{
+			maxYPosition = transform.position.y;  // Обновляем максимальную высоту, если персонаж поднимается
+		}
+
+		_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
+
+		// if (_jumpKeyWasLetGo)
+		// {
+		// 	_moveVelocity.y = minJumpVelocity;
+
+		// 	// if (_moveVelocity.y > minJumpVelocity)
+		// 	// {
+		// 	// 	_moveVelocity.y = minJumpVelocity;
+		// 	// }
+		// }
+
+		// _moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
 
 		// if (!_jumpTimer.IsRunning && _isGrounded)
 		// {
-		// 	_moveVelocity.y = -1f;
+		// 	_jumpTimer.Stop();
 		// 	return;
 		// }
 
-		// if (!_jumpTimer.IsRunning)
+		// if (_jumpPerformed && _jumpTimer.IsRunning)
+		// // if (_jumpPerformed)
 		// {
-		// 	// Gravity takes over
-		// 	_moveVelocity.y -= stats.FallAcceleration * Time.fixedDeltaTime;
+		// 	_testTimer.Start();
+
+		// 	maxYPosition = transform.position.y; 
+		// 	_moveVelocity.y = Mathf.Sqrt(2 * AdjustedJumpHeight * gravity); 
+		// 	// _moveVelocity.y = initialJumpVelocity;
+
+		// 	// _testTimer.Stop();
+		// 	// _jumpPerformed = false;
+		// }
+		// else 
+		// { 
+		// 	// Debug.Log(_testTimer.GetTime()); 
+		// 	_testTimer.Stop();
+		// 	_jumpPerformed = false;
+
+		// 	_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
 		// }
 
-		// if (_jumpTimer.IsRunning)
-		// 	_moveVelocity.y = PowerJump;
 
-		if (!_jumpTimer.IsRunning && _isGrounded)
-		{
-			_jumpTimer.Stop();
-			return;
-		}
-
-		if (_jumpPerformed && _jumpTimer.IsRunning)
-		// if (_jumpPerformed)
-		{
-			_testTimer.Start();
-			
-			maxYPosition = transform.position.y; 
-			_moveVelocity.y = Mathf.Sqrt(2 * AdjustedJumpHeight * gravity); 
-			// _moveVelocity.y = initialJumpVelocity;
-			 
-			// _testTimer.Stop();
-			// _jumpPerformed = false;
-		}
-		else 
-		{ 
-			// Debug.Log(_testTimer.GetTime()); 
-			_testTimer.Stop();
-			_jumpPerformed = false;
-			
-			_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
-		}
-		
-		// _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -30f, 50f); // TODO Ограничение скорости падения персонажа
-
-		// if (_jumpTimer.IsRunning)
-		// {
-
-		// 	// _moveVelocity.y = PowerJump;
-
-		// 	// _moveVelocity.y = Mathf.Sqrt(2 * MaxHeightJump * stats.FallAcceleration);
-		// 	_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
-
-
-		// 	// float launchPoint = 0.9f;
-
-		// 	// if (_jumpTimer.Progress > launchPoint)
-		// 	// {
-		// 	// 	_moveVelocity.y = Mathf.Sqrt(2 * jumpHeitgh * gravity);
-		// 	// }
-		// 	// else
-		// 	// {
-		// 	// 	_moveVelocity.y += (1 - _jumpTimer.Progress) * PowerJump * Time.fixedDeltaTime;
-		// 	// }
-		// }
-		// else
-		// {
-		// 	_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity
-		// }
 	}
 
 	private void ExecuteJump()
@@ -221,7 +242,7 @@ public class PlayerController : MonoBehaviour
 			? stats.Acceleration
 			: stats.Deceleration;
 
-		// MoveToWord 
+		// MoveToWord fix 
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
 
@@ -230,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
 	private void HandleTimers()
 	{
-		_jumpTimer.Tick(Time.fixedDeltaTime);
+		_jumpTimer.Tick(Time.deltaTime);
 		_testTimer.Tick(Time.deltaTime);
 	}
 
@@ -279,10 +300,17 @@ public class PlayerController : MonoBehaviour
 
 	private void OnJump(bool performed)
 	{
-		if (performed)
-			_jumpPerformed = true;
-		else
-			_jumpPerformed = false;
+		if (!_jumpKeyIsPressed && performed)
+		{
+			_jumpKeyWasPressed = true;
+		}
+
+		if (_jumpKeyIsPressed && !performed)
+		{
+			_jumpKeyWasLetGo = true;
+		}
+
+		_jumpKeyIsPressed = performed;
 	}
 	#endregion
 
