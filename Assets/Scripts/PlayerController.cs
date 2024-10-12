@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	[Header("References")]
 	[SerializeField] InputReader input;
 	[SerializeField] PlayerControllerStats stats;
+	private CollisionsChecker _collisionsChecker;
 	private Rigidbody2D _rigidbody;
 	private CapsuleCollider2D _capsuleCollider;
 	private BoxCollider2D _feetCollider;
@@ -32,9 +33,6 @@ public class PlayerController : MonoBehaviour
 	private bool _jumpPerformed;
 
 	// CollisionChecks parameters
-	private RaycastHit2D _groundHit;
-	private RaycastHit2D _headHit;
-	private bool _isGrounded;
 	private bool _bumbedHead;
 
 	// Movement parameters
@@ -46,11 +44,11 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float PowerJump = 15f;
 	[SerializeField] private float MaxHeightJump = 3f;
 	[SerializeField] private float GravityMultiplayer = 1.5f;
-
+	[SerializeField] private float CoyoteTime = 1.5f;
 
 	// Timers
 	private CountdownTimer _jumpTimer;
-	private StopwatchTimer _testTimer;
+	private CountdownTimer _jumpCoyoteTimer;
 
 
 	//TETS var
@@ -62,11 +60,12 @@ public class PlayerController : MonoBehaviour
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
+		_collisionsChecker = GetComponent<CollisionsChecker>();
 		_feetCollider = GetComponentInChildren<BoxCollider2D>();
 
 		// Setup Timers
 		_jumpTimer = new CountdownTimer(jumpDuraction); //FIXME Так как в awake не могу менять
-		_testTimer = new StopwatchTimer(); //FIXME DELETE
+		_jumpCoyoteTimer = new CountdownTimer(CoyoteTime);
 	}
 
 	private void Update()
@@ -74,11 +73,12 @@ public class PlayerController : MonoBehaviour
 		HandleTimers();
 		HandleJump();
 		Debbuging();
+		
+		Debug.Log(_collisionsChecker.IsGrounded);
 	}
 
 	private void FixedUpdate()
 	{
-		CollisionChecks();
 		HandleMovement();
 
 		// HandleGravity();
@@ -98,15 +98,14 @@ public class PlayerController : MonoBehaviour
 	public float timeTillJumpApex = 0.35f;
 	public float jumpHeightCompensationFactor = 1f;
 
-	// Максимальная высота прыжка (высотка прыжка при однократном нажатии)
-	// float AdjustedJumpHeight => jumpHeight * jumpHeightCompensationFactor; 
-	float gravity => 2f * maxJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
+	float AdjustedJumpHeight => maxJumpHeight * jumpHeightCompensationFactor;
+	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
 	float maxJumpVelocity => gravity * timeTillJumpApex;
 	float minJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * gravity);
 
 	private void HandleGravity()
 	{
-		if (_isGrounded && _moveVelocity.y <= 0f)
+		if (_collisionsChecker.IsGrounded && _moveVelocity.y <= 0f)
 		{
 			_moveVelocity.y = stats.GroundGravity;
 		}
@@ -122,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
 	private void HandleJump()
 	{
-		if (_jumpPerformed && _isGrounded)
+		if (_jumpPerformed && _collisionsChecker.IsGrounded)
 		{
 			_jumpTimer.Start();
 			// ExecuteJump();
@@ -133,20 +132,20 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	// [SerializeField] private float launchPoint = 0.9f;
-
 	private float maxYPosition;
-	private float jumpTimer;
+	private float coyoteTimeCounter;
 	private void Jump()
 	{
-		// float currentYPosition = transform.position.y;
-		// if (currentYPosition > maxYPosition)
+		// if (_isGrounded)
 		// {
-		// 	maxYPosition = currentYPosition;
+		// 	coyoteTimeCounter = CoyoteTime;
 		// }
-		// Debug.Log(maxYPosition); // TODO
-
-		if (_isGrounded)
+		// else if (!_isGrounded && !_jumpKeyWasPressed)
+		// {
+		// 	coyoteTimeCounter -= Time.deltaTime;
+		// }
+		
+		if (_collisionsChecker.IsGrounded) // FIXME Вычисление максимальной высоты прыжка
 		{
 			if (maxYPosition > 0)
 			{
@@ -156,14 +155,9 @@ public class PlayerController : MonoBehaviour
 
 			_moveVelocity.y = 0;  // Сбрасываем вертикальную скорость на земле
 		}
-		
-		if (!_isGrounded)
-		{
-			_jumpKeyWasPressed = false;
-		}
 
-		// Начало прыжка
-		if (_jumpKeyWasPressed && _isGrounded)
+		// if (_jumpKeyWasPressed && coyoteTimeCounter > 0f)
+		if (_jumpKeyWasPressed && _collisionsChecker.IsGrounded)
 		{
 			_moveVelocity.y = maxJumpVelocity;
 			maxYPosition = transform.position.y;
@@ -176,55 +170,19 @@ public class PlayerController : MonoBehaviour
 				_moveVelocity.y = minJumpVelocity;
 			}
 			_jumpKeyWasLetGo = false;
-		}
+			// coyoteTimeCounter = 0f;
 
-		if (!_isGrounded && transform.position.y > maxYPosition)
+		}
+		
+		_jumpKeyWasPressed = false;
+		_jumpKeyWasLetGo = false;
+		
+		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
 		{
-			maxYPosition = transform.position.y;  // Обновляем максимальную высоту, если персонаж поднимается
+			maxYPosition = transform.position.y;  
 		}
 
 		_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
-
-		// if (_jumpKeyWasLetGo)
-		// {
-		// 	_moveVelocity.y = minJumpVelocity;
-
-		// 	// if (_moveVelocity.y > minJumpVelocity)
-		// 	// {
-		// 	// 	_moveVelocity.y = minJumpVelocity;
-		// 	// }
-		// }
-
-		// _moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
-
-		// if (!_jumpTimer.IsRunning && _isGrounded)
-		// {
-		// 	_jumpTimer.Stop();
-		// 	return;
-		// }
-
-		// if (_jumpPerformed && _jumpTimer.IsRunning)
-		// // if (_jumpPerformed)
-		// {
-		// 	_testTimer.Start();
-
-		// 	maxYPosition = transform.position.y; 
-		// 	_moveVelocity.y = Mathf.Sqrt(2 * AdjustedJumpHeight * gravity); 
-		// 	// _moveVelocity.y = initialJumpVelocity;
-
-		// 	// _testTimer.Stop();
-		// 	// _jumpPerformed = false;
-		// }
-		// else 
-		// { 
-		// 	// Debug.Log(_testTimer.GetTime()); 
-		// 	_testTimer.Stop();
-		// 	_jumpPerformed = false;
-
-		// 	_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
-		// }
-
-
 	}
 
 	private void ExecuteJump()
@@ -232,6 +190,7 @@ public class PlayerController : MonoBehaviour
 		_moveVelocity.y = stats.JumpPower;
 	}
 
+	// public float airAcceleration = 0.1f;
 	private void HandleMovement()
 	{
 		targetVelocity = _moveDirection != Vector2.zero
@@ -241,6 +200,19 @@ public class PlayerController : MonoBehaviour
 		float smoothFactor = _moveDirection != Vector2.zero
 			? stats.Acceleration
 			: stats.Deceleration;
+
+		// if (_isGrounded)
+		// {
+		// 	smoothFactor = _moveDirection != Vector2.zero
+		// 		? stats.Acceleration
+		// 		: stats.Deceleration;
+		// }
+		// else
+		// {
+		// 	smoothFactor = airAcceleration;
+		// }
+
+		// _moveVelocity.x = Mathf.SmoothDamp(_moveDirection.x, targetVelocity.x, ref velocityXSmoothing, (_isGrounded ? ground : air));
 
 		// MoveToWord fix 
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
@@ -252,31 +224,8 @@ public class PlayerController : MonoBehaviour
 	private void HandleTimers()
 	{
 		_jumpTimer.Tick(Time.deltaTime);
-		_testTimer.Tick(Time.deltaTime);
+		_jumpCoyoteTimer.Tick(Time.deltaTime);
 	}
-
-	#region CollisionChecks
-
-	private void CollisionChecks()
-	{
-		IsGrounded();
-	}
-
-	private void IsGrounded()
-	{
-		var bounds = _feetCollider.bounds;
-		Vector2 boxCastOrigin = new Vector2(bounds.center.x, bounds.min.y);
-		Vector2 boxCastSize = new Vector2(bounds.size.x, stats.GroundDetectionRayLenght);
-
-		_isGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer).collider != null;
-
-		// if (_isGrounded)
-		// {
-		// 	_bufferedJumpUsable = true; // TODO
-		// }
-	}
-
-	#endregion
 
 	#region OnEnableDisable
 	void OnEnable()
@@ -302,7 +251,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!_jumpKeyIsPressed && performed)
 		{
-			_jumpKeyWasPressed = true;
+			_jumpKeyWasPressed = true; 
 		}
 
 		if (_jumpKeyIsPressed && !performed)
