@@ -19,11 +19,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   GroundDetectionRayLenght: 0.02
-  HeadDetectionRayLenght: 0.02
-  HeadWidth: 0.75
-  FallAcceleration: 150
+  HeadDetectionRayLength: 0.02
+  HeadWidth: 1
+  maxJumpHeight: 5
+  minJumpHeight: 2
+  timeTillJumpApex: 0.35
+  jumpHeightCompensationFactor: 1.06
+  GravityMultiplayer: 1
+  CoyoteTime: 1.5
   MaxFallSpeed: 40
-  JumpPower: 36
   JumpEndEarlyGravityModifier: 2
-  JumpBuffer: 0.15
   GroundGravity: -1.5

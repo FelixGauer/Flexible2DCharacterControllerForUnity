@@ -15,15 +15,20 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Collision Check")] 
 	public LayerMask GroundLayer;
 	public float GroundDetectionRayLenght = 0.02f;
-	public float HeadDetectionRayLenght = 0.02f;
-	[Range(0f, 2f)] public float HeadWidth = 0.75f;
+	public float HeadDetectionRayLength = 0.02f;
+	[Range(0f, 5f)] public float HeadWidth = 0.75f;
 
 	[Header("Jump")]
-	[Range(0f, 200f)] public float FallAcceleration = 110f; // Gravity
+	[Range(0f, 100f)] public float maxJumpHeight = 5f;
+	[Range(0f, 100f)] public float minJumpHeight = 2f;
+	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
+	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
+	[Range(0f, 5f)] public float GravityMultiplayer = 1.5f;
+	[Range(0f, 5f)] public float CoyoteTime = 1.5f;
+	
+	// Dont Use
 	[Range(0f, 200f)] public float MaxFallSpeed = 40f; 
-	[Range(0f, 200f)] public float JumpPower = 36f; 
 	[Range(0f, 200f)] public float JumpEndEarlyGravityModifier = 3f; 
-	[Range(0f, 2f)] public float JumpBuffer = 0.2f; 
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f; 
 
 }

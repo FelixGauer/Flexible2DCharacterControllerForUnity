@@ -26,12 +26,10 @@ public class PlayerController : MonoBehaviour
 	private CollisionsChecker _collisionsChecker;
 	private Rigidbody2D _rigidbody;
 	private CapsuleCollider2D _capsuleCollider;
-	private BoxCollider2D _feetCollider;
 
 	// InputReader parameters
 	private Vector2 _moveDirection;
-	private bool _jumpPerformed;
-
+	
 	// CollisionChecks parameters
 	private bool _bumbedHead;
 
@@ -39,42 +37,32 @@ public class PlayerController : MonoBehaviour
 	private Vector2 _moveVelocity;
 	private Vector2 targetVelocity;
 
-	//FIXME Jump Var 
-	[SerializeField] private float jumpDuraction = 0.3f;
-	[SerializeField] private float PowerJump = 15f;
-	[SerializeField] private float MaxHeightJump = 3f;
-	[SerializeField] private float GravityMultiplayer = 1.5f;
-	[SerializeField] private float CoyoteTime = 1.5f;
-
-	// Timers
-	private CountdownTimer _jumpTimer;
-	private CountdownTimer _jumpCoyoteTimer;
-
-
-	//TETS var
+	//Calculate jump vars
+	float AdjustedJumpHeight => stats.maxJumpHeight * stats.jumpHeightCompensationFactor;
+	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(stats.timeTillJumpApex, 2f);
+	float maxJumpVelocity => gravity * stats.timeTillJumpApex;
+	float minJumpVelocity => Mathf.Sqrt(2 * stats.minJumpHeight * gravity);
+	
 	private bool _jumpKeyIsPressed; // Нажата
 	private bool _jumpKeyWasPressed; // Была нажата
 	private bool _jumpKeyWasLetGo; // Была отпущена
+	
+	// Timers
+	private CountdownTimer _jumpCoyoteTimer;
 
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
-		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_collisionsChecker = GetComponent<CollisionsChecker>();
-		_feetCollider = GetComponentInChildren<BoxCollider2D>();
+		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 
-		// Setup Timers
-		_jumpTimer = new CountdownTimer(jumpDuraction); //FIXME Так как в awake не могу менять
-		_jumpCoyoteTimer = new CountdownTimer(CoyoteTime);
+		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 	}
 
 	private void Update()
 	{
 		HandleTimers();
-		HandleJump();
-		Debbuging();
-		
-		Debug.Log(_collisionsChecker.IsGrounded);
+		Debbuging();		
 	}
 
 	private void FixedUpdate()
@@ -92,17 +80,6 @@ public class PlayerController : MonoBehaviour
 		_rigidbody.velocity = _moveVelocity;
 	}
 
-	[Header("TEST")]
-	public float maxJumpHeight = 5f;
-	public float minJumpHeight = 2f;
-	public float timeTillJumpApex = 0.35f;
-	public float jumpHeightCompensationFactor = 1f;
-
-	float AdjustedJumpHeight => maxJumpHeight * jumpHeightCompensationFactor;
-	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);
-	float maxJumpVelocity => gravity * timeTillJumpApex;
-	float minJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * gravity);
-
 	private void HandleGravity()
 	{
 		if (_collisionsChecker.IsGrounded && _moveVelocity.y <= 0f)
@@ -111,7 +88,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			float gravityForce = stats.FallAcceleration;
+			float gravityForce = gravity;
 
 			// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, -grav * Time.fixedDeltaTime);
 			_moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravityForce * Time.fixedDeltaTime);
@@ -119,32 +96,9 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	private void HandleJump()
-	{
-		if (_jumpPerformed && _collisionsChecker.IsGrounded)
-		{
-			_jumpTimer.Start();
-			// ExecuteJump();
-		}
-		else if (!_jumpPerformed && _jumpTimer.IsRunning)
-		{
-			_jumpTimer.Stop();
-		}
-	}
-
 	private float maxYPosition;
-	private float coyoteTimeCounter;
 	private void Jump()
 	{
-		// if (_isGrounded)
-		// {
-		// 	coyoteTimeCounter = CoyoteTime;
-		// }
-		// else if (!_isGrounded && !_jumpKeyWasPressed)
-		// {
-		// 	coyoteTimeCounter -= Time.deltaTime;
-		// }
-		
 		if (_collisionsChecker.IsGrounded) // FIXME Вычисление максимальной высоты прыжка
 		{
 			if (maxYPosition > 0)
@@ -156,7 +110,6 @@ public class PlayerController : MonoBehaviour
 			_moveVelocity.y = 0;  // Сбрасываем вертикальную скорость на земле
 		}
 
-		// if (_jumpKeyWasPressed && coyoteTimeCounter > 0f)
 		if (_jumpKeyWasPressed && _collisionsChecker.IsGrounded)
 		{
 			_moveVelocity.y = maxJumpVelocity;
@@ -170,8 +123,6 @@ public class PlayerController : MonoBehaviour
 				_moveVelocity.y = minJumpVelocity;
 			}
 			_jumpKeyWasLetGo = false;
-			// coyoteTimeCounter = 0f;
-
 		}
 		
 		_jumpKeyWasPressed = false;
@@ -182,12 +133,10 @@ public class PlayerController : MonoBehaviour
 			maxYPosition = transform.position.y;  
 		}
 
-		_moveVelocity.y -= gravity * GravityMultiplayer * Time.fixedDeltaTime; // stats.FallAcceleration : gravity			
-	}
-
-	private void ExecuteJump()
-	{
-		_moveVelocity.y = stats.JumpPower;
+		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime; 
+		
+		// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravity * Time.fixedDeltaTime);
+					
 	}
 
 	// public float airAcceleration = 0.1f;
@@ -223,9 +172,10 @@ public class PlayerController : MonoBehaviour
 
 	private void HandleTimers()
 	{
-		_jumpTimer.Tick(Time.deltaTime);
 		_jumpCoyoteTimer.Tick(Time.deltaTime);
 	}
+
+	
 
 	#region OnEnableDisable
 	void OnEnable()
