@@ -15,10 +15,7 @@ public class PlayerController : MonoBehaviour
 {
 	//TODO Реализовать дебаг функции для всех механик: 1. Линия за персонажем 2. Точка на линии когда нажат прыжок
 	//TODO Собственная Буферизация Прыжка
-	//TODO Создать отдельные скрипты для таймеров
-	//TODO Попробовать реализовать прыжок на таймерах
 	//TODO Траектория для прыжка (Куда прыгать предикт)
-	//TODO GroundChecker отдельный класс 
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -29,9 +26,6 @@ public class PlayerController : MonoBehaviour
 
 	// InputReader parameters
 	private Vector2 _moveDirection;
-	
-	// CollisionChecks parameters
-	private bool _bumbedHead;
 
 	// Movement parameters
 	private Vector2 _moveVelocity;
@@ -42,13 +36,22 @@ public class PlayerController : MonoBehaviour
 	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(stats.timeTillJumpApex, 2f);
 	float maxJumpVelocity => gravity * stats.timeTillJumpApex;
 	float minJumpVelocity => Mathf.Sqrt(2 * stats.minJumpHeight * gravity);
-	
+
+	private bool _isJumping;
+	public float NumberAvailableJumps = 2f;
+	private float _numberAvailableJumps;
+
 	private bool _jumpKeyIsPressed; // Нажата
 	private bool _jumpKeyWasPressed; // Была нажата
 	private bool _jumpKeyWasLetGo; // Была отпущена
-	
+
+	//Debug var
+	private float maxYPosition;
+
 	// Timers
 	private CountdownTimer _jumpCoyoteTimer;
+	private CountdownTimer _jumpBufferTimer;
+	public float _bufferTime = 1f;
 
 	private void Awake()
 	{
@@ -57,12 +60,13 @@ public class PlayerController : MonoBehaviour
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
+		_jumpBufferTimer = new CountdownTimer(_bufferTime);
 	}
 
 	private void Update()
 	{
 		HandleTimers();
-		Debbuging();		
+		Debbuging();
 	}
 
 	private void FixedUpdate()
@@ -70,7 +74,7 @@ public class PlayerController : MonoBehaviour
 		HandleMovement();
 
 		// HandleGravity();
-		Jump(); //FIXME
+		HandleJump(); //FIXME
 
 		ApplyMovement();
 	}
@@ -90,30 +94,100 @@ public class PlayerController : MonoBehaviour
 		{
 			float gravityForce = gravity;
 
-			// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, -grav * Time.fixedDeltaTime);
 			_moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravityForce * Time.fixedDeltaTime);
-			// _moveVelocity.y -= gravityForce * 1.5f *  Time.fixedDeltaTime;
+			_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
 		}
 	}
 
-	private float maxYPosition;
-	private void Jump()
+	bool _coyoteUsable;
+	bool _bufferUsable;
+	bool bufferJump = false;
+	bool letkeyBuffer;
+	private bool _wasGroundedLastFrame = true;
+
+	private float jumpBuferTime = 0.2f;
+	private float jumpBuferCounter;
+
+	private void HandleJump()
 	{
 		if (_collisionsChecker.IsGrounded) // FIXME Вычисление максимальной высоты прыжка
 		{
 			if (maxYPosition > 0)
 			{
-				Debug.Log("Максимальная высота прыжка: " + maxYPosition);
+				// Debug.Log("Максимальная высота прыжка: " + maxYPosition);
 				maxYPosition = 0; // Сбрасываем максимальную высоту для следующего прыжка
 			}
 
 			_moveVelocity.y = 0;  // Сбрасываем вертикальную скорость на земле
 		}
 
-		if (_jumpKeyWasPressed && _collisionsChecker.IsGrounded)
+		if (_jumpKeyWasPressed && _bufferUsable && !_collisionsChecker.IsGrounded)
 		{
+			_jumpBufferTimer.Start();
+			_bufferUsable = false;
+		}
+
+		if (_collisionsChecker.IsGrounded)
+		{
+			// Если персонаж на земле, сбрасываем состояние
+			_numberAvailableJumps = NumberAvailableJumps;
+			_coyoteUsable = true;
+			_bufferUsable = true;
+			_wasGroundedLastFrame = true;
+			_isJumping = false;
+			_jumpCoyoteTimer.Reset();
+			_jumpBufferTimer.Reset();
+		}
+		else if (_wasGroundedLastFrame && !_isJumping && _numberAvailableJumps > 0f)
+		{
+			if (_coyoteUsable)
+			{
+				_jumpCoyoteTimer.Start();
+				_coyoteUsable = false;
+			}
+
+			if (_jumpCoyoteTimer.IsFinished)
+			{
+				_numberAvailableJumps--;
+				_wasGroundedLastFrame = false;
+			}
+		}
+
+		if (_numberAvailableJumps <= 0f)
+		{
+			_jumpKeyWasPressed = false;
+		}
+
+		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo)
+		{
+			bufferJump = true;
+		}
+		if (_jumpBufferTimer.IsRunning && _collisionsChecker.IsGrounded)
+		{
+			_jumpKeyWasPressed = true;
+			if (bufferJump)
+			{
+				_jumpKeyWasLetGo = true;
+				bufferJump = false;
+			}
+
+		}
+
+		if (_jumpKeyWasPressed)
+		{
+			jumpBuferCounter = jumpBuferTime;
+
 			_moveVelocity.y = maxJumpVelocity;
+
 			maxYPosition = transform.position.y;
+			_numberAvailableJumps -= 1f;
+
+			_jumpKeyWasPressed = false;
+			_isJumping = true;
+			_coyoteUsable = false;
+
+			_jumpCoyoteTimer.Stop();
+			_jumpBufferTimer.Stop();
 		}
 
 		if (_jumpKeyWasLetGo)
@@ -121,22 +195,26 @@ public class PlayerController : MonoBehaviour
 			if (_moveVelocity.y > minJumpVelocity)
 			{
 				_moveVelocity.y = minJumpVelocity;
+
 			}
+
 			_jumpKeyWasLetGo = false;
-		}
-		
-		_jumpKeyWasPressed = false;
-		_jumpKeyWasLetGo = false;
-		
-		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
-		{
-			maxYPosition = transform.position.y;  
+
 		}
 
-		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime; 
-		
-		// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravity * Time.fixedDeltaTime);
-					
+		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
+		{
+			maxYPosition = transform.position.y;
+		}
+
+		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
+
+		// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravity * Time.fixedDeltaTime);			
+	}
+
+	private void Jump()
+	{
+
 	}
 
 	// public float airAcceleration = 0.1f;
@@ -173,9 +251,8 @@ public class PlayerController : MonoBehaviour
 	private void HandleTimers()
 	{
 		_jumpCoyoteTimer.Tick(Time.deltaTime);
+		_jumpBufferTimer.Tick(Time.deltaTime);
 	}
-
-	
 
 	#region OnEnableDisable
 	void OnEnable()
@@ -201,7 +278,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!_jumpKeyIsPressed && performed)
 		{
-			_jumpKeyWasPressed = true; 
+			_jumpKeyWasPressed = true;
 		}
 
 		if (_jumpKeyIsPressed && !performed)
@@ -236,7 +313,5 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
-
-
 }
 

@@ -7,7 +7,7 @@ public class CollisionsChecker : MonoBehaviour
 	[SerializeField] PlayerControllerStats stats;
 
 	public bool IsGrounded { get; private set; }
-	public bool TestBumpedHead { get; private set; }
+	public bool BumpedHead { get; private set; }
 
 	// private Collider2D _feetCollider;
 	// private Collider2D _bodyCollider;
@@ -20,8 +20,7 @@ public class CollisionsChecker : MonoBehaviour
 	void Update()
 	{
 		CheckIsGrounded();
-		BumpedHead();
-		Debug.Log(TestBumpedHead);
+		CheckBumpedHead();
 	}
 
 	private void CheckIsGrounded()
@@ -33,7 +32,7 @@ public class CollisionsChecker : MonoBehaviour
 		IsGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, stats.GroundDetectionRayLenght, stats.GroundLayer).collider != null;
 	}
 
-	private void BumpedHead()
+	private void CheckBumpedHead()
 	{
 		var bounds = FeetCollider.bounds;
 
@@ -44,29 +43,27 @@ public class CollisionsChecker : MonoBehaviour
 
 		if (_headHit.collider != null)
 		{
-			TestBumpedHead = true;
+			BumpedHead = true;
 		}
 		else
 		{
-			TestBumpedHead = false;
+			BumpedHead = false;
 		}
+		// float headWidth = stats.HeadWidth;
 
-		float headWidth = stats.HeadWidth;
+		// Color rayColor;
+		// if (BumpedHead)
+		// {
+		// 	rayColor = Color.green;
+		// }
+		// else
+		// {
+		// 	rayColor = Color.red;
+		// }
 
-		Color rayColor;
-		if (TestBumpedHead)
-		{
-			rayColor = Color.green;
-		}
-		else
-		{
-			rayColor = Color.red;
-		}
-
-		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		Debug.DrawRay(new Vector2(boxCastOrigin.x + (boxCastSize.x / 2) * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
-
+		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
+		// Debug.DrawRay(new Vector2(boxCastOrigin.x + (boxCastSize.x / 2) * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
+		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
 	}
 
 }
