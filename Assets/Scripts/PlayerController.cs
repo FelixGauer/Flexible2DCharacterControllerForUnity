@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 using UnityEngine.Scripting.APIUpdating;
@@ -47,11 +48,16 @@ public class PlayerController : MonoBehaviour
 
 	//Debug var
 	private float maxYPosition;
+	private TrailRenderer trailRenderer; //FIXME
+	private List<GameObject> markers = new List<GameObject>(); // Список для хранения всех меток
+
+
 
 	// Timers
 	private CountdownTimer _jumpCoyoteTimer;
 	private CountdownTimer _jumpBufferTimer;
 	public float _bufferTime = 1f;
+
 
 	private void Awake()
 	{
@@ -61,12 +67,17 @@ public class PlayerController : MonoBehaviour
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 		_jumpBufferTimer = new CountdownTimer(_bufferTime);
+
+		trailRenderer = GetComponent<TrailRenderer>();
 	}
 
 	private void Update()
 	{
+
 		HandleTimers();
 		Debbuging();
+		
+		Debug.Log(_moveVelocity.y);
 	}
 
 	private void FixedUpdate()
@@ -76,7 +87,6 @@ public class PlayerController : MonoBehaviour
 		// HandleGravity();
 		//HandleJump(); //FIXME
 		TestJump();
-
 
 		ApplyMovement();
 	}
@@ -218,23 +228,26 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private bool cutJump;
-	private bool cutJumpBuffer;
+	// private bool cutJumpBuffer;
 	private bool isJumping;
 	private bool coyoteUsable;
 	public float numberJump = 1;
 
 	// private bool jumpBuffer;
-	private bool minJumpBuffer = false;
+	private bool cutJumpBuffer = false;
 
 
 	private void TestJump()
 	{
 		if (_collisionsChecker.IsGrounded) // TODO Можно отдельно вывести в HandleGravity 
 		{
+			if (!_jumpBufferTimer.IsRunning && _moveDirection != Vector2.zero)
+				ClearMarkers();
+			
 			_moveVelocity.y = -1f;
 			numberJump = 1;
 			isJumping = false;
-			coyoteUsable = true;
+			coyoteUsable = true;			
 		}
 		else if (!_collisionsChecker.IsGrounded && !isJumping && coyoteUsable)
 		{
@@ -245,24 +258,23 @@ public class PlayerController : MonoBehaviour
 
 		if (_jumpKeyWasPressed)
 		{
-			// if (!_collisionsChecker.IsGrounded) { jumpBuffer = true; } //FIXME
-
+			AddJumpMarker();
+			
 			_jumpBufferTimer.Reset();
 			_jumpBufferTimer.Start();
 		}
 		if (_jumpKeyWasLetGo)
 		{
-			// if (jumpBuffer) { minJumpBuffer = true; } //FIXME
-			if (_jumpBufferTimer.IsRunning) { minJumpBuffer = true; }
+			if (_jumpBufferTimer.IsRunning) { cutJumpBuffer = true; }
 
 			cutJump = true;
 		}
 
-		// if (_jumpBufferTimer.IsFinished) { jumpBuffer = false; minJumpBuffer = false; }
-		if (_jumpBufferTimer.IsFinished) { minJumpBuffer = false; }
+		if (_jumpBufferTimer.IsFinished) { cutJumpBuffer = false; }
 
 		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning))
 		{
+			
 			_moveVelocity.y = maxJumpVelocity;
 
 			isJumping = true;
@@ -271,13 +283,13 @@ public class PlayerController : MonoBehaviour
 			_jumpCoyoteTimer.Stop();
 
 			// jumpBuffer = false;
-			if (minJumpBuffer)
+			if (cutJumpBuffer)
 			{
 				if (_moveVelocity.y > minJumpVelocity)
 				{
 					_moveVelocity.y = minJumpVelocity;
 				}
-				minJumpBuffer = false;
+				cutJumpBuffer = false;
 			}
 		}
 		if (cutJump)
@@ -288,36 +300,8 @@ public class PlayerController : MonoBehaviour
 			}
 			cutJump = false;
 		}
-		
-		// if (jumpBuffer && _collisionsChecker.IsGrounded)
-		// {
-		// 	if (_moveVelocity.y > minJumpVelocity)
-		// 	{
-		// 		_moveVelocity.y = minJumpVelocity;
-		// 	}
-		// 	jumpBuffer = false;
-		// 	cutJump = true;
-		// }
-		// if (cutJump)
-		// {
 
-		// 	if (_moveVelocity.y > 0f)
-		// 	{
-		// 		if (_moveVelocity.y > minJumpVelocity)
-		// 		{
-		// 			_moveVelocity.y = minJumpVelocity;
-		// 			cutJump = false;
-		// 		}
-		// 	}
-		// 	if (_moveVelocity.y < 0f && !_collisionsChecker.IsGrounded)
-		// 	{
-
-		// 	}
-
-		// }
-
-
-
+		// Multi/Double JUMP
 		// if (_jumpBufferTimer.IsRunning && isJumping && numberJump > 0f)
 		// {
 		// 	_moveVelocity.y = maxJumpVelocity;
@@ -327,21 +311,15 @@ public class PlayerController : MonoBehaviour
 		// 	_jumpBufferTimer.Stop();
 		// 	_jumpCoyoteTimer.Stop();
 		// }
-		// if (cutJump && _moveVelocity.y > 0f)
-		// {
-		// 	if (_moveVelocity.y > minJumpVelocity)
-		// 	{
-		// 		_moveVelocity.y = minJumpVelocity;
-		// 	}
-		// 	cutJump = false;	
-		// }
-		// Debug.Log(cutJump);
 
 		_jumpKeyWasPressed = false;
 		_jumpKeyWasLetGo = false;
 
 		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
+		
+		_moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -20f, 50f);
 	}
+	
 
 	// public float airAcceleration = 0.1f;
 	private void HandleMovement()
@@ -415,6 +393,45 @@ public class PlayerController : MonoBehaviour
 		_jumpKeyIsPressed = performed;
 	}
 	#endregion
+
+	public GameObject markerPrefab;
+	void AddJumpMarker()
+	{
+		// Получаем позицию конца линии TrailRenderer
+		Vector3 trailEndPosition = GetTrailEndPosition();
+
+		// Спавним метку на этой позиции и сохраняем её в список markers
+		GameObject newMarker = Instantiate(markerPrefab, trailEndPosition, Quaternion.identity);
+		markers.Add(newMarker); // Добавляем созданную метку в список
+	}
+	
+	public void ClearMarkers()
+	{
+		foreach (GameObject marker in markers)
+		{
+			Destroy(marker);
+		}
+
+		markers.Clear();
+	}
+
+	Vector3 GetTrailEndPosition()
+	{
+		// Trail Renderer хранит все точки следа, берем последнюю из них
+		Vector3[] positions = new Vector3[trailRenderer.positionCount];
+		trailRenderer.GetPositions(positions);
+
+		if (positions.Length > 0)
+		{
+			// Конец линии - это последняя точка в массиве
+			return positions[positions.Length - 1];
+		}
+		else
+		{
+			// Если точек нет, возвращаем позицию игрока
+			return transform.position;
+		}
+	}
 
 	//TODO Дебаг для Grounded
 	private void Debbuging()
