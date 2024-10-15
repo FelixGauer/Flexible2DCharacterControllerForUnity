@@ -74,7 +74,9 @@ public class PlayerController : MonoBehaviour
 		HandleMovement();
 
 		// HandleGravity();
-		HandleJump(); //FIXME
+		//HandleJump(); //FIXME
+		TestJump();
+
 
 		ApplyMovement();
 	}
@@ -102,11 +104,7 @@ public class PlayerController : MonoBehaviour
 	bool _coyoteUsable;
 	bool _bufferUsable;
 	bool bufferJump = false;
-	bool letkeyBuffer;
 	private bool _wasGroundedLastFrame = true;
-
-	private float jumpBuferTime = 0.2f;
-	private float jumpBuferCounter;
 
 	private void HandleJump()
 	{
@@ -121,15 +119,22 @@ public class PlayerController : MonoBehaviour
 			_moveVelocity.y = 0;  // Сбрасываем вертикальную скорость на земле
 		}
 
-		if (_jumpKeyWasPressed && _bufferUsable && !_collisionsChecker.IsGrounded)
+		if (_collisionsChecker.BumpedHead) // FIXME Удар головой и сразу в низ
 		{
-			_jumpBufferTimer.Start();
-			_bufferUsable = false;
+			_moveVelocity.y = Mathf.Min(0, _moveVelocity.y);
+		}
+
+		if (_jumpKeyWasPressed && _bufferUsable && !_collisionsChecker.IsGrounded && _numberAvailableJumps <= 0f)
+		{
+			if (_isJumping || !_wasGroundedLastFrame)
+			{
+				_jumpBufferTimer.Start();
+				_bufferUsable = false;
+			}
 		}
 
 		if (_collisionsChecker.IsGrounded)
 		{
-			// Если персонаж на земле, сбрасываем состояние
 			_numberAvailableJumps = NumberAvailableJumps;
 			_coyoteUsable = true;
 			_bufferUsable = true;
@@ -148,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
 			if (_jumpCoyoteTimer.IsFinished)
 			{
-				_numberAvailableJumps--;
+				_numberAvailableJumps -= 1f;
 				_wasGroundedLastFrame = false;
 			}
 		}
@@ -158,25 +163,27 @@ public class PlayerController : MonoBehaviour
 			_jumpKeyWasPressed = false;
 		}
 
-		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo)
+		if (_jumpBufferTimer.IsRunning)
 		{
-			bufferJump = true;
-		}
-		if (_jumpBufferTimer.IsRunning && _collisionsChecker.IsGrounded)
-		{
-			_jumpKeyWasPressed = true;
-			if (bufferJump)
+			if (_jumpKeyWasLetGo)
 			{
-				_jumpKeyWasLetGo = true;
-				bufferJump = false;
+				bufferJump = true;
 			}
 
+			if (_collisionsChecker.IsGrounded)
+			{
+				_jumpKeyWasPressed = true;
+
+				if (bufferJump)
+				{
+					_jumpKeyWasLetGo = true;
+					bufferJump = false;
+				}
+			}
 		}
 
 		if (_jumpKeyWasPressed)
 		{
-			jumpBuferCounter = jumpBuferTime;
-
 			_moveVelocity.y = maxJumpVelocity;
 
 			maxYPosition = transform.position.y;
@@ -195,11 +202,9 @@ public class PlayerController : MonoBehaviour
 			if (_moveVelocity.y > minJumpVelocity)
 			{
 				_moveVelocity.y = minJumpVelocity;
-
 			}
 
 			_jumpKeyWasLetGo = false;
-
 		}
 
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
@@ -212,9 +217,130 @@ public class PlayerController : MonoBehaviour
 		// _moveVelocity.y = Mathf.MoveTowards(_moveVelocity.y, -stats.MaxFallSpeed, gravity * Time.fixedDeltaTime);			
 	}
 
-	private void Jump()
-	{
+	private bool cutJump;
+	private bool cutJumpBuffer;
+	private bool isJumping;
+	private bool coyoteUsable;
+	public float numberJump = 1;
 
+	// private bool jumpBuffer;
+	private bool minJumpBuffer = false;
+
+
+	private void TestJump()
+	{
+		if (_collisionsChecker.IsGrounded) // TODO Можно отдельно вывести в HandleGravity 
+		{
+			_moveVelocity.y = -1f;
+			numberJump = 1;
+			isJumping = false;
+			coyoteUsable = true;
+		}
+		else if (!_collisionsChecker.IsGrounded && !isJumping && coyoteUsable)
+		{
+			_jumpCoyoteTimer.Reset();
+			_jumpCoyoteTimer.Start();
+			coyoteUsable = false;
+		}
+
+		if (_jumpKeyWasPressed)
+		{
+			// if (!_collisionsChecker.IsGrounded) { jumpBuffer = true; } //FIXME
+
+			_jumpBufferTimer.Reset();
+			_jumpBufferTimer.Start();
+		}
+		if (_jumpKeyWasLetGo)
+		{
+			// if (jumpBuffer) { minJumpBuffer = true; } //FIXME
+			if (_jumpBufferTimer.IsRunning) { minJumpBuffer = true; }
+
+			cutJump = true;
+		}
+
+		// if (_jumpBufferTimer.IsFinished) { jumpBuffer = false; minJumpBuffer = false; }
+		if (_jumpBufferTimer.IsFinished) { minJumpBuffer = false; }
+
+		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning))
+		{
+			_moveVelocity.y = maxJumpVelocity;
+
+			isJumping = true;
+
+			_jumpBufferTimer.Stop();
+			_jumpCoyoteTimer.Stop();
+
+			// jumpBuffer = false;
+			if (minJumpBuffer)
+			{
+				if (_moveVelocity.y > minJumpVelocity)
+				{
+					_moveVelocity.y = minJumpVelocity;
+				}
+				minJumpBuffer = false;
+			}
+		}
+		if (cutJump)
+		{
+			if (_moveVelocity.y > minJumpVelocity)
+			{
+				_moveVelocity.y = minJumpVelocity;
+			}
+			cutJump = false;
+		}
+		
+		// if (jumpBuffer && _collisionsChecker.IsGrounded)
+		// {
+		// 	if (_moveVelocity.y > minJumpVelocity)
+		// 	{
+		// 		_moveVelocity.y = minJumpVelocity;
+		// 	}
+		// 	jumpBuffer = false;
+		// 	cutJump = true;
+		// }
+		// if (cutJump)
+		// {
+
+		// 	if (_moveVelocity.y > 0f)
+		// 	{
+		// 		if (_moveVelocity.y > minJumpVelocity)
+		// 		{
+		// 			_moveVelocity.y = minJumpVelocity;
+		// 			cutJump = false;
+		// 		}
+		// 	}
+		// 	if (_moveVelocity.y < 0f && !_collisionsChecker.IsGrounded)
+		// 	{
+
+		// 	}
+
+		// }
+
+
+
+		// if (_jumpBufferTimer.IsRunning && isJumping && numberJump > 0f)
+		// {
+		// 	_moveVelocity.y = maxJumpVelocity;
+		// 	numberJump -= 1;
+
+		// 	isJumping = true;
+		// 	_jumpBufferTimer.Stop();
+		// 	_jumpCoyoteTimer.Stop();
+		// }
+		// if (cutJump && _moveVelocity.y > 0f)
+		// {
+		// 	if (_moveVelocity.y > minJumpVelocity)
+		// 	{
+		// 		_moveVelocity.y = minJumpVelocity;
+		// 	}
+		// 	cutJump = false;	
+		// }
+		// Debug.Log(cutJump);
+
+		_jumpKeyWasPressed = false;
+		_jumpKeyWasLetGo = false;
+
+		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
 	}
 
 	// public float airAcceleration = 0.1f;
