@@ -76,8 +76,7 @@ public class PlayerController : MonoBehaviour
 
 		HandleTimers();
 		Debbuging();
-		
-		Debug.Log(_moveVelocity.y);
+
 	}
 
 	private void FixedUpdate()
@@ -231,7 +230,7 @@ public class PlayerController : MonoBehaviour
 	// private bool cutJumpBuffer;
 	private bool isJumping;
 	private bool coyoteUsable;
-	public float numberJump = 1;
+	public float numberJump = 2; // FIXME
 
 	// private bool jumpBuffer;
 	private bool cutJumpBuffer = false;
@@ -239,15 +238,20 @@ public class PlayerController : MonoBehaviour
 
 	private void TestJump()
 	{
-		if (_collisionsChecker.IsGrounded) // TODO Можно отдельно вывести в HandleGravity 
+		if (_collisionsChecker.BumpedHead)
+		{
+			_moveVelocity.y = Mathf.Min(0, _moveVelocity.y);
+		}
+
+		if (_collisionsChecker.IsGrounded)
 		{
 			if (!_jumpBufferTimer.IsRunning && _moveDirection != Vector2.zero)
 				ClearMarkers();
-			
+
 			_moveVelocity.y = -1f;
-			numberJump = 1;
+			numberJump = 2; // FIXME
 			isJumping = false;
-			coyoteUsable = true;			
+			coyoteUsable = true;
 		}
 		else if (!_collisionsChecker.IsGrounded && !isJumping && coyoteUsable)
 		{
@@ -259,7 +263,7 @@ public class PlayerController : MonoBehaviour
 		if (_jumpKeyWasPressed)
 		{
 			AddJumpMarker();
-			
+
 			_jumpBufferTimer.Reset();
 			_jumpBufferTimer.Start();
 		}
@@ -274,52 +278,59 @@ public class PlayerController : MonoBehaviour
 
 		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning))
 		{
-			
-			_moveVelocity.y = maxJumpVelocity;
-
-			isJumping = true;
-
-			_jumpBufferTimer.Stop();
-			_jumpCoyoteTimer.Stop();
-
+			Jump();
 			// jumpBuffer = false;
 			if (cutJumpBuffer)
 			{
-				if (_moveVelocity.y > minJumpVelocity)
-				{
-					_moveVelocity.y = minJumpVelocity;
-				}
+				CutJump();
 				cutJumpBuffer = false;
 			}
 		}
 		if (cutJump)
 		{
-			if (_moveVelocity.y > minJumpVelocity)
-			{
-				_moveVelocity.y = minJumpVelocity;
-			}
+			CutJump();
 			cutJump = false;
 		}
 
 		// Multi/Double JUMP
-		// if (_jumpBufferTimer.IsRunning && isJumping && numberJump > 0f)
-		// {
-		// 	_moveVelocity.y = maxJumpVelocity;
-		// 	numberJump -= 1;
-
-		// 	isJumping = true;
-		// 	_jumpBufferTimer.Stop();
-		// 	_jumpCoyoteTimer.Stop();
-		// }
+		if (_jumpBufferTimer.IsRunning && !_collisionsChecker.IsGrounded && numberJump > 0f)
+		{
+			Jump();
+		}
 
 		_jumpKeyWasPressed = false;
 		_jumpKeyWasLetGo = false;
 
-		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
-		
+		if (isJumping && _moveVelocity.y < 0f)
+		{
+			_moveVelocity.y -= gravity * 1.6f * Time.fixedDeltaTime;
+		}
+		else
+		{
+			_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
+		}
+
 		_moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -20f, 50f);
 	}
-	
+
+	private void Jump()
+	{
+		numberJump -= 1;
+		_moveVelocity.y = maxJumpVelocity;
+
+		isJumping = true;
+
+		_jumpBufferTimer.Stop();
+		_jumpCoyoteTimer.Stop();
+	}
+
+	private void CutJump()
+	{
+		if (_moveVelocity.y > minJumpVelocity)
+		{
+			_moveVelocity.y = minJumpVelocity;
+		}
+	}
 
 	// public float airAcceleration = 0.1f;
 	private void HandleMovement()
@@ -346,7 +357,7 @@ public class PlayerController : MonoBehaviour
 		// _moveVelocity.x = Mathf.SmoothDamp(_moveDirection.x, targetVelocity.x, ref velocityXSmoothing, (_isGrounded ? ground : air));
 
 		// MoveToWord fix 
-		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
+		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x; //FIXME
 		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
 
 		// Debug.Log(_moveVelocity);
@@ -372,7 +383,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	#region OnMethodActions
+	#region  OnMethodActions
 	private void OnMove(Vector2 moveDirection)
 	{
 		_moveDirection = moveDirection;
@@ -394,6 +405,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
+	#region Debbug
 	public GameObject markerPrefab;
 	void AddJumpMarker()
 	{
@@ -404,7 +416,7 @@ public class PlayerController : MonoBehaviour
 		GameObject newMarker = Instantiate(markerPrefab, trailEndPosition, Quaternion.identity);
 		markers.Add(newMarker); // Добавляем созданную метку в список
 	}
-	
+
 	public void ClearMarkers()
 	{
 		foreach (GameObject marker in markers)
@@ -456,5 +468,6 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+	#endregion
 }
 

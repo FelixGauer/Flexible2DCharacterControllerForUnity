@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Bits: 256
   GroundDetectionRayLenght: 0.02
   HeadDetectionRayLength: 0.02
-  HeadWidth: 1
+  HeadWidth: 0.75
   maxJumpHeight: 5
   minJumpHeight: 2
   timeTillJumpApex: 0.35
