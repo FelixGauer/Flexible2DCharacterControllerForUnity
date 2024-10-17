@@ -49,21 +49,21 @@ public class CollisionsChecker : MonoBehaviour
 		{
 			BumpedHead = false;
 		}
-		// float headWidth = stats.HeadWidth;
+		float headWidth = stats.HeadWidth;
 
-		// Color rayColor;
-		// if (BumpedHead)
-		// {
-		// 	rayColor = Color.green;
-		// }
-		// else
-		// {
-		// 	rayColor = Color.red;
-		// }
+		Color rayColor;
+		if (BumpedHead)
+		{
+			rayColor = Color.green;
+		}
+		else
+		{
+			rayColor = Color.red;
+		}
 
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x + (boxCastSize.x / 2) * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		// Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x + (boxCastSize.x / 2) * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
 	}
 
 }
