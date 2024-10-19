@@ -7,11 +7,12 @@ public class LocomotionState : BaseState
 
 	public override void OnEnter()
 	{
+		player.GroundedState();		
 		Debug.Log("MoveEnter");
 	}
 
 	public override void FixedUpdate()
 	{
-		player.SMMove();
+		player.HandleMovement();
 	}
 }

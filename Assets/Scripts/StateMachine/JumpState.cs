@@ -11,7 +11,9 @@ public class JumpState : BaseState
 
 	public override void FixedUpdate()
 	{
-		player.SMJump();
-		player.SMMove();
+		// player.HandleJump();
+		
+		player.JumpForState();
+		player.HandleMovement();
 	}
 }
