@@ -8,6 +8,7 @@ public class FallState : BaseState
 	public override void OnEnter()
 	{
 		Debug.Log("FallState");
+		player.BumpedHead();
 	}
 
 	public override void FixedUpdate()

@@ -25,6 +25,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
 	[Range(0f, 5f)] public float GravityMultiplayer = 1.5f;
 	[Range(0f, 5f)] public float CoyoteTime = 1.5f;
+	[Range(0f, 5f)] public float BufferTime = 0.2f;
 	
 	// Dont Use
 	[Range(0f, 200f)] public float MaxFallSpeed = 40f; 

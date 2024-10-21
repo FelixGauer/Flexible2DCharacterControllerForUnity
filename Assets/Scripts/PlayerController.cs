@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Packages.Rider.Editor.UnitTesting;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering.Universal;
@@ -12,6 +13,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
@@ -46,6 +48,12 @@ public class PlayerController : MonoBehaviour
 	private bool _jumpKeyWasPressed; // Была нажата
 	private bool _jumpKeyWasLetGo; // Была отпущена
 
+	private bool _isJumping = false;
+	private bool _coyoteUsable;
+	private bool _variableJumpHeight;
+	private bool _variableJumpHeightBuffer = false;
+	private bool _negativeMoveVeolicty = false;
+
 	//Debug var
 	private float maxYPosition;
 	private TrailRenderer trailRenderer; //FIXME
@@ -54,11 +62,10 @@ public class PlayerController : MonoBehaviour
 	// Timers
 	private CountdownTimer _jumpCoyoteTimer;
 	private CountdownTimer _jumpBufferTimer;
-	public float _bufferTime = 1f;
+	// public float _bufferTime = 1f;
 
 	// State Machine Var
 	private StateMachine stateMachine;
-
 
 	private void Awake()
 	{
@@ -67,7 +74,7 @@ public class PlayerController : MonoBehaviour
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
-		_jumpBufferTimer = new CountdownTimer(_bufferTime);
+		_jumpBufferTimer = new CountdownTimer(stats.BufferTime);
 
 		trailRenderer = GetComponent<TrailRenderer>();
 
@@ -81,12 +88,13 @@ public class PlayerController : MonoBehaviour
 		var fallState = new FallState(this);
 
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _moveVelocity.y < 0f && !_isJumpCoyote));
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _moveVelocity.y < 0f && _negativeMoveVeolicty));
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _collisionsChecker.BumpedHead));
 
 		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
 
 		At(fallState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
-		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _jumpCoyoteTimer.IsRunning));
+		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f)));
 
 		stateMachine.SetState(locomotionState);
 	}
@@ -122,64 +130,91 @@ public class PlayerController : MonoBehaviour
 	private void ApplyMovement()
 	{
 		_rigidbody.velocity = _moveVelocity;
-		// _rigidbody.MovePosition(_rigidbody.position + _moveVelocity * Time.fixedDeltaTime);
 	}
 
-	private bool _isJumpCoyote = false;
 	public void JumpForState()
 	{
+		// Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
 		if (_jumpBufferTimer.IsFinished) { _variableJumpHeight = false; }
 
+		// Запуск буфера прыжка при нажатии пробела
 		if (_jumpKeyWasPressed) { _jumpBufferTimer.Start(); }
 
-		
-		if (_isJumpCoyote)
+		// Проверка для прыжка кайота и мултипрыжка, нужна для того чтобы контроллировать переход в состояние падения
+		// При падении с уступа скорость становится отрицатательной и за 1 фрейм она не выходит в положительуню 
+		// следовательно скорость будет прыгать от отрицательной к положительной и состояния меняться пока _moveVelocity.y > 0f
+		if (_moveVelocity.y > 0f)
 		{
-			if (_moveVelocity.y > 0f)
-			{
-				_isJumpCoyote = false;
-			}
+			_negativeMoveVeolicty = true;
 		}
 
+		// Запуск буф, обычного, кайфот прыжков
 		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning))
 		{
-			_moveVelocity.y = maxJumpVelocity;
-
-			if (_variableJumpHeight) { ExecuteVariableJumpHeight(); _variableJumpHeight = false; }
-			
-			_isJumping = true;
-
-			_jumpBufferTimer.Stop();
-			_jumpCoyoteTimer.Stop();
-			_jumpCoyoteTimer.Reset();
-			_jumpBufferTimer.Reset();
-		}
+			ExecuteJump();
+			// Запуск  минимальный забуфериннего прыжка (пробел для буфера сразу прожат и отпущен)
+			if (_variableJumpHeight)
+			{
+				ExecuteVariableJumpHeight();
+				_variableJumpHeight = false;
+			}
+		} 
+		// Контролль высоты прыжка в зависимости от удержания кнопки прыжка
 		if (_jumpKeyWasLetGo)
 		{
-			if (_moveVelocity.y > minJumpVelocity)
+			ExecuteVariableJumpHeight();
+		}
+		// Запуск мультипрыжка
+		if (_jumpBufferTimer.IsRunning && !_collisionsChecker.IsGrounded)
+		{
+			// Проверка если таймер кайота прошел нужно вычесть 1 прыжок 
+			if (_jumpCoyoteTimer.IsFinished)
 			{
-				_moveVelocity.y = minJumpVelocity;
+				_numberAvailableJumps -= 1f;
+			}
+			// Прыгать если количество прыжков больше 0
+			if (_numberAvailableJumps > 0f)
+			{
+				ExecuteJump();
 			}
 		}
-
+		
+		// Примененеи гравитации в прыжке, до состояния падения
 		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime; // FIXME
 	}
 
 	public void FallForState()
 	{
+		// При спуске с платформы запускаем таймер кайота прыжка
 		if (_coyoteUsable && !_isJumping)
 		{
 			_coyoteUsable = false;
 			_jumpCoyoteTimer.Start();
-			_isJumpCoyote = true;
 		}
 
+		// Запуск таймера прыжка в падении
 		if (_jumpKeyWasPressed) //FIXME
 			_jumpBufferTimer.Start();
+		// Сохранение переменной для буферизации минимального прыжка
 		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo)
 			_variableJumpHeight = true;
 
+		_negativeMoveVeolicty = false;
+		// Примененеие гравитации падения
 		_moveVelocity.y -= gravity * stats.GravityMultiplayer * Time.fixedDeltaTime;
+
+		// Ограничение максимальной скорости падения
+		_moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -20f, 50f);
+	}
+
+	public void BumpedHead()
+	{
+		// Проверка не ударился ли персонаж голвоой платформы
+		if (_collisionsChecker.BumpedHead)
+		{
+			// Отправить персонажа вниз
+			_moveVelocity.y = Mathf.Min(0, _moveVelocity.y);
+		}
 	}
 
 	public void GroundedState()
@@ -189,8 +224,10 @@ public class PlayerController : MonoBehaviour
 		{
 			maxYPosition = 0;
 		}
-		_isJumping = false;
+		
+		_numberAvailableJumps = NumberAvailableJumps;
 
+		_isJumping = false;
 		_coyoteUsable = true;
 
 		_moveVelocity.y = stats.GroundGravity;
@@ -202,10 +239,6 @@ public class PlayerController : MonoBehaviour
 		_jumpKeyWasLetGo = false;
 	}
 
-	private bool _coyoteUsable;
-	private bool _variableJumpHeight;
-	private bool _isJumping;
-	private bool _variableJumpHeightBuffer = false;
 
 	public void HandleJump()
 	{
@@ -312,8 +345,6 @@ public class PlayerController : MonoBehaviour
 		_jumpBufferTimer.Reset();
 	}
 
-
-
 	// Код неполного прыжка
 	private void ExecuteVariableJumpHeight()
 	{
@@ -321,7 +352,6 @@ public class PlayerController : MonoBehaviour
 		{
 			_moveVelocity.y = minJumpVelocity;
 		}
-
 	}
 
 	// public float airAcceleration = 0.1f;
