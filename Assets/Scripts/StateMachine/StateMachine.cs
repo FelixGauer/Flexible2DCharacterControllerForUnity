@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class StateMachine
 {
@@ -90,8 +89,6 @@ public class StateMachine
 	{
 		public IState State { get; }
 		public HashSet<ITransition> Transitions { get; }
-		
-		
 		
 		public StateNode(IState state)
 		{

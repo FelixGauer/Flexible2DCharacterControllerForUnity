@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class CollisionsChecker : MonoBehaviour
 {
@@ -8,19 +10,26 @@ public class CollisionsChecker : MonoBehaviour
 
 	public bool IsGrounded { get; private set; }
 	public bool BumpedHead { get; private set; }
+	public bool IsTouchingWall { get; private set; }
 
-	// private Collider2D _feetCollider;
-	// private Collider2D _bodyCollider;
+	private PlayerController playerController;
 	private RaycastHit2D _headHit;
-	
+	private RaycastHit2D _wallHit;
+	private RaycastHit2D _lastWallHit;
+
 	[SerializeField] private Collider2D FeetCollider;
 	[SerializeField] private Collider2D BodyCollider;
 
+	private void Awake()
+	{
+		playerController = GetComponent<PlayerController>();
+	}
 
 	void Update()
 	{
 		CheckIsGrounded();
 		CheckBumpedHead();
+		CheckTouchWall();
 	}
 
 	private void CheckIsGrounded()
@@ -66,4 +75,58 @@ public class CollisionsChecker : MonoBehaviour
 		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
 	}
 
+	private void CheckTouchWall()
+	{
+		float originEndPoint = 0f;
+
+		if (playerController._isFacingRight)
+		{
+			originEndPoint = BodyCollider.bounds.max.x;
+		}
+		else
+		{
+			originEndPoint = BodyCollider.bounds.min.x;
+		}
+
+		float adjustedHeight = BodyCollider.bounds.size.y * stats.WallDetectionRayHeightMultiplayer;
+
+		Vector2 boxCastOrigin = new Vector2(originEndPoint, BodyCollider.bounds.center.y);
+		Vector2 boxCastSize = new Vector2(stats.WallDetectionRayLength, adjustedHeight);
+
+		_wallHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, transform.right, stats.WallDetectionRayLength, stats.GroundLayer);
+
+		if (_wallHit.collider != null)
+		{
+			_lastWallHit = _wallHit;
+			IsTouchingWall = true;
+		}
+		else
+		{
+			IsTouchingWall = false;
+		}
+
+		#region Debug
+
+		Color rayColor;
+		if (IsTouchingWall)
+		{
+			rayColor = Color.green;
+		}
+		else
+		{
+			rayColor = Color.red;
+		}
+
+		Vector2 boxBottomLeft = new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - boxCastSize.y / 2);
+		Vector2 boxBottomRight = new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y - boxCastSize.y / 2);
+		Vector2 boxTopLeft = new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y + boxCastSize.y / 2);
+		Vector2 boxTopRight = new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y + boxCastSize.y / 2);
+
+		Debug.DrawLine(boxBottomLeft, boxBottomRight, rayColor);
+		Debug.DrawLine(boxBottomRight, boxTopRight, rayColor);
+		Debug.DrawLine(boxTopRight, boxTopLeft, rayColor);
+		Debug.DrawLine(boxTopLeft, boxBottomLeft, rayColor);
+
+		#endregion
+	}
 }

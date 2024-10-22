@@ -10,10 +10,8 @@ public class JumpState : BaseState
 	}
 
 	public override void FixedUpdate()
-	{
-		// player.HandleJump();
-		
-		player.JumpForState();
+	{		
+		player.HandleJump();
 		player.HandleMovement();
 	}
 }
