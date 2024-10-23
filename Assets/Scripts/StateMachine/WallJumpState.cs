@@ -16,4 +16,9 @@ public class WallJumpState : BaseState
 		player.HandleWallSlide();
 		// player.HandleMovement();
 	}
+
+    public override void OnExit()
+    {
+        player.WallSliding();
+    }
 }

@@ -24,6 +24,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 100f)] public float maxJumpHeight = 5f;
 	[Range(0f, 100f)] public float minJumpHeight = 2f;
 	[Range(0f, 100f)] public float airAcceleration = 30f;
+	[Range(0f, 100f)] public float airDeceleration = 5f;
 	[Range(0f, 50f)] public float numberAvailableJumps = 2f;
 	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
