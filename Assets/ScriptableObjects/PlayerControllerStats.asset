@@ -25,12 +25,15 @@ MonoBehaviour:
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
   minJumpHeight: 1
-  airAcceleration: 15
+  airAcceleration: 8
+  airDeceleration: 5
   numberAvailableJumps: 2
   timeTillJumpApex: 0.3
   jumpHeightCompensationFactor: 1.06
   JumpGravityMultiplayer: 1
-  FallGravityMultiplayer: 1
+  FallGravityMultiplayer: 1.2
+  jumpHangTimeThreshold: 1
+  jumpHangGravityMult: 0.5
   CoyoteTime: 0.13
   BufferTime: 0.2
   maxFallSpeed: 20

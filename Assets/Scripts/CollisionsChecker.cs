@@ -7,6 +7,9 @@ using UnityEngine.UIElements;
 public class CollisionsChecker : MonoBehaviour
 {
 	[SerializeField] PlayerControllerStats stats;
+	
+	[SerializeField] private Collider2D FeetCollider;
+	[SerializeField] private Collider2D BodyCollider;
 
 	public bool IsGrounded { get; private set; }
 	public bool BumpedHead { get; private set; }
@@ -16,10 +19,7 @@ public class CollisionsChecker : MonoBehaviour
 	private RaycastHit2D _headHit;
 	private RaycastHit2D _wallHit;
 	private RaycastHit2D _lastWallHit;
-
-	[SerializeField] private Collider2D FeetCollider;
-	[SerializeField] private Collider2D BodyCollider;
-
+	
 	private void Awake()
 	{
 		playerController = GetComponent<PlayerController>();
@@ -79,7 +79,7 @@ public class CollisionsChecker : MonoBehaviour
 	{
 		float originEndPoint = 0f;
 
-		if (playerController._isFacingRight)
+		if (playerController.TurnChecker.IsFacingRight)
 		{
 			originEndPoint = BodyCollider.bounds.max.x;
 		}

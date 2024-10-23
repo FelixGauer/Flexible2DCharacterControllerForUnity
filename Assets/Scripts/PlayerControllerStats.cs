@@ -30,12 +30,25 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
 	[Range(0f, 5f)] public float JumpGravityMultiplayer = 1.5f;
 	[Range(0f, 5f)] public float FallGravityMultiplayer = 1.5f;
+	
+	[Header("JumpHang")]
+	public float jumpHangTimeThreshold = 1f;
+	public float jumpHangGravityMult = 0.5f;
+	
+	[Header("WallSlide/Jump")]
+	[Range(-20f, 20f)] public float WallSlideSpeedMax = -5f;
+	public Vector2 WallJumpClimb;
+	public Vector2 WallJumpOff;
+	public Vector2 WallLeap;
+	
+	
+	[Header("Timers")]
 	[Range(0f, 5f)] public float CoyoteTime = 1.5f;
 	[Range(0f, 5f)] public float BufferTime = 0.2f;
-
+	[Range(0f, 5f)] public float wallJumpTime = 0.25f;
+	
 
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
-
 }

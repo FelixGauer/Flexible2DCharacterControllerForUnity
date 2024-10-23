@@ -7,18 +7,17 @@ public class WallJumpState : BaseState
 
 	public override void OnEnter()
 	{
-		// player.GroundedState();		
+		player.EnterWallSlidiong();		
 		Debug.Log("WallJumpState");
 	}
 
 	public override void FixedUpdate()
 	{
-		player.HandleWallSlide();
-		// player.HandleMovement();
+		player.HandleWallInteraction();
 	}
 
     public override void OnExit()
     {
-        player.WallSliding();
+        player.ExitWallSliding();
     }
 }

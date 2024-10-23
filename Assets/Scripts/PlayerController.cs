@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	//TODO Реализовать дебаг функции для всех механик: 1. Линия за персонажем 2. Точка на линии когда нажат прыжок
 	//TODO Собственная Буферизация Прыжка
 	//TODO Траектория для прыжка (Куда прыгать предикт)
+	//TODO Удариться голвоой после прыжка со стены
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -38,9 +39,13 @@ public class PlayerController : MonoBehaviour
 	private bool _jumpKeyWasLetGo; // Была отпущена
 
 	private bool _isJumping = false;
+	private bool _isCutJumping = false;
 	private bool _coyoteUsable;
 	private bool _variableJumpHeight;
 	private bool _positiveMoveVelocity = false;
+
+	// WallJump var
+	private bool _wasWallSliding = false;
 
 	//Debug var
 	private float maxYPosition;
@@ -55,8 +60,9 @@ public class PlayerController : MonoBehaviour
 	// State Machine Var
 	private StateMachine stateMachine;
 
-	public bool _isFacingRight { get; private set; }
-	public float wallJumpTime = 0.25f;
+	// public bool _isFacingRight { get; private set; } = true;
+	
+	public TurnChecker TurnChecker;
 
 	private void Awake()
 	{
@@ -67,9 +73,9 @@ public class PlayerController : MonoBehaviour
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 		_jumpBufferTimer = new CountdownTimer(stats.BufferTime);
-		_wallJumpTimer = new CountdownTimer(wallJumpTime); //FIXME
+		_wallJumpTimer = new CountdownTimer(stats.wallJumpTime); //FIXME
 
-		_isFacingRight = true;
+		TurnChecker = new TurnChecker();
 
 		SetupStateMachine();
 	}
@@ -87,7 +93,7 @@ public class PlayerController : MonoBehaviour
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _moveVelocity.y < 0f && _positiveMoveVelocity));
 		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _collisionsChecker.BumpedHead));
-		// At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _jumpKeyWasLetGo)); //FIXME 
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _isCutJumping)); //FIXME 
 
 		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
 
@@ -95,13 +101,11 @@ public class PlayerController : MonoBehaviour
 		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))); //FIXME
 
 		// TO WALLJUMP
-		// At(jumpState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall)); // FIXME
 		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));// FIXME
 
 		// FROM WALLJUMP
-		// At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));// FIXME
-		// At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
-		// At(wallJumpState, jumpState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall && _jumpKeyWasPressed));// FIXME
+		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));// FIXME
+		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
 
 		stateMachine.SetState(locomotionState);
 	}
@@ -111,11 +115,10 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log(_rigidbody.gravityScale);
 		stateMachine.Update();
 
-		if (!_wasWallSliding) //FIXME
-			TurnCheck(_moveDirection);
+		// TurnCheck(_moveDirection);
+		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding);
 
 		HandleTimers();
 		Debbuging();
@@ -138,95 +141,70 @@ public class PlayerController : MonoBehaviour
 	}
 
 	#region WallSlide
-	public float _wallSlideSpeedMax = -5f;
-	private bool _wasWallSliding = false;
-	public Vector2 wallJumpClimb;
-	public Vector2 wallJumpOff;
-	public Vector2 wallLeap;
 
-	public void HandleWallSlide() // FIXME 
+	public void HandleWallInteraction()
 	{
-		if (_collisionsChecker.IsGrounded) { _wasWallSliding = false; }
+		HandleWallSlide();
 
-		_numberAvailableJumps = stats.numberAvailableJumps;
-
-		if (_collisionsChecker.IsTouchingWall)
+		if (_jumpKeyWasPressed)
 		{
-			_wasWallSliding = true;
-
-			if (_moveVelocity.y < _wallSlideSpeedMax)
-			{
-				_moveVelocity.y = _wallSlideSpeedMax;
-			}
+			HandleWallJump();
 		}
+	}
 
-		// _moveVelocity.y = 0f;
-		_moveVelocity.y -= gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; // FIXME
+	public void HandleWallSlide()
+	{
+		_moveVelocity.y = Mathf.Max(_moveVelocity.y, stats.WallSlideSpeedMax) - gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime;
 
-		float wallDirX;
-
-		if (_isFacingRight)
-			wallDirX = 1f;
-		else
-			wallDirX = -1f;
+		float wallDirX = TurnChecker.IsFacingRight ? 1f : -1f;
 
 		if (_wallJumpTimer.IsFinished)
 		{
 			_wasWallSliding = false;
-			_wallJumpTimer.Stop();
-			_wallJumpTimer.Reset();
 		}
+
 		if (_moveDirection.x != wallDirX && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _wasWallSliding)
 		{
 			_wallJumpTimer.Start();
 		}
+	}
 
-		// else if (!_wallJumpTimer.IsRunning)
-		// {
-		// 	_wallJumpTimer.Stop();
-		// 	_wallJumpTimer.Reset();
-		// }
+	public void HandleWallJump()
+	{
+		float wallDirX = TurnChecker.IsFacingRight ? 1f : -1f;
 
-		if (_jumpKeyWasPressed)
+		if (_moveDirection.x == wallDirX)
 		{
-			// _numberAvailableJumps -= 1f;
-
-			if (_wasWallSliding)
-			{
-				if (_moveDirection.x == wallDirX)
-				{
-					_moveVelocity.x = -wallDirX * wallJumpClimb.x;
-					_moveVelocity.y = wallJumpClimb.y;
-				}
-				else if (_moveDirection.x == 0f)
-				{
-					_moveVelocity.x = -wallDirX * wallJumpOff.x;
-					_moveVelocity.y = wallJumpOff.y;
-				}
-				else
-				{
-					_moveVelocity.x = -wallDirX * wallLeap.x;
-					_moveVelocity.y = wallLeap.y;
-				}
-
-
-				// if (_moveDirection.x == 1f)
-				// {
-				// 	_moveVelocity.x = -1f * wallJumpClimb.x;
-				// 	_moveVelocity.y = wallJumpClimb.y;
-				// }
-				// else if (_moveDirection.x == -1f)
-				// {
-				// 	_moveVelocity.x = 1f * wallJumpClimb.x;
-				// 	_moveVelocity.y = wallJumpClimb.y;
-				// }
-
-			}
+			// Прыжок с поднятием по стене
+			_moveVelocity.x = -wallDirX * stats.WallJumpClimb.x;
+			_moveVelocity.y = stats.WallJumpClimb.y;
+		}
+		else if (_moveDirection.x == 0f)
+		{
+			// Прыжок с отталкиванием от стены
+			_moveVelocity.x = -wallDirX * stats.WallJumpOff.x;
+			_moveVelocity.y = stats.WallJumpOff.y;
+		}
+		else
+		{
+			// Прыжок в сторону от стены
+			_moveVelocity.x = -wallDirX * stats.WallLeap.x;
+			_moveVelocity.y = stats.WallLeap.y;
 		}
 	}
 
-	public void WallSliding()
+	public void EnterWallSlidiong()
 	{
+		_wallJumpTimer.Reset();
+
+		_wasWallSliding = true;
+		_numberAvailableJumps = stats.numberAvailableJumps;
+	}
+
+	public void ExitWallSliding()
+	{
+		_wallJumpTimer.Stop();
+
 		_wasWallSliding = false;
 	}
 	#endregion
@@ -238,10 +216,9 @@ public class PlayerController : MonoBehaviour
 
 	private void SetGravity(float gravityMulitplayer)
 	{
-		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime; 
+		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
 	}
 
-	private bool test = false;
 	public void HandleJump()
 	{
 		// Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
@@ -275,35 +252,19 @@ public class PlayerController : MonoBehaviour
 		// Контроль высоты прыжка в зависимости от удержания кнопки прыжка
 		if (_jumpKeyWasLetGo)
 		{
-			test = true;
 			ExecuteVariableJumpHeight();
 		}
 
-		if (test) //FIXME
-		{
-			_moveVelocity.y -= gravity * stats.FallGravityMultiplayer * Time.fixedDeltaTime;
-		}
-		else
-		{
-			_moveVelocity.y -= gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; // FIXME
-
-		}
-
-		// Debug.Log(Mathf.Abs(_rigidbody.velocity.y)); 
-
 		// Применение гравитации в прыжке до состояния падения		
-		// _moveVelocity.y -= gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; // FIXME
+		SetGravity(stats.JumpGravityMultiplayer);
 	}
-
-	public float jumpHangTimeThreshold = 1f;
-	public float jumpHangGravityMult = 0.5f;
 
 	public void FallForState()
 	{
+		BumpedHead(); //FIXME
 
-		test = false; //FIXME
-					  // При спуске с платформы запускаем таймер кайота прыжка
-		if (_coyoteUsable && !_isJumping)
+		// При спуске с платформы запускаем таймер кайота прыжка
+		if (_coyoteUsable && !_isJumping) // TODO только на запуске
 		{
 			_coyoteUsable = false;
 			_jumpCoyoteTimer.Start();
@@ -315,30 +276,20 @@ public class PlayerController : MonoBehaviour
 		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo) { _variableJumpHeight = true; }
 
 		_positiveMoveVelocity = false;
-		// Примененеие гравитации падения
-		// _moveVelocity.y -= gravity * stats.FallGravityMultiplayer * Time.fixedDeltaTime;
+		_isCutJumping = false;
 
-		if (Mathf.Abs(_rigidbody.velocity.y) < jumpHangTimeThreshold) // FIXME 
+		if (Mathf.Abs(_rigidbody.velocity.y) < stats.jumpHangTimeThreshold)
 		{
-			_moveVelocity.y -= gravity * jumpHangGravityMult * Time.fixedDeltaTime;
+			SetGravity(stats.jumpHangGravityMult);
+		}
+		else if (_jumpKeyIsPressed)
+		{
+			SetGravity(stats.JumpGravityMultiplayer);
 		}
 		else
 		{
-			if (_jumpKeyIsPressed)
-				_moveVelocity.y -= gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime;
-			else
-				_moveVelocity.y -= gravity * stats.FallGravityMultiplayer * Time.fixedDeltaTime;
+			SetGravity(stats.FallGravityMultiplayer);
 		}
-
-
-		// if (_jumpKeyIsPressed) //FIXME
-		// 	_moveVelocity.y -= gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; 
-		// else
-		// 	_moveVelocity.y -= gravity * stats.FallGravityMultiplayer * Time.fixedDeltaTime;
-
-
-		// float fallGravityMultiplier = Mathf.Lerp(stats.JumpGravityMultiplayer, stats.FallGravityMultiplayer, _moveVelocity.y / -stats.maxFallSpeed);
-		// 	_moveVelocity.y -= gravity * fallGravityMultiplier * Time.fixedDeltaTime;
 
 		// Ограничение максимальной скорости падения
 		_moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -stats.maxFallSpeed, 50f);
@@ -371,12 +322,6 @@ public class PlayerController : MonoBehaviour
 		_moveVelocity.y = stats.GroundGravity;
 	}
 
-	private void JumpKeyReset()
-	{
-		_jumpKeyWasPressed = false;
-		_jumpKeyWasLetGo = false;
-	}
-
 	// Код прыжка
 	private void ExecuteJump()
 	{
@@ -389,12 +334,13 @@ public class PlayerController : MonoBehaviour
 		_jumpCoyoteTimer.Stop();
 		_jumpCoyoteTimer.Reset();
 		_jumpBufferTimer.Reset();
-
 	}
 
 	// Код неполного прыжка
 	private void ExecuteVariableJumpHeight()
 	{
+		_isCutJumping = true;
+
 		if (_moveVelocity.y > minJumpVelocity)
 		{
 			_moveVelocity.y = minJumpVelocity;
@@ -402,6 +348,12 @@ public class PlayerController : MonoBehaviour
 	}
 
 	// private Vector2 _velocityRef;
+
+	private void JumpKeyReset()
+	{
+		_jumpKeyWasPressed = false;
+		_jumpKeyWasLetGo = false;
+	}
 
 	public void HandleMovement()
 	{
@@ -414,7 +366,7 @@ public class PlayerController : MonoBehaviour
 			: (_collisionsChecker.IsGrounded ? stats.Deceleration : stats.airDeceleration);
 
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x; //FIXME
-
+		 // Debug.Log((Mathf.Abs(_moveVelocity.x) > 0.01f));
 
 		// _moveVelocity.x = Mathf.SmoothDamp(_moveDirection.x, targetVelocity.x, ref velocityXSmoothing, (_isGrounded ? ground : air));
 
@@ -438,19 +390,21 @@ public class PlayerController : MonoBehaviour
 
 	//FIXME
 	#region TurnCheck
-	private void TurnCheck(Vector2 moveDirection)
-	{
-		if ((moveDirection.x < 0 && _isFacingRight) || (moveDirection.x > 0 && !_isFacingRight))
-		{
-			Turn();
-		}
-	}
+	// private void TurnCheck(Vector2 moveDirection)
+	// {
+	// 	if (_wasWallSliding) return;
 
-	private void Turn()
-	{
-		_isFacingRight = !_isFacingRight;
-		transform.Rotate(0f, 180f, 0f);
-	}
+	// 	if ((moveDirection.x < 0 && _isFacingRight) || (moveDirection.x > 0 && !_isFacingRight))
+	// 	{
+	// 		Turn();
+	// 	}
+	// }
+
+	// private void Turn()
+	// {
+	// 	_isFacingRight = !_isFacingRight;
+	// 	transform.Rotate(0f, 180f, 0f);
+	// }
 	#endregion
 
 	#region OnEnableDisable
