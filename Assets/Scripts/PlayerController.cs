@@ -8,9 +8,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 	//TODO Реализовать дебаг функции для всех механик: 1. Линия за персонажем 2. Точка на линии когда нажат прыжок
-	//TODO Собственная Буферизация Прыжка
 	//TODO Траектория для прыжка (Куда прыгать предикт)
-	//TODO Удариться голвоой после прыжка со стены
+	//TODO Камера Контроллер 
+	//TODO Dash
+	//TODO Сквиш при прыжке
+	//TODO ledge grab climp unity 2d 
+	//TODO Углы
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -24,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
 	// Movement parameters
 	private Vector2 _moveVelocity;
-	private Vector2 targetVelocity;
+	private Vector2 _targetVelocity;
 
 	//Calculate jump vars
 	float AdjustedJumpHeight => stats.maxJumpHeight * stats.jumpHeightCompensationFactor;
@@ -60,9 +63,7 @@ public class PlayerController : MonoBehaviour
 	// State Machine Var
 	private StateMachine stateMachine;
 
-	// public bool _isFacingRight { get; private set; } = true;
-	
-	public TurnChecker TurnChecker;
+	[HideInInspector] public TurnChecker TurnChecker;
 
 	private void Awake()
 	{
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
 		SetupStateMachine();
 	}
-
+	
 	private void SetupStateMachine()
 	{
 		stateMachine = new StateMachine();
@@ -117,17 +118,13 @@ public class PlayerController : MonoBehaviour
 	{
 		stateMachine.Update();
 
-		// TurnCheck(_moveDirection);
-		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding);
-
+		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
 		HandleTimers();
 		Debbuging();
 	}
 
 	private void FixedUpdate()
 	{
-		// HandleWallSlide();
-
 		stateMachine.FixedUpdate();
 
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
@@ -137,7 +134,6 @@ public class PlayerController : MonoBehaviour
 
 		ApplyMovement();
 		JumpKeyReset();
-
 	}
 
 	#region WallSlide
@@ -209,16 +205,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	private void ApplyMovement()
-	{
-		_rigidbody.velocity = _moveVelocity;
-	}
-
-	private void SetGravity(float gravityMulitplayer)
-	{
-		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
-	}
-
+	#region Jump
 	public void HandleJump()
 	{
 		// Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
@@ -259,7 +246,57 @@ public class PlayerController : MonoBehaviour
 		SetGravity(stats.JumpGravityMultiplayer);
 	}
 
-	public void FallForState()
+	private void ExecuteJump()
+	{
+		_moveVelocity.y = maxJumpVelocity;
+
+		_numberAvailableJumps -= 1;
+		_isJumping = true;
+
+		_jumpBufferTimer.Stop();
+		_jumpCoyoteTimer.Stop();
+		_jumpCoyoteTimer.Reset();
+		_jumpBufferTimer.Reset();
+	}
+
+	private void ExecuteVariableJumpHeight()
+	{
+		_isCutJumping = true;
+
+		if (_moveVelocity.y > minJumpVelocity)
+		{
+			_moveVelocity.y = minJumpVelocity;
+		}
+	}
+	#endregion
+
+	public void HandleMovement()
+	{
+		_targetVelocity = _moveDirection != Vector2.zero
+			? new Vector2(_moveDirection.x, 0f) * stats.MoveSpeed
+			: Vector2.zero;
+
+		float smoothFactor = _moveDirection != Vector2.zero
+			? (_collisionsChecker.IsGrounded ? stats.Acceleration : stats.airAcceleration)
+			: (_collisionsChecker.IsGrounded ? stats.Deceleration : stats.airDeceleration);
+
+		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x; //FIXME
+																											  // Debug.Log((Mathf.Abs(_moveVelocity.x) > 0.01f));
+
+		// _moveVelocity.x = Mathf.SmoothDamp(_moveDirection.x, _targetVelocity.x, ref velocityXSmoothing, (_isGrounded ? ground : air));
+
+		// MoveToWord fix 
+
+		// _moveVelocity = Vector2.SmoothDamp(_moveVelocity, _targetVelocity, ref _velocityRef, smoothFactor, Mathf.Infinity, Time.deltaTime);
+
+		// _moveVelocity.x = Mathf.MoveTowards(_moveVelocity.x, _targetVelocity.x, smoothFactor * Time.fixedDeltaTime); //FIXME
+
+		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
+
+		// Debug.Log(_moveVelocity);
+	}
+	
+	public void HandleFalling()
 	{
 		BumpedHead(); //FIXME
 
@@ -305,9 +342,8 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void GroundedState()
+	public void HandleGround()
 	{
-		_wasWallSliding = false; // FIXME
 		Debug.Log(maxYPosition);
 		if (maxYPosition > 0)
 		{
@@ -322,63 +358,20 @@ public class PlayerController : MonoBehaviour
 		_moveVelocity.y = stats.GroundGravity;
 	}
 
-	// Код прыжка
-	private void ExecuteJump()
+	private void ApplyMovement()
 	{
-		_moveVelocity.y = maxJumpVelocity;
-
-		_numberAvailableJumps -= 1;
-		_isJumping = true;
-
-		_jumpBufferTimer.Stop();
-		_jumpCoyoteTimer.Stop();
-		_jumpCoyoteTimer.Reset();
-		_jumpBufferTimer.Reset();
+		_rigidbody.velocity = _moveVelocity;
 	}
 
-	// Код неполного прыжка
-	private void ExecuteVariableJumpHeight()
+	private void SetGravity(float gravityMulitplayer)
 	{
-		_isCutJumping = true;
-
-		if (_moveVelocity.y > minJumpVelocity)
-		{
-			_moveVelocity.y = minJumpVelocity;
-		}
+		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
 	}
-
-	// private Vector2 _velocityRef;
 
 	private void JumpKeyReset()
 	{
 		_jumpKeyWasPressed = false;
 		_jumpKeyWasLetGo = false;
-	}
-
-	public void HandleMovement()
-	{
-		targetVelocity = _moveDirection != Vector2.zero
-			? new Vector2(_moveDirection.x, 0f) * stats.MoveSpeed
-			: Vector2.zero;
-
-		float smoothFactor = _moveDirection != Vector2.zero
-			? (_collisionsChecker.IsGrounded ? stats.Acceleration : stats.airAcceleration)
-			: (_collisionsChecker.IsGrounded ? stats.Deceleration : stats.airDeceleration);
-
-		_moveVelocity.x = Vector2.Lerp(_moveVelocity, targetVelocity, smoothFactor * Time.fixedDeltaTime).x; //FIXME
-		 // Debug.Log((Mathf.Abs(_moveVelocity.x) > 0.01f));
-
-		// _moveVelocity.x = Mathf.SmoothDamp(_moveDirection.x, targetVelocity.x, ref velocityXSmoothing, (_isGrounded ? ground : air));
-
-		// MoveToWord fix 
-
-		// _moveVelocity = Vector2.SmoothDamp(_moveVelocity, targetVelocity, ref _velocityRef, smoothFactor, Mathf.Infinity, Time.deltaTime);
-
-		// _moveVelocity.x = Mathf.MoveTowards(_moveVelocity.x, targetVelocity.x, smoothFactor * Time.fixedDeltaTime); //FIXME
-
-		// _rigidbody.velocity = new Vector2(_moveVelocity.x, _rigidbody.velocity.y);
-
-		// Debug.Log(_moveVelocity);
 	}
 
 	private void HandleTimers()
@@ -387,25 +380,6 @@ public class PlayerController : MonoBehaviour
 		_jumpBufferTimer.Tick(Time.deltaTime);
 		_wallJumpTimer.Tick(Time.deltaTime);
 	}
-
-	//FIXME
-	#region TurnCheck
-	// private void TurnCheck(Vector2 moveDirection)
-	// {
-	// 	if (_wasWallSliding) return;
-
-	// 	if ((moveDirection.x < 0 && _isFacingRight) || (moveDirection.x > 0 && !_isFacingRight))
-	// 	{
-	// 		Turn();
-	// 	}
-	// }
-
-	// private void Turn()
-	// {
-	// 	_isFacingRight = !_isFacingRight;
-	// 	transform.Rotate(0f, 180f, 0f);
-	// }
-	#endregion
 
 	#region OnEnableDisable
 	void OnEnable()
@@ -421,7 +395,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	#region  OnMethodActions
+	#region OnMethodActions
 	private void OnMove(Vector2 moveDirection)
 	{
 		_moveDirection = moveDirection;
@@ -488,7 +462,7 @@ public class PlayerController : MonoBehaviour
 	private void Debbuging()
 	{
 		// Визуализация целевой скорости (Target Velocity)
-		Debug.DrawLine(transform.position, transform.position + new Vector3(targetVelocity.x, 0, 0), Color.red);
+		Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
 
 		// Визуализация текущего вектора скорости (_moveVelocity)
 		Debug.DrawLine(transform.position, transform.position + new Vector3(_moveVelocity.x, 0, 0), Color.blue);

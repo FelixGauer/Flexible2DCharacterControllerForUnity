@@ -13,6 +13,15 @@ public class TurnChecker : MonoBehaviour
 			Turn(transform);
 		}
 	}
+	
+	// Универсальный скрипт, проверку на wasWallSliding делаю в самом классе плеера
+	// public void TurnCheck(Vector2 moveDirection, Transform transform)
+	// {
+	// 	if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
+	// 	{
+	// 		Turn(transform);
+	// 	}
+	// }
 
 	private void Turn(Transform transform)
 	{

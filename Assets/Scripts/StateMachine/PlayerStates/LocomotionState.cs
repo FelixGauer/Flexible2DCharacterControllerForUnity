@@ -7,7 +7,7 @@ public class LocomotionState : BaseState
 
 	public override void OnEnter()
 	{
-		player.GroundedState();		
+		player.HandleGround();		
 		Debug.Log("MoveEnter");
 	}
 

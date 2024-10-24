@@ -476,14 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
   stats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
-  wallJumpTime: 0.15
-  _wallSlideSpeedMax: -2
-  wallJumpClimb: {x: 30, y: 30}
-  wallJumpOff: {x: 10, y: 10}
-  wallLeap: {x: 50, y: 20}
-  jumpHangTimeThreshold: 1
-  jumpHangGravityMult: 0.5
-  decelAir: 6
+  TurnChecker: {fileID: 0}
   markerPrefab: {fileID: 1594843421}
 --- !u!212 &690232520
 SpriteRenderer:
@@ -902,7 +895,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.005827844, y: -0.43096197}
+  m_Offset: {x: -0.0019924939, y: -0.43096197}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -913,7 +906,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6323364, y: 0.1380761}
+  m_Size: {x: 0.9086599, y: 0.13807607}
   m_EdgeRadius: 0
 --- !u!1 &985712194
 GameObject:
@@ -1169,7 +1162,7 @@ Transform:
   m_GameObject: {fileID: 1241988816}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3, y: 2.1, z: 0}
+  m_LocalPosition: {x: 5.3, y: 2.29, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

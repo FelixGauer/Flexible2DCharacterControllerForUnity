@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Bits: 256
   GroundDetectionRayLenght: 0.02
   HeadDetectionRayLength: 0.02
-  HeadWidth: 1.21
+  HeadWidth: 1.04
   WallDetectionRayLength: 0.125
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
@@ -34,7 +34,12 @@ MonoBehaviour:
   FallGravityMultiplayer: 1.2
   jumpHangTimeThreshold: 1
   jumpHangGravityMult: 0.5
+  WallSlideSpeedMax: -2
+  WallJumpClimb: {x: 20, y: 25}
+  WallJumpOff: {x: 5, y: 8}
+  WallLeap: {x: 30, y: 15}
   CoyoteTime: 0.13
   BufferTime: 0.2
+  wallJumpTime: 0.25
   maxFallSpeed: 20
   GroundGravity: -1.5
