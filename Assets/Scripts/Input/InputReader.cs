@@ -8,6 +8,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 {
 	public event UnityAction<Vector2> Move = delegate { };
 	public event UnityAction<bool> Jump = delegate { };
+	public event UnityAction<bool> Dash = delegate { };
 
 	private PlayerInputActions _inputActions;
 
@@ -31,11 +32,6 @@ public class InputReader : ScriptableObject, IPlayerActions
 
 	public void OnJump(InputAction.CallbackContext context)
 	{
-		// if (context.phase == InputActionPhase.Performed)
-		// {
-		// 	Debug.Log($"{context.phase} + Jump");
-		// 	Jump.Invoke();
-		// }
 		switch (context.phase)
 		{
 			case InputActionPhase.Started:
@@ -46,6 +42,15 @@ public class InputReader : ScriptableObject, IPlayerActions
 				break;
 		}
 
-		// Debug.Log($"{context.phase} + Jump");
 	}
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+		{
+			case InputActionPhase.Started:
+				Dash.Invoke(true);
+				break;
+		}
+    }
 }

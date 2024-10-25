@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TurnChecker : MonoBehaviour
+public class TurnChecker
 {
 	public bool IsFacingRight { get; private set; } = true;
 	

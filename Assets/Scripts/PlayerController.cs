@@ -1,9 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	//TODO Сквиш при прыжке
 	//TODO ledge grab climp unity 2d 
 	//TODO Углы
+	//TODO WAllSlide DecelSpeed
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -59,11 +58,33 @@ public class PlayerController : MonoBehaviour
 	private CountdownTimer _jumpCoyoteTimer;
 	private CountdownTimer _jumpBufferTimer;
 	private CountdownTimer _wallJumpTimer;
+	private CountdownTimer _dashTimer;
 
 	// State Machine Var
 	private StateMachine stateMachine;
 
-	[HideInInspector] public TurnChecker TurnChecker;
+	public TurnChecker TurnChecker;
+
+	// Dash var
+	private bool _dashKeyWasPressed;
+	public float dashVelocity = 15f;
+	public float dashTime = 0.11f;
+	private Vector2 _dashDireciton;
+	private bool _isDashing;
+	private bool _canDash = true;
+
+	public readonly Vector2[] DashDirection = new Vector2[]
+	{
+		new Vector2(0, 0), // Nothing
+		new Vector2(1, 0), // Right
+		new Vector2(1, 1).normalized, // Top-Right
+		new Vector2(0, 1), // Up
+		new Vector2(-1, 1).normalized, // Top-Left
+		new Vector2(-1, 0), // Left
+		new Vector2(-1, -1).normalized, // Bot-Left
+		new Vector2(0, -1), // Down
+		new Vector2(1, -1).normalized, // Bot-Right
+	};
 
 	private void Awake()
 	{
@@ -74,13 +95,14 @@ public class PlayerController : MonoBehaviour
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 		_jumpBufferTimer = new CountdownTimer(stats.BufferTime);
-		_wallJumpTimer = new CountdownTimer(stats.wallJumpTime); //FIXME
+		_wallJumpTimer = new CountdownTimer(stats.wallJumpTime);
+		_dashTimer = new CountdownTimer(dashTime);
 
 		TurnChecker = new TurnChecker();
 
 		SetupStateMachine();
 	}
-	
+
 	private void SetupStateMachine()
 	{
 		stateMachine = new StateMachine();
@@ -89,24 +111,31 @@ public class PlayerController : MonoBehaviour
 		var jumpState = new JumpState(this);
 		var idleState = new IdleState(this);
 		var fallState = new FallState(this);
-		var wallJumpState = new WallJumpState(this); // FIXME
+		var wallJumpState = new WallJumpState(this);
+		var dashState = new DashState(this);
 
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _moveVelocity.y < 0f && _positiveMoveVelocity));
 		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _collisionsChecker.BumpedHead));
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _isCutJumping)); //FIXME 
-
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _isCutJumping));
 		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
 
 		At(fallState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
-		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))); //FIXME
+		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f)));
 
 		// TO WALLJUMP
-		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));// FIXME
+		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 
 		// FROM WALLJUMP
 		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));// FIXME
 		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
+
+		// DASH
+		// At(locomotionState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
+		// At(jumpState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
+		// At(fallState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
+		// At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning));
+		// At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
 
 		stateMachine.SetState(locomotionState);
 	}
@@ -119,6 +148,7 @@ public class PlayerController : MonoBehaviour
 		stateMachine.Update();
 
 		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
+
 		HandleTimers();
 		Debbuging();
 	}
@@ -131,6 +161,8 @@ public class PlayerController : MonoBehaviour
 		{
 			maxYPosition = transform.position.y;
 		}
+
+		HandleDash();
 
 		ApplyMovement();
 		JumpKeyReset();
@@ -270,6 +302,85 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
+	#region Dash
+
+	public void HandleDash()
+	{
+		if (!_dashTimer.IsRunning)
+		{
+			_dashDireciton = input.Direction;
+
+			Vector2 closestDirection = Vector2.zero;
+			float minDistance = Vector2.Distance(_dashDireciton, DashDirection[0]);
+
+			for (int i = 0; i < DashDirection.Length; i++)
+			{
+				if (_dashDireciton == DashDirection[i])
+				{
+					closestDirection = _dashDireciton;
+					break;
+				}
+
+				float distance = Vector2.Distance(_dashDireciton, DashDirection[i]);
+
+				bool isDiagonal = (Mathf.Abs(DashDirection[i].x) == 1 && Mathf.Abs(DashDirection[i].y) == 1);
+				if (isDiagonal)
+				{
+					distance = 1f; // FIXME
+				}
+				else if (distance < minDistance)
+				{
+					minDistance = distance;
+					closestDirection = DashDirection[i];
+				}
+			}
+
+			if (closestDirection == Vector2.zero)
+			{
+				if (TurnChecker.IsFacingRight)
+				{
+					closestDirection = Vector2.right;
+				}
+				else
+				{
+					closestDirection = Vector2.left;
+				}
+			}
+
+			_dashDireciton = closestDirection;
+		}
+
+		if (_dashKeyWasPressed)
+		{
+			_dashTimer.Start();
+			_dashKeyWasPressed = false;
+		}
+
+		if (_dashTimer.IsRunning)
+		{
+			_moveVelocity.x = _dashDireciton.x * dashVelocity; // FIXME
+
+			if (_dashDireciton.y != 0)
+			{
+				_moveVelocity.y = _dashDireciton.y * dashVelocity; // FIXME
+
+			}
+		}
+		else
+		{
+			_dashTimer.Stop();
+			_dashTimer.Reset();
+		}
+		if (_dashDireciton == -_moveDirection)
+		{
+			_dashTimer.Stop();
+			_dashTimer.Reset();
+		}
+	}
+
+
+	#endregion
+
 	public void HandleMovement()
 	{
 		_targetVelocity = _moveDirection != Vector2.zero
@@ -295,7 +406,7 @@ public class PlayerController : MonoBehaviour
 
 		// Debug.Log(_moveVelocity);
 	}
-	
+
 	public void HandleFalling()
 	{
 		BumpedHead(); //FIXME
@@ -379,6 +490,7 @@ public class PlayerController : MonoBehaviour
 		_jumpCoyoteTimer.Tick(Time.deltaTime);
 		_jumpBufferTimer.Tick(Time.deltaTime);
 		_wallJumpTimer.Tick(Time.deltaTime);
+		_dashTimer.Tick(Time.deltaTime);
 	}
 
 	#region OnEnableDisable
@@ -386,12 +498,14 @@ public class PlayerController : MonoBehaviour
 	{
 		input.Move += OnMove;
 		input.Jump += OnJump;
+		input.Dash += OnDash;
 	}
 
 	void OnDisable()
 	{
 		input.Move -= OnMove;
 		input.Jump -= OnJump;
+		input.Dash -= OnDash;
 	}
 	#endregion
 
@@ -414,6 +528,11 @@ public class PlayerController : MonoBehaviour
 		}
 
 		_jumpKeyIsPressed = performed;
+	}
+
+	private void OnDash(bool performed)
+	{
+		_dashKeyWasPressed = performed;
 	}
 	#endregion
 
