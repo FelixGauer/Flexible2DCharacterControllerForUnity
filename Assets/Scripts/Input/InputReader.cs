@@ -44,13 +44,16 @@ public class InputReader : ScriptableObject, IPlayerActions
 
 	}
 
-    public void OnDash(InputAction.CallbackContext context)
-    {
-        switch (context.phase)
+	public void OnDash(InputAction.CallbackContext context)
+	{
+		switch (context.phase)
 		{
 			case InputActionPhase.Started:
 				Dash.Invoke(true);
 				break;
+			case InputActionPhase.Canceled: //FIXME
+				Dash.Invoke(false);
+				break;
 		}
-    }
+	}
 }

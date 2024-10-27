@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,28 +64,14 @@ public class PlayerController : MonoBehaviour
 	// State Machine Var
 	private StateMachine stateMachine;
 
-	public TurnChecker TurnChecker;
-
 	// Dash var
+	private float _numberAvailableDash;
 	private bool _dashKeyWasPressed;
-	public float dashVelocity = 15f;
-	public float dashTime = 0.11f;
-	private Vector2 _dashDireciton;
-	private bool _isDashing;
-	private bool _canDash = true;
-
-	public readonly Vector2[] DashDirection = new Vector2[]
-	{
-		new Vector2(0, 0), // Nothing
-		new Vector2(1, 0), // Right
-		new Vector2(1, 1).normalized, // Top-Right
-		new Vector2(0, 1), // Up
-		new Vector2(-1, 1).normalized, // Top-Left
-		new Vector2(-1, 0), // Left
-		new Vector2(-1, -1).normalized, // Bot-Left
-		new Vector2(0, -1), // Down
-		new Vector2(1, -1).normalized, // Bot-Right
-	};
+	private Vector2 _dashDirection;
+	
+	// 
+	public TurnChecker TurnChecker;
+	private bool IsFacingRight => TurnChecker.IsFacingRight;
 
 	private void Awake()
 	{
@@ -95,10 +82,10 @@ public class PlayerController : MonoBehaviour
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 		_jumpBufferTimer = new CountdownTimer(stats.BufferTime);
-		_wallJumpTimer = new CountdownTimer(stats.wallJumpTime);
-		_dashTimer = new CountdownTimer(dashTime);
+		_wallJumpTimer = new CountdownTimer(stats.WallJumpTime);
+		_dashTimer = new CountdownTimer(stats.DashTime);
 
-		TurnChecker = new TurnChecker();
+		TurnChecker = new TurnChecker(); // FIXME
 
 		SetupStateMachine();
 	}
@@ -134,8 +121,13 @@ public class PlayerController : MonoBehaviour
 		// At(locomotionState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
 		// At(jumpState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
 		// At(fallState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
-		// At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning));
-		// At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
+		Any(dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f));
+
+		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyWasPressed));
+		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyWasPressed));
+		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
+		At(dashState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _numberAvailableJumps > 0f));
+		// At(dashState, wallJumpState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsTouchingWall && !_dashKeyWasPressed));
 
 		stateMachine.SetState(locomotionState);
 	}
@@ -156,13 +148,14 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		stateMachine.FixedUpdate();
+		// Debug.Log(_dashKeyWasPressed);
 
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
 		{
 			maxYPosition = transform.position.y;
 		}
 
-		HandleDash();
+		// HandleDash();
 
 		ApplyMovement();
 		JumpKeyReset();
@@ -180,11 +173,17 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public float WallSlideGravityMultiplayer = 1f;
+	public float decelerationWallSlide = 0.1f;
+	public float startVelocitySlide = 1f;
 	public void HandleWallSlide()
 	{
-		_moveVelocity.y = Mathf.Max(_moveVelocity.y, stats.WallSlideSpeedMax) - gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime;
+		// _moveVelocity.y = Mathf.Max(_moveVelocity.y, -stats.WallSlideSpeedMax) - gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; // FIXME 	JumpGravityMultiplayer
+		// _moveVelocity.y = Mathf.Max(_moveVelocity.y, -stats.WallSlideSpeedMax) - gravity * WallSlideGravityMultiplayer * Time.fixedDeltaTime;
 
-		float wallDirX = TurnChecker.IsFacingRight ? 1f : -1f;
+		_moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -stats.WallSlideSpeedMax, decelerationWallSlide * Time.fixedDeltaTime); //FIXME
+
+		float wallDirX = IsFacingRight ? 1f : -1f;
 
 		if (_wallJumpTimer.IsFinished)
 		{
@@ -199,7 +198,7 @@ public class PlayerController : MonoBehaviour
 
 	public void HandleWallJump()
 	{
-		float wallDirX = TurnChecker.IsFacingRight ? 1f : -1f;
+		float wallDirX = IsFacingRight ? 1f : -1f;
 
 		if (_moveDirection.x == wallDirX)
 		{
@@ -221,12 +220,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void EnterWallSlidiong()
+	public void EnterWallSliding()
 	{
+		// Персонаж после касения стены падает вниз
+		// _moveVelocity.x = 0f; // FIXME
+		// _moveVelocity.y = -startVelocitySlide;
+		_moveVelocity = new Vector2(0f, -startVelocitySlide);
+
 		_wallJumpTimer.Reset();
 
 		_wasWallSliding = true;
-		_numberAvailableJumps = stats.numberAvailableJumps;
+		_numberAvailableJumps = stats.MaxNumberJumps;
+		_numberAvailableDash = stats.MaxNumberDash;
 	}
 
 	public void ExitWallSliding()
@@ -300,84 +305,96 @@ public class PlayerController : MonoBehaviour
 			_moveVelocity.y = minJumpVelocity;
 		}
 	}
-	#endregion
 
-	#region Dash
-
-	public void HandleDash()
+	public void ExitJump()
 	{
-		if (!_dashTimer.IsRunning)
-		{
-			_dashDireciton = input.Direction;
-
-			Vector2 closestDirection = Vector2.zero;
-			float minDistance = Vector2.Distance(_dashDireciton, DashDirection[0]);
-
-			for (int i = 0; i < DashDirection.Length; i++)
-			{
-				if (_dashDireciton == DashDirection[i])
-				{
-					closestDirection = _dashDireciton;
-					break;
-				}
-
-				float distance = Vector2.Distance(_dashDireciton, DashDirection[i]);
-
-				bool isDiagonal = (Mathf.Abs(DashDirection[i].x) == 1 && Mathf.Abs(DashDirection[i].y) == 1);
-				if (isDiagonal)
-				{
-					distance = 1f; // FIXME
-				}
-				else if (distance < minDistance)
-				{
-					minDistance = distance;
-					closestDirection = DashDirection[i];
-				}
-			}
-
-			if (closestDirection == Vector2.zero)
-			{
-				if (TurnChecker.IsFacingRight)
-				{
-					closestDirection = Vector2.right;
-				}
-				else
-				{
-					closestDirection = Vector2.left;
-				}
-			}
-
-			_dashDireciton = closestDirection;
-		}
-
-		if (_dashKeyWasPressed)
-		{
-			_dashTimer.Start();
-			_dashKeyWasPressed = false;
-		}
-
-		if (_dashTimer.IsRunning)
-		{
-			_moveVelocity.x = _dashDireciton.x * dashVelocity; // FIXME
-
-			if (_dashDireciton.y != 0)
-			{
-				_moveVelocity.y = _dashDireciton.y * dashVelocity; // FIXME
-
-			}
-		}
-		else
-		{
-			_dashTimer.Stop();
-			_dashTimer.Reset();
-		}
-		if (_dashDireciton == -_moveDirection)
-		{
-			_dashTimer.Stop();
-			_dashTimer.Reset();
-		}
+		_positiveMoveVelocity = false;
+		_isCutJumping = false;
 	}
 
+	#endregion
+
+	// Регион отвечающий за DASH/РЫВОК
+	#region Dash
+
+	// Обработка состояния рывка
+	public void HandleDash()
+	{
+		// Изменение скорости по оси X для совершение рывка
+		_moveVelocity.x = _dashDirection.x * stats.DashVelocity;
+
+		// Если скорость по y не равна 0, применяем рывок в оси Y
+		if (_dashDirection.y != 0)
+		{
+			_moveVelocity.y = _dashDirection.y * stats.DashVelocity;
+		}
+
+		// Отмена рывка, если игрок проживаем противоположное направление
+		if (_dashDirection == -_moveDirection)
+		{
+			OnExitDash();
+		}
+
+		// Применение гравитации во время рывка
+		SetGravity(stats.DashGravityMultiplayer);
+	}
+
+	// Метод вызываемый при входе в состояние рывка
+	public void OnEnterDash()
+	{
+		_dashTimer.Start(); // Запуск таймера рывка
+		_dashKeyWasPressed = false; // Сброс флага нажатия клавиши
+		_numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
+		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
+	}
+
+	// Метод вызываемый при выходе из состояния рывка
+	public void OnExitDash()
+	{
+		_dashTimer.Stop(); // Остановка таймера
+		_dashTimer.Reset(); // Сброс таймера
+	}
+	
+	// Расчет направления рывка
+	public void CalculateDashDirection()
+	{
+		_dashDirection = input.Direction;
+		_dashDirection = GetClosestDirection(_dashDirection); // Поиск ближайшего допустимого направления
+	}
+
+	// Метод для поиска ближайшего направления рывка
+	private Vector2 GetClosestDirection(Vector2 targetDirection)
+	{
+		Vector2 closestDirection = Vector2.zero; // Начальное значение для ближайшего направления
+		float minDistance = float.MaxValue;      // Минимальная дистанция для поиска ближайшего направления
+
+		// Перебор всех допустимых направления в общем массиве направлений
+		foreach (var dashDirection in stats.DashDirections)
+		{
+			float distance = Vector2.Distance(targetDirection, dashDirection);
+			
+			// Проверка на диагональное направление
+			if (IsDiagonal(dashDirection))
+			{
+				distance = 1f;
+			}
+			// Если найдено близкое направление, обновляем ближайшее и минимальную дистанцию
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				closestDirection = dashDirection;
+			}
+		}
+
+		// Если стоит на месте, применяем рывок в сторону поворота игрока, иначе в найденое ближайшее направление
+		return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
+	}
+
+	// Проверка является ли направление диагональным
+	private bool IsDiagonal(Vector2 direction)
+	{
+		return Mathf.Abs(direction.x) == 1 && Mathf.Abs(direction.y) == 1;
+	}
 
 	#endregion
 
@@ -423,8 +440,8 @@ public class PlayerController : MonoBehaviour
 		// Сохранение переменной для буферизации минимального прыжка
 		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo) { _variableJumpHeight = true; }
 
-		_positiveMoveVelocity = false;
-		_isCutJumping = false;
+		// _positiveMoveVelocity = false;
+		// _isCutJumping = false;
 
 		if (Mathf.Abs(_rigidbody.velocity.y) < stats.jumpHangTimeThreshold)
 		{
@@ -455,13 +472,14 @@ public class PlayerController : MonoBehaviour
 
 	public void HandleGround()
 	{
-		Debug.Log(maxYPosition);
+		// Debug.Log(maxYPosition);
 		if (maxYPosition > 0)
 		{
 			maxYPosition = 0;
 		}
 
-		_numberAvailableJumps = stats.numberAvailableJumps;
+		_numberAvailableJumps = stats.MaxNumberJumps;
+		_numberAvailableDash = stats.MaxNumberDash;
 
 		_isJumping = false;
 		_coyoteUsable = true;

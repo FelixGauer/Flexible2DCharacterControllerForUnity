@@ -21,25 +21,29 @@ MonoBehaviour:
   GroundDetectionRayLenght: 0.02
   HeadDetectionRayLength: 0.02
   HeadWidth: 1.04
-  WallDetectionRayLength: 0.125
+  WallDetectionRayLength: 0.015
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
   minJumpHeight: 1
   airAcceleration: 8
   airDeceleration: 5
-  numberAvailableJumps: 2
+  MaxNumberJumps: 2
   timeTillJumpApex: 0.3
   jumpHeightCompensationFactor: 1.06
   JumpGravityMultiplayer: 1
   FallGravityMultiplayer: 1.2
   jumpHangTimeThreshold: 1
   jumpHangGravityMult: 0.5
-  WallSlideSpeedMax: -2
+  WallSlideSpeedMax: 5
   WallJumpClimb: {x: 20, y: 25}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 30, y: 15}
+  DashVelocity: 20
+  MaxNumberDash: 2
+  DashGravityMultiplayer: 0
   CoyoteTime: 0.13
   BufferTime: 0.2
-  wallJumpTime: 0.25
+  WallJumpTime: 0.25
+  DashTime: 0.11
   maxFallSpeed: 20
   GroundGravity: -1.5

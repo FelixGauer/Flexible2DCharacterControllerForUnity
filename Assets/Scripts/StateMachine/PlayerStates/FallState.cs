@@ -16,4 +16,5 @@ public class FallState : BaseState
 		player.HandleFalling();
 		player.HandleMovement();
 	}
+	
 }

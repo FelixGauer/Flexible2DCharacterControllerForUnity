@@ -25,7 +25,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 100f)] public float minJumpHeight = 2f;
 	[Range(0f, 100f)] public float airAcceleration = 30f;
 	[Range(0f, 100f)] public float airDeceleration = 5f;
-	[Range(0f, 50f)] public float numberAvailableJumps = 2f;
+	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
 	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
 	[Range(0f, 5f)] public float JumpGravityMultiplayer = 1.5f;
@@ -36,18 +36,37 @@ public class PlayerControllerStats : ScriptableObject
 	public float jumpHangGravityMult = 0.5f;
 	
 	[Header("WallSlide/Jump")]
-	[Range(-20f, 20f)] public float WallSlideSpeedMax = -5f;
+	[Range(-100f, 100f)] public float WallSlideSpeedMax = -5f;
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
 	
+	[Header("Dash")]
+	[Range(0f, 200f)] public float DashVelocity = 15f;
+	
+	public float MaxNumberDash = 2f;
+	public float DashGravityMultiplayer = 0f;
+	
+	
+	public readonly Vector2[] DashDirections = new Vector2[]
+	{
+		new Vector2(0, 0), // Nothing
+		new Vector2(1, 0), // Right
+		new Vector2(1, 1).normalized, // Top-Right
+		new Vector2(0, 1), // Up
+		new Vector2(-1, 1).normalized, // Top-Left
+		new Vector2(-1, 0), // Left
+		new Vector2(-1, -1).normalized, // Bot-Left
+		new Vector2(0, -1), // Down
+		new Vector2(1, -1).normalized, // Bot-Right
+	};
 	
 	[Header("Timers")]
-	[Range(0f, 5f)] public float CoyoteTime = 1.5f;
-	[Range(0f, 5f)] public float BufferTime = 0.2f;
-	[Range(0f, 5f)] public float wallJumpTime = 0.25f;
+	public float CoyoteTime = 1.5f;
+	public float BufferTime = 0.2f;
+	public float WallJumpTime = 0.25f;
+	public float DashTime = 0.11f;
 	
-
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;

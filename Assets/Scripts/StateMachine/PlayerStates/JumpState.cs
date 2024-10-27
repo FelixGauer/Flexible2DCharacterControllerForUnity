@@ -14,4 +14,10 @@ public class JumpState : BaseState
 		player.HandleJump();
 		player.HandleMovement();
 	}
+
+    public override void OnExit()
+    {
+        player.ExitJump();
+    }
+	
 }
