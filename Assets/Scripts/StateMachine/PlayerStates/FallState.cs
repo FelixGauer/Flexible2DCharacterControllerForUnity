@@ -8,7 +8,8 @@ public class FallState : BaseState
 	public override void OnEnter()
 	{
 		Debug.Log("FallState");
-		player.BumpedHead();
+		player.BumpedHead(); // FIXME
+		player.CoyoteTimerStart();
 	}
 
 	public override void FixedUpdate()

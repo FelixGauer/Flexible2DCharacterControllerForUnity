@@ -34,7 +34,9 @@ MonoBehaviour:
   FallGravityMultiplayer: 1.2
   jumpHangTimeThreshold: 1
   jumpHangGravityMult: 0.5
-  WallSlideSpeedMax: 5
+  StartVelocityWallSlide: 2.5
+  WallSlideSpeedMax: 3.5
+  WallSlideDeceleration: 5
   WallJumpClimb: {x: 20, y: 25}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 30, y: 15}

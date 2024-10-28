@@ -17,7 +17,7 @@ public class JumpState : BaseState
 
     public override void OnExit()
     {
-        player.ExitJump();
+        player.OnExitJump();
     }
 	
 }

@@ -7,7 +7,7 @@ public class WallJumpState : BaseState
 
 	public override void OnEnter()
 	{
-		player.EnterWallSliding();		
+		player.OnEnterWallSliding();		
 		Debug.Log("WallJumpState");
 	}
 
@@ -18,6 +18,6 @@ public class WallJumpState : BaseState
 
     public override void OnExit()
     {
-        player.ExitWallSliding();
+        player.OnExitWallSliding();
     }
 }

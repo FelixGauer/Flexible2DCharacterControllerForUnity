@@ -36,7 +36,10 @@ public class PlayerControllerStats : ScriptableObject
 	public float jumpHangGravityMult = 0.5f;
 	
 	[Header("WallSlide/Jump")]
-	[Range(-100f, 100f)] public float WallSlideSpeedMax = -5f;
+	public float StartVelocityWallSlide = 3f;
+	public float WallSlideSpeedMax = 5f;
+	// public float WallSlideGravityMultiplayer = 1f;
+	public float WallSlideDeceleration = 0.1f;
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
