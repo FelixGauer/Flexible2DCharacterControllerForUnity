@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.AI;
+using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class PlayerController : MonoBehaviour
 	//TODO ledge grab climp unity 2d 
 	//TODO Углы
 	//TODO WAllSlide DecelSpeed
+	//TODO Anim Crouch Box
 
 	[Header("References")]
 	[SerializeField] InputReader input;
@@ -69,6 +72,9 @@ public class PlayerController : MonoBehaviour
 	private bool _dashKeyWasPressed;
 	private Vector2 _dashDirection;
 
+	// Crouch var
+	private bool _crouchKeyIsPressed;
+
 	// 
 	public TurnChecker TurnChecker;
 	private bool IsFacingRight => TurnChecker.IsFacingRight;
@@ -87,6 +93,9 @@ public class PlayerController : MonoBehaviour
 
 		TurnChecker = new TurnChecker(); // FIXME
 
+		_collisionsChecker.IsSitting = () => IsSitting;
+		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
+
 		SetupStateMachine();
 	}
 
@@ -100,6 +109,7 @@ public class PlayerController : MonoBehaviour
 		var fallState = new FallState(this);
 		var wallJumpState = new WallJumpState(this);
 		var dashState = new DashState(this);
+		var crouchState = new CrouchState(this);
 
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
@@ -115,12 +125,18 @@ public class PlayerController : MonoBehaviour
 		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));// FIXME
 		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
 
-		Any(dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f));
+		Any(dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f && !IsSitting)); //FIXME !IsSitting
 
 		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyWasPressed));
 		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyWasPressed));
 		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 		At(dashState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _numberAvailableJumps > 0f));
+
+		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
+		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead));
+		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
+		At(crouchState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
+		// FIXME Crouch to DashState
 
 		stateMachine.SetState(locomotionState);
 	}
@@ -131,7 +147,6 @@ public class PlayerController : MonoBehaviour
 	private void Update()
 	{
 		stateMachine.Update();
-
 
 		HandleTimers();
 		Debbuging();
@@ -149,20 +164,60 @@ public class PlayerController : MonoBehaviour
 
 		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
 
-		Crouch();
+		// Crouch();
 
 		BumpedHead();
 		ApplyMovement();
 		JumpKeyReset();
 	}
 
+
+	#region Crouch
+
+	private void Start()
+	{
+		// normalHeight = transform.localScale;
+		normalHeight = _capsuleCollider.size;
+	}
+
+	private Vector2 normalHeight;
+	public float crouchHeight = 0.6f;
+	public float crouchOffset = -0.20f;
+	public float CrouchSpeed = 7f;
+	public bool IsSitting { get; private set; } = false;
+	
+	public float test = 0.25f;
+	
+	public Transform spriteTransform;
+	
 	public void Crouch()
 	{
-		if (_moveDirection.y == -1f)
-		{
-			Debug.Log("Crouch");
-		}
+		
 	}
+
+	public void OnEnterCrouch()
+	{
+		IsSitting = true;
+		_capsuleCollider.size = new Vector2(_capsuleCollider.size.x, crouchHeight);
+		_capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, -crouchOffset); // Сдвигаем коллайдер вниз
+		
+		spriteTransform.localScale = new Vector2(1f, crouchHeight);
+		spriteTransform.localPosition = new Vector2(spriteTransform.localPosition.x, -test);
+	}
+
+	public void OnExitCrouch()
+	{
+		IsSitting = false;
+		_capsuleCollider.size = new Vector2(_capsuleCollider.size.x, normalHeight.x);
+		_capsuleCollider.offset = Vector2.zero;
+		
+		// Восстанавливаем масштаб и позицию спрайта
+		spriteTransform.localScale = Vector2.one; // нормальный масштаб
+		spriteTransform.localPosition = Vector2.zero; // нормальное положение
+	
+	}
+
+	#endregion
 
 	// Регион отвечающий за WallSlide/Jump
 	#region WallSlideJump
@@ -423,11 +478,14 @@ public class PlayerController : MonoBehaviour
 
 	public void HandleMovement()
 	{
+		// Изменение скорости в зависимости от того ходьба это или присед
+		float speed = IsSitting ? CrouchSpeed : stats.MoveSpeed;
+		
 		// Вычисление вектора направления перемноженного на скорость
 		_targetVelocity = _moveDirection != Vector2.zero
-			? new Vector2(_moveDirection.x, 0f) * stats.MoveSpeed
+			? new Vector2(_moveDirection.x, 0f) * speed
 			: Vector2.zero;
-
+			
 		// Вычисление ускорения или замедления игрока в воздухе или на земле
 		float smoothFactor = _moveDirection != Vector2.zero
 			? (_collisionsChecker.IsGrounded ? stats.Acceleration : stats.airAcceleration)
@@ -436,6 +494,27 @@ public class PlayerController : MonoBehaviour
 		// Обработка позиции игрока по X
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 	}
+	
+	// public void HandleMovement()
+	// {
+	// 	// Корректировка _moveDirection для диагонального движения
+	// 	Vector2 adjustedMoveDirection = _moveDirection != Vector2.zero
+	// 		? Mathf.Abs(_moveDirection.x) < 1 ? _moveDirection.normalized * Mathf.Sqrt(2) : _moveDirection
+	// 		: Vector2.zero;
+
+	// 	Debug.Log(adjustedMoveDirection);
+	// 	// Вычисление целевой скорости с использованием скорректированного направления
+	// 	_targetVelocity = adjustedMoveDirection * stats.MoveSpeed;
+	// 	Debug.Log(_targetVelocity);
+		
+	// 	// Определение коэффициента плавности (ускорение/замедление)
+	// 	float smoothFactor = _moveDirection != Vector2.zero
+	// 		? (_collisionsChecker.IsGrounded ? stats.Acceleration : stats.airAcceleration)
+	// 		: (_collisionsChecker.IsGrounded ? stats.Deceleration : stats.airDeceleration);
+
+	// 	// Обновление скорости игрока по X
+	// 	_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
+	// }
 
 	// Регион отвечающий за Fall/Падение
 	#region Fall
@@ -548,6 +627,7 @@ public class PlayerController : MonoBehaviour
 		input.Move += OnMove;
 		input.Jump += OnJump;
 		input.Dash += OnDash;
+		input.Crouch += OnCrouch;
 	}
 
 	void OnDisable()
@@ -555,10 +635,12 @@ public class PlayerController : MonoBehaviour
 		input.Move -= OnMove;
 		input.Jump -= OnJump;
 		input.Dash -= OnDash;
+		input.Crouch -= OnCrouch;
 	}
 	#endregion
 
 	#region OnMethodActions
+
 	private void OnMove(Vector2 moveDirection)
 	{
 		_moveDirection = moveDirection;
@@ -582,6 +664,11 @@ public class PlayerController : MonoBehaviour
 	private void OnDash(bool performed)
 	{
 		_dashKeyWasPressed = performed;
+	}
+
+	private void OnCrouch(bool performed)
+	{
+		_crouchKeyIsPressed = performed;
 	}
 	#endregion
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class CollisionsChecker : MonoBehaviour
 {
 	[SerializeField] PlayerControllerStats stats;
-	
+
 	[SerializeField] private Collider2D FeetCollider;
 	[SerializeField] private Collider2D BodyCollider;
 
@@ -11,18 +11,16 @@ public class CollisionsChecker : MonoBehaviour
 	public bool BumpedHead { get; private set; }
 	public bool IsTouchingWall { get; private set; }
 
-	private PlayerController playerController;
 	private RaycastHit2D _headHit;
 	private RaycastHit2D _wallHit;
 	private RaycastHit2D _lastWallHit;
 	
-	private void Awake()
-	{
-		playerController = GetComponent<PlayerController>();
-	}
+	// Делегаты для получения состояния персонажа
+	public System.Func<bool> IsSitting;
+	public System.Func<bool> IsFacingRight;
 
 	void Update()
-	{
+	{		
 		CheckIsGrounded();
 		CheckBumpedHead();
 		CheckTouchWall();
@@ -40,50 +38,24 @@ public class CollisionsChecker : MonoBehaviour
 	private void CheckBumpedHead()
 	{
 		var bounds = FeetCollider.bounds;
+		float currentHeadDetectionRayLength = IsSitting() ? 0.2f : stats.HeadDetectionRayLength;
 
 		Vector2 boxCastOrigin = new Vector2(bounds.center.x, BodyCollider.bounds.max.y);
 		Vector2 boxCastSize = new Vector2(bounds.size.x * stats.HeadWidth, stats.HeadDetectionRayLength);
 
-		_headHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.up, stats.HeadDetectionRayLength, stats.GroundLayer);
+		_headHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.up, currentHeadDetectionRayLength, stats.GroundLayer);
+		BumpedHead = _headHit.collider != null;
 
-		if (_headHit.collider != null)
-		{
-			BumpedHead = true;
-		}
-		else
-		{
-			BumpedHead = false;
-		}
-		float headWidth = stats.HeadWidth;
+		Color rayColor = BumpedHead ? Color.green : Color.red;
 
-		Color rayColor;
-		if (BumpedHead)
-		{
-			rayColor = Color.green;
-		}
-		else
-		{
-			rayColor = Color.red;
-		}
-
-		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		Debug.DrawRay(new Vector2(boxCastOrigin.x + (boxCastSize.x / 2) * headWidth, boxCastOrigin.y), Vector2.up * stats.HeadDetectionRayLength, rayColor);
-		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth + stats.HeadDetectionRayLength, boxCastOrigin.y), Vector2.right * boxCastSize.x * headWidth, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * stats.HeadWidth, boxCastOrigin.y), Vector2.up * currentHeadDetectionRayLength, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2 * stats.HeadWidth, boxCastOrigin.y), Vector2.up * currentHeadDetectionRayLength, rayColor);
+		Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * stats.HeadWidth, currentHeadDetectionRayLength + boxCastOrigin.y), Vector2.right * boxCastSize.x * stats.HeadWidth, rayColor);
 	}
 
 	private void CheckTouchWall()
 	{
-		float originEndPoint = 0f;
-
-		if (playerController.TurnChecker.IsFacingRight)
-		{
-			originEndPoint = BodyCollider.bounds.max.x;
-		}
-		else
-		{
-			originEndPoint = BodyCollider.bounds.min.x;
-		}
-
+		float originEndPoint = IsFacingRight() ? BodyCollider.bounds.max.x : BodyCollider.bounds.min.x;
 		float adjustedHeight = BodyCollider.bounds.size.y * stats.WallDetectionRayHeightMultiplayer;
 
 		Vector2 boxCastOrigin = new Vector2(originEndPoint, BodyCollider.bounds.center.y);
@@ -91,6 +63,9 @@ public class CollisionsChecker : MonoBehaviour
 
 		_wallHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, transform.right, stats.WallDetectionRayLength, stats.GroundLayer);
 
+		// IsTouchingWall = _wallHit.collider != null;
+		// if (IsTouchingWall) _lastWallHit = _wallHit;
+		
 		if (_wallHit.collider != null)
 		{
 			_lastWallHit = _wallHit;
@@ -103,16 +78,9 @@ public class CollisionsChecker : MonoBehaviour
 
 		#region Debug
 
-		Color rayColor;
-		if (IsTouchingWall)
-		{
-			rayColor = Color.green;
-		}
-		else
-		{
-			rayColor = Color.red;
-		}
+		Color rayColor = IsTouchingWall ? Color.green : Color.red;
 
+		// Отрисовка отладочного бокса
 		Vector2 boxBottomLeft = new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - boxCastSize.y / 2);
 		Vector2 boxBottomRight = new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y - boxCastSize.y / 2);
 		Vector2 boxTopLeft = new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y + boxCastSize.y / 2);

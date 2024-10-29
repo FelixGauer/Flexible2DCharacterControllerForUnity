@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, IPlayerActions
 	public event UnityAction<Vector2> Move = delegate { };
 	public event UnityAction<bool> Jump = delegate { };
 	public event UnityAction<bool> Dash = delegate { };
+	public event UnityAction<bool> Crouch = delegate { };
 
 	private PlayerInputActions _inputActions;
 
@@ -56,4 +57,17 @@ public class InputReader : ScriptableObject, IPlayerActions
 				break;
 		}
 	}
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+		{
+			case InputActionPhase.Started:
+				Crouch.Invoke(true);
+				break;
+			case InputActionPhase.Canceled: //FIXME
+				Crouch.Invoke(false);
+				break;
+		}
+    }
 }
