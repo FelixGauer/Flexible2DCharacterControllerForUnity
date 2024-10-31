@@ -43,6 +43,11 @@ MonoBehaviour:
   DashVelocity: 20
   MaxNumberDash: 2
   DashGravityMultiplayer: 0
+  CrouchMoveSpeed: 7
+  CrouchHeight: 0.6
+  CrouchOffset: 0.2
+  CrouchRollTime: 0.1
+  CrouchRollVelocity: 10
   CoyoteTime: 0.13
   BufferTime: 0.2
   WallJumpTime: 0.25

@@ -48,9 +48,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 200f)] public float DashVelocity = 15f;
 	
 	public float MaxNumberDash = 2f;
-	public float DashGravityMultiplayer = 0f;
-	
-	
+	public float DashGravityMultiplayer = 0f;	
 	public readonly Vector2[] DashDirections = new Vector2[]
 	{
 		new Vector2(0, 0), // Nothing
@@ -63,6 +61,13 @@ public class PlayerControllerStats : ScriptableObject
 		new Vector2(0, -1), // Down
 		new Vector2(1, -1).normalized, // Bot-Right
 	};
+	
+	[Header("Crouch/CrouchRoll")]
+	public float CrouchMoveSpeed = 7f;
+	public float CrouchHeight = 0.6f;
+	public float CrouchOffset = 0.2f;
+	public float CrouchRollTime = 0.1f;
+	public float CrouchRollVelocity = 10f;
 	
 	[Header("Timers")]
 	public float CoyoteTime = 1.5f;

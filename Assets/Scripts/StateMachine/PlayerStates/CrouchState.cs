@@ -13,8 +13,8 @@ public class CrouchState : BaseState
 
 	public override void FixedUpdate()
 	{
-		// player.Crouch();
 		player.HandleMovement();
+		// player.Crouch();
 	}
 
 	public override void OnExit()
