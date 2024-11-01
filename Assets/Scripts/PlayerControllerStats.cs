@@ -9,8 +9,12 @@ public class PlayerControllerStats : ScriptableObject
 
 	[Header("Movement")]
 	[Range(0f, 100f)] public float MoveSpeed = 12.5f;
-	[Range(0f, 100f)] public float Acceleration = 5f;
-	[Range(0f, 100f)] public float Deceleration = 20f;
+	[Range(0f, 100f)] public float WalkAcceleration = 5f;
+	[Range(0f, 100f)] public float WalkDeceleration = 20f;
+	[Range(0f, 100f)] public float RunAcceleration = 15f;
+	[Range(0f, 100f)] public float RunDeceleration = 30f;
+	[Range(0f, 100f)] public float CrouchAcceleration = 15f;
+	[Range(0f, 100f)] public float CrouchDeceleration = 30f;
 
 	[Header("Collision Check")]
 	public LayerMask GroundLayer;
@@ -66,14 +70,18 @@ public class PlayerControllerStats : ScriptableObject
 	public float CrouchMoveSpeed = 7f;
 	public float CrouchHeight = 0.6f;
 	public float CrouchOffset = 0.2f;
-	public float CrouchRollTime = 0.1f;
 	public float CrouchRollVelocity = 10f;
+	
+	[Header("Run")]
+	public float RunSpeed = 20f;
+	
 	
 	[Header("Timers")]
 	public float CoyoteTime = 1.5f;
 	public float BufferTime = 0.2f;
 	public float WallJumpTime = 0.25f;
 	public float DashTime = 0.11f;
+	public float CrouchRollTime = 0.1f;
 	
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;

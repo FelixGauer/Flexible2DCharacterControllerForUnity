@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.AI;
@@ -14,9 +15,7 @@ public class PlayerController : MonoBehaviour
 	//TODO Сквиш при прыжке
 	//TODO ledge grab climp unity 2d 
 	//TODO Углы
-	//TODODebug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
-	//TODO Когда на стене и нажимаю в обратную сторону и сразу в сторону стены таймер не обновляются и он спрыгнет со стены только когда я снова один раз нажму в обртаную сторону
-	//TODO Dash от стены и в стену не так работает, нужно исправить
+	//TODO Debug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
 
 
 	[Header("References")]
@@ -73,18 +72,20 @@ public class PlayerController : MonoBehaviour
 
 	// Dash var
 	private float _numberAvailableDash;
-	private bool _dashKeyWasPressed;
+	private bool _dashKeyIsPressed;
 	private Vector2 _dashDirection;
 
-	// Run
+	// Run var
 	private bool _runKeyIsPressed;
-	public float RunSpeed = 20f;
+	private bool _isRunning = false;
 
 	// Crouch var
 	private bool _crouchKeyIsPressed;
 	private Vector2 normalHeight => _capsuleCollider.size;
 	private Vector2 _crouchRollDirection;
-	private bool IsSitting = false;
+	private bool _isSitting = false;
+
+	private bool _crouchRollKeyIsPressed;
 
 	// 
 	public TurnChecker TurnChecker;
@@ -105,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
 		TurnChecker = new TurnChecker(); // FIXME
 
-		_collisionsChecker.IsSitting = () => IsSitting;
+		_collisionsChecker.IsSitting = () => _isSitting;
 		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
 
 		SetupStateMachine();
@@ -139,10 +140,10 @@ public class PlayerController : MonoBehaviour
 		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
 
-		Any(dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f && !IsSitting)); //FIXME !IsSitting
+		Any(dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f && !_isSitting)); //FIXME !IsSitting
 
-		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyWasPressed));
-		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyWasPressed));
+		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyIsPressed));
+		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyIsPressed));
 		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall)); // FIXME Переход из wallState to DashState
 		At(dashState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _numberAvailableJumps > 0f));
 
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
 		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed)); //FIXME wasPressed если быстро нажимаю присед и потом деш ошибка
 		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(crouchState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
-		At(crouchState, crouchRollState, new FuncPredicate(() => _dashKeyWasPressed)); //FIXME Переминовать _dashKeyWasPressed _crouchKeyWasPressed
+		At(crouchState, crouchRollState, new FuncPredicate(() => _crouchRollKeyIsPressed)); //FIXME Переминовать _dashKeyWasPressed _crouchKeyWasPressed
 		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
 
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
@@ -192,6 +193,11 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
+		
+		if (_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f)
+		{
+			Debug.Log("ASDAS");
+		}
 
 		BumpedHead();
 		ApplyMovement();
@@ -207,7 +213,7 @@ public class PlayerController : MonoBehaviour
 	// Метод вызываемый при выходе из состояния приседа
 	public void OnExitCrouch()
 	{
-		if (_dashKeyWasPressed) return;
+		if (_dashKeyIsPressed) return;
 
 		SetCrouchState(false);
 	}
@@ -215,7 +221,7 @@ public class PlayerController : MonoBehaviour
 	// Метод который регулирует высоту спрайта и коллайдера в зависиомсти сидит ли персонаж или стоит
 	private void SetCrouchState(bool isCrouching)
 	{
-		IsSitting = isCrouching;
+		_isSitting = isCrouching;
 		// Еси персонаж сидит его высота равна высоте приседа, если нет обычной высоте
 		var height = isCrouching ? stats.CrouchHeight : normalHeight.x;
 		// Еси персонаж сидит его оффсет равен оффсету приседа, если нет то нулю
@@ -242,7 +248,7 @@ public class PlayerController : MonoBehaviour
 		_crouchRollTimer.Start();
 		// Сохранение направления кувырка
 		_crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
-		_dashKeyWasPressed = false;
+		_crouchRollKeyIsPressed = false;
 	}
 	// Метод вызываемый при выходе из кувырка в приседе
 	public void OnExitCrouchRoll()
@@ -273,58 +279,50 @@ public class PlayerController : MonoBehaviour
 	// Обработка скольжения по стене WallSlide
 	public void HandleWallSlide()
 	{
-		// _moveVelocity.y = Mathf.Max(_moveVelocity.y, -stats.WallSlideSpeedMax) - gravity * stats.JumpGravityMultiplayer * Time.fixedDeltaTime; // FIXME 	JumpGravityMultiplayer
-		// _moveVelocity.y = Mathf.Max(_moveVelocity.y, -stats.WallSlideSpeedMax) - gravity * WallSlideGravityMultiplayer * Time.fixedDeltaTime;
-
 		// Плавное Изменение Y на стене, для скольжение 
 		// Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
 		_moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -stats.WallSlideSpeedMax, stats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
 
-		// Debug.Log(_moveVelocity.y);
-
-		// Расчет направление персонажа по X
-		float wallDirectionX = IsFacingRight ? 1f : -1f;
-
-		// if (_wallJumpTimer.IsFinished && (_moveDirection.x == wallDirectionX || _moveDirection.x == 0f)) //FIXME
-		// {
-		// 	_wallJumpTimer.Stop();
-		// 	_wallJumpTimer.Reset();
-		// }
-		// // Отцепление персонажа от стены
-		// else if (_wallJumpTimer.IsFinished)
-		// {
-		// 	_wasWallSliding = false;
-		// }
-
-		// Управление состоянием таймера и скольжением по стене
-		if (_wallJumpTimer.IsFinished)
-		{
-			if (_moveDirection.x == wallDirectionX || _moveDirection.x == 0f)
-			{
-				// Персонаж продолжает скользить по стене, сбрасываем таймер
-				_wallJumpTimer.Stop();
-				_wallJumpTimer.Reset();
-			}
-			else
-			{
-				// Если персонаж пытается отойти от стены, останавливаем скольжение
-				_wasWallSliding = false;
-			}
-		}
+		HandleWallJumpTimer();
 
 		// Если ввод обртаный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
 		// Запуск таймера при попытке слезть со стены, помогает выполнить прыжок от стены
-		if (_moveDirection.x != wallDirectionX && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _wasWallSliding)
+		if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _wasWallSliding)
 		{
 			_wallJumpTimer.Start();
 		}
+	}
+
+	// Метод управления таймером
+	private void HandleWallJumpTimer()
+	{
+		// Управление состоянием таймера и скольжением по стене
+		if (_wallJumpTimer.IsFinished)
+		{
+			// Персонаж продолжает скользить по стене, сбрасываем таймер
+			if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
+			{
+				_wallJumpTimer.Stop();
+				_wallJumpTimer.Reset();
+			}
+			else // Если персонаж пытается отойти от стены, останавливаем скольжение
+			{
+				_wasWallSliding = false;
+			}
+		}
+	}
+
+	// Метод вычисляет направление стены по X
+	private float CalculateWallDirectionX()
+	{
+		return IsFacingRight ? 1f : -1f;
 	}
 
 	// Применение прыжка со стены WallJump
 	public void HandleWallJump()
 	{
 		// Расчет направление персонажа по X
-		float wallDirectionX = IsFacingRight ? 1f : -1f;
+		float wallDirectionX = CalculateWallDirectionX();
 
 		// Если ввод в сторону стены
 		if (_moveDirection.x == wallDirectionX)
@@ -480,7 +478,7 @@ public class PlayerController : MonoBehaviour
 	public void OnEnterDash()
 	{
 		_dashTimer.Start(); // Запуск таймера рывка
-		_dashKeyWasPressed = false; // Сброс флага нажатия клавиши
+		_dashKeyIsPressed = false; // Сброс флага нажатия клавиши
 		_numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
 		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
 	}
@@ -535,40 +533,18 @@ public class PlayerController : MonoBehaviour
 
 	#endregion
 
-	private bool _isRunning = false;
-	public void OnEnterRun()
-	{
-		if (_collisionsChecker.IsGrounded)
-		{
-			_isRunning = true;
-		}
-	}
-
-	public void OnExitRun()
-	{
-		if (_collisionsChecker.IsGrounded)
-		{
-			_isRunning = false;
-		}
-	}
-
-	public float walkAcceleration = 15f;
-	public float walkDeceleration = 30f;
-	public float runAcceleration = 15f;
-	public float runDeceleration = 30f;
-	public float crouchAcceleration = 15f;
-	public float crouchDeceleration = 30f;
+	// Регион отвечающий за Movement/Run
+	#region Movement/Run
 
 	public void HandleMovement()
 	{
-		if (!_runKeyIsPressed)
-		{
-			_isRunning = false;
-		}
+		// Выход из состояния бега. Так как вход только при переходе в состояние бега, этот метод помогает реализовать логику
+		// Того что в состояние бега можно войти только на земле, а выйти в любвое время.
+		if (_isRunning) CheckExitRun();
 
 		float speed = GetCurrentSpeed();
-		float Acceleration = GetCurrentAcceleration();
-		float Deceleration = GetCurrentDeceleration();
+		float acceleration = GetCurrentAcceleration();
+		float deceleration = GetCurrentDeceleration();
 
 		// Вычисление вектора направления перемноженного на скорость
 		_targetVelocity = _moveDirection != Vector2.zero
@@ -577,35 +553,62 @@ public class PlayerController : MonoBehaviour
 
 		// Вычисление ускорения или замедления игрока в воздухе или на земле
 		float smoothFactor = _moveDirection != Vector2.zero
-			? Acceleration
-			: Deceleration;
+			? acceleration
+			: deceleration;
 
 		// Обработка позиции игрока по X
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 	}
 
+	// Метод для получения текущей скорости
 	private float GetCurrentSpeed()
 	{
-		if (IsSitting) return stats.CrouchMoveSpeed;
-		else if (_isRunning) return RunSpeed;
-		else return stats.MoveSpeed;
+		if (_isSitting) return stats.CrouchMoveSpeed;
+		if (_isRunning) return stats.RunSpeed;
+		return stats.MoveSpeed;
 	}
-
+	// Метод для получения текущего ускорения
 	private float GetCurrentAcceleration()
 	{
 		if (!_collisionsChecker.IsGrounded) return stats.airAcceleration;
-		if (IsSitting) return crouchAcceleration;
-		if (_isRunning) return runAcceleration;
-		return walkAcceleration;
+		if (_isSitting) return stats.CrouchAcceleration;
+		if (_isRunning) return stats.RunAcceleration;
+		return stats.WalkAcceleration;
 	}
-
+	// Метод для получения текущей замедления
 	private float GetCurrentDeceleration()
 	{
 		if (!_collisionsChecker.IsGrounded) return stats.airDeceleration;
-		if (IsSitting) return crouchDeceleration;
-		if (_isRunning) return runDeceleration;
-		return walkDeceleration;
+		if (_isSitting) return stats.CrouchDeceleration;
+		if (_isRunning) return stats.RunDeceleration;
+		return stats.WalkDeceleration;
 	}
+
+	#region Run
+
+	// Метод вызываемый при входе в состояние бега
+	public void OnEnterRun()
+	{
+		// Нельзя войти в состояние бега находясь не на земле
+		if (_collisionsChecker.IsGrounded)
+		{
+			_isRunning = true;
+		}
+	}
+
+	// Метод для выхода из бега. Данный метод помогает в реализации механики которая позволяет применять бег только на земле.
+	// То есть в воздухе не получится изменить переменную движения на переменную бега. А вот выйти из бега получится.
+	private void CheckExitRun()
+	{
+		if (!_runKeyIsPressed)
+		{
+			_isRunning = false;
+		}
+	}
+
+	#endregion
+
+	#endregion
 
 	// Регион отвечающий за Fall/Падение
 	#region Fall
@@ -721,6 +724,7 @@ public class PlayerController : MonoBehaviour
 		input.Dash += OnDash;
 		input.Crouch += OnCrouch;
 		input.Run += OnRun;
+		input.CrouchRoll += OnCrouchRoll;
 	}
 
 	void OnDisable()
@@ -730,6 +734,7 @@ public class PlayerController : MonoBehaviour
 		input.Dash -= OnDash;
 		input.Crouch -= OnCrouch;
 		input.Run -= OnRun;
+		input.CrouchRoll -= OnCrouchRoll;
 	}
 	#endregion
 
@@ -757,7 +762,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnDash(bool performed)
 	{
-		_dashKeyWasPressed = performed;
+		_dashKeyIsPressed = performed;
 	}
 
 	private void OnCrouch(bool performed)
@@ -769,6 +774,12 @@ public class PlayerController : MonoBehaviour
 	{
 		_runKeyIsPressed = performed;
 	}
+
+	private void OnCrouchRoll(bool performed)
+	{
+		_crouchRollKeyIsPressed = performed;
+	}
+
 	#endregion
 
 	#region Debbug
