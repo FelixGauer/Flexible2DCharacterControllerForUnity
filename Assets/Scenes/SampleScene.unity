@@ -478,6 +478,12 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
   spriteTransform: {fileID: 1681974918}
   RunSpeed: 20
+  walkAcceleration: 15
+  walkDeceleration: 30
+  runAcceleration: 15
+  runDeceleration: 30
+  crouchAcceleration: 15
+  crouchDeceleration: 30
   markerPrefab: {fileID: 1594843421}
 --- !u!212 &690232520
 SpriteRenderer:

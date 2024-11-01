@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
 	//TODO Сквиш при прыжке
 	//TODO ledge grab climp unity 2d 
 	//TODO Углы
-	//TODO	Debug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
+	//TODODebug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
+	//TODO Когда на стене и нажимаю в обратную сторону и сразу в сторону стены таймер не обновляются и он спрыгнет со стены только когда я снова один раз нажму в обртаную сторону
+	//TODO Dash от стены и в стену не так работает, нужно исправить
 
 
 	[Header("References")]
@@ -134,22 +136,23 @@ public class PlayerController : MonoBehaviour
 		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f)));
 		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 
-		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));// FIXME
+		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
 
 		Any(dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f && !IsSitting)); //FIXME !IsSitting
 
 		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyWasPressed));
 		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyWasPressed));
-		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
+		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall)); // FIXME Переход из wallState to DashState
 		At(dashState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _numberAvailableJumps > 0f));
 
 		// CROUCH STATE
-		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
-		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead));
+		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed)); //FIXME wasPressed если быстро нажимаю присед и потом деш ошибка
 		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(crouchState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
-		At(crouchState, crouchRollState, new FuncPredicate(() => _dashKeyWasPressed));
+		At(crouchState, crouchRollState, new FuncPredicate(() => _dashKeyWasPressed)); //FIXME Переминовать _dashKeyWasPressed _crouchKeyWasPressed
+		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
+
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
 		At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
 		At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
@@ -173,6 +176,8 @@ public class PlayerController : MonoBehaviour
 	{
 		stateMachine.Update();
 
+		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
+
 		HandleTimers();
 		Debbuging();
 	}
@@ -181,12 +186,12 @@ public class PlayerController : MonoBehaviour
 	{
 		stateMachine.FixedUpdate();
 
-		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // FIXME Обновляем максимальную высоту, если персонаж поднимается
+		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // бновляем максимальную высоту, если персонаж поднимается
 		{
 			maxYPosition = transform.position.y;
 		}
 
-		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
+		// TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
 
 		BumpedHead();
 		ApplyMovement();
@@ -280,10 +285,31 @@ public class PlayerController : MonoBehaviour
 		// Расчет направление персонажа по X
 		float wallDirectionX = IsFacingRight ? 1f : -1f;
 
-		// Отцепление персонажа от стены
+		// if (_wallJumpTimer.IsFinished && (_moveDirection.x == wallDirectionX || _moveDirection.x == 0f)) //FIXME
+		// {
+		// 	_wallJumpTimer.Stop();
+		// 	_wallJumpTimer.Reset();
+		// }
+		// // Отцепление персонажа от стены
+		// else if (_wallJumpTimer.IsFinished)
+		// {
+		// 	_wasWallSliding = false;
+		// }
+
+		// Управление состоянием таймера и скольжением по стене
 		if (_wallJumpTimer.IsFinished)
 		{
-			_wasWallSliding = false;
+			if (_moveDirection.x == wallDirectionX || _moveDirection.x == 0f)
+			{
+				// Персонаж продолжает скользить по стене, сбрасываем таймер
+				_wallJumpTimer.Stop();
+				_wallJumpTimer.Reset();
+			}
+			else
+			{
+				// Если персонаж пытается отойти от стены, останавливаем скольжение
+				_wasWallSliding = false;
+			}
 		}
 
 		// Если ввод обртаный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
@@ -517,7 +543,7 @@ public class PlayerController : MonoBehaviour
 			_isRunning = true;
 		}
 	}
-	
+
 	public void OnExitRun()
 	{
 		if (_collisionsChecker.IsGrounded)
@@ -525,54 +551,60 @@ public class PlayerController : MonoBehaviour
 			_isRunning = false;
 		}
 	}
-	
-	private float _playerSpeed;
+
+	public float walkAcceleration = 15f;
+	public float walkDeceleration = 30f;
+	public float runAcceleration = 15f;
+	public float runDeceleration = 30f;
+	public float crouchAcceleration = 15f;
+	public float crouchDeceleration = 30f;
 
 	public void HandleMovement()
 	{
-		// Изменение скорости в зависимости от того ходьба это или присед
-		// float speed = IsSitting ? stats.CrouchMoveSpeed : stats.MoveSpeed;
-
-		// if (!_runKeyIsPressed)
-		// {
-		// 	_isRunning = false;
-		// }
-
-		// if (_isRunning && !IsSitting)
-		// {
-		// 	speed = RunSpeed;
-		// }
-		
 		if (!_runKeyIsPressed)
 		{
 			_isRunning = false;
 		}
-		
-		if (IsSitting)
-		{
-			_playerSpeed = stats.CrouchMoveSpeed;
-		}
-		else if (_isRunning)
-		{
-			_playerSpeed = RunSpeed;
-		}
-		else
-		{
-			_playerSpeed = stats.MoveSpeed;
-		}
+
+		float speed = GetCurrentSpeed();
+		float Acceleration = GetCurrentAcceleration();
+		float Deceleration = GetCurrentDeceleration();
 
 		// Вычисление вектора направления перемноженного на скорость
 		_targetVelocity = _moveDirection != Vector2.zero
-			? new Vector2(_moveDirection.x, 0f) * _playerSpeed
+			? new Vector2(_moveDirection.x, 0f) * speed
 			: Vector2.zero;
 
 		// Вычисление ускорения или замедления игрока в воздухе или на земле
 		float smoothFactor = _moveDirection != Vector2.zero
-			? (_collisionsChecker.IsGrounded ? stats.Acceleration : stats.airAcceleration)
-			: (_collisionsChecker.IsGrounded ? stats.Deceleration : stats.airDeceleration);
+			? Acceleration
+			: Deceleration;
 
 		// Обработка позиции игрока по X
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
+	}
+
+	private float GetCurrentSpeed()
+	{
+		if (IsSitting) return stats.CrouchMoveSpeed;
+		else if (_isRunning) return RunSpeed;
+		else return stats.MoveSpeed;
+	}
+
+	private float GetCurrentAcceleration()
+	{
+		if (!_collisionsChecker.IsGrounded) return stats.airAcceleration;
+		if (IsSitting) return crouchAcceleration;
+		if (_isRunning) return runAcceleration;
+		return walkAcceleration;
+	}
+
+	private float GetCurrentDeceleration()
+	{
+		if (!_collisionsChecker.IsGrounded) return stats.airDeceleration;
+		if (IsSitting) return crouchDeceleration;
+		if (_isRunning) return runDeceleration;
+		return walkDeceleration;
 	}
 
 	// Регион отвечающий за Fall/Падение
