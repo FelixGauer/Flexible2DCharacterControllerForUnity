@@ -8,10 +8,12 @@ public class IdleState : BaseState
 	public override void OnEnter()
 	{		
 		Debug.Log("IdleState");
+		player.HandleGround();
 	}
 
 	public override void FixedUpdate()
 	{
 		// player.SMMove();
+		player.HandleMovement();
 	}
 }

@@ -9,6 +9,7 @@ public class RunState : BaseState
 	{		
 		Debug.Log("RunState");
 		player.OnEnterRun();
+		player.HandleGround();
 	}
 
 	public override void FixedUpdate()

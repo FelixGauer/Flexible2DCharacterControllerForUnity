@@ -9,6 +9,7 @@ public class CrouchState : BaseState
 	{		
 		Debug.Log("CrouchState");
 		player.OnEnterCrouch();
+		player.HandleGround();
 	}
 
 	public override void FixedUpdate()
