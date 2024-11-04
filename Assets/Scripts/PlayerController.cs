@@ -94,6 +94,9 @@ public class PlayerController : MonoBehaviour
 	public TurnChecker TurnChecker;
 	private bool IsFacingRight => TurnChecker.IsFacingRight;
 
+	// Test var
+	public float runToMoveThreshold = 0.9f;
+
 	private void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();
@@ -119,16 +122,6 @@ public class PlayerController : MonoBehaviour
 	{
 		stateMachine = new StateMachine();
 
-		// var locomotionState = new LocomotionState(this);
-		// var jumpState = new JumpState(this);
-		// var idleState = new IdleState(this);
-		// var fallState = new FallState(this);
-		// var wallJumpState = new WallJumpState(this);
-		// var dashState = new DashState(this);
-		// var crouchState = new CrouchState(this);
-		// var crouchRollState = new CrouchRollState(this);
-		// var runState = new RunState(this);
-		
 		var idleState = new IdleState(this);
 		var locomotionState = new LocomotionState(this);
 		var runState = new RunState(this);
@@ -138,44 +131,44 @@ public class PlayerController : MonoBehaviour
 		var dashState = new DashState(this);
 		var crouchRollState = new CrouchRollState(this);
 		var wallJumpState = new WallJumpState(this);
-		
 
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
-		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
+		At(locomotionState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(locomotionState, runState, new FuncPredicate(() => _runKeyIsPressed && _collisionsChecker.IsGrounded));
+		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
+		At(locomotionState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
+		At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
 
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _moveVelocity.y < 0f && _positiveMoveVelocity));
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _collisionsChecker.BumpedHead));
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _isCutJumping));
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping)));
+		At(jumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
 
-		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
-		At(fallState, runState, new FuncPredicate(() => _runKeyIsPressed && _collisionsChecker.IsGrounded)); // FIXME 
-		At(fallState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f)));
+		At(fallState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
+		At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
+		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
+		At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed)); // FIXME
+		At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _runKeyIsPressed)); // FIXME 
+		At(fallState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 
 		At(wallJumpState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
 		At(wallJumpState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
+		At(wallJumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && CalculateWallDirectionX() != _moveDirection.x));
 
 		// Any(dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f && !_isSitting)); //FIXME !IsSitting
 
 		At(idleState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
-		At(locomotionState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
 		At(runState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
-		At(jumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
-		At(fallState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
-		At(wallJumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && CalculateWallDirectionX() != _moveDirection.x));
 
-		At(dashState, idleState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyIsPressed && _moveDirection == Vector2.zero));
-		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && !_dashKeyIsPressed && !_runKeyIsPressed));
-		At(dashState, runState, new FuncPredicate(() => _runKeyIsPressed && _collisionsChecker.IsGrounded && !_dashTimer.IsRunning));
-		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded && !_dashKeyIsPressed));
-		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall)); // FIXME Переход из wallState to DashState
+		At(dashState, idleState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
+		At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _runKeyIsPressed));
+		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded));
+		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
+		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 		At(dashState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && _numberAvailableJumps > 0f));
 
 		// CROUCH STATE
-		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed)); //FIXME wasPressed если быстро нажимаю присед и потом деш ошибка
 		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(crouchState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(crouchState, crouchRollState, new FuncPredicate(() => _crouchRollKeyIsPressed)); //FIXME Переминовать _dashKeyWasPressed _crouchKeyWasPressed
@@ -186,21 +179,22 @@ public class PlayerController : MonoBehaviour
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
 		At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
 		At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
-
 		At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
-		At(runState, idleState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
+		At(runState, idleState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
+		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed - 0.5f)); // FIXME
+		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed * 0.9f));  // FIXME
+		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed * runToMoveThreshold)); // FIXME
 		At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded));
 		At(runState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(runState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(runState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
 
-		At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
-		At(idleState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed || _jumpBufferTimer.IsRunning));
+		At(idleState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(idleState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
-		At(idleState, locomotionState, new FuncPredicate(() => _moveDirection != Vector2.zero && !_crouchKeyIsPressed && !_runKeyIsPressed));
 		At(idleState, runState, new FuncPredicate(() => _moveDirection != Vector2.zero && _runKeyIsPressed));
+		At(idleState, locomotionState, new FuncPredicate(() => _moveDirection != Vector2.zero));
 
-		stateMachine.SetState(locomotionState);
+		stateMachine.SetState(idleState);
 	}
 
 	void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
@@ -223,13 +217,6 @@ public class PlayerController : MonoBehaviour
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // бновляем максимальную высоту, если персонаж поднимается
 		{
 			maxYPosition = transform.position.y;
-		}
-
-		// TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
-
-		if (_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f)
-		{
-			// Debug.Log("ASDAS");
 		}
 
 		BumpedHead();
@@ -599,7 +586,7 @@ public class PlayerController : MonoBehaviour
 		// Обработка позиции игрока по X
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 
-		adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
+		// adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
 	}
 
 	// Метод для получения текущей скорости
@@ -694,6 +681,14 @@ public class PlayerController : MonoBehaviour
 			_coyoteUsable = false;
 			_jumpCoyoteTimer.Start();
 		}
+	}
+
+	// Метод вызываемый при выходе из состояния падения
+	public void OnExitFall() // FIXME 
+	{
+		// Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
+		// Также используется для коррентной реализации буферного прыжка в StateMachine
+		if (_collisionsChecker.IsGrounded) HandleGround();
 	}
 
 	#endregion

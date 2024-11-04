@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: PlayerControllerStats
   m_EditorClassIdentifier: 
   MoveSpeed: 12
-  Acceleration: 15
-  Deceleration: 30
+  WalkAcceleration: 15
+  WalkDeceleration: 30
+  RunAcceleration: 15
+  RunDeceleration: 30
+  CrouchAcceleration: 15
+  CrouchDeceleration: 30
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -46,11 +50,12 @@ MonoBehaviour:
   CrouchMoveSpeed: 7
   CrouchHeight: 0.6
   CrouchOffset: 0.2
-  CrouchRollTime: 0.5
   CrouchRollVelocity: 10
+  RunSpeed: 20
   CoyoteTime: 0.13
   BufferTime: 0.2
   WallJumpTime: 0.25
   DashTime: 0.11
+  CrouchRollTime: 0.1
   maxFallSpeed: 20
   GroundGravity: -1.5

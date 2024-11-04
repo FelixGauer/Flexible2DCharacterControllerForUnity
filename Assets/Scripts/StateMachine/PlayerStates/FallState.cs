@@ -18,4 +18,9 @@ public class FallState : BaseState
 		player.HandleMovement();
 	}
 	
+	public override void OnExit()
+	{
+		player.OnExitFall();
+	}
+	
 }
