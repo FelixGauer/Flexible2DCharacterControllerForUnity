@@ -13,8 +13,6 @@ public class CrouchRollState : BaseState
 
 	public override void FixedUpdate()
 	{
-		// player.SMMove();
-		// player.Crouch();
 		player.CrouchRoll();
 	}
 

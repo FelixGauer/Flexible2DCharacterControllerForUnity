@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Experimental.AI;
-using UnityEngine.TextCore.Text;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,8 +11,6 @@ public class PlayerController : MonoBehaviour
 	//TODO ledge grab climp unity 2d 
 	//TODO Углы
 	//TODO Debug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
-	//TODO IDLE state add 
-	//TODO Постоянное влкючение movestate, то есть movestate = ground, исправить это 
 	//TODO Исправить ситуацию при которой при выходе из RunState в IdleState персонаж сразу останаливается
 
 
@@ -96,6 +89,8 @@ public class PlayerController : MonoBehaviour
 
 	// Test var
 	public float runToMoveThreshold = 0.9f;
+	private float adaptiveIdleThreshold;
+	public float thresholdFactor = 0.1f;
 
 	private void Awake()
 	{
@@ -158,8 +153,6 @@ public class PlayerController : MonoBehaviour
 
 		// Any(dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f && !_isSitting)); //FIXME !IsSitting
 
-		At(idleState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
-		At(runState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
 
 		At(dashState, idleState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
 		At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _runKeyIsPressed));
@@ -179,6 +172,7 @@ public class PlayerController : MonoBehaviour
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
 		At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
 		At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
+		
 		At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
 		At(runState, idleState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
 		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed - 0.5f)); // FIXME
@@ -186,9 +180,11 @@ public class PlayerController : MonoBehaviour
 		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed * runToMoveThreshold)); // FIXME
 		At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded));
 		At(runState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
+		At(runState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
 		At(runState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(runState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
 
+		At(idleState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
 		At(idleState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
 		At(idleState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
 		At(idleState, runState, new FuncPredicate(() => _moveDirection != Vector2.zero && _runKeyIsPressed));
@@ -200,11 +196,11 @@ public class PlayerController : MonoBehaviour
 	void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
 	void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
 
-	private void Update()
+	private void Update() 
 	{
 		stateMachine.Update();
 
-		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME
+		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME _wasWallSliding убрать
 
 		HandleTimers();
 		Debbuging();
@@ -224,12 +220,15 @@ public class PlayerController : MonoBehaviour
 		JumpKeyReset();
 	}
 
+	// Регион отвечающий за Crouch/CrouchRoll
 	#region Crouch
+	
 	// Метод вызываемый при входе в состояние приседа
 	public void OnEnterCrouch()
 	{
 		SetCrouchState(true);
 	}
+	
 	// Метод вызываемый при выходе из состояния приседа
 	public void OnExitCrouch()
 	{
@@ -257,11 +256,13 @@ public class PlayerController : MonoBehaviour
 	}
 
 	#region CrouchRoll
+	
 	// Метод обработки кувырка
 	public void CrouchRoll()
 	{
 		_moveVelocity.x = _crouchRollDirection.x * stats.CrouchRollVelocity;
 	}
+	
 	// Метод вызываемый при входе в состояние кувырка в приседе
 	public void OnEnterCrouchRoll()
 	{
@@ -270,6 +271,7 @@ public class PlayerController : MonoBehaviour
 		_crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
 		_crouchRollKeyIsPressed = false;
 	}
+	
 	// Метод вызываемый при выходе из кувырка в приседе
 	public void OnExitCrouchRoll()
 	{
@@ -279,6 +281,7 @@ public class PlayerController : MonoBehaviour
 		if (!_collisionsChecker.IsGrounded)
 			SetCrouchState(false);
 	}
+	
 	#endregion
 
 	#endregion
@@ -387,10 +390,13 @@ public class PlayerController : MonoBehaviour
 		// Сброс флага скольжения
 		_wasWallSliding = false;
 	}
+	
 	#endregion
 
 	// Регион отвечающий за Jump
 	#region Jump
+	
+	// Метод обработки прыжка
 	public void HandleJump()
 	{
 		// Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
@@ -431,6 +437,7 @@ public class PlayerController : MonoBehaviour
 		SetGravity(stats.JumpGravityMultiplayer);
 	}
 
+	// Метод для выполнения прыжка
 	private void ExecuteJump()
 	{
 		// Изменения Y на высоту прыжка
@@ -448,6 +455,7 @@ public class PlayerController : MonoBehaviour
 		_jumpBufferTimer.Reset();
 	}
 
+	// Метод для выполнения неполного прыжка  
 	private void ExecuteVariableJumpHeight()
 	{
 		// Ставим флаг короткого прыжка
@@ -555,19 +563,13 @@ public class PlayerController : MonoBehaviour
 
 	// Регион отвечающий за Movement/Run
 	#region Movement/Run
-
-	private float adaptiveIdleThreshold;
-	public float thresholdFactor = 0.1f;
+	
+	// Обработка движения игрока шаг/бег/присед/воздух	
 	public void HandleMovement()
 	{
 		// Выход из состояния бега. Так как вход только при переходе в состояние бега, этот метод помогает реализовать логику
 		// Того что в состояние бега можно войти только на земле, а выйти в любвое время.
 		if (_isRunning) CheckExitRun();
-
-		// if (_isRunning && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f)
-		// {
-		// 	_isRunning = false;
-		// }
 
 		float speed = GetCurrentSpeed();
 		float acceleration = GetCurrentAcceleration();
@@ -588,7 +590,7 @@ public class PlayerController : MonoBehaviour
 
 		// adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
 	}
-
+	
 	// Метод для получения текущей скорости
 	private float GetCurrentSpeed()
 	{
@@ -596,6 +598,7 @@ public class PlayerController : MonoBehaviour
 		if (_isRunning) return stats.RunSpeed;
 		return stats.MoveSpeed;
 	}
+	
 	// Метод для получения текущего ускорения
 	private float GetCurrentAcceleration()
 	{
@@ -604,6 +607,7 @@ public class PlayerController : MonoBehaviour
 		if (_isRunning) return stats.RunAcceleration;
 		return stats.WalkAcceleration;
 	}
+	
 	// Метод для получения текущей замедления
 	private float GetCurrentDeceleration()
 	{
@@ -689,11 +693,15 @@ public class PlayerController : MonoBehaviour
 		// Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
 		// Также используется для коррентной реализации буферного прыжка в StateMachine
 		if (_collisionsChecker.IsGrounded) HandleGround();
+		if (_collisionsChecker.IsTouchingWall) _isRunning = false; // FIXME
 	}
 
 	#endregion
 
+	// Регион отвечающий за реакцию на сталкивания с коллюзиями
 	#region ReactionToCollisions
+	
+	// Метод проверки ударился ли персонаж головой
 	public void BumpedHead()
 	{
 		// Проверка не ударился ли персонаж голвоой платформы
@@ -704,6 +712,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	// Метод обнуления флагов когда персонаж оказываетс на земле
 	public void HandleGround()
 	{
 		// Debug.Log(maxYPosition);
@@ -720,16 +729,20 @@ public class PlayerController : MonoBehaviour
 
 		_moveVelocity.y = stats.GroundGravity; // Гравитация на земле
 	}
+	
 	#endregion
 
+	// Регион отвечающий за основные методы
 	#region GeneralMethod
 
+	// Метод изменяющий позицию игрока
 	private void ApplyMovement()
 	{
 		// Изменение координат игрока игрока
 		_rigidbody.velocity = _moveVelocity;
 	}
 
+	// Метод применения гравитации
 	private void SetGravity(float gravityMulitplayer)
 	{
 		// Применение гравитации
@@ -754,6 +767,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	#region OnEnableDisable
+	
 	void OnEnable()
 	{
 		input.Move += OnMove;
@@ -773,6 +787,7 @@ public class PlayerController : MonoBehaviour
 		input.Run -= OnRun;
 		input.CrouchRoll -= OnCrouchRoll;
 	}
+	
 	#endregion
 
 	#region OnMethodActions

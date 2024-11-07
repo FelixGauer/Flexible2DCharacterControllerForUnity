@@ -57,5 +57,5 @@ MonoBehaviour:
   WallJumpTime: 0.25
   DashTime: 0.11
   CrouchRollTime: 0.1
-  maxFallSpeed: 20
+  maxFallSpeed: 30
   GroundGravity: -1.5
