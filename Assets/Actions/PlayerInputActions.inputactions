@@ -18,7 +18,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "258d7a67-e048-413c-8124-b301b0a8d369",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -27,7 +27,7 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "a57335a6-37bd-4ecb-97b3-0acd16212c15",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

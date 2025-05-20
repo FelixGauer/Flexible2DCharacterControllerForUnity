@@ -659,7 +659,7 @@ public class PlayerController : MonoBehaviour
 
 		// Применнение гравитации
 		// Гравитация в верхней точки прыжыка
-		if (Mathf.Abs(_rigidbody.velocity.y) < stats.jumpHangTimeThreshold)
+		if (Mathf.Abs(_rigidbody.linearVelocity.y) < stats.jumpHangTimeThreshold)
 		{
 			SetGravity(stats.jumpHangGravityMult);
 		} // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
@@ -739,7 +739,7 @@ public class PlayerController : MonoBehaviour
 	private void ApplyMovement()
 	{
 		// Изменение координат игрока игрока
-		_rigidbody.velocity = _moveVelocity;
+		_rigidbody.linearVelocity = _moveVelocity;
 	}
 
 	// Метод применения гравитации

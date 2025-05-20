@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -26,6 +27,11 @@ public class InputReader : ScriptableObject, IPlayerActions
 
 		}
 		_inputActions.Enable();
+	}
+
+	private void OnDisable() 
+	{
+		_inputActions.Disable();
 	}
 
 	public void OnMove(InputAction.CallbackContext context)
