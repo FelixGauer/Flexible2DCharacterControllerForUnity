@@ -65,6 +65,20 @@ public class InputReader : ScriptableObject, IPlayerActions
 				break;
 		}
 	}
+	
+	// public void OnDash(InputAction.CallbackContext context)
+	// {
+	// 	if (context.performed)
+	// 	{
+	// 		// Отправляем true только один раз, когда кнопка реально «нажата»
+	// 		Dash.Invoke(true);
+	// 	}
+	// 	else if (context.canceled)
+	// 	{
+	// 		// Это когда кнопку отпустили
+	// 		Dash.Invoke(false);
+	// 	}
+	// }
 
     public void OnCrouch(InputAction.CallbackContext context)
     {

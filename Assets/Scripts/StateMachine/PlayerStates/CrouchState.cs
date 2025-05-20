@@ -9,6 +9,9 @@ public class CrouchState : BaseState
 	{		
 		Debug.Log("CrouchState");
 		player.OnEnterCrouch();
+		
+		// player.SetCrouchState(true);
+		
 		player.HandleGround();
 	}
 

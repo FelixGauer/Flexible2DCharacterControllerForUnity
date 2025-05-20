@@ -152,8 +152,7 @@ public class PlayerController : MonoBehaviour
 		At(wallJumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && CalculateWallDirectionX() != _moveDirection.x));
 
 		// Any(dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f && !_isSitting)); //FIXME !IsSitting
-
-
+		
 		At(dashState, idleState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
 		At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _runKeyIsPressed));
 		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded));
@@ -164,14 +163,16 @@ public class PlayerController : MonoBehaviour
 		// CROUCH STATE
 		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(crouchState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed));
-		At(crouchState, crouchRollState, new FuncPredicate(() => _crouchRollKeyIsPressed)); //FIXME Переминовать _dashKeyWasPressed _crouchKeyWasPressed
+		At(crouchState, crouchRollState, new FuncPredicate(() => _dashKeyIsPressed)); //FIXME Переименовать _dashKeyWasPressed _crouchKeyWasPressed
 		At(crouchState, runState, new FuncPredicate(() => _runKeyIsPressed && !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
 		At(crouchState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
 		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
 
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
+		At(crouchRollState, idleState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !_crouchKeyIsPressed)); //
+		At(crouchRollState, fallState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !_collisionsChecker.IsGrounded)); // Подумать
+
 		At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
-		At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		
 		At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
 		At(runState, idleState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
@@ -198,6 +199,8 @@ public class PlayerController : MonoBehaviour
 
 	private void Update() 
 	{
+		// Debug.Log(_dashKeyIsPressed);
+
 		stateMachine.Update();
 
 		TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME _wasWallSliding убрать
@@ -238,7 +241,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	// Метод который регулирует высоту спрайта и коллайдера в зависиомсти сидит ли персонаж или стоит
-	private void SetCrouchState(bool isCrouching)
+	public void SetCrouchState(bool isCrouching)
 	{
 		_isSitting = isCrouching;
 		// Еси персонаж сидит его высота равна высоте приседа, если нет обычной высоте
@@ -266,20 +269,24 @@ public class PlayerController : MonoBehaviour
 	// Метод вызываемый при входе в состояние кувырка в приседе
 	public void OnEnterCrouchRoll()
 	{
+		SetCrouchState(true);
+
 		_crouchRollTimer.Start();
 		// Сохранение направления кувырка
 		_crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
-		_crouchRollKeyIsPressed = false;
+		_dashKeyIsPressed = false;
 	}
 	
 	// Метод вызываемый при выходе из кувырка в приседе
 	public void OnExitCrouchRoll()
 	{
+		SetCrouchState(false);
+
 		_crouchRollTimer.Stop();
 		_crouchRollTimer.Reset();
 		// Если кувырок сделан с уступа вернуть высоту коллайдера и спрайта
-		if (!_collisionsChecker.IsGrounded)
-			SetCrouchState(false);
+		if (!_collisionsChecker.IsGrounded) // FIXME
+			SetCrouchState(false); 
 	}
 	
 	#endregion
