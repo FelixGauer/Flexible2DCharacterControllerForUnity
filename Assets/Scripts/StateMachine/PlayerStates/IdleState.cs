@@ -8,6 +8,8 @@ public class IdleState : BaseState
 	public override void OnEnter()
 	{		
 		Debug.Log("IdleState");
+		
+		// player.OnEnterCrouch();
 		player.HandleGround();
 	}
 
