@@ -11,13 +11,19 @@ public class JumpState : BaseState
 
 	public override void FixedUpdate()
 	{		
-		player.HandleJump();
-		player.HandleMovement();
+		// player.HandleJump();
+		// player.HandleMovement();
+		
+		player.playerPhysicsController.HandleJump(player._jumpKeyWasPressed, player._jumpKeyWasLetGo);
+		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed  , player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 	}
 
     public override void OnExit()
     {
-        player.OnExitJump();
+        // player.OnExitJump();
+
+        player.playerPhysicsController.OnExitJump(); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+
     }
 	
 }

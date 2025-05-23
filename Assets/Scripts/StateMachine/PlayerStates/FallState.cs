@@ -10,17 +10,24 @@ public class FallState : BaseState
 		Debug.Log("FallState");
 		player.BumpedHead(); // FIXME
 		player.CoyoteTimerStart();
+		
+		player.playerPhysicsController.CoyoteTimerStart();
 	}
 
 	public override void FixedUpdate()
 	{
-		player.HandleFalling();
-		player.HandleMovement();
+		// player.HandleFalling();
+		// player.HandleMovement();
+		
+		player.playerPhysicsController.HandleFalling(player._jumpKeyWasPressed, player._jumpKeyWasLetGo, player._jumpKeyIsPressed);
+		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 	}
 	
 	public override void OnExit()
 	{
-		player.OnExitFall();
+		// player.OnExitFall();
+
+		player.playerPhysicsController.OnExitFall();
 	}
 	
 }
