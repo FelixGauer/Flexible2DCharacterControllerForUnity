@@ -17,7 +17,14 @@ public class LocomotionState : BaseState
 	
 	public override void OnEnter()
 	{
-		player.HandleGround();		
+		// player.HandleGround();	
+		
+		player.playerPhysicsController.HandleGround();
+
+		// player.playerPhysicsController._jumpModule.HandleGround();
+
+		// player.playerPhysicsController.HandleGround2();
+
 		Debug.Log("MoveEnter");
 	}
 
@@ -25,5 +32,7 @@ public class LocomotionState : BaseState
 	{
 		// player.HandleMovement(); //
 		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		
+		// player.playerPhysicsController.HandleMovement();
 	}
 }

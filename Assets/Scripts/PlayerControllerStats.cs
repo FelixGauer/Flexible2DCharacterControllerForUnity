@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,4 +87,9 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
+	
+	public float AdjustedJumpHeight => maxJumpHeight * jumpHeightCompensationFactor;  
+	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);  
+	public float MaxJumpVelocity => Gravity * timeTillJumpApex;  
+	public float MinJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * Gravity);
 }

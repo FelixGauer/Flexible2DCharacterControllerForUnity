@@ -14,15 +14,21 @@ public class JumpState : BaseState
 		// player.HandleJump();
 		// player.HandleMovement();
 		
-		player.playerPhysicsController.HandleJump(player._jumpKeyWasPressed, player._jumpKeyWasLetGo);
-		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed  , player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		// player.playerPhysicsController.HandleJump(player._jumpKeyWasPressed, player._jumpKeyWasLetGo);
+		// player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed  , player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		
+		player.playerPhysicsController.HandleJump();
+		// player.playerPhysicsController.HandleMovement();
+
 	}
 
     public override void OnExit()
     {
         // player.OnExitJump();
 
-        player.playerPhysicsController.OnExitJump(); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        // player.playerPhysicsController.OnExitJump(); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        
+        player.playerPhysicsController._jumpModule.OnExitJump();
 
     }
 	

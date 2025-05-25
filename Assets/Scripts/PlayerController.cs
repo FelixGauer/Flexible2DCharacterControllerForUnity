@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker.IsSitting = () => _isSitting;
 		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
 
-		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpBufferTimer, _jumpCoyoteTimer, _collisionsChecker, stats);
+		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpBufferTimer, _jumpCoyoteTimer, _collisionsChecker, stats, this);
 
 		SetupStateMachine();
 	}
@@ -170,13 +170,13 @@ public class PlayerController : MonoBehaviour
 		At(locomotionState, dashState, new FuncPredicate(() => _dashKeyIsPressed));
 		At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController._moveVelocity.x) < 0.1f)); // FIXME  playerPhysicsController
 
-		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._moveVelocity.y < 0f && playerPhysicsController._positiveMoveVelocity) || playerPhysicsController._isCutJumping)));
+		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && playerPhysicsController._jumpModule.CanFall())); // (_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping
 		At(jumpState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
 
-		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (playerPhysicsController._jumpCoyoteTimer.IsRunning || playerPhysicsController._numberAvailableJumps > 0f)));
+		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (playerPhysicsController._jumpCoyoteTimer.IsRunning || playerPhysicsController._physicsContext.NumberAvailableJumps > 0f)));
 		At(fallState, dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f));
 		At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && playerPhysicsController._jumpBufferTimer.IsRunning));
-		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
+		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded )); // FIXME && _moveDirection == Vector2.zero
 		At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed && _moveDirection[0] == 0));
 		At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed)); // FIXME
 		At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _runKeyIsPressed)); // FIXME 
