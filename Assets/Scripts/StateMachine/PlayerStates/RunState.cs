@@ -11,6 +11,8 @@ public class RunState : BaseState
 		player.OnEnterRun();
 		player.HandleGround();
 		
+		// player.playerPhysicsController.HandleGround();
+		
 		player.playerPhysicsController.HandleGround();
 	}
 

@@ -20,12 +20,10 @@ public class LocomotionState : BaseState
 		// player.HandleGround();	
 		
 
-		// player.playerPhysicsController._jumpModule.HandleGround();
 
-		player.playerPhysicsController.HandleGround2();
+		player.playerPhysicsController.HandleGround();
 
 		
-		// player.playerPhysicsController.HandleGround();
 
 		Debug.Log("MoveEnter");
 	}

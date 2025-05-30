@@ -11,8 +11,9 @@ public class FallState : BaseState
 		player.BumpedHead(); // FIXME
 		player.CoyoteTimerStart();
 		
-		player.playerPhysicsController.CoyoteTimerStart();
-		
+		// player.playerPhysicsController.CoyoteTimerStart();
+
+		player.playerPhysicsController._fallModule.CoyoteTimerStart();  // FIXME
 	}
 
 	public override void FixedUpdate()
@@ -36,7 +37,7 @@ public class FallState : BaseState
 		
 		// player.playerPhysicsController.HandleGround2();
 		
-		player.playerPhysicsController._fallModule.OnExitFall();
+		player.playerPhysicsController._fallModule.OnExitFall(); // FIXME
 		
 	}
 	

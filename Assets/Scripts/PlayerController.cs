@@ -146,12 +146,12 @@ public class PlayerController : MonoBehaviour
 		//
 		At(runFallState, fallState, new FuncPredicate(() => !_runKeyIsPressed && !_collisionsChecker.IsGrounded));
 		At(runFallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
-		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && playerPhysicsController._jumpBufferTimer.IsRunning));
-		At(runFallState, runJumpState, new FuncPredicate(() => _jumpKeyWasPressed && (playerPhysicsController._jumpCoyoteTimer.IsRunning || playerPhysicsController._numberAvailableJumps > 0f)));
-
-
+		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
+		At(runFallState, runJumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || playerPhysicsController._physicsContext.NumberAvailableJumps > 0f)));
 		
-		At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._moveVelocity.y < 0f && playerPhysicsController._positiveMoveVelocity) || playerPhysicsController._isCutJumping)));
+		// At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._moveVelocity.y < 0f && playerPhysicsController._positiveMoveVelocity) || playerPhysicsController._isCutJumping))); // FIXME СЕЙЧАС ФИКС
+		At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._physicsContext.MoveVelocity.y < 0f && playerPhysicsController._jumpModule.CanFall())))); // FIXME СЕЙЧАС ФИКС
+
 		
 		At(runFallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _runKeyIsPressed)); 
 		
@@ -176,9 +176,9 @@ public class PlayerController : MonoBehaviour
 		At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && playerPhysicsController._jumpModule.CanFall())); // (_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping
 		At(jumpState, dashState, new FuncPredicate(() => _dashKeyWasPressed && _numberAvailableDash > 0f));
 
-		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (playerPhysicsController._jumpCoyoteTimer.IsRunning || playerPhysicsController._physicsContext.NumberAvailableJumps > 0f)));
+		At(fallState, jumpState, new FuncPredicate(() => _jumpKeyWasPressed && (_jumpCoyoteTimer.IsRunning || playerPhysicsController._physicsContext.NumberAvailableJumps > 0f)));
 		At(fallState, dashState, new FuncPredicate(() => _dashKeyWasPressed && playerPhysicsController._physicsContext.NumberAvailableDash > 0f));
-		At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && playerPhysicsController._jumpBufferTimer.IsRunning));
+		At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
 		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded )); // FIXME && _moveDirection == Vector2.zero
 		At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed && _moveDirection[0] == 0));
 		At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed)); // FIXME
@@ -256,6 +256,15 @@ public class PlayerController : MonoBehaviour
 
 		HandleTimers();
 		Debbuging();
+
+		if (input.DashState.WasPressedThisFrame)
+			Debug.Log("Jump just pressed");
+		if (input.DashState.IsHeld)
+			Debug.Log("Jump is held");
+		if (input.DashState.WasReleasedThisFrame)
+			Debug.Log("Jump just released");
+		
+		input.DashState.ResetFrameState();
 	}
 
 	private void FixedUpdate()
@@ -270,10 +279,12 @@ public class PlayerController : MonoBehaviour
 		BumpedHead();
 		// ApplyMovement();
 		playerPhysicsController.ApplyMovement();
+		// Debug.Log(playerPhysicsController._physicsContext.MoveVelocity);
 
-		Debug.Log(_dashKeyWasPressed);
 		// Debug.Log(_dashTimer.IsRunning);
 		JumpKeyReset();
+		
+
 	}
 
 	// Регион отвечающий за Crouch/CrouchRoll

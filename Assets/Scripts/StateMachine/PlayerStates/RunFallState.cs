@@ -10,7 +10,9 @@ public class RunFallState : BaseState
         player.BumpedHead(); // FIXME
         player.CoyoteTimerStart();
         
-        player.playerPhysicsController.CoyoteTimerStart();
+        // player.playerPhysicsController.CoyoteTimerStart();
+        player.playerPhysicsController._fallModule.CoyoteTimerStart();
+
     }
 
     public override void FixedUpdate()
@@ -18,7 +20,9 @@ public class RunFallState : BaseState
         // player.HandleFalling();
         // player.HandleMovement();
 		
-        player.playerPhysicsController.HandleFalling(player._jumpKeyWasPressed, player._jumpKeyWasLetGo, player._jumpKeyIsPressed);
+        // player.playerPhysicsController.HandleFalling(player._jumpKeyWasPressed, player._jumpKeyWasLetGo, player._jumpKeyIsPressed);
+        
+        player.playerPhysicsController.HandleFalling();
         player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
     }
 	
@@ -26,7 +30,10 @@ public class RunFallState : BaseState
     {
         // player.OnExitFall();
 
-        player.playerPhysicsController.OnExitFall();
+        // player.playerPhysicsController.OnExitFall();
+        
+        player.playerPhysicsController._fallModule.OnExitFall(); // FIXME
+
     }
 	
 }

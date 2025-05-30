@@ -52,19 +52,6 @@ public class InputReader : ScriptableObject, IPlayerActions
 		}
 
 	}
-
-	public void OnDash(InputAction.CallbackContext context)
-	{
-		switch (context.phase)
-		{
-			case InputActionPhase.Started:
-				Dash.Invoke(true);
-				break;
-			case InputActionPhase.Canceled: //FIXME
-				Dash.Invoke(false);
-				break;
-		}
-	}
 	
 	// public void OnDash(InputAction.CallbackContext context)
 	// {
@@ -118,4 +105,60 @@ public class InputReader : ScriptableObject, IPlayerActions
 				break;
 		}
     }
+    
+    public void OnDash(InputAction.CallbackContext context)
+    {
+	    // switch (context.phase)
+	    // {
+		   //  case InputActionPhase.Started:
+			  //   Dash.Invoke(true);
+			  //   break;
+		   //  case InputActionPhase.Canceled: //FIXME
+			  //   Dash.Invoke(false);
+			  //   break;
+	    // }
+	    
+	    DashState.Update(context);
+    }
+    
+    public InputButtonState DashState { get; private set; } = new();
+}
+
+
+public class InputButtonState
+{
+	public bool IsHeld { get; private set; }
+	public bool WasPressedThisFrame { get; private set; }
+	public bool WasReleasedThisFrame { get; private set; }
+
+	public void Update(InputAction.CallbackContext context)
+	{
+		// WasPressedThisFrame = false;
+		// WasReleasedThisFrame = false;
+
+		switch (context.phase)
+		{
+			case InputActionPhase.Started:
+				if (!IsHeld)
+				{
+					IsHeld = true;
+					WasPressedThisFrame = true;
+				}
+				break;
+
+			case InputActionPhase.Canceled:
+				if (IsHeld)
+				{
+					IsHeld = false;
+					WasReleasedThisFrame = true;
+				}
+				break;
+		}
+	}
+
+	public void ResetFrameState()
+	{
+		WasPressedThisFrame = false;
+		WasReleasedThisFrame = false;
+	}
 }

@@ -27,7 +27,7 @@ public class IdleState : BaseState
 
 		// player.playerPhysicsController._fallModule.OnExitFall();
 		
-		player.playerPhysicsController.HandleGround2();
+		player.playerPhysicsController.HandleGround();
 	}
 
 	public override void FixedUpdate()
