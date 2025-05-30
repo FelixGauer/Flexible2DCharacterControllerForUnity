@@ -1,8 +1,9 @@
 using System;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MovementModule 
+public class MovementModuleGAMNO 
 {
 	private readonly Rigidbody2D _rigidbody;
 
@@ -10,7 +11,7 @@ public class MovementModule
 	private Vector2 _moveVelocity;
 	private PhysicsContext _physicsContext;
 
-	public MovementModule(Rigidbody2D rigidbody, PhysicsContext physicsContext) 
+	public MovementModuleGAMNO(Rigidbody2D rigidbody, PhysicsContext physicsContext) 
 	{
 		_rigidbody = rigidbody;
 		_physicsContext = physicsContext;
@@ -273,7 +274,7 @@ public class GroundModule
 		// }
 
 		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-		// _numberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
 
 		// _isJumping = false; // Сброс флага прыжка
 		// _coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
@@ -392,10 +393,18 @@ public class PhysicsContext
 	public bool VariableJumpHeight { get; set; }
 
 	public float NumberAvailableJumps { get; set; }
+	public float NumberAvailableDash { get; set; }
 	public bool IsJumping { get; set; }
 	public bool CoyoteUsable { get; set; }
 	public bool PositiveMoveVelocity { get; set; }
 	public bool IsCutJumping { get; set; }
+	
+	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
+	{
+		// Применение гравитации
+		 moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+		 return moveVelocity;
+	}
 }
 
 
@@ -427,11 +436,6 @@ public class JumpModule
 	
 	private Vector2 _moveVelocity;
 	
-	private float adjustedJumpHeight => _playerControllerStats.maxJumpHeight * _playerControllerStats.jumpHeightCompensationFactor;
-	private float gravity => 2f * adjustedJumpHeight / MathF.Pow(_playerControllerStats.timeTillJumpApex, 2f);
-	private float maxJumpVelocity => gravity * _playerControllerStats.timeTillJumpApex;
-	private float minJumpVelocity => Mathf.Sqrt(2 * _playerControllerStats.minJumpHeight * gravity);
-
 	private bool _variableJumpHeight;
 	private bool _positiveMoveVelocity;
 	private float _numberAvailableJumps;
@@ -505,7 +509,8 @@ public class JumpModule
 		}
 
 		// Применение гравитации в прыжке до состояния падения		
-		SetGravity(_playerControllerStats.JumpGravityMultiplayer);
+		// SetGravity(_playerControllerStats.JumpGravityMultiplayer);
+		_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
 
 		_physicsContext.MoveVelocity = _moveVelocity;
 
@@ -516,7 +521,7 @@ public class JumpModule
 	private void ExecuteJump()
 	{
 		// Изменения Y на высоту прыжка
-		_moveVelocity.y = maxJumpVelocity;
+		_moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
 	}
 
 	// Метод для выполнения неполного прыжка
@@ -526,9 +531,9 @@ public class JumpModule
 		_isCutJumping = true;
 
 		// Изменения Y на минимальную высоту прыжка
-		if (_moveVelocity.y > minJumpVelocity)
+		if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
 		{
-			_moveVelocity.y = minJumpVelocity;
+			_moveVelocity.y = _playerControllerStats.MinJumpVelocity;
 		}
 	}
 
@@ -542,7 +547,7 @@ public class JumpModule
 	private void SetGravity(float gravityMulitplayer)
 	{
 		// Применение гравитации
-		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
+		_moveVelocity.y -= _playerControllerStats.Gravity * gravityMulitplayer * Time.fixedDeltaTime;
 	}
 
 	private void ApplyMovement()
@@ -556,7 +561,6 @@ public class JumpModule
 		return ((_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping); // FIXME В теории избавиться от _isCutJumping
 	}
 }
-
 public class FallModule 
 {
 	public FallModule(PhysicsContext physicsContext, Rigidbody2D rigidbody, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer)
@@ -597,15 +601,20 @@ public class FallModule
 		// Гравитация в верхней точки прыжыка
 		if (Mathf.Abs(_rigidbody.linearVelocity.y) < _playerControllerStats.jumpHangTimeThreshold)
 		{
-			SetGravity(_playerControllerStats.jumpHangGravityMult);
+			// SetGravity(_playerControllerStats.jumpHangGravityMult);
+			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.jumpHangGravityMult);
+
 		} // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
 		else if (_jumpKeyIsPressed)
 		{
-			SetGravity(_playerControllerStats.JumpGravityMultiplayer);
+			// SetGravity(_playerControllerStats.JumpGravityMultiplayer);
+			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
+
 		} // Гравитация в падении
 		else
 		{
-			SetGravity(_playerControllerStats.FallGravityMultiplayer);
+			// SetGravity(_playerControllerStats.FallGravityMultiplayer);
+			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.FallGravityMultiplayer);
 		}
 
 		// Ограничение максимальной скорости падения
@@ -639,17 +648,16 @@ public class FallModule
 		// if (_collisionsChecker.IsTouchingWall) _isRunning = false; // FIXME
 	}
 	
-	private float adjustedJumpHeight => _playerControllerStats.maxJumpHeight * _playerControllerStats.jumpHeightCompensationFactor;
-	private float gravity => 2f * adjustedJumpHeight / MathF.Pow(_playerControllerStats.timeTillJumpApex, 2f);
 	private void SetGravity(float gravityMulitplayer)
 	{
 		// Применение гравитации
-		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
+		_moveVelocity.y -= _playerControllerStats.Gravity * gravityMulitplayer * Time.fixedDeltaTime;
 	}
 	
 	public void HandleGround()
 	{
 		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
 		// _numberAvailableDash = _stats.MaxNumberDash; // При касании земли возвращение рывков
 
 		// _isJumping = false; // Сброс флага прыжка
@@ -664,7 +672,157 @@ public class FallModule
 	}
 }
 
+public class MovementModule 
+{
+	private readonly Rigidbody2D _rigidbody;
 
+	private Vector2 _targetVelocity;
+	private Vector2 _moveVelocity;
+	private PhysicsContext _physicsContext;
+
+	public MovementModule(Rigidbody2D rigidbody, PhysicsContext physicsContext) 
+	{
+		_rigidbody = rigidbody;
+		_physicsContext = physicsContext;
+	}
+
+	public void HandleMovement(Vector2 _moveDirection, float speed, float acceleration, float deceleration)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+			
+		// Вычисление вектора направления перемноженного на скорость
+		_targetVelocity = _moveDirection != Vector2.zero
+			? new Vector2(_moveDirection.x, 0f) * speed
+			: Vector2.zero;
+
+		// Вычисление ускорения или замедления игрока в воздухе или на земле
+		float smoothFactor = _moveDirection != Vector2.zero
+			? acceleration
+			: deceleration;
+
+		// Обработка позиции игрока по X
+		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
+		
+		_physicsContext.MoveVelocity = _moveVelocity;
+
+		// Debug.Log(_physicsContext.MoveVelocity);
+	}
+}
+
+public class DashModule 
+{
+	private readonly Rigidbody2D _rigidbody;
+
+	private Vector2 _moveVelocity;
+	private PhysicsContext _physicsContext;
+	private readonly PlayerControllerStats _playerControllerStats;
+	private CountdownTimer _dashTimer;
+	
+	private Vector2 _dashDirection;
+	private readonly TurnChecker _turnChecker;
+	
+	private bool IsFacingRight => _turnChecker.IsFacingRight;
+
+	public DashModule(Rigidbody2D rigidbody, PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
+	{
+		_rigidbody = rigidbody;
+		_physicsContext = physicsContext;
+		_playerControllerStats = playerControllerStats;
+		_dashTimer = dashTimer;
+		_turnChecker = turnChecker;
+	}
+	
+	public void HandleDash(Vector2 _moveDirection)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+
+		// Изменение скорости по оси X для совершение рывка
+		_moveVelocity.x = _dashDirection.x * _playerControllerStats.DashVelocity;
+
+		// Если скорость по y не равна 0, применяем рывок в оси Y
+		if (_dashDirection.y != 0)
+		{
+			_moveVelocity.y = _dashDirection.y * _playerControllerStats.DashVelocity;
+		}
+
+		// Отмена рывка, если игрок проживаем противоположное направление
+		if (_dashDirection == -_moveDirection)
+		{
+			OnExitDash();
+		}
+
+		// Применение гравитации во время рывка
+		_physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.DashGravityMultiplayer);
+		
+		_physicsContext.MoveVelocity = _moveVelocity;
+	}
+
+	// Метод вызываемый при входе в состояние рывка
+	public void OnEnterDash()
+	{
+		_dashTimer.Start(); // Запуск таймера рывка
+		// _dashKeyIsPressed = false; // Сброс флага нажатия клавиши
+		_physicsContext.NumberAvailableDash -= 1;
+		// _numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
+		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
+		_physicsContext.MoveVelocity = Vector2.zero;
+
+	}
+
+	// Метод вызываемый при выходе из состояния рывка
+	public void OnExitDash()
+	{
+		_dashTimer.Stop(); // Остановка таймера
+		_dashTimer.Reset(); // Сброс таймера
+	}
+
+	// Расчет направления рывка
+	public void CalculateDashDirection(InputReader input)
+	{
+		_dashDirection = input.Direction;
+		// _dashDirection = new Vector2(1, 0);
+		// _dashDirection = _moveDirection;
+		
+		_dashDirection = GetClosestDirection(_dashDirection); // Поиск ближайшего допустимого направления
+	}
+	
+	// Метод для поиска ближайшего направления рывка
+	private Vector2 GetClosestDirection(Vector2 targetDirection)
+	{
+		Vector2 closestDirection = Vector2.zero; // Начальное значение для ближайшего направления
+		float minDistance = float.MaxValue;      // Минимальная дистанция для поиска ближайшего направления
+
+		// Перебор всех допустимых направления в общем массиве направлений
+		foreach (var dashDirection in _playerControllerStats.DashDirections)
+		{
+			float distance = Vector2.Distance(targetDirection, dashDirection);
+
+			// Проверка на диагональное направление
+			if (IsDiagonal(dashDirection))
+			{
+				distance = 1f;
+			}
+			// Если найдено близкое направление, обновляем ближайшее и минимальную дистанцию
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				closestDirection = dashDirection;
+			}
+		}
+
+		// Если стоит на месте, применяем рывок в сторону поворота игрока, иначе в найденое ближайшее направление
+		// return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
+		return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
+
+	}
+	
+
+	// Проверка является ли направление диагональным
+	private bool IsDiagonal(Vector2 direction)
+	{
+		return Mathf.Abs(direction.x) == 1 && Mathf.Abs(direction.y) == 1;
+	}
+}
 
 public class PlayerPhysicsController
 {
@@ -676,12 +834,15 @@ public class PlayerPhysicsController
 		// Debug.Log(_physicsContext.NumberAvailableJumps);
 	}
 	
-	public PlayerPhysicsController(Rigidbody2D rigidbody, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer, CollisionsChecker collisionsChecker, PlayerControllerStats stats, PlayerController playerController)
+	public PlayerPhysicsController(Rigidbody2D rigidbody, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer, CollisionsChecker collisionsChecker, PlayerControllerStats stats, PlayerController playerController, CountdownTimer dashTimer, TurnChecker turnChecker)
 	{
 		_rigidbody = rigidbody;
 		_jumpBufferTimer = jumpBufferTimer;
 		_jumpCoyoteTimer = jumpCoyoteTimer;
 		_collisionsChecker = collisionsChecker;
+		_dashTimer = dashTimer;
+		_turnChecker = turnChecker;
+
 		_stats = stats;
 		
 		_physicsContext = new PhysicsContext();
@@ -692,12 +853,16 @@ public class PlayerPhysicsController
 		
 		_jumpModule = new JumpModule(_physicsContext, rigidbody, _collisionsChecker, stats, jumpCoyoteTimer, jumpBufferTimer);
 		_fallModule = new FallModule(_physicsContext, rigidbody, _collisionsChecker, stats, jumpCoyoteTimer, jumpBufferTimer);
+		_dashModule = new DashModule(rigidbody, _physicsContext, stats, turnChecker, dashTimer);
 	}
+	
+	
 
 	private MovementModule _movementModule;
 	private PlayerController _playerController;
 	private GroundModule _groundModule;
 	public FallModule _fallModule;
+	public DashModule _dashModule;
 	
 	public JumpModule _jumpModule;
 	
@@ -710,11 +875,24 @@ public class PlayerPhysicsController
 
 	public PhysicsContext _physicsContext;
 	
+	private CountdownTimer _dashTimer;
+
+	
 	public void HandleJump() => _jumpModule.HandleJump(_playerController._jumpKeyWasPressed, _playerController._jumpKeyWasLetGo, _playerController._jumpKeyIsPressed);
 	public void HandleFalling() => _fallModule.HandleFalling(_playerController._jumpKeyWasPressed, _playerController._jumpKeyWasLetGo, _playerController._jumpKeyIsPressed);
 
-	public void HandleMovement() => _movementModule.HandleMovement(_playerController.GetMoveDirection(), _stats.MoveSpeed, _stats.WalkAcceleration, _stats.WalkDeceleration);
+	// public void HandleMovement() => _movementModule.HandleMovement(_playerController.GetMoveDirection(), _stats.MoveSpeed, _stats.WalkAcceleration, _stats.WalkDeceleration);
 	public void HandleGround2() => _groundModule.HandleGround();
+
+	public void HandleMovement(Vector2 _moveDirection, float speed, float acceleration, float deceleration)
+	{
+		_movementModule.HandleMovement(_moveDirection, speed, acceleration, deceleration);
+	}
+	
+	public void HandleDash(Vector2 _moveDirection)
+	{
+		_dashModule.HandleDash(_moveDirection);
+	}
 
 
 
@@ -734,31 +912,31 @@ public class PlayerPhysicsController
 
 	
 	// Обработка движения игрока шаг/бег/присед/воздух	
-	public void HandleMovement(Vector2 _moveDirection, float speed, float acceleration, float deceleration)
-	{
-		// Выход из состояния бега. Так как вход только при переходе в состояние бега, этот метод помогает реализовать логику
-		// Того что в состояние бега можно войти только на земле, а выйти в любое время.
-		// if (_isRunning) CheckExitRun(); // TODO
-
-		// float speed = GetCurrentSpeed();
-		// float acceleration = GetCurrentAcceleration();
-		// float deceleration = GetCurrentDeceleration();
-
-		// Вычисление вектора направления перемноженного на скорость
-		_targetVelocity = _moveDirection != Vector2.zero
-			? new Vector2(_moveDirection.x, 0f) * speed
-			: Vector2.zero;
-
-		// Вычисление ускорения или замедления игрока в воздухе или на земле
-		float smoothFactor = _moveDirection != Vector2.zero
-			? acceleration
-			: deceleration;
-
-		// Обработка позиции игрока по X
-		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
-
-		// adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
-	}
+	// public void HandleMovement(Vector2 _moveDirection, float speed, float acceleration, float deceleration)
+	// {
+	// 	// Выход из состояния бега. Так как вход только при переходе в состояние бега, этот метод помогает реализовать логику
+	// 	// Того что в состояние бега можно войти только на земле, а выйти в любое время.
+	// 	// if (_isRunning) CheckExitRun(); // TODO
+	//
+	// 	// float speed = GetCurrentSpeed();
+	// 	// float acceleration = GetCurrentAcceleration();
+	// 	// float deceleration = GetCurrentDeceleration();
+	//
+	// 	// Вычисление вектора направления перемноженного на скорость
+	// 	_targetVelocity = _moveDirection != Vector2.zero
+	// 		? new Vector2(_moveDirection.x, 0f) * speed
+	// 		: Vector2.zero;
+	//
+	// 	// Вычисление ускорения или замедления игрока в воздухе или на земле
+	// 	float smoothFactor = _moveDirection != Vector2.zero
+	// 		? acceleration
+	// 		: deceleration;
+	//
+	// 	// Обработка позиции игрока по X
+	// 	_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
+	//
+	// 	// adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
+	// }
 
 	
 	// // Метод для получения текущей скорости
@@ -979,6 +1157,7 @@ public class PlayerPhysicsController
 	
 	private float _numberAvailableDash;
 	private float maxYPosition;
+	private readonly TurnChecker _turnChecker;
 
 
 	public void HandleGround()

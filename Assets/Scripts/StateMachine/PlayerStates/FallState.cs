@@ -12,6 +12,7 @@ public class FallState : BaseState
 		player.CoyoteTimerStart();
 		
 		player.playerPhysicsController.CoyoteTimerStart();
+		
 	}
 
 	public override void FixedUpdate()
@@ -23,7 +24,7 @@ public class FallState : BaseState
 		// player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		
 		player.playerPhysicsController.HandleFalling();
-		// player.playerPhysicsController.HandleMovement();
+		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
 	}
 	
@@ -36,7 +37,7 @@ public class FallState : BaseState
 		// player.playerPhysicsController.HandleGround2();
 		
 		player.playerPhysicsController._fallModule.OnExitFall();
-
+		
 	}
 	
 }

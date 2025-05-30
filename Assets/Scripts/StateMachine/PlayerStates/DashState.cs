@@ -8,17 +8,25 @@ public class DashState : BaseState
 	public override void OnEnter()
 	{		
 		Debug.Log("DashState");
-		player.OnEnterDash();
-		player.CalculateDashDirection();
+		// player.OnEnterDash();
+		// player.CalculateDashDirection();
+		
+		
+		player.playerPhysicsController._dashModule.OnEnterDash();
+		player.playerPhysicsController._dashModule.CalculateDashDirection(player.input);
 	}
 
 	public override void FixedUpdate()
 	{
-		player.HandleDash();
+		// player.HandleDash();
+		
+		player.playerPhysicsController.HandleDash(player.GetMoveDirection());
 	}
 	
 	public override void OnExit()
 	{
-		player.OnExitDash();
+		// player.OnExitDash();
+		
+		player.playerPhysicsController._dashModule.OnExitDash();
 	}
 }

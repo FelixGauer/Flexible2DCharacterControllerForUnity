@@ -19,11 +19,13 @@ public class LocomotionState : BaseState
 	{
 		// player.HandleGround();	
 		
-		player.playerPhysicsController.HandleGround();
 
 		// player.playerPhysicsController._jumpModule.HandleGround();
 
-		// player.playerPhysicsController.HandleGround2();
+		player.playerPhysicsController.HandleGround2();
+
+		
+		// player.playerPhysicsController.HandleGround();
 
 		Debug.Log("MoveEnter");
 	}
@@ -31,8 +33,11 @@ public class LocomotionState : BaseState
 	public override void FixedUpdate()
 	{
 		// player.HandleMovement(); //
-		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		
 		// player.playerPhysicsController.HandleMovement();
+		
+		
+		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+
 	}
 }

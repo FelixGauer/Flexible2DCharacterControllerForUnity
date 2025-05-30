@@ -18,7 +18,8 @@ public class JumpState : BaseState
 		// player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed  , player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		
 		player.playerPhysicsController.HandleJump();
-		// player.playerPhysicsController.HandleMovement();
+		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+
 
 	}
 
