@@ -2,6 +2,7 @@ using System;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.LowLevel;
 
 public class GroundModule
 {
@@ -87,7 +88,7 @@ public class JumpModule
 	private bool _isJumping;
 	private bool _isCutJumping;
 
-	public void HandleJump(bool _jumpKeyWasPressed, bool _jumpKeyWasLetGo, bool _jumpKeyIsPressed)
+	public void HandleJump(InputButtonState jumpState)
 	{
 		_moveVelocity = _physicsContext.MoveVelocity;
 		
@@ -102,7 +103,7 @@ public class JumpModule
 
 		// Проверка на возможность прыжка (обычный прыжок или мультипрыжок)
 		// if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
-		if (_jumpBufferTimer.IsRunning || (_jumpKeyWasPressed && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)))
+		if (_jumpBufferTimer.IsRunning || (jumpState.WasPressedThisFrame && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)))
 		{
 			// Если не на земле и таймер кайота завершён — вычитаем прыжок
 			if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
@@ -113,7 +114,7 @@ public class JumpModule
 			ExecuteJump();
 			
 			// Запуск укороченного буферного прыжка
-			if (_jumpBufferTimer.IsRunning && !_jumpKeyIsPressed) 
+			if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld) 
 				ExecuteVariableJumpHeight();
 
 			// Уменьшение количества доступных прыжков
@@ -147,7 +148,7 @@ public class JumpModule
 		}
 
 		// Контроль высоты прыжка в зависимости от удержания кнопки прыжка
-		if (_jumpKeyWasLetGo)
+		if (jumpState.WasReleasedThisFrame)
 		{
 			ExecuteVariableJumpHeight();
 		}
@@ -221,16 +222,16 @@ public class FallModule
 
 	private Vector2 _moveVelocity;
 	
-	public void HandleFalling(bool _jumpKeyWasPressed, bool _jumpKeyWasLetGo, bool _jumpKeyIsPressed)
+	public void HandleFalling(InputButtonState jumpState)
 	{
 		_moveVelocity = _physicsContext.MoveVelocity;
 		// Проверка на удар головой об платформу
 		// BumpedHead(); //FIXME
 
 		// Запуск таймера прыжка в падении
-		if (_jumpKeyWasPressed) { _jumpBufferTimer.Start(); }
+		if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
 		// Сохранение переменной для буферизации минимального прыжка
-		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo) { _physicsContext.VariableJumpHeight = true; } //FIXME
+		if (_jumpBufferTimer.IsRunning && jumpState.WasReleasedThisFrame) { _physicsContext.VariableJumpHeight = true; } //FIXME
 
 		// Применнение гравитации
 		// Гравитация в верхней точки прыжыка
@@ -240,7 +241,7 @@ public class FallModule
 			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.jumpHangGravityMult);
 
 		} // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
-		else if (_jumpKeyIsPressed)
+		else if (jumpState.IsHeld)
 		{
 			// SetGravity(_playerControllerStats.JumpGravityMultiplayer);
 			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
@@ -390,7 +391,6 @@ public class DashModule
 		// _numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
 		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
 		_physicsContext.MoveVelocity = Vector2.zero;
-
 	}
 
 	// Метод вызываемый при выходе из состояния рывка
@@ -404,7 +404,6 @@ public class DashModule
 	public void CalculateDashDirection(InputReader input)
 	{
 		_dashDirection = input.Direction;
-		// _dashDirection = new Vector2(1, 0);
 		// _dashDirection = _moveDirection;
 		
 		_dashDirection = GetClosestDirection(_dashDirection); // Поиск ближайшего допустимого направления
@@ -463,7 +462,7 @@ public class PlayerPhysicsController
 	
 	public readonly JumpModule _jumpModule; // FIXME
 	public readonly FallModule _fallModule; // FIXME
-	public readonly DashModule _dashModule;
+	public readonly DashModule _dashModule; // FIXME
 
 	private readonly PlayerController _playerController;
 	public readonly PhysicsContext _physicsContext;
@@ -515,21 +514,9 @@ public class PlayerPhysicsController
 		_groundModule.HandleGround();
 	}
 
-	public void HandleJump()
-	{
-		_jumpModule.HandleJump(
-			_playerController._jumpKeyWasPressed,
-			_playerController._jumpKeyWasLetGo,
-			_playerController._jumpKeyIsPressed);
-	}
+	public void HandleJump() => _jumpModule.HandleJump(_playerController.input.JumpState);
 
-	public void HandleFalling()
-	{
-		_fallModule.HandleFalling(
-			_playerController._jumpKeyWasPressed,
-			_playerController._jumpKeyWasLetGo,
-			_playerController._jumpKeyIsPressed);
-	}
+	public void HandleFalling() => _fallModule.HandleFalling(_playerController.input.JumpState);
 
 	public void HandleDash(Vector2 moveDirection)
 	{

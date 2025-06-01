@@ -39,19 +39,19 @@ public class InputReader : ScriptableObject, IPlayerActions
 		Move.Invoke(context.ReadValue<Vector2>());
 	}
 
-	public void OnJump(InputAction.CallbackContext context)
-	{
-		switch (context.phase)
-		{
-			case InputActionPhase.Started:
-				Jump.Invoke(true);
-				break;
-			case InputActionPhase.Canceled:
-				Jump.Invoke(false);
-				break;
-		}
-
-	}
+	// public void OnJump(InputAction.CallbackContext context)
+	// {
+	// 	switch (context.phase)
+	// 	{
+	// 		case InputActionPhase.Started:
+	// 			Jump.Invoke(true);
+	// 			break;
+	// 		case InputActionPhase.Canceled:
+	// 			Jump.Invoke(false);
+	// 			break;
+	// 	}
+	//
+	// }
 	
 	// public void OnDash(InputAction.CallbackContext context)
 	// {
@@ -106,22 +106,12 @@ public class InputReader : ScriptableObject, IPlayerActions
 		}
     }
     
-    public void OnDash(InputAction.CallbackContext context)
-    {
-	    // switch (context.phase)
-	    // {
-		   //  case InputActionPhase.Started:
-			  //   Dash.Invoke(true);
-			  //   break;
-		   //  case InputActionPhase.Canceled: //FIXME
-			  //   Dash.Invoke(false);
-			  //   break;
-	    // }
-	    
-	    DashState.Update(context);
-    }
-    
     public InputButtonState DashState { get; private set; } = new();
+    public InputButtonState JumpState { get; private set; } = new();
+
+    public void OnDash(InputAction.CallbackContext context) => DashState.Update(context);
+
+    public void OnJump(InputAction.CallbackContext context) => JumpState.Update(context);
 }
 
 
