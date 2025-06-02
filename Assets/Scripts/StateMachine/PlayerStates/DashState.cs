@@ -12,21 +12,21 @@ public class DashState : BaseState
 		// player.CalculateDashDirection();
 		
 		
-		player.playerPhysicsController._dashModule.OnEnterDash();
-		player.playerPhysicsController._dashModule.CalculateDashDirection(player.input);
+		player.playerPhysicsController.DashModule.OnEnterDash();
+		player.playerPhysicsController.DashModule.CalculateDashDirection(player.input.Direction);
 	}
 
 	public override void FixedUpdate()
 	{
 		// player.HandleDash();
 		
-		player.playerPhysicsController.HandleDash(player.GetMoveDirection());
+		player.playerPhysicsController.DashModule.HandleDash(player.GetMoveDirection());
 	}
 	
 	public override void OnExit()
 	{
 		// player.OnExitDash();
 		
-		player.playerPhysicsController._dashModule.OnExitDash();
+		player.playerPhysicsController.DashModule.OnExitDash();
 	}
 }

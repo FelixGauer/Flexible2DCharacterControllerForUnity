@@ -7,7 +7,7 @@ public class TurnChecker
 	public void TurnCheck(Vector2 moveDirection, Transform transform, bool wasWallSliding)
 	{
 		if (wasWallSliding) return;
-
+	
 		if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
 		{
 			Turn(transform);

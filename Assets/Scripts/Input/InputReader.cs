@@ -106,12 +106,12 @@ public class InputReader : ScriptableObject, IPlayerActions
 		}
     }
     
-    public InputButtonState DashState { get; private set; } = new();
-    public InputButtonState JumpState { get; private set; } = new();
+    public InputButtonState DashInputButtonState { get; private set; } = new();
+    public InputButtonState JumpInputButtonState { get; private set; } = new();
 
-    public void OnDash(InputAction.CallbackContext context) => DashState.Update(context);
+    public void OnDash(InputAction.CallbackContext context) => DashInputButtonState.Update(context);
 
-    public void OnJump(InputAction.CallbackContext context) => JumpState.Update(context);
+    public void OnJump(InputAction.CallbackContext context) => JumpInputButtonState.Update(context);
 }
 
 

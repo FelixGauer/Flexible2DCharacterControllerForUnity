@@ -17,8 +17,8 @@ public class RunJumpState : BaseState
         // player.playerPhysicsController.HandleJump(player._jumpKeyWasPressed, player._jumpKeyWasLetGo);
         // player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed  , player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         
-        player.playerPhysicsController.HandleJump();
-        player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
+        player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
     }
 
@@ -28,6 +28,6 @@ public class RunJumpState : BaseState
 
         // player.playerPhysicsController.OnExitJump(); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         
-        player.playerPhysicsController._jumpModule.OnExitJump(); // FIXME
+        player.playerPhysicsController.JumpModule.OnExitJump(); // FIXME
     }
 }

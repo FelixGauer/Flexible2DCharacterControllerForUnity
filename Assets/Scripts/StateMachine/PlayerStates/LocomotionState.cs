@@ -19,11 +19,7 @@ public class LocomotionState : BaseState
 	{
 		// player.HandleGround();	
 		
-
-
-		player.playerPhysicsController.HandleGround();
-
-		
+		player.playerPhysicsController.GroundModule.HandleGround();
 
 		Debug.Log("MoveEnter");
 	}
@@ -35,7 +31,13 @@ public class LocomotionState : BaseState
 		// player.playerPhysicsController.HandleMovement();
 		
 		
-		player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+
+	}
+
+	public override void OnExit()
+	{
+		player.playerPhysicsController.FallModule.CoyoteTimerStart();  // FIXME
 
 	}
 }

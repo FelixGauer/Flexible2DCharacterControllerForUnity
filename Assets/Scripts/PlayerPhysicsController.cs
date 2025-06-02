@@ -4,44 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
 
-public class GroundModule
-{
-	private readonly Rigidbody2D _rigidbody;
-
-	private Vector2 _moveVelocity;
-	private readonly PlayerControllerStats _playerControllerStats;
-	private readonly PhysicsContext _physicsContext;
-
-	public GroundModule(Rigidbody2D rigidbody, PlayerControllerStats playerControllerStats , PhysicsContext physicsContext) 
-	{
-		_rigidbody = rigidbody;
-		_playerControllerStats = playerControllerStats;
-		_physicsContext = physicsContext;
-	}
-
-	public void HandleGround()
-	{
-		// Debug.Log(maxYPosition);
-		// if (maxYPosition > 0)
-		// {
-		// 	maxYPosition = 0;
-		// }
-
-		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
-
-		// _isJumping = false; // Сброс флага прыжка
-		// _coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
-
-		_moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
-
-		_physicsContext.MoveVelocity = _moveVelocity;
-	}
-}
 public class PhysicsContext 
 {
 	public Vector2 MoveVelocity { get; set; }
 	public bool VariableJumpHeight { get; set; }
+	public bool WasWallSliding {get; set;}
 
 	public float NumberAvailableJumps { get; set; }
 	public float NumberAvailableDash { get; set; }
@@ -49,15 +16,39 @@ public class PhysicsContext
 	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
 	{
 		// Применение гравитации
-		 moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
-		 return moveVelocity;
+		moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+		return moveVelocity;
+	}
+}
+public class GroundModule
+{
+	private readonly Rigidbody2D _rigidbody;
+
+	private readonly PlayerControllerStats _playerControllerStats;
+	private readonly PhysicsContext _physicsContext;
+	
+	private Vector2 _moveVelocity;
+
+	public GroundModule(PlayerControllerStats playerControllerStats , PhysicsContext physicsContext) 
+	{
+		_playerControllerStats = playerControllerStats;
+		_physicsContext = physicsContext;
+	}
+
+	public void HandleGround()
+	{
+		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+
+		_moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
+
+		_physicsContext.MoveVelocity = _moveVelocity;
 	}
 }
 public class JumpModule
 {
-	public JumpModule(PhysicsContext physicsContext, Rigidbody2D rigidbody, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer)
+	public JumpModule(PhysicsContext physicsContext, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer)
 	{
-		_rigidbody = rigidbody;
 		_collisionsChecker = collisionsChecker;
 		_playerControllerStats = playerControllerStats;
 
@@ -65,29 +56,68 @@ public class JumpModule
 		_jumpBufferTimer = jumpBufferTimer;
 
 		_physicsContext = physicsContext;
-
-		// _jumpCoyoteTimer = new CountdownTimer(playerControllerStats.CoyoteTime);
-		// _jumpBufferTimer = new CountdownTimer(playerControllerStats.BufferTime);
 	}
 
-	private PhysicsContext _physicsContext;
-	
-	private Rigidbody2D _rigidbody;
+	private readonly PhysicsContext _physicsContext;
 	private readonly CollisionsChecker _collisionsChecker;
 	private readonly PlayerControllerStats _playerControllerStats;
-
-	private CountdownTimer _jumpCoyoteTimer;
-	private CountdownTimer _jumpBufferTimer;
+	private readonly CountdownTimer _jumpCoyoteTimer;
+	private readonly CountdownTimer _jumpBufferTimer;
 	
 	private Vector2 _moveVelocity;
-	
 	private bool _variableJumpHeight;
 	private bool _positiveMoveVelocity;
 	private float _numberAvailableJumps;
+	
+	
+	private bool _jumpKeyReleased;
 
-	private bool _isJumping;
-	private bool _isCutJumping;
+	public void Test1Update(InputButtonState jumpState)
+	{
+		// Обработка ввода
+		if (jumpState.WasPressedThisFrame)
+		{
+			_jumpBufferTimer.Start();
+		}
+		if (jumpState.WasReleasedThisFrame)
+		{
+			_jumpKeyReleased = true;
+		}
+	}
 
+	public void Test2FixedUpdate(InputButtonState jumpState)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+
+		if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
+		if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
+
+		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f))
+		{
+			if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
+			{
+				_physicsContext.NumberAvailableJumps -= 1f;
+			}
+			ExecuteJump();
+			if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
+				ExecuteVariableJumpHeight();
+			_physicsContext.NumberAvailableJumps -= 1;
+			_jumpBufferTimer.Stop();
+			_jumpCoyoteTimer.Stop();
+			_jumpCoyoteTimer.Reset();
+			_jumpBufferTimer.Reset();
+		}
+
+		if (_jumpKeyReleased)
+		{
+			ExecuteVariableJumpHeight();
+			_jumpKeyReleased = false;
+		}
+
+		_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
+		_physicsContext.MoveVelocity = _moveVelocity;
+	}
+	
 	public void HandleJump(InputButtonState jumpState)
 	{
 		_moveVelocity = _physicsContext.MoveVelocity;
@@ -119,14 +149,13 @@ public class JumpModule
 
 			// Уменьшение количества доступных прыжков
 			_physicsContext.NumberAvailableJumps -= 1;
-			// Ставим флаг прыжка
-			_isJumping = true;
 
 			// Стоп и сброс таймеров
 			_jumpBufferTimer.Stop();
 			_jumpCoyoteTimer.Stop();
 			_jumpCoyoteTimer.Reset();
 			_jumpBufferTimer.Reset();
+			
 			// Запуск минимального забуферированного прыжка (если пробел был быстро отпущен)
 			// if (_physicsContext.VariableJumpHeight)
 			// {
@@ -166,7 +195,6 @@ public class JumpModule
 	public void OnExitJump()
 	{
 		_positiveMoveVelocity = false;
-		_isCutJumping = false;
 	}
 	
 	public bool CanFall()
@@ -187,8 +215,6 @@ public class JumpModule
 	// Метод для выполнения неполного прыжка
 	private void ExecuteVariableJumpHeight()
 	{
-		// Ставим флаг короткого прыжка
-		_isCutJumping = true;
 
 		// Изменения Y на минимальную высоту прыжка
 		if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
@@ -221,6 +247,12 @@ public class FallModule
 	private PhysicsContext _physicsContext;
 
 	private Vector2 _moveVelocity;
+	private bool _coyoteUsable;
+
+	// public void Test(InputButtonState jumpState)
+	// {
+	// 	if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
+	// }
 	
 	public void HandleFalling(InputButtonState jumpState)
 	{
@@ -237,19 +269,16 @@ public class FallModule
 		// Гравитация в верхней точки прыжыка
 		if (Mathf.Abs(_rigidbody.linearVelocity.y) < _playerControllerStats.jumpHangTimeThreshold)
 		{
-			// SetGravity(_playerControllerStats.jumpHangGravityMult);
 			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.jumpHangGravityMult);
 
 		} // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
 		else if (jumpState.IsHeld)
 		{
-			// SetGravity(_playerControllerStats.JumpGravityMultiplayer);
 			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
 
 		} // Гравитация в падении
 		else
 		{
-			// SetGravity(_playerControllerStats.FallGravityMultiplayer);
 			_moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.FallGravityMultiplayer);
 		}
 
@@ -261,18 +290,20 @@ public class FallModule
 		// ApplyMovement();
 	}
 
-	private bool _coyoteUsable;
 
 	// Метод отвечающий за запуск таймера кайота при входе в состояние падения
 	public void CoyoteTimerStart()
 	{
 		// При спуске с платформы запускаем таймер кайота прыжка
 		// if (_coyoteUsable && !_isJumping) // TODO только на запуске 
-		if (_coyoteUsable) // TODO только на запуске 
-		{
-			_coyoteUsable = false;
-			_jumpCoyoteTimer.Start();
-		}
+		// if (_coyoteUsable) // TODO только на запуске 
+		// {
+		// 	_coyoteUsable = false;
+		// 	_jumpCoyoteTimer.Start();
+		// }
+		
+		_jumpCoyoteTimer.Start();
+
 	}
 
 	// Метод вызываемый при выходе из состояния падения
@@ -280,16 +311,16 @@ public class FallModule
 	{
 		// Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
 		// Также используется для конкретной реализации буферного прыжка в StateMachine
+		// if (_collisionsChecker.IsGrounded) HandleGround();
 		if (_collisionsChecker.IsGrounded) HandleGround();
+
 		// if (_collisionsChecker.IsTouchingWall) _isRunning = false; // FIXME
 	}
-	
 	
 	public void HandleGround()
 	{
 		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
 		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
-		// _numberAvailableDash = _stats.MaxNumberDash; // При касании земли возвращение рывков
 	
 		// _isJumping = false; // Сброс флага прыжка
 		_coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
@@ -297,18 +328,14 @@ public class FallModule
 		_moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
 	}
 }
-
 public class MovementModule 
 {
-	private readonly Rigidbody2D _rigidbody;
-
 	private Vector2 _targetVelocity;
 	private Vector2 _moveVelocity;
-	private PhysicsContext _physicsContext;
+	private readonly PhysicsContext _physicsContext;
 
-	public MovementModule(Rigidbody2D rigidbody, PhysicsContext physicsContext) 
+	public MovementModule(PhysicsContext physicsContext) 
 	{
-		_rigidbody = rigidbody;
 		_physicsContext = physicsContext;
 	}
 
@@ -330,27 +357,22 @@ public class MovementModule
 		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
 		
 		_physicsContext.MoveVelocity = _moveVelocity;
-
-		// Debug.Log(_physicsContext.MoveVelocity);
 	}
 }
 public class DashModule 
 {
-	private readonly Rigidbody2D _rigidbody;
-
-	private Vector2 _moveVelocity;
-	private PhysicsContext _physicsContext;
+	private readonly PhysicsContext _physicsContext;
 	private readonly PlayerControllerStats _playerControllerStats;
-	private CountdownTimer _dashTimer;
-	
-	private Vector2 _dashDirection;
+	private readonly CountdownTimer _dashTimer;
 	private readonly TurnChecker _turnChecker;
+	
+	private Vector2 _moveVelocity;
+	private Vector2 _dashDirection;
 	
 	private bool IsFacingRight => _turnChecker.IsFacingRight;
 
-	public DashModule(Rigidbody2D rigidbody, PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
+	public DashModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
 	{
-		_rigidbody = rigidbody;
 		_physicsContext = physicsContext;
 		_playerControllerStats = playerControllerStats;
 		_dashTimer = dashTimer;
@@ -401,10 +423,10 @@ public class DashModule
 	}
 
 	// Расчет направления рывка
-	public void CalculateDashDirection(InputReader input)
+	public void CalculateDashDirection(Vector2 _moveDirection)
 	{
-		_dashDirection = input.Direction;
-		// _dashDirection = _moveDirection;
+		// _dashDirection = input.Direction;
+		_dashDirection = _moveDirection;
 		
 		_dashDirection = GetClosestDirection(_dashDirection); // Поиск ближайшего допустимого направления
 	}
@@ -445,9 +467,168 @@ public class DashModule
 		return Mathf.Abs(direction.x) == 1 && Mathf.Abs(direction.y) == 1;
 	}
 }
+public class WallSlideModule // TODO Разделить на 2 состояния WallSlide, WallSlideJump
+{
+	private readonly PhysicsContext _physicsContext;
+	private readonly PlayerControllerStats _playerControllerStats;
+	private readonly TurnChecker _turnChecker;
+	private readonly CountdownTimer _wallJumpTimer;
+	
+	private Vector2 _moveVelocity;
+	private bool _wasWallSliding;
+	
+	private bool IsFacingRight => _turnChecker.IsFacingRight;
+
+	public WallSlideModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer wallJumpTimer) 
+	{
+		_physicsContext = physicsContext;
+		_playerControllerStats = playerControllerStats;
+		_turnChecker = turnChecker;
+		_wallJumpTimer = wallJumpTimer;
+	}
+	
+	public void HandleWallInteraction(Vector2 _moveDirection, InputButtonState jumpInputButtonState)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+
+		HandleWallSlide(_moveDirection);
+		
+		if (jumpInputButtonState.WasPressedThisFrame)
+		{
+			HandleWallJump(_moveDirection);
+		}
+		
+		_physicsContext.MoveVelocity = _moveVelocity;
+
+		// if (_jumpKeyWasPressed)
+		// {
+		// 	HandleWallJump(Vector2 _moveDirection);
+		// }
+	}
+
+	// Обработка скольжения по стене WallSlide
+	public void HandleWallSlide(Vector2 _moveDirection)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+		// Плавное Изменение Y на стене,для скольжения 
+		// Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
+		_moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -_playerControllerStats.WallSlideSpeedMax, _playerControllerStats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
+
+		HandleWallJumpTimer(_moveDirection);
+
+		// Если ввод обратный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
+		// Запуск таймера при попытке слезть со стены, помогает выполнить прыжок от стены
+		if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _physicsContext.WasWallSliding)
+		{
+			_wallJumpTimer.Start();
+		}
+
+		_physicsContext.MoveVelocity = _moveVelocity;
+	}
+
+	// Метод управления таймером
+	private void HandleWallJumpTimer(Vector2 _moveDirection)
+	{
+		// Управление состоянием таймера и скольжением по стене
+		if (_wallJumpTimer.IsFinished)
+		{
+			// Персонаж продолжает скользить по стене, сбрасываем таймер
+			if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
+			{
+				_wallJumpTimer.Stop();
+				_wallJumpTimer.Reset();
+			}
+			else // Если персонаж пытается отойти от стены, останавливаем скольжение
+			{
+				_physicsContext.WasWallSliding = false;
+			}
+		}
+	}
+
+	// Метод вычисляет направление стены по X
+	public float CalculateWallDirectionX()
+	{
+		return IsFacingRight ? 1f : -1f;
+	}
+
+	// Применение прыжка со стены WallJump
+	public void HandleWallJump(Vector2 _moveDirection)
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+
+		// Расчет направление персонажа по X
+		float wallDirectionX = CalculateWallDirectionX();
+	
+		// Если ввод в сторону стены
+		if (_moveDirection.x == wallDirectionX)
+		{
+			Debug.Log("В СТОРОНУ СТЕНЫ");
+
+			// Прыжок вверх по стене
+			_moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpClimb.x, _playerControllerStats.WallJumpClimb.y);
+		}
+		else if (_moveDirection.x == 0f) // Если ввод равен 0
+		{
+			Debug.Log("ПО СТЕНЕ");
+
+			// Прыжок от стены
+			_moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpOff.x, _playerControllerStats.WallJumpOff.y);
+		}
+		else // Если ввод сторону от стены, обратную сторону
+		{
+			Debug.Log("ОТ СТЕНЫ");
+
+			// Прыжок в сторону от стены
+			_moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallLeap.x, _playerControllerStats.WallLeap.y);
+		}
+		
+		_physicsContext.MoveVelocity = _moveVelocity;
+	}
+
+	// Метод вызываемый при входе в состояние wallJump/Slide
+	
+	public void OnEnterWallSliding()
+	{
+		// Начальная скорость скольжения, x = 0 - персонаж падает вниз после окончания скольжения, то есть не сохраняет скорость
+		_moveVelocity = new Vector2(0f, -_playerControllerStats.StartVelocityWallSlide);
+		_physicsContext.MoveVelocity = _moveVelocity;
+		
+		// Сброс таймера
+		_wallJumpTimer.Reset();
+
+		// Флаг скольжения по стене
+		_physicsContext.WasWallSliding = true;
+
+		// Обнуления максКолвоПрыжков, максКолвоРывков
+		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
+	}
+
+	// Метод вызываемый при выходе в состояние wallJump/Slide
+	public void OnExitWallSliding()
+	{
+		// Остановка таймера
+		_wallJumpTimer.Stop();
+		
+		// Сброс флага скольжения
+		_physicsContext.WasWallSliding = false;
+	}
+	
+	
+}
+
 
 public class PlayerPhysicsController
 {
+	public readonly MovementModule MovementModule;
+	public readonly GroundModule GroundModule;
+	public readonly JumpModule JumpModule;
+	public readonly FallModule FallModule; 
+	public readonly DashModule DashModule;
+	public readonly WallSlideModule WallSlideModule;
+	
+	public readonly PhysicsContext PhysicsContext;
+
 	private readonly Rigidbody2D _rigidbody;
 	private readonly CollisionsChecker _collisionsChecker;
 	private readonly PlayerControllerStats _stats;
@@ -456,20 +637,11 @@ public class PlayerPhysicsController
 	private readonly CountdownTimer _jumpCoyoteTimer;
 	private readonly CountdownTimer _jumpBufferTimer;
 	private readonly CountdownTimer _dashTimer;
+	private readonly CountdownTimer _wallJumpTimer;
 
-	private readonly MovementModule _movementModule;
-	private readonly GroundModule _groundModule;
 	
-	public readonly JumpModule _jumpModule; // FIXME
-	public readonly FallModule _fallModule; // FIXME
-	public readonly DashModule _dashModule; // FIXME
-
 	private readonly PlayerController _playerController;
-	public readonly PhysicsContext _physicsContext;
-
-	public Vector2 _moveVelocity;
-	private Vector2 _targetVelocity;
-
+	
 	public PlayerPhysicsController(
 		Rigidbody2D rigidbody,
 		CountdownTimer jumpCoyoteTimer,
@@ -478,7 +650,8 @@ public class PlayerPhysicsController
 		PlayerControllerStats stats,
 		PlayerController playerController,
 		CountdownTimer dashTimer,
-		TurnChecker turnChecker)
+		TurnChecker turnChecker,
+		CountdownTimer wallJumpTimer)
 	{
 		_rigidbody = rigidbody;
 		_jumpCoyoteTimer = jumpCoyoteTimer;
@@ -488,40 +661,47 @@ public class PlayerPhysicsController
 		_playerController = playerController;
 		_dashTimer = dashTimer;
 		_turnChecker = turnChecker;
+		_wallJumpTimer = wallJumpTimer;
 
-		_physicsContext = new PhysicsContext();
+		PhysicsContext = new PhysicsContext();
 
-		_movementModule = new MovementModule(_rigidbody, _physicsContext);
-		_groundModule = new GroundModule(_rigidbody, _stats, _physicsContext);
-		_jumpModule = new JumpModule(_physicsContext, _rigidbody, _collisionsChecker, _stats, _jumpCoyoteTimer, _jumpBufferTimer);
-		_fallModule = new FallModule(_physicsContext, _rigidbody, _collisionsChecker, _stats, _jumpCoyoteTimer, _jumpBufferTimer);
-		_dashModule = new DashModule(_rigidbody, _physicsContext, _stats, _turnChecker, _dashTimer);
+		MovementModule = new MovementModule(PhysicsContext);
+		GroundModule = new GroundModule(_stats, PhysicsContext);
+		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _stats, _jumpCoyoteTimer, _jumpBufferTimer);
+		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _stats, _jumpCoyoteTimer, _jumpBufferTimer);
+		DashModule = new DashModule(PhysicsContext, _stats, _turnChecker, _dashTimer);
+		WallSlideModule = new WallSlideModule(PhysicsContext, _stats, _turnChecker, _wallJumpTimer);
 	}
-
 
 	public void ApplyMovement()
 	{
-		_rigidbody.linearVelocity = _physicsContext.MoveVelocity;
+		_rigidbody.linearVelocity = PhysicsContext.MoveVelocity;
 	}
 
-	public void HandleMovement(Vector2 moveDirection, float speed, float acceleration, float deceleration)
-	{
-		_movementModule.HandleMovement(moveDirection, speed, acceleration, deceleration);
-	}
+	#region Pattern facade
 
-	public void HandleGround()
-	{
-		_groundModule.HandleGround();
-	}
 
-	public void HandleJump() => _jumpModule.HandleJump(_playerController.input.JumpState);
+	//
+	// public void HandleMovement(Vector2 moveDirection, float speed, float acceleration, float deceleration)
+	// {
+	// 	_movementModule.HandleMovement(moveDirection, speed, acceleration, deceleration);
+	// }
+	//
+	// public void HandleGround()
+	// {
+	// 	_groundModule.HandleGround();
+	// }
+	//
+	// public void HandleJump() => _jumpModule.HandleJump(_playerController.input.JumpState);
+	//
+	// public void HandleFalling() => _fallModule.HandleFalling(_playerController.input.JumpState);
+	//
+	// public void HandleDash(Vector2 moveDirection)
+	// {
+	// 	_dashModule.HandleDash(moveDirection);
+	// }
+	//
+	// public void IsReadyToFall() => _jumpModule.CanFall();
 
-	public void HandleFalling() => _fallModule.HandleFalling(_playerController.input.JumpState);
-
-	public void HandleDash(Vector2 moveDirection)
-	{
-		_dashModule.HandleDash(moveDirection);
-	}
-
-	public void IsReadyToFall() => _jumpModule.CanFall();
+	#endregion
 }

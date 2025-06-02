@@ -8,12 +8,9 @@ public class IdleState : BaseState
 	public override void OnEnter()
 	{
 		player._moveVelocity.x = 0f;
-		player.playerPhysicsController._moveVelocity.x = 0f;
-		player.playerPhysicsController._physicsContext.MoveVelocity = Vector2.zero;
-		
+		player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
 		
 		Debug.Log("IdleState");
-		
 		
 		// player.playerPhysicsController.HandleGround();
 		
@@ -27,7 +24,7 @@ public class IdleState : BaseState
 
 		// player.playerPhysicsController._fallModule.OnExitFall();
 		
-		player.playerPhysicsController.HandleGround();
+		player.playerPhysicsController.GroundModule.HandleGround();
 	}
 
 	public override void FixedUpdate()
