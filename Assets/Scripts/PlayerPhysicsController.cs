@@ -616,6 +616,117 @@ public class WallSlideModule // TODO Разделить на 2 состояни�
 	
 	
 }
+public class CrouchModule
+{
+	private readonly PhysicsContext _physicsContext;
+	private readonly PlayerControllerStats _playerControllerStats;
+	private readonly CapsuleCollider2D _capsuleCollider;
+	private readonly Transform _spriteTransform;
+
+	private Vector2 _moveVelocity;
+	private Vector2 _dashDirection;
+
+	private Vector2 normalHeight => _capsuleCollider.size;
+
+	public CrouchModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, CapsuleCollider2D capsuleCollider, Transform spriteTransform) 
+	{
+		_physicsContext = physicsContext;
+		_playerControllerStats = playerControllerStats;
+		_capsuleCollider = capsuleCollider;
+		_spriteTransform = spriteTransform;
+	}
+	
+	public void OnEnterCrouch()
+	{
+		SetCrouchState(true);
+	}
+	
+	// Метод вызываемый при выходе из состояния приседа
+	public void OnExitCrouch(InputButtonState crouchRollButtonState)
+	{
+		// if (_dashKeyIsPressed) return;
+		
+		if (crouchRollButtonState.WasPressedThisFrame) return;
+		
+		SetCrouchState(false);
+	}
+
+	// Метод который регулирует высоту спрайта и коллайдера в зависиомсти сидит ли персонаж или стоит
+	private void SetCrouchState(bool isCrouching)
+	{
+		// _isSitting = isCrouching;
+		// Еси персонаж сидит его высота равна высоте приседа, если нет обычной высоте
+		var height = isCrouching ? _playerControllerStats.CrouchHeight : normalHeight.x;
+		// Еси персонаж сидит его оффсет равен оффсету приседа, если нет то нулю
+		var offset = isCrouching ? -_playerControllerStats.CrouchOffset : 0;
+
+		// Настройка коллайдера
+		_capsuleCollider.size = new Vector2(_capsuleCollider.size.x, height);
+		_capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
+
+		// Настройка спрайта
+		_spriteTransform.localScale = isCrouching ? new Vector2(1f, _playerControllerStats.CrouchHeight) : Vector2.one;
+		_spriteTransform.localPosition = isCrouching ? new Vector2(_spriteTransform.localPosition.x, offset) : Vector2.zero;
+	}
+}
+
+public class CrouchRollModule
+{
+	private readonly PhysicsContext _physicsContext;
+	private readonly PlayerControllerStats _playerControllerStats;
+	private readonly CapsuleCollider2D _capsuleCollider;
+	private readonly Transform _spriteTransform;
+	private readonly CountdownTimer _crouchRollTimer;
+	private readonly TurnChecker _turnChecker;
+	
+	private bool IsFacingRight => _turnChecker.IsFacingRight;
+
+
+
+	private Vector2 _moveVelocity;
+	private Vector2 _crouchRollDirection;
+
+
+	public CrouchRollModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, CapsuleCollider2D capsuleCollider, Transform spriteTransform, CountdownTimer crouchRollTimer, TurnChecker turnChecker) 
+	{
+		_physicsContext = physicsContext;
+		_playerControllerStats = playerControllerStats;
+		_capsuleCollider = capsuleCollider;
+		_spriteTransform = spriteTransform;
+		_crouchRollTimer = crouchRollTimer;
+		_turnChecker = turnChecker;
+	}
+	
+	public void CrouchRoll()
+	{
+		_moveVelocity = _physicsContext.MoveVelocity;
+		_moveVelocity.x = _crouchRollDirection.x * _playerControllerStats.CrouchRollVelocity;
+		_physicsContext.MoveVelocity = _moveVelocity;
+	}
+	
+	// Метод вызываемый при входе в состояние кувырка в приседе
+	public void OnEnterCrouchRoll()
+	{
+		// SetCrouchState(true);
+
+		_crouchRollTimer.Start();
+		// Сохранение направления кувырка
+		_crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
+		// _dashKeyIsPressed = false;
+	}
+	
+	// Метод вызываемый при выходе из кувырка в приседе
+	public void OnExitCrouchRoll()
+	{
+		// SetCrouchState(false);
+
+		_crouchRollTimer.Stop();
+		_crouchRollTimer.Reset();
+		// Если кувырок сделан с уступа вернуть высоту коллайдера и спрайта
+		// if (!_collisionsChecker.IsGrounded) // FIXME
+		// 	SetCrouchState(false); 
+	}
+}
 
 
 public class PlayerPhysicsController
@@ -626,6 +737,9 @@ public class PlayerPhysicsController
 	public readonly FallModule FallModule; 
 	public readonly DashModule DashModule;
 	public readonly WallSlideModule WallSlideModule;
+	public readonly CrouchModule CrouchModule;
+	public readonly CrouchRollModule CrouchRollModule;
+
 	
 	public readonly PhysicsContext PhysicsContext;
 
@@ -651,7 +765,8 @@ public class PlayerPhysicsController
 		PlayerController playerController,
 		CountdownTimer dashTimer,
 		TurnChecker turnChecker,
-		CountdownTimer wallJumpTimer)
+		CountdownTimer wallJumpTimer,
+		CountdownTimer crouchRollTimer)
 	{
 		_rigidbody = rigidbody;
 		_jumpCoyoteTimer = jumpCoyoteTimer;
@@ -671,6 +786,9 @@ public class PlayerPhysicsController
 		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _stats, _jumpCoyoteTimer, _jumpBufferTimer);
 		DashModule = new DashModule(PhysicsContext, _stats, _turnChecker, _dashTimer);
 		WallSlideModule = new WallSlideModule(PhysicsContext, _stats, _turnChecker, _wallJumpTimer);
+		CrouchModule = new CrouchModule(PhysicsContext, _stats, playerController._capsuleCollider, playerController.spriteTransform);
+		CrouchRollModule = new CrouchRollModule(PhysicsContext, _stats, playerController._capsuleCollider, playerController.spriteTransform, crouchRollTimer, turnChecker);
+
 	}
 
 	public void ApplyMovement()

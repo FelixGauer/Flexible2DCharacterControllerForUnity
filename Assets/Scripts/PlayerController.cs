@@ -20,11 +20,11 @@ public class PlayerController : MonoBehaviour
 	[Header("References")]
 	[SerializeField] public InputReader input;
 	[SerializeField] public PlayerControllerStats stats; // FIXME private
-	[SerializeField] Transform spriteTransform;
+	[SerializeField] public Transform spriteTransform;
 
 	private CollisionsChecker _collisionsChecker;
 	private Rigidbody2D _rigidbody;
-	private CapsuleCollider2D _capsuleCollider;
+	public CapsuleCollider2D _capsuleCollider;
 
 	// InputReader parameters
 	private Vector2 _moveDirection;
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker.IsSitting = () => _isSitting;
 		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
 
-		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpCoyoteTimer, _jumpBufferTimer, _collisionsChecker, stats, this, _dashTimer, TurnChecker, _wallJumpTimer);
+		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpCoyoteTimer, _jumpBufferTimer, _collisionsChecker, stats, this, _dashTimer, TurnChecker, _wallJumpTimer, _crouchRollTimer);
 
 		SetupStateMachine();
 	}
@@ -144,15 +144,11 @@ public class PlayerController : MonoBehaviour
 		At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));
 		At(wallJumpState, wallSlideState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 
-
-
-		
-
 		At(runState, runJumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 		At(runState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 
 		//
-		At(runFallState, fallState, new FuncPredicate(() => !_runKeyIsPressed && !_collisionsChecker.IsGrounded));
+		At(runFallState, fallState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && !_collisionsChecker.IsGrounded));
 		At(runFallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
 		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
 		At(runFallState, runJumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && (_jumpCoyoteTimer.IsRunning || playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f)));
@@ -162,16 +158,16 @@ public class PlayerController : MonoBehaviour
 		// At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._moveVelocity.y < 0f && playerPhysicsController._positiveMoveVelocity) || playerPhysicsController._isCutJumping))); // FIXME СЕЙЧАС ФИКС
 		At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController.PhysicsContext.MoveVelocity.y < 0f && playerPhysicsController.JumpModule.CanFall())))); // FIXME СЕЙЧАС ФИКС
 
-		At(runFallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _runKeyIsPressed)); 
+		At(runFallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld)); 
 		
 		// At(runJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController._moveVelocity.y < 0f && playerPhysicsController._positiveMoveVelocity) || playerPhysicsController._isCutJumping)));
 		At(runJumpState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 
 		At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(locomotionState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
-		At(locomotionState, runState, new FuncPredicate(() => _runKeyIsPressed && _collisionsChecker.IsGrounded));
-		At(locomotionState, idleCrouchState, new FuncPredicate(() => _crouchKeyIsPressed && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
-		At(locomotionState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
+		At(locomotionState, runState, new FuncPredicate(() => input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded));
+		At(locomotionState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
+		At(locomotionState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld));
 		At(locomotionState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
 		// At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController._moveVelocity.x) < 0.1f)); // FIXME  playerPhysicsController
 
@@ -185,9 +181,9 @@ public class PlayerController : MonoBehaviour
 		At(fallState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 		At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
 		At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded )); // FIXME && _moveDirection == Vector2.zero
-		At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed && _moveDirection[0] == 0));
-		At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _crouchKeyIsPressed)); // FIXME
-		At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _runKeyIsPressed)); // FIXME 
+		At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
+		At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld)); // FIXME
+		At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld)); // FIXME 
 		At(fallState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 		At(fallState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 
@@ -197,61 +193,63 @@ public class PlayerController : MonoBehaviour
 		// At(wallJumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && _wallJumpTimer.IsFinished && !_collisionsChecker.IsTouchingWall));// FIXME jumpState
 
 		At(wallJumpState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.WallSlideModule.CalculateWallDirectionX() != _moveDirection.x));
-		At(wallJumpState, idleCrouchState, new FuncPredicate(() => _crouchKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection[0] == 0));
+		At(wallJumpState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _collisionsChecker.IsGrounded && _moveDirection[0] == 0));
 		
 		// Any(dashState, new FuncPredicate(() => _dashKeyIsPressed && _numberAvailableDash > 0f && !_isSitting)); //FIXME !IsSitting
 		
 		At(dashState, idleState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
-		At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _runKeyIsPressed));
+		At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld));
 		At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
 		At(dashState, wallJumpState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 		At(dashState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && _numberAvailableJumps > 0f));
-		At(dashState, idleCrouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _crouchKeyIsPressed && _moveDirection[0] == 0));
-		At(dashState, crouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && _crouchKeyIsPressed));
+		At(dashState, idleCrouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
+		At(dashState, crouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld));
 		At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded));
 		
 		// IDLECROUCH STATE
-		At(idleCrouchState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed && _moveDirection[0] != 0));
+		At(idleCrouchState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] != 0));
 		At(idleCrouchState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
-		At(idleCrouchState, idleState, new FuncPredicate(() => !_crouchKeyIsPressed && _moveDirection[0] == 0));
-		At(idleCrouchState, crouchRollState, new FuncPredicate(() => _crouchKeyIsPressed && _dashKeyIsPressed));
+		At(idleCrouchState, idleState, new FuncPredicate(() => !input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
+		// At(idleCrouchState, crouchRollState, new FuncPredicate(() => _crouchKeyIsPressed && _dashKeyIsPressed));
+		At(idleCrouchState, crouchRollState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
+
 
 		// CROUCH STATE
-		At(crouchState, idleCrouchState, new FuncPredicate(() => _crouchKeyIsPressed && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
+		At(crouchState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
 		At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		At(crouchState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 		// At(crouchState, crouchRollState, new FuncPredicate(() => _dashKeyIsPressed)); //FIXME Переименовать _dashKeyWasPressed _crouchKeyWasPressed input.DashState.WasPressedThisFrame
 		At(crouchState, crouchRollState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame)); //FIXME Переименовать _dashKeyWasPressed _crouchKeyWasPressed input.DashState.WasPressedThisFrame
-		At(crouchState, runState, new FuncPredicate(() => _runKeyIsPressed && !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
-		At(crouchState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
-		At(crouchState, locomotionState, new FuncPredicate(() => !_crouchKeyIsPressed && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
+		At(crouchState, runState, new FuncPredicate(() => input.RunInputButtonState.IsHeld && !input.CrouchInputButtonState.IsHeld && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
+		At(crouchState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && !input.CrouchInputButtonState.IsHeld && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
+		At(crouchState, locomotionState, new FuncPredicate(() => !input.CrouchInputButtonState.IsHeld && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead)); // FIXME Смотреть выше
 
 		// At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning || !_collisionsChecker.IsGrounded));
-		At(crouchRollState, idleState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !_crouchKeyIsPressed)); //
+		At(crouchRollState, idleState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !input.CrouchInputButtonState.IsHeld)); //
 		At(crouchRollState, fallState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !_collisionsChecker.IsGrounded)); // Подумать
-		At(crouchRollState, idleCrouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && _crouchKeyIsPressed && _moveDirection[0] == 0));
+		At(crouchRollState, idleCrouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
 		At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
 		
 		At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
-		At(runState, idleState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
+		At(runState, idleState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
 		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed - 0.5f)); // FIXME
 		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed * 0.9f));  // FIXME
 		// At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded && _moveVelocity.x < stats.RunSpeed * runToMoveThreshold)); // FIXME
-		At(runState, locomotionState, new FuncPredicate(() => !_runKeyIsPressed && _collisionsChecker.IsGrounded));
+		At(runState, locomotionState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded));
 		At(runState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 		// At(runState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
 		At(runState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
 		At(runState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
-		At(runState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
+		At(runState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld));
 
 		// At(idleState, dashState, new FuncPredicate(() => _dashKeyWasPressed));
 		At(idleState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
 		At(idleState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 		// At(idleState, jumpState, new FuncPredicate(() => input.JumpState.IsHeld));
 
-		At(idleState, idleCrouchState, new FuncPredicate(() => _crouchKeyIsPressed && _moveDirection[0] == 0));
-		At(idleState, crouchState, new FuncPredicate(() => _crouchKeyIsPressed));
-		At(idleState, runState, new FuncPredicate(() => _moveDirection != Vector2.zero && _runKeyIsPressed));
+		At(idleState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
+		At(idleState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld));
+		At(idleState, runState, new FuncPredicate(() => _moveDirection != Vector2.zero && input.RunInputButtonState.IsHeld));
 		At(idleState, locomotionState, new FuncPredicate(() => _moveDirection != Vector2.zero));
 
 		stateMachine.SetState(idleState);

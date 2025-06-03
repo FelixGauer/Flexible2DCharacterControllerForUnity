@@ -67,31 +67,31 @@ public class InputReader : ScriptableObject, IPlayerActions
 	// 	}
 	// }
 
-    public void OnCrouch(InputAction.CallbackContext context)
-    {
-        switch (context.phase)
-		{
-			case InputActionPhase.Started:
-				Crouch.Invoke(true);
-				break;
-			case InputActionPhase.Canceled: //FIXME
-				Crouch.Invoke(false);
-				break;
-		}
-    }
-
-    public void OnRun(InputAction.CallbackContext context)
-    {
-        switch (context.phase)
-		{
-			case InputActionPhase.Started:
-				Run.Invoke(true);
-				break;
-			case InputActionPhase.Canceled: //FIXME
-				Run.Invoke(false);
-				break;
-		}
-    }
+  //   public void OnCrouch(InputAction.CallbackContext context)
+  //   {
+  //       switch (context.phase)
+		// {
+		// 	case InputActionPhase.Started:
+		// 		Crouch.Invoke(true);
+		// 		break;
+		// 	case InputActionPhase.Canceled: //FIXME
+		// 		Crouch.Invoke(false);
+		// 		break;
+		// }
+  //   }
+  //
+  //   public void OnRun(InputAction.CallbackContext context)
+  //   {
+  //       switch (context.phase)
+		// {
+		// 	case InputActionPhase.Started:
+		// 		Run.Invoke(true);
+		// 		break;
+		// 	case InputActionPhase.Canceled: //FIXME
+		// 		Run.Invoke(false);
+		// 		break;
+		// }
+  //   }
 
     public void OnCrouchRoll(InputAction.CallbackContext context)
     {
@@ -108,10 +108,16 @@ public class InputReader : ScriptableObject, IPlayerActions
     
     public InputButtonState DashInputButtonState { get; private set; } = new();
     public InputButtonState JumpInputButtonState { get; private set; } = new();
+    public InputButtonState RunInputButtonState { get; private set; } = new();
+    public InputButtonState CrouchInputButtonState { get; private set; } = new();
 
     public void OnDash(InputAction.CallbackContext context) => DashInputButtonState.Update(context);
 
     public void OnJump(InputAction.CallbackContext context) => JumpInputButtonState.Update(context);
+    
+    public void OnRun(InputAction.CallbackContext context) => RunInputButtonState.Update(context);
+    
+    public void OnCrouch(InputAction.CallbackContext context) => CrouchInputButtonState.Update(context);
 }
 
 

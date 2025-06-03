@@ -7,17 +7,27 @@ public class CrouchRollState : BaseState
 
 	public override void OnEnter()
 	{		
-		player.OnEnterCrouchRoll();
 		Debug.Log("CrouchRollState");
+
+		// player.OnEnterCrouchRoll();
+		
+		player.playerPhysicsController.CrouchRollModule.OnEnterCrouchRoll();
 	}
 
 	public override void FixedUpdate()
 	{
-		player.CrouchRoll();
+		// player.CrouchRoll();
+		player.playerPhysicsController.CrouchRollModule.CrouchRoll();
+
 	}
 
 	public override void OnExit()
 	{
+		// player.playerPhysicsController.CrouchRollModule.OnExitCrouchRoll();
+
 		player.OnExitCrouchRoll();
+		
+		player.playerPhysicsController.CrouchRollModule.OnExitCrouchRoll();
+
 	}
 }
