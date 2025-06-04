@@ -8,6 +8,11 @@ public class RunJumpState : BaseState
     {
         Debug.Log("RunJumpState");
     }
+    
+    public override void Update()
+    {
+        player.playerPhysicsController.JumpModule.Test1Update(player.input.JumpInputButtonState);
+    }
 
     public override void FixedUpdate()
     {		
@@ -17,7 +22,10 @@ public class RunJumpState : BaseState
         // player.playerPhysicsController.HandleJump(player._jumpKeyWasPressed, player._jumpKeyWasLetGo);
         // player.playerPhysicsController.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed  , player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         
-        player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
+        // player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
+
+        
+        player.playerPhysicsController.JumpModule.Test2FixedUpdate(player.input.JumpInputButtonState);
         player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
     }

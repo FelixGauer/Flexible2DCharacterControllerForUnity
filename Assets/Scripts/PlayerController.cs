@@ -147,7 +147,8 @@ public class PlayerController : MonoBehaviour
 		At(runState, runJumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 		At(runState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 
-		//
+		At(runFallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning && !input.RunInputButtonState.IsHeld));
+		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
 		At(runFallState, fallState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && !_collisionsChecker.IsGrounded));
 		At(runFallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
 		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
@@ -277,15 +278,16 @@ public class PlayerController : MonoBehaviour
 	{
 		stateMachine.FixedUpdate();
 		
-		input.DashInputButtonState.ResetFrameState(); // FIXME WallJumpState
-		input.JumpInputButtonState.ResetFrameState();
+		// input.DashInputButtonState.ResetFrameState(); // FIXME WallJumpState
+		// input.JumpInputButtonState.ResetFrameState();
 
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // обновляем максимальную высоту, если персонаж поднимается
 		{
 			maxYPosition = transform.position.y;
 		}
 
-		BumpedHead();
+		// BumpedHead();
+		playerPhysicsController.BumpedHead();
 		// ApplyMovement();
 		playerPhysicsController.ApplyMovement();
 
@@ -302,9 +304,11 @@ public class PlayerController : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		// input.DashInputButtonState.ResetFrameState(); // FIXME WallJumpState
-		// input.JumpInputButtonState.ResetFrameState();
+		input.DashInputButtonState.ResetFrameState(); // FIXME WallJumpState
+		input.JumpInputButtonState.ResetFrameState();
 	}
+	
+	
 
 	// Регион отвечающий за Crouch/CrouchRoll
 	#region Crouch
@@ -794,7 +798,7 @@ public class PlayerController : MonoBehaviour
 	// Метод проверки ударился ли персонаж головой
 	public void BumpedHead()
 	{
-		// Проверка не ударился ли персонаж голвоой платформы
+		// Проверка не ударился ли персонаж головой платформы
 		if (_collisionsChecker.BumpedHead)
 		{
 			_moveVelocity = playerPhysicsController.PhysicsContext.MoveVelocity;

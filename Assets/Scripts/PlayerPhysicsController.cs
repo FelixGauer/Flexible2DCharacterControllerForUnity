@@ -19,6 +19,19 @@ public class PhysicsContext
 		moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
 		return moveVelocity;
 	}
+	
+	// public void CoyoteTimerStart()
+	// {
+	// 	_jumpCoyoteTimer.Start();
+	// }
+	
+	// public void HandleGround()
+	// {
+	// 	NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+	// 	NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+	//
+	// 	MoveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
+	// }
 }
 public class GroundModule
 {
@@ -68,7 +81,6 @@ public class JumpModule
 	private bool _variableJumpHeight;
 	private bool _positiveMoveVelocity;
 	private float _numberAvailableJumps;
-	
 	
 	private bool _jumpKeyReleased;
 
@@ -215,7 +227,6 @@ public class JumpModule
 	// Метод для выполнения неполного прыжка
 	private void ExecuteVariableJumpHeight()
 	{
-
 		// Изменения Y на минимальную высоту прыжка
 		if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
 		{
@@ -237,22 +248,22 @@ public class FallModule
 		_physicsContext = physicsContext;
 	}
 	
-	private Rigidbody2D _rigidbody;
+	private readonly Rigidbody2D _rigidbody;
 	private readonly CollisionsChecker _collisionsChecker;
 	private readonly PlayerControllerStats _playerControllerStats;
 	
-	private CountdownTimer _jumpCoyoteTimer;
-	private CountdownTimer _jumpBufferTimer;
+	private readonly CountdownTimer _jumpCoyoteTimer;
+	private readonly CountdownTimer _jumpBufferTimer;
 
-	private PhysicsContext _physicsContext;
+	private readonly PhysicsContext _physicsContext;
 
 	private Vector2 _moveVelocity;
 	private bool _coyoteUsable;
 
-	// public void Test(InputButtonState jumpState)
-	// {
-	// 	if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
-	// }
+	public void Test(InputButtonState jumpState)
+	{
+		if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
+	}
 	
 	public void HandleFalling(InputButtonState jumpState)
 	{
@@ -317,12 +328,11 @@ public class FallModule
 		// if (_collisionsChecker.IsTouchingWall) _isRunning = false; // FIXME
 	}
 	
-	public void HandleGround()
+	private void HandleGround()
 	{
 		_physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
 		_physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
 	
-		// _isJumping = false; // Сброс флага прыжка
 		_coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
 	
 		_moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
@@ -383,7 +393,7 @@ public class DashModule
 	{
 		_moveVelocity = _physicsContext.MoveVelocity;
 
-		// Изменение скорости по оси X для совершение рывка
+		// Изменение скорости по оси X для совершения рывка
 		_moveVelocity.x = _dashDirection.x * _playerControllerStats.DashVelocity;
 
 		// Если скорость по y не равна 0, применяем рывок в оси Y
@@ -408,9 +418,7 @@ public class DashModule
 	public void OnEnterDash()
 	{
 		_dashTimer.Start(); // Запуск таймера рывка
-		// _dashKeyIsPressed = false; // Сброс флага нажатия клавиши
 		_physicsContext.NumberAvailableDash -= 1;
-		// _numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
 		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
 		_physicsContext.MoveVelocity = Vector2.zero;
 	}
@@ -423,7 +431,7 @@ public class DashModule
 	}
 
 	// Расчет направления рывка
-	public void CalculateDashDirection(Vector2 _moveDirection)
+	public void CalculateDashDirection(Vector2 _moveDirection) // Убрать из FallState и вызывать сразу в EnterState
 	{
 		// _dashDirection = input.Direction;
 		_dashDirection = _moveDirection;
@@ -467,7 +475,7 @@ public class DashModule
 		return Mathf.Abs(direction.x) == 1 && Mathf.Abs(direction.y) == 1;
 	}
 }
-public class WallSlideModule // TODO Разделить на 2 состояния WallSlide, WallSlideJump
+public class WallSlideModule
 {
 	private readonly PhysicsContext _physicsContext;
 	private readonly PlayerControllerStats _playerControllerStats;
@@ -669,7 +677,6 @@ public class CrouchModule
 		_spriteTransform.localPosition = isCrouching ? new Vector2(_spriteTransform.localPosition.x, offset) : Vector2.zero;
 	}
 }
-
 public class CrouchRollModule
 {
 	private readonly PhysicsContext _physicsContext;
@@ -728,7 +735,6 @@ public class CrouchRollModule
 	}
 }
 
-
 public class PlayerPhysicsController
 {
 	public readonly MovementModule MovementModule;
@@ -739,7 +745,6 @@ public class PlayerPhysicsController
 	public readonly WallSlideModule WallSlideModule;
 	public readonly CrouchModule CrouchModule;
 	public readonly CrouchRollModule CrouchRollModule;
-
 	
 	public readonly PhysicsContext PhysicsContext;
 
@@ -753,7 +758,6 @@ public class PlayerPhysicsController
 	private readonly CountdownTimer _dashTimer;
 	private readonly CountdownTimer _wallJumpTimer;
 
-	
 	private readonly PlayerController _playerController;
 	
 	public PlayerPhysicsController(
@@ -795,11 +799,21 @@ public class PlayerPhysicsController
 	{
 		_rigidbody.linearVelocity = PhysicsContext.MoveVelocity;
 	}
+	
+	public void BumpedHead()
+	{
+		// Проверка не ударился ли персонаж головой платформы
+		if (_collisionsChecker.BumpedHead)
+		{
+			var moveVelocity = PhysicsContext.MoveVelocity;
+			// Отправить персонажа вниз
+			moveVelocity.y = Mathf.Min(0, moveVelocity.y);
+			PhysicsContext.MoveVelocity = moveVelocity;
+		}
+	}
 
 	#region Pattern facade
 
-
-	//
 	// public void HandleMovement(Vector2 moveDirection, float speed, float acceleration, float deceleration)
 	// {
 	// 	_movementModule.HandleMovement(moveDirection, speed, acceleration, deceleration);

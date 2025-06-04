@@ -14,6 +14,12 @@ public class RunFallState : BaseState
         // player.playerPhysicsController.FallModule.CoyoteTimerStart();
 
     }
+    
+    public override void Update()
+    {
+        player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
+
+    }
 
     public override void FixedUpdate()
     {

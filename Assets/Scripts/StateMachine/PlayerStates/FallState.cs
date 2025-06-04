@@ -18,7 +18,7 @@ public class FallState : BaseState
 
 	public override void Update()
 	{
-		// player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
+		player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
 
 	}
 

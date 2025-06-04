@@ -8,8 +8,8 @@ public class RunState : BaseState
 	public override void OnEnter()
 	{		
 		Debug.Log("RunState");
-		player.OnEnterRun();
-		player.HandleGround();
+		// player.OnEnterRun();
+		// player.HandleGround();
 		
 		// player.playerPhysicsController.HandleGround();
 

@@ -9,7 +9,7 @@ public class IdleCrouchState : BaseState
         Debug.Log("IdleCrouchState");
         // player.OnEnterCrouch();
 
-        player.HandleGround();
+        // player.HandleGround();
         
         player.playerPhysicsController.CrouchModule.OnEnterCrouch();
         player.playerPhysicsController.GroundModule.HandleGround();
