@@ -148,7 +148,6 @@ public class PlayerController : MonoBehaviour
 		At(runState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 
 		At(runFallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning && !input.RunInputButtonState.IsHeld));
-		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
 		At(runFallState, fallState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && !_collisionsChecker.IsGrounded));
 		At(runFallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero)); // FIXME
 		At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
@@ -170,8 +169,6 @@ public class PlayerController : MonoBehaviour
 		At(locomotionState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
 		At(locomotionState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld));
 		At(locomotionState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
-		// At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController._moveVelocity.x) < 0.1f)); // FIXME  playerPhysicsController
-
 		At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f)); // FIXME  playerPhysicsController
 
 		// At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping)); // 

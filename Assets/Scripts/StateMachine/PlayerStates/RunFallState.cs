@@ -7,18 +7,17 @@ public class RunFallState : BaseState
     public override void OnEnter()
     {
         Debug.Log("RunFallState");
-        player.BumpedHead(); // FIXME
-        // player.CoyoteTimerStart();
-        
-        // player.playerPhysicsController.CoyoteTimerStart();
-        // player.playerPhysicsController.FallModule.CoyoteTimerStart();
 
+        // player.playerPhysicsController.FallModule.CoyoteTimerStart();
     }
     
     public override void Update()
     {
-        player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
-
+        // player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
+        
+        player.playerPhysicsController.FallModule.BufferJump(player.input.JumpInputButtonState);
+        player.playerPhysicsController.FallModule.RequestVariableJump(player.input.JumpInputButtonState);
+        player.playerPhysicsController.FallModule.SetHoldState(player.input.JumpInputButtonState.IsHeld);
     }
 
     public override void FixedUpdate()
@@ -28,7 +27,8 @@ public class RunFallState : BaseState
 		
         // player.playerPhysicsController.HandleFalling(player._jumpKeyWasPressed, player._jumpKeyWasLetGo, player._jumpKeyIsPressed);
         
-        player.playerPhysicsController.FallModule.HandleFalling(player.input.JumpInputButtonState);
+        // player.playerPhysicsController.FallModule.HandleFalling(player.input.JumpInputButtonState);
+        player.playerPhysicsController.FallModule.HandleFalling();
         player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
     }
 	
@@ -38,7 +38,7 @@ public class RunFallState : BaseState
 
         // player.playerPhysicsController.OnExitFall();
         
-        player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
+        // player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
 
     }
 	

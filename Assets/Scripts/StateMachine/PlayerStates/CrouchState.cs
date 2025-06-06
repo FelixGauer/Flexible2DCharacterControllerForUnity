@@ -10,7 +10,9 @@ public class CrouchState : BaseState
 		Debug.Log("CrouchState");
 		
 		// player.OnEnterCrouch();
-		player.playerPhysicsController.CrouchModule.OnEnterCrouch();
+		// player.playerPhysicsController.CrouchModule.OnEnterCrouch();
+		
+		player.playerPhysicsController.CrouchModule.SetCrouchState(true);
 		
 		// player.HandleGround();
 		player.playerPhysicsController.GroundModule.HandleGround();
@@ -24,7 +26,11 @@ public class CrouchState : BaseState
 
 	public override void OnExit()
 	{
+		if (player.input.DashInputButtonState.WasPressedThisFrame) return;
+		
+		player.playerPhysicsController.CrouchModule.SetCrouchState(false);
+
 		// player.OnExitCrouch();
-		player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
+		// player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
 	}
 }

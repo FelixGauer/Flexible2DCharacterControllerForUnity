@@ -37,7 +37,9 @@ public class LocomotionState : BaseState
 
 	public override void OnExit()
 	{
-		player.playerPhysicsController.FallModule.CoyoteTimerStart();  // FIXME
+		// player.playerPhysicsController.FallModule.CoyoteTimerStart();  // FIXME
+		player.playerPhysicsController.CoyoteTimerStart();
+
 
 	}
 }
