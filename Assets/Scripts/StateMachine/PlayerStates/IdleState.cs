@@ -11,7 +11,7 @@ public class IdleState : BaseState
 
 		animator.Play("Idle");
 
-		player._moveVelocity.x = 0f;
+		// player._moveVelocity.x = 0f;
 		player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
 		
 		Debug.Log("IdleState");

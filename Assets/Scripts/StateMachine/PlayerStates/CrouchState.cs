@@ -10,20 +10,14 @@ public class CrouchState : BaseState
 		Debug.Log("CrouchState");
 		
 		animator.Play("CrouchWalk");
-
-		
-		// player.OnEnterCrouch();
-		// player.playerPhysicsController.CrouchModule.OnEnterCrouch();
 		
 		player.playerPhysicsController.CrouchModule.SetCrouchState(true);
 		
-		// player.HandleGround();
 		player.playerPhysicsController.GroundModule.HandleGround();
 	}
 
 	public override void FixedUpdate()
 	{
-		player.HandleMovement();
 		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.CrouchMoveSpeed, player.stats.CrouchAcceleration, player.stats.CrouchDeceleration);
 	}
 

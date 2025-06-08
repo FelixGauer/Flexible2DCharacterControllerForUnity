@@ -7,6 +7,10 @@ public class RunFallState : BaseState
     public override void OnEnter()
     {
         Debug.Log("RunFallState");
+        
+        
+        animator.Play("Fall");
+
 
         // player.playerPhysicsController.FallModule.CoyoteTimerStart();
     }

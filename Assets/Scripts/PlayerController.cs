@@ -4,19 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	//TODO Реализовать дебаг функции для всех механик: 1. Линия за персонажем 2. Точка на линии когда нажат прыжок
-	//TODO Траектория для прыжка (Куда прыгать предикт)
-	//TODO Камера Контроллер 
-	//TODO Сквиш при прыжке
-	//TODO ledge grab climp unity 2d 
-	//TODO Углы
-	//TODO Debug.Log(_moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.01f); IDLE State
-	//TODO Исправить ситуацию при которой при выходе из RunState в IdleState персонаж сразу останаливается
-	
-	
-	//TODO Избавиться от MoveDirection[0] или MoveDirection = new Vector2.zero 
-
-
 	[Header("References")]
 	[SerializeField] public InputReader input;
 	[SerializeField] public PlayerControllerStats stats; // FIXME private
@@ -28,31 +15,6 @@ public class PlayerController : MonoBehaviour
 
 	// InputReader parameters
 	private Vector2 _moveDirection;
-
-	// Movement parameters
-	public Vector2 _moveVelocity; // FIXME
-	private Vector2 _targetVelocity;
-
-	//Calculate jump vars
-	float AdjustedJumpHeight => stats.maxJumpHeight * stats.jumpHeightCompensationFactor;
-	float gravity => 2f * AdjustedJumpHeight / MathF.Pow(stats.timeTillJumpApex, 2f);
-	float maxJumpVelocity => gravity * stats.timeTillJumpApex;
-	float minJumpVelocity => Mathf.Sqrt(2 * stats.minJumpHeight * gravity);
-
-	private float _numberAvailableJumps;
-
-	public bool _jumpKeyIsPressed; // Нажата
-	public bool _jumpKeyWasPressed; // Была нажата
-	public bool _jumpKeyWasLetGo; // Была отпущена
-
-	private bool _isJumping = false;
-	private bool _isCutJumping = false;
-	private bool _coyoteUsable;
-	private bool _variableJumpHeight;
-	private bool _positiveMoveVelocity = false;
-
-	// WallJump var
-	private bool _wasWallSliding = false;
 
 	//Debug var
 	private float maxYPosition;
@@ -67,37 +29,15 @@ public class PlayerController : MonoBehaviour
 	private CountdownTimer _crouchRollTimer;
 
 	// State Machine Var
-	private StateMachine stateMachine;
+	private StateMachine _stateMachine;
 
-	// Dash var
-	private float _numberAvailableDash;
-	public bool _dashKeyIsPressed;
-	private Vector2 _dashDirection;
-
-	// Run var
-	private bool _runKeyIsPressed;
-	private bool _isRunning = false;
-
-	// Crouch var
-	private bool _crouchKeyIsPressed;
-	private Vector2 normalHeight => _capsuleCollider.size;
-	private Vector2 _crouchRollDirection;
-	private bool _isSitting = false;
-
-	private bool _crouchRollKeyIsPressed;
-
-	// 
-	public TurnChecker TurnChecker;
-	private bool IsFacingRight => TurnChecker.IsFacingRight;
-
-	// Test var
-	public float runToMoveThreshold = 0.9f;
-	private float adaptiveIdleThreshold;
-	public float thresholdFactor = 0.1f;
-	
 	public PlayerPhysicsController playerPhysicsController;
 
 	private Animator _animator;
+	
+	private TurnChecker _turnChecker;
+	// private bool IsFacingRight => _turnChecker.IsFacingRight;
+	private bool _isSitting = false;
 	
 	private void Awake()
 	{
@@ -105,6 +45,9 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker = GetComponent<CollisionsChecker>();
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
+		
+		_collisionsChecker.IsSitting = () => _isSitting;
+		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight;
 
 		_jumpCoyoteTimer = new CountdownTimer(stats.CoyoteTime);
 		_jumpBufferTimer = new CountdownTimer(stats.BufferTime);
@@ -112,21 +55,18 @@ public class PlayerController : MonoBehaviour
 		_dashTimer = new CountdownTimer(stats.DashTime);
 		_crouchRollTimer = new CountdownTimer(stats.CrouchRollTime);
 
-		TurnChecker = new TurnChecker(); // FIXME
+		_turnChecker = new TurnChecker(); // FIXME
 
-		_collisionsChecker.IsSitting = () => _isSitting;
-		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
-
-		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpCoyoteTimer, _jumpBufferTimer, _collisionsChecker, stats, this, _dashTimer, TurnChecker, _wallJumpTimer, _crouchRollTimer);
+		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpCoyoteTimer, _jumpBufferTimer, _collisionsChecker, stats, this, _dashTimer, _turnChecker, _wallJumpTimer, _crouchRollTimer);
 		
-		_animator = GetComponentInChildren<Animator>();
+		_animator = GetComponentInChildren<Animator>(); // FIXME
 		
 		SetupStateMachine();
 	}
 
 	private void SetupStateMachine()
 	{
-	    stateMachine = new StateMachine();
+	    _stateMachine = new StateMachine();
 
 	    // Инициализация состояний
 	    var idleState = new IdleState(this, _animator);
@@ -155,7 +95,7 @@ public class PlayerController : MonoBehaviour
 	    At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 	    At(locomotionState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 	    At(locomotionState, runState, new FuncPredicate(() => input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded));
-	    At(locomotionState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
+	    At(locomotionState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
 	    At(locomotionState, crouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld));
 	    At(locomotionState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
 	    At(locomotionState, idleState, new FuncPredicate(() => _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
@@ -163,7 +103,7 @@ public class PlayerController : MonoBehaviour
 	    // Переходы из runState
 	    At(runState, runJumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 	    At(runState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
-	    At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
+	    At(runState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
 	    At(runState, idleState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero));
 	    At(runState, locomotionState, new FuncPredicate(() => !input.RunInputButtonState.IsHeld && _collisionsChecker.IsGrounded));
 	    At(runState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
@@ -178,7 +118,7 @@ public class PlayerController : MonoBehaviour
 	    At(idleCrouchState, crouchRollState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
 
 	    // Переходы из crouchState
-	    At(crouchState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(_moveVelocity.x) < 0.1f));
+	    At(crouchState, idleCrouchState, new FuncPredicate(() => input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0 && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
 	    At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 	    At(crouchState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame));
 	    At(crouchState, crouchRollState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
@@ -195,7 +135,7 @@ public class PlayerController : MonoBehaviour
 	    At(fallState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && (_jumpCoyoteTimer.IsRunning || playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f)));
 	    At(fallState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 	    At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
-	    At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
+	    At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
 	    At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
 	    At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld));
 	    At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld));
@@ -207,14 +147,14 @@ public class PlayerController : MonoBehaviour
 	    At(dashState, runState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld));
 	    At(dashState, fallState, new FuncPredicate(() => !_dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
 	    At(dashState, wallSlideState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
-	    At(dashState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && _numberAvailableJumps > 0f));
+	    At(dashState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f));
 	    At(dashState, idleCrouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
 	    At(dashState, crouchState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld));
 	    At(dashState, locomotionState, new FuncPredicate(() => !_dashTimer.IsRunning && _collisionsChecker.IsGrounded));
 
 	    // Переходы из crouchRollState
 	    At(crouchRollState, idleState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !input.CrouchInputButtonState.IsHeld));
-	    At(crouchRollState, fallState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && !_collisionsChecker.IsGrounded));
+	    At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 	    At(crouchRollState, idleCrouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
 	    At(crouchRollState, crouchState, new FuncPredicate(() => !_crouchRollTimer.IsRunning));
 
@@ -244,20 +184,17 @@ public class PlayerController : MonoBehaviour
 	    At(runFallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld));
 
 	    // Установка начального состояния
-	    stateMachine.SetState(idleState);
+	    _stateMachine.SetState(idleState);
 	}
 
-	void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
-	void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
+	void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
+	void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
 
 	private void Update() 
 	{
-		// Debug.Log(playerPhysicsController.PhysicsContext.NumberAvailableJumps);
-		stateMachine.Update();
+		_stateMachine.Update();
 		
-		// TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME _wasWallSliding убрать
-
-		TurnChecker.TurnCheck(_moveDirection, transform, playerPhysicsController.PhysicsContext.WasWallSliding);
+		_turnChecker.TurnCheck(_moveDirection, transform, playerPhysicsController.PhysicsContext.WasWallSliding);
 		
 		HandleTimers();
 		Debbuging();
@@ -265,573 +202,16 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		// UnityEngine.Debug.Log(playerPhysicsController.PhysicsContext.MoveVelocity.x);
+		_stateMachine.FixedUpdate();
 
-		stateMachine.FixedUpdate();
-
-		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // обновляем максимальную высоту, если персонаж поднимается
-		{
-			maxYPosition = transform.position.y;
-		}
-
-		// BumpedHead();
 		playerPhysicsController.BumpedHead();
-		// ApplyMovement();
 		playerPhysicsController.ApplyMovement();
-		
-		JumpKeyReset();
 	}
 
 	private void LateUpdate()
 	{
 		input.DashInputButtonState.ResetFrameState(); // FIXME WallJumpState
 		input.JumpInputButtonState.ResetFrameState();
-	}
-	
-	
-
-	// Регион отвечающий за Crouch/CrouchRoll
-	#region Crouch
-	
-	// Метод вызываемый при входе в состояние приседа
-	public void OnEnterCrouch()
-	{
-		SetCrouchState(true);
-	}
-	
-	// Метод вызываемый при выходе из состояния приседа
-	public void OnExitCrouch()
-	{
-		// if (_dashKeyIsPressed) return;
-
-		SetCrouchState(false);
-	}
-
-	// Метод который регулирует высоту спрайта и коллайдера в зависиомсти сидит ли персонаж или стоит
-	public void SetCrouchState(bool isCrouching)
-	{
-		_isSitting = isCrouching;
-		// Еси персонаж сидит его высота равна высоте приседа, если нет обычной высоте
-		var height = isCrouching ? stats.CrouchHeight : normalHeight.x;
-		// Еси персонаж сидит его оффсет равен оффсету приседа, если нет то нулю
-		var offset = isCrouching ? -stats.CrouchOffset : 0;
-
-		// Настройка коллайдера
-		_capsuleCollider.size = new Vector2(_capsuleCollider.size.x, height);
-		_capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
-
-		// Настройка спрайта
-		spriteTransform.localScale = isCrouching ? new Vector2(1f, stats.CrouchHeight) : Vector2.one;
-		spriteTransform.localPosition = isCrouching ? new Vector2(spriteTransform.localPosition.x, offset) : Vector2.zero;
-	}
-
-	#region CrouchRoll
-	
-	// Метод обработки кувырка
-	public void CrouchRoll()
-	{
-		_moveVelocity.x = _crouchRollDirection.x * stats.CrouchRollVelocity;
-	}
-	
-	// Метод вызываемый при входе в состояние кувырка в приседе
-	public void OnEnterCrouchRoll()
-	{
-		SetCrouchState(true);
-
-		_crouchRollTimer.Start();
-		// Сохранение направления кувырка
-		_crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
-		_dashKeyIsPressed = false;
-	}
-	
-	// Метод вызываемый при выходе из кувырка в приседе
-	public void OnExitCrouchRoll()
-	{
-		SetCrouchState(false);
-
-		_crouchRollTimer.Stop();
-		_crouchRollTimer.Reset();
-		// Если кувырок сделан с уступа вернуть высоту коллайдера и спрайта
-		if (!_collisionsChecker.IsGrounded) // FIXME
-			SetCrouchState(false); 
-	}
-	
-	#endregion
-
-	#endregion
-
-	// Регион отвечающий за WallSlide/Jump
-	#region WallSlideJump
-
-	public void HandleWallInteraction()
-	{
-		HandleWallSlide();
-
-		if (_jumpKeyWasPressed)
-		{
-			HandleWallJump();
-		}
-	}
-
-	// Обработка скольжения по стене WallSlide
-	public void HandleWallSlide()
-	{
-		// Плавное Изменение Y на стене, для скольжение 
-		// Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
-		_moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -stats.WallSlideSpeedMax, stats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
-
-		HandleWallJumpTimer();
-
-		// Если ввод обртаный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
-		// Запуск таймера при попытке слезть со стены, помогает выполнить прыжок от стены
-		if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _wasWallSliding)
-		{
-			_wallJumpTimer.Start();
-		}
-	}
-
-	// Метод управления таймером
-	private void HandleWallJumpTimer()
-	{
-		// Управление состоянием таймера и скольжением по стене
-		if (_wallJumpTimer.IsFinished)
-		{
-			// Персонаж продолжает скользить по стене, сбрасываем таймер
-			if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
-			{
-				_wallJumpTimer.Stop();
-				_wallJumpTimer.Reset();
-			}
-			else // Если персонаж пытается отойти от стены, останавливаем скольжение
-			{
-				_wasWallSliding = false;
-			}
-		}
-	}
-
-	// Метод вычисляет направление стены по X
-	private float CalculateWallDirectionX()
-	{
-		return IsFacingRight ? 1f : -1f;
-	}
-
-	// Применение прыжка со стены WallJump
-	public void HandleWallJump()
-	{
-		// Расчет направление персонажа по X
-		float wallDirectionX = CalculateWallDirectionX();
-
-		// Если ввод в сторону стены
-		if (_moveDirection.x == wallDirectionX)
-		{
-			// Прыжок вверх по стене
-			_moveVelocity = new Vector2(-wallDirectionX * stats.WallJumpClimb.x, stats.WallJumpClimb.y);
-		}
-		else if (_moveDirection.x == 0f) // Если ввод равен 0
-		{
-			// Прыжок от стены
-			_moveVelocity = new Vector2(-wallDirectionX * stats.WallJumpOff.x, stats.WallJumpOff.y);
-		}
-		else // Если ввод сторону от стены, обратную сторону
-		{
-			// Прыжок в сторону от стены
-			_moveVelocity = new Vector2(-wallDirectionX * stats.WallLeap.x, stats.WallLeap.y);
-		}
-	}
-
-	// Метод вызываемый при входе в состояние wallJump/Slide
-	public void OnEnterWallSliding()
-	{
-		// Начальная скорость скольжения, x = 0 - персонаж падает вниз после окончания скольжения, то есть не сохраняет скорость
-		_moveVelocity = new Vector2(0f, -stats.StartVelocityWallSlide);
-
-		// Сброс таймера
-		_wallJumpTimer.Reset();
-
-		// Флаг скольжения по стене
-		_wasWallSliding = true;
-
-		// Обнуления максКолвоПрыжков, максКолвоРывков
-		_numberAvailableJumps = stats.MaxNumberJumps;
-		_numberAvailableDash = stats.MaxNumberDash;
-	}
-
-	// Метод вызываемый при выходе в состояние wallJump/Slide
-	public void OnExitWallSliding()
-	{
-		// Остановка таймера
-		_wallJumpTimer.Stop();
-		// Сброс флага скольжения
-		_wasWallSliding = false;
-	}
-	
-	#endregion
-
-	// Регион отвечающий за Jump
-	#region Jump
-	
-	// Метод обработки прыжка
-	public void HandleJump()
-	{
-		// Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
-		if (_jumpBufferTimer.IsFinished) { _variableJumpHeight = false; }
-
-		// Запуск буфера прыжка при нажатии пробела
-		if (_jumpKeyWasPressed) { _jumpBufferTimer.Start(); }
-
-		// Проверка для прыжка кайота и мултипрыжка, нужна для того чтобы контроллировать переход в состояние падения
-		if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
-
-		// Проверка на возможность прыжка (обычный прыжок или мультипрыжок)
-		if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))
-		{
-			// Если не на земле и таймер кайота завершён — вычитаем прыжок
-			if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
-			{
-				_numberAvailableJumps -= 1f;
-			}
-
-			ExecuteJump();
-
-			// Запуск минимального забуферированного прыжка (если пробел был быстро отпущен)
-			if (_variableJumpHeight)
-			{
-				ExecuteVariableJumpHeight();
-				_variableJumpHeight = false;
-			}
-		}
-
-		// Контроль высоты прыжка в зависимости от удержания кнопки прыжка
-		if (_jumpKeyWasLetGo)
-		{
-			ExecuteVariableJumpHeight();
-		}
-
-		// Применение гравитации в прыжке до состояния падения		
-		SetGravity(stats.JumpGravityMultiplayer);
-	}
-
-	// Метод для выполнения прыжка
-	private void ExecuteJump()
-	{
-		// Изменения Y на высоту прыжка
-		_moveVelocity.y = maxJumpVelocity;
-
-		// Уменьшение количества доступных прыжков
-		_numberAvailableJumps -= 1;
-		// Ставим флаг прыжка
-		_isJumping = true;
-
-		// Стоп и сброс таймеров
-		_jumpBufferTimer.Stop();
-		_jumpCoyoteTimer.Stop();
-		_jumpCoyoteTimer.Reset();
-		_jumpBufferTimer.Reset();
-	}
-
-	// Метод для выполнения неполного прыжка  
-	private void ExecuteVariableJumpHeight()
-	{
-		// Ставим флаг короткого прыжка
-		_isCutJumping = true;
-
-		// Изменения Y на минимальную высоту прыжка
-		if (_moveVelocity.y > minJumpVelocity)
-		{
-			_moveVelocity.y = minJumpVelocity;
-		}
-	}
-
-	// Метод вызываемый при выходе из состояния прыжка
-	public void OnExitJump()
-	{
-		_positiveMoveVelocity = false;
-		_isCutJumping = false;
-	}
-
-	#endregion
-
-	// Регион отвечающий за Dash/Рывок
-	#region Dash
-
-	// Обработка состояния рывка
-	public void HandleDash()
-	{
-		// Изменение скорости по оси X для совершение рывка
-		_moveVelocity.x = _dashDirection.x * stats.DashVelocity;
-
-		// Если скорость по y не равна 0, применяем рывок в оси Y
-		if (_dashDirection.y != 0)
-		{
-			_moveVelocity.y = _dashDirection.y * stats.DashVelocity;
-		}
-
-		// Отмена рывка, если игрок проживаем противоположное направление
-		if (_dashDirection == -_moveDirection)
-		{
-			OnExitDash();
-		}
-
-		// Применение гравитации во время рывка
-		SetGravity(stats.DashGravityMultiplayer);
-	}
-
-	// Метод вызываемый при входе в состояние рывка
-	public void OnEnterDash()
-	{
-		_dashTimer.Start(); // Запуск таймера рывка
-		_dashKeyIsPressed = false; // Сброс флага нажатия клавиши
-		_numberAvailableDash -= 1; // Уменьшение количество оставшихся рывков
-		_moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
-	}
-
-	// Метод вызываемый при выходе из состояния рывка
-	public void OnExitDash()
-	{
-		_dashTimer.Stop(); // Остановка таймера
-		_dashTimer.Reset(); // Сброс таймера
-	}
-
-	// Расчет направления рывка
-	public void CalculateDashDirection()
-	{
-		_dashDirection = input.Direction;
-		_dashDirection = GetClosestDirection(_dashDirection); // Поиск ближайшего допустимого направления
-	}
-
-	// Метод для поиска ближайшего направления рывка
-	private Vector2 GetClosestDirection(Vector2 targetDirection)
-	{
-		Vector2 closestDirection = Vector2.zero; // Начальное значение для ближайшего направления
-		float minDistance = float.MaxValue;      // Минимальная дистанция для поиска ближайшего направления
-
-		// Перебор всех допустимых направления в общем массиве направлений
-		foreach (var dashDirection in stats.DashDirections)
-		{
-			float distance = Vector2.Distance(targetDirection, dashDirection);
-
-			// Проверка на диагональное направление
-			if (IsDiagonal(dashDirection))
-			{
-				distance = 1f;
-			}
-			// Если найдено близкое направление, обновляем ближайшее и минимальную дистанцию
-			if (distance < minDistance)
-			{
-				minDistance = distance;
-				closestDirection = dashDirection;
-			}
-		}
-
-		// Если стоит на месте, применяем рывок в сторону поворота игрока, иначе в найденое ближайшее направление
-		return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
-	}
-
-	// Проверка является ли направление диагональным
-	private bool IsDiagonal(Vector2 direction)
-	{
-		return Mathf.Abs(direction.x) == 1 && Mathf.Abs(direction.y) == 1;
-	}
-
-	#endregion
-
-	// Регион отвечающий за Movement/Run
-	#region Movement/Run
-	
-	// Обработка движения игрока шаг/бег/присед/воздух	
-	public void HandleMovement()
-	{
-		// Выход из состояния бега. Так как вход только при переходе в состояние бега, этот метод помогает реализовать логику
-		// Того что в состояние бега можно войти только на земле, а выйти в любое время.
-		if (_isRunning) CheckExitRun();
-
-		float speed = GetCurrentSpeed();
-		float acceleration = GetCurrentAcceleration();
-		float deceleration = GetCurrentDeceleration();
-
-		// Вычисление вектора направления перемноженного на скорость
-		_targetVelocity = _moveDirection != Vector2.zero
-			? new Vector2(_moveDirection.x, 0f) * speed
-			: Vector2.zero;
-
-		// Вычисление ускорения или замедления игрока в воздухе или на земле
-		float smoothFactor = _moveDirection != Vector2.zero
-			? acceleration
-			: deceleration;
-
-		// Обработка позиции игрока по X
-		_moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
-
-		// adaptiveIdleThreshold = Mathf.Max(0.05f, Mathf.Abs(_targetVelocity.x) * thresholdFactor); // FIXME
-	}
-	
-	// Метод для получения текущей скорости
-	private float GetCurrentSpeed() //TODO Нужно перенести в состояния на Enter
-	{
-		if (_isSitting) return stats.CrouchMoveSpeed;
-		if (_isRunning) return stats.RunSpeed;
-		return stats.MoveSpeed;
-	}
-	
-	// Метод для получения текущего ускорения
-	private float GetCurrentAcceleration()
-	{
-		if (!_collisionsChecker.IsGrounded) return stats.airAcceleration;
-		if (_isSitting) return stats.CrouchAcceleration;
-		if (_isRunning) return stats.RunAcceleration;
-		return stats.WalkAcceleration;
-	}
-	
-	// Метод для получения текущей замедления
-	private float GetCurrentDeceleration()
-	{
-		if (!_collisionsChecker.IsGrounded) return stats.airDeceleration;
-		if (_isSitting) return stats.CrouchDeceleration;
-		if (_isRunning) return stats.RunDeceleration;
-		return stats.WalkDeceleration;
-	}
-
-	#region Run
-
-	// Метод вызываемый при входе в состояние бега
-	public void OnEnterRun()
-	{
-		// Нельзя войти в состояние бега находясь не на земле
-		if (_collisionsChecker.IsGrounded)
-		{
-			_isRunning = true;
-		}
-	}
-
-	// Метод для выхода из бега. Данный метод помогает в реализации механики которая позволяет применять бег только на земле.
-	// То есть в воздухе не получится изменить переменную движения на переменную бега. А вот выйти из бега получится.
-	private void CheckExitRun()
-	{
-		if (!_runKeyIsPressed)
-		{
-			_isRunning = false;
-		}
-	}
-
-	#endregion
-
-	#endregion
-
-	// Регион отвечающий за Fall/Падение
-	#region Fall
-
-	// Метод отвечающий за обработку состояния падения
-	public void HandleFalling()
-	{
-		// Проверка на удар головой об платформу
-		// BumpedHead(); //FIXME
-
-		// Запуск таймера прыжка в падении
-		if (_jumpKeyWasPressed) { _jumpBufferTimer.Start(); }
-		// Сохранение переменной для буферизации минимального прыжка
-		if (_jumpBufferTimer.IsRunning && _jumpKeyWasLetGo) { _variableJumpHeight = true; }
-
-		// Применнение гравитации
-		// Гравитация в верхней точки прыжыка
-		if (Mathf.Abs(_rigidbody.linearVelocity.y) < stats.jumpHangTimeThreshold)
-		{
-			SetGravity(stats.jumpHangGravityMult);
-		} // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
-		else if (_jumpKeyIsPressed)
-		{
-			SetGravity(stats.JumpGravityMultiplayer);
-		} // Гравитация в падении
-		else
-		{
-			SetGravity(stats.FallGravityMultiplayer);
-		}
-
-		// Ограничение максимальной скорости падения
-		_moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -stats.maxFallSpeed, 50f);
-	}
-
-	// Метод отвечающий за запуск таймера кайота при входе в состояние падения
-	public void CoyoteTimerStart()
-	{
-		// При спуске с платформы запускаем таймер кайота прыжка
-		if (_coyoteUsable && !_isJumping) // TODO только на запуске
-		{
-			_coyoteUsable = false;
-			_jumpCoyoteTimer.Start();
-		}
-	}
-
-	// Метод вызываемый при выходе из состояния падения
-	public void OnExitFall() // FIXME 
-	{
-		// Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
-		// Также используется для коррентной реализации буферного прыжка в StateMachine
-		if (_collisionsChecker.IsGrounded) HandleGround();
-		if (_collisionsChecker.IsTouchingWall) _isRunning = false; // FIXME
-	}
-
-	#endregion
-
-	// Регион отвечающий за реакцию на сталкивания с коллюзиями
-	#region ReactionToCollisions
-	
-	// Метод проверки ударился ли персонаж головой
-	public void BumpedHead()
-	{
-		// Проверка не ударился ли персонаж головой платформы
-		if (_collisionsChecker.BumpedHead)
-		{
-			_moveVelocity = playerPhysicsController.PhysicsContext.MoveVelocity;
-			// Отправить персонажа вниз
-			_moveVelocity.y = Mathf.Min(0, _moveVelocity.y);
-			playerPhysicsController.PhysicsContext.MoveVelocity = _moveVelocity;
-		}
-	}
-
-	// Метод обнуления флагов когда персонаж оказываетс на земле
-	public void HandleGround()
-	{
-		// Debug.Log(maxYPosition);
-		if (maxYPosition > 0)
-		{
-			maxYPosition = 0;
-		}
-
-		_numberAvailableJumps = stats.MaxNumberJumps; // При касании земли возвращение прыжков
-		_numberAvailableDash = stats.MaxNumberDash; // При касании земли возвращение рывков
-
-		_isJumping = false; // Сброс флага прыжка
-		_coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
-
-		_moveVelocity.y = stats.GroundGravity; // Гравитация на земле
-	}
-	
-	#endregion
-
-	// Регион отвечающий за основные методы
-	#region GeneralMethod
-
-	// Метод изменяющий позицию игрока
-	private void ApplyMovement()
-	{
-		// Изменение координат игрока игрока
-		_rigidbody.linearVelocity = _moveVelocity;
-	}
-
-	// Метод применения гравитации
-	private void SetGravity(float gravityMulitplayer)
-	{
-		// Применение гравитации
-		_moveVelocity.y -= gravity * gravityMulitplayer * Time.fixedDeltaTime;
-	}
-
-	#endregion
-
-	private void JumpKeyReset()
-	{
-		_jumpKeyWasPressed = false; // Сброс флага нажатой кнопки прыжка
-		_jumpKeyWasLetGo = false; // Сброс флага отпущенной кнопки прыжка
-		_dashKeyWasPressed = false;
 	}
 
 	private void HandleTimers() // Сделать список
@@ -847,22 +227,12 @@ public class PlayerController : MonoBehaviour
 	
 	void OnEnable()
 	{
-		input.Move += OnMove;
-		input.Jump += OnJump;
-		input.Dash += OnDash;
-		input.Crouch += OnCrouch;
-		input.Run += OnRun;
-		input.CrouchRoll += OnCrouchRoll;
+		input.Move += OnMove; // FIXME
 	}
 
 	void OnDisable()
 	{
-		input.Move -= OnMove;
-		input.Jump -= OnJump;
-		input.Dash -= OnDash;
-		input.Crouch -= OnCrouch;
-		input.Run -= OnRun;
-		input.CrouchRoll -= OnCrouchRoll;
+		input.Move -= OnMove; // FIXME
 	}
 	
 	#endregion
@@ -871,64 +241,16 @@ public class PlayerController : MonoBehaviour
 
 	private void OnMove(Vector2 moveDirection)
 	{
-		_moveDirection = moveDirection;
+		// _moveDirection = moveDirection;
+		_moveDirection = input.Direction;
+
 	}
 
 	public Vector2 GetMoveDirection()
 	{
 		return _moveDirection;
 	}
-
-	private void OnJump(bool performed)
-	{
-		if (!_jumpKeyIsPressed && performed)
-		{
-			_jumpKeyWasPressed = true;
-		}
-
-		if (_jumpKeyIsPressed && !performed)
-		{
-			_jumpKeyWasLetGo = true;
-		}
-
-		_jumpKeyIsPressed = performed;
-	}
-
-	private bool _dashKeyWasPressed;
 	
-	private void OnDash(bool performed)
-	{
-		if (!_dashKeyIsPressed && performed)
-		{
-			_dashKeyWasPressed = true;
-		}
-	
-		_dashKeyIsPressed = performed;
-	}
-	
-	// public InputButtonState OnDash { get; private set; } = new();
-
-	
-	// private void OnDash(bool performed)
-	// {
-	// 	_dashKeyIsPressed = performed;
-	// }
-
-	private void OnCrouch(bool performed)
-	{
-		_crouchKeyIsPressed = performed;
-	}
-
-	private void OnRun(bool performed)
-	{
-		_runKeyIsPressed = performed;
-	}
-
-	private void OnCrouchRoll(bool performed)
-	{
-		_crouchRollKeyIsPressed = performed;
-	}
-
 	#endregion
 
 	#region Debbug
@@ -976,10 +298,10 @@ public class PlayerController : MonoBehaviour
 	private void Debbuging()
 	{
 		// Визуализация целевой скорости (Target Velocity)
-		Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
+		// Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
 
 		// Визуализация текущего вектора скорости (_moveVelocity)
-		Debug.DrawLine(transform.position, transform.position + new Vector3(_moveVelocity.x, 0, 0), Color.blue);
+		Debug.DrawLine(transform.position, transform.position + new Vector3(playerPhysicsController.PhysicsContext.MoveVelocity.x, 0, 0), Color.blue);
 
 		// Визуализация направления движения (_moveDirection)
 		if (_moveDirection != Vector2.zero)
@@ -989,9 +311,9 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			// Визуализация замедления
-			if (_moveVelocity != Vector2.zero)
+			if (playerPhysicsController.PhysicsContext.MoveVelocity != Vector2.zero)
 			{
-				Debug.DrawLine(transform.position, transform.position + new Vector3(_moveVelocity.x, 0, 0), Color.yellow);
+				Debug.DrawLine(transform.position, transform.position + new Vector3(playerPhysicsController.PhysicsContext.MoveVelocity.x, 0, 0), Color.yellow);
 			}
 		}
 	}

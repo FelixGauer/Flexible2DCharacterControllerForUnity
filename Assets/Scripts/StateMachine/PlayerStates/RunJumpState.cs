@@ -6,6 +6,8 @@ public class RunJumpState : BaseState
 	
     public override void OnEnter()
     {
+        animator.Play("Jump");
+
         Debug.Log("RunJumpState");
     }
     
