@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class WallSlideState : BaseState
 {
-	public WallSlideState(PlayerController player) : base(player) { }
+	public WallSlideState(PlayerController player, Animator animator) : base(player, animator) { }
 
 	public override void OnEnter()
 	{
-		Debug.Log("WallJumpState");
+		animator.Play("WallSlide");
+
+		Debug.Log("WallSlideState");
 
 		// player.OnEnterWallSliding();	
 		

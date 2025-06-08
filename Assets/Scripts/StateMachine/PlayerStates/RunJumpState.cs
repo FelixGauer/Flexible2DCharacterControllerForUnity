@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RunJumpState : BaseState
 {
-    public RunJumpState(PlayerController player) : base(player) { }
+    public RunJumpState(PlayerController player, Animator animator) : base(player, animator) { }
 	
     public override void OnEnter()
     {

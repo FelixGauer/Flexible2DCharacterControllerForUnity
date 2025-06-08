@@ -86,7 +86,8 @@ public class PlayerPhysicsController
 	
 	public void CoyoteTimerStart()
 	{
-		_jumpCoyoteTimer.Start();
+		// Debug.Log(!_collisionsChecker.IsGrounded);
+		if (!_collisionsChecker.IsGrounded) _jumpCoyoteTimer.Start();
 	}
 	
 	private bool IsFacingRight => _turnChecker.IsFacingRight;

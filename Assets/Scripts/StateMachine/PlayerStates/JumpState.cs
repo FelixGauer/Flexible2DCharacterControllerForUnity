@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class JumpState : BaseState
 {
-	public JumpState(PlayerController player) : base(player) { }
+	public JumpState(PlayerController player, Animator animator) : base(player, animator) { }
 	
 	public override void OnEnter()
 	{
+		animator.Play("Jump");
+		
 		Debug.Log("JumpEnter");
 		// player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
 	}
@@ -13,6 +15,9 @@ public class JumpState : BaseState
 	public override void Update()
 	{
 		player.playerPhysicsController.JumpModule.Test1Update(player.input.JumpInputButtonState);
+		
+		if (player.input.JumpInputButtonState.WasPressedThisFrame && player.playerPhysicsController.PhysicsContext.NumberAvailableJumps == 1)
+			animator.Play("MultiJump");
 	}
 
 	public override void FixedUpdate()

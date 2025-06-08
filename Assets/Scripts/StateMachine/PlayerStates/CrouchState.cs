@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class CrouchState : BaseState
 {
-	public CrouchState(PlayerController player) : base(player) { }
+	public CrouchState(PlayerController player, Animator animator) : base(player, animator) { }
 
 	public override void OnEnter()
 	{		
 		Debug.Log("CrouchState");
+		
+		animator.Play("CrouchWalk");
+
 		
 		// player.OnEnterCrouch();
 		// player.playerPhysicsController.CrouchModule.OnEnterCrouch();

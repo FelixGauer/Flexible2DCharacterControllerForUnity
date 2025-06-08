@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RunFallState : BaseState
 {
-    public RunFallState(PlayerController player) : base(player) { }
+    public RunFallState(PlayerController player, Animator animator) : base(player, animator) { }
 
     public override void OnEnter()
     {

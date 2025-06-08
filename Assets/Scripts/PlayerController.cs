@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
 	public float thresholdFactor = 0.1f;
 	
 	public PlayerPhysicsController playerPhysicsController;
+
+	private Animator _animator;
 	
 	private void Awake()
 	{
@@ -116,7 +118,9 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker.IsFacingRight = () => TurnChecker.IsFacingRight;
 
 		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _jumpCoyoteTimer, _jumpBufferTimer, _collisionsChecker, stats, this, _dashTimer, TurnChecker, _wallJumpTimer, _crouchRollTimer);
-
+		
+		_animator = GetComponentInChildren<Animator>();
+		
 		SetupStateMachine();
 	}
 
@@ -125,19 +129,19 @@ public class PlayerController : MonoBehaviour
 	    stateMachine = new StateMachine();
 
 	    // Инициализация состояний
-	    var idleState = new IdleState(this);
-	    var locomotionState = new LocomotionState(this);
-	    var runState = new RunState(this);
-	    var idleCrouchState = new IdleCrouchState(this);
-	    var crouchState = new CrouchState(this);
-	    var jumpState = new JumpState(this);
-	    var fallState = new FallState(this);
-	    var dashState = new DashState(this);
-	    var crouchRollState = new CrouchRollState(this);
-	    var wallSlideState = new WallSlideState(this);
-	    var wallJumpState = new WallJumpState(this);
-	    var runJumpState = new RunJumpState(this);
-	    var runFallState = new RunFallState(this);
+	    var idleState = new IdleState(this, _animator);
+	    var locomotionState = new LocomotionState(this, _animator);
+	    var runState = new RunState(this, _animator);
+	    var idleCrouchState = new IdleCrouchState(this, _animator);
+	    var crouchState = new CrouchState(this, _animator);
+	    var jumpState = new JumpState(this, _animator);
+	    var fallState = new FallState(this, _animator);
+	    var dashState = new DashState(this, _animator);
+	    var crouchRollState = new CrouchRollState(this, _animator);
+	    var wallSlideState = new WallSlideState(this, _animator);
+	    var wallJumpState = new WallJumpState(this, _animator);
+	    var runJumpState = new RunJumpState(this, _animator);
+	    var runFallState = new RunFallState(this, _animator);
 
 	    // Переходы из idleState
 	    At(idleState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame));
@@ -184,13 +188,14 @@ public class PlayerController : MonoBehaviour
 
 	    // Переходы из jumpState
 	    At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && playerPhysicsController.JumpModule.CanFall()));
+	    // At(jumpState, jumpState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && input.JumpInputButtonState.WasPressedThisFrame));
 	    At(jumpState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 
 	    // Переходы из fallState
 	    At(fallState, jumpState, new FuncPredicate(() => input.JumpInputButtonState.WasPressedThisFrame && (_jumpCoyoteTimer.IsRunning || playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f)));
 	    At(fallState, dashState, new FuncPredicate(() => input.DashInputButtonState.WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 	    At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _jumpBufferTimer.IsRunning));
-	    At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
+	    At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _moveDirection == Vector2.zero && Mathf.Abs(_moveVelocity.x) < 0.1f));
 	    At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld && _moveDirection[0] == 0));
 	    At(fallState, crouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.CrouchInputButtonState.IsHeld));
 	    At(fallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && input.RunInputButtonState.IsHeld));
@@ -247,6 +252,7 @@ public class PlayerController : MonoBehaviour
 
 	private void Update() 
 	{
+		// Debug.Log(playerPhysicsController.PhysicsContext.NumberAvailableJumps);
 		stateMachine.Update();
 		
 		// TurnChecker.TurnCheck(_moveDirection, transform, _wasWallSliding); // FIXME _wasWallSliding убрать
@@ -259,8 +265,9 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		stateMachine.FixedUpdate();
+		// UnityEngine.Debug.Log(playerPhysicsController.PhysicsContext.MoveVelocity.x);
 
+		stateMachine.FixedUpdate();
 
 		if (!_collisionsChecker.IsGrounded && transform.position.y > maxYPosition) // обновляем максимальную высоту, если персонаж поднимается
 		{

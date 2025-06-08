@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class WallJumpState : BaseState
 {
-    public WallJumpState(PlayerController player) : base(player) { }
+    public WallJumpState(PlayerController player, Animator animator) : base(player, animator) { }
 
     public override void OnEnter()
     {
-        Debug.Log("WallSlideState");
+        Debug.Log("WallJumpState");
         // player.playerPhysicsController.WallSlideModule.HandleWallJump(player.GetMoveDirection());
         player.playerPhysicsController.WallJumpModule.HandleWallJump(player.GetMoveDirection());
     }

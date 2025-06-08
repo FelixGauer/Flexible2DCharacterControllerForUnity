@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class FallState : BaseState
 {
-	public FallState(PlayerController player) : base(player) { }
+	public FallState(PlayerController player, Animator animator) : base(player, animator) { }
 
 	public override void OnEnter()
 	{
+		animator.Play("Fall");
+
 		Debug.Log("FallState");
 		
 		// player.playerPhysicsController.FallModule.CoyoteTimerStart();  // FIXME
@@ -35,15 +37,16 @@ public class FallState : BaseState
 
 	}
 	
-	// public override void OnExit()
-	// {
-	// 	// player.OnExitFall();
-	//
-	// 	// player.playerPhysicsController.OnExitFall();
-	// 	
-	// 	// player.playerPhysicsController.HandleGround2();
-	// 	
-	// 	// player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
-	// 	
-	// }
+	public override void OnExit()
+	{
+		// player.OnExitFall();
+	
+		// player.playerPhysicsController.OnExitFall();
+		
+		// player.playerPhysicsController.HandleGround2();
+		
+
+		
+		player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
+	}
 }

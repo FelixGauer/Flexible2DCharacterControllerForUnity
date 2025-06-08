@@ -38,7 +38,8 @@ public class JumpModule
             _jumpKeyReleased = true;
         }
     }
-
+    
+    
     public void Test2FixedUpdate(InputButtonState jumpState)
     {
         _moveVelocity = _physicsContext.MoveVelocity;
@@ -46,16 +47,22 @@ public class JumpModule
         if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
         if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
 
-        if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f))
+        if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
+        // if (_jumpBufferTimer.IsRunning || _collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)
         {
-            if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
+            if (!_collisionsChecker.IsGrounded && !_jumpCoyoteTimer.IsFinished)
             {
                 _physicsContext.NumberAvailableJumps -= 1f;
             }
+            
             ExecuteJump();
+            
+            // if (_jumpBufferTimer.IsRunning && _jumpKeyReleased)
             if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
                 ExecuteVariableJumpHeight();
+            
             _physicsContext.NumberAvailableJumps -= 1;
+            
             _jumpBufferTimer.Stop();
             _jumpCoyoteTimer.Stop();
             _jumpCoyoteTimer.Reset();
@@ -162,6 +169,7 @@ public class JumpModule
     // Метод для выполнения прыжка
     private void ExecuteJump()
     {
+        Debug.Log("1");
         // Изменения Y на высоту прыжка
         _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
     }
@@ -169,6 +177,8 @@ public class JumpModule
     // Метод для выполнения неполного прыжка
     private void ExecuteVariableJumpHeight()
     {
+        Debug.Log("2");
+
         // Изменения Y на минимальную высоту прыжка
         if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
         {

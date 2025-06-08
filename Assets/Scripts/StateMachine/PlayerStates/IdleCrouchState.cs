@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class IdleCrouchState : BaseState
 {
-    public IdleCrouchState(PlayerController player) : base(player) { }
+    public IdleCrouchState(PlayerController player, Animator animator) : base(player, animator) { }
 
     public override void OnEnter()
     {		
         Debug.Log("IdleCrouchState");
+        
+        animator.Play("CrouchIdle");
+
 
         player.playerPhysicsController.CrouchModule.SetCrouchState(true);
         player.playerPhysicsController.GroundModule.HandleGround();
@@ -26,4 +29,6 @@ public class IdleCrouchState : BaseState
         // player.OnExitCrouch();
         // player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
     }
+    
+
 }

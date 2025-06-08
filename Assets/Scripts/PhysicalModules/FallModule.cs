@@ -91,23 +91,23 @@ public class FallModule
     // }
 
     // Метод вызываемый при выходе из состояния падения
-    // public void OnExitFall() // FIXME 
-    // {
+    public void OnExitFall() // FIXME 
+    {
     // Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
     // Также используется для конкретной реализации буферного прыжка в StateMachine
-    // if (_collisionsChecker.IsGrounded) HandleGround();
     // if (_collisionsChecker.IsGrounded) _coyoteUsable = true;;
-    // }
+        if (_collisionsChecker.IsGrounded) HandleGround();
+    }
 	
-    // private void HandleGround()
-    // {
-    //     _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-    //     _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
-    //
-    //     _coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
-    //
-    //     _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
-    // }
+    private void HandleGround()
+    {
+        _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+        _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
+    
+        // _coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
+    
+        // _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
+    }
     // public void HandleFalling(InputButtonState jumpState)
     // {
     //     _moveVelocity = _physicsContext.MoveVelocity;

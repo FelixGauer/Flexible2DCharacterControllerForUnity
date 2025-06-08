@@ -17,6 +17,8 @@ public class GroundModule
 
     public void HandleGround()
     {
+        _moveVelocity = _physicsContext.MoveVelocity;
+        
         _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
         _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
 
