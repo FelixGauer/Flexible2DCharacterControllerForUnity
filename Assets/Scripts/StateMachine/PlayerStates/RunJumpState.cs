@@ -25,7 +25,7 @@ public class RunJumpState : BaseState
         // player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
 
         
-        player.playerPhysicsController.JumpModule.Test2FixedUpdate(player.input.JumpInputButtonState);
+        player.playerPhysicsController.JumpModule.Test1FixedUpdate(player.input.JumpInputButtonState);
         player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
     }

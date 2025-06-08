@@ -26,6 +26,9 @@ public class JumpModule
 	
     private bool _jumpKeyReleased;
 
+    private InputButtonState _jumpState;
+
+    
     public void Test1Update(InputButtonState jumpState)
     {
         // Обработка ввода
@@ -37,31 +40,31 @@ public class JumpModule
         {
             _jumpKeyReleased = true;
         }
+
+        _jumpState = jumpState;
     }
     
-    
-    public void Test2FixedUpdate(InputButtonState jumpState)
+    public void Test1FixedUpdate(InputButtonState jumpState)
     {
         _moveVelocity = _physicsContext.MoveVelocity;
 
         if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
         if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
+        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
+        {
+            _physicsContext.NumberAvailableJumps -= 1f;
+        }
 
         if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
         // if (_jumpBufferTimer.IsRunning || _collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)
         {
-            if (!_collisionsChecker.IsGrounded && !_jumpCoyoteTimer.IsFinished)
-            {
-                _physicsContext.NumberAvailableJumps -= 1f;
-            }
-            
             ExecuteJump();
             
             // if (_jumpBufferTimer.IsRunning && _jumpKeyReleased)
             if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
                 ExecuteVariableJumpHeight();
             
-            _physicsContext.NumberAvailableJumps -= 1;
+            // _physicsContext.NumberAvailableJumps -= 1;
             
             _jumpBufferTimer.Stop();
             _jumpCoyoteTimer.Stop();
@@ -79,7 +82,40 @@ public class JumpModule
         _physicsContext.MoveVelocity = _moveVelocity;
     }
 	
-    public void HandleJump(InputButtonState jumpState)
+    // Метод вызываемый при выходе из состояния прыжка
+    public void OnExitJump()
+    {
+        _positiveMoveVelocity = false;
+    }
+	
+    public bool CanFall()
+    {
+        // return (_moveVelocity.y < 0f && (_positiveMoveVelocity || _isCutJumping));
+        // return ((_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping);
+
+        return (_moveVelocity.y < 0f && _positiveMoveVelocity);
+    }
+	
+    // Метод для выполнения прыжка
+    private void ExecuteJump()
+    {
+        // Изменения Y на высоту прыжка
+        _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
+        _physicsContext.NumberAvailableJumps -= 1;
+
+    }
+	
+    // Метод для выполнения неполного прыжка
+    private void ExecuteVariableJumpHeight()
+    {
+        // Изменения Y на минимальную высоту прыжка
+        if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
+        {
+            _moveVelocity.y = _playerControllerStats.MinJumpVelocity;
+        }
+    }
+    
+    public void HandleJumpOLD(InputButtonState jumpState)
     {
         _moveVelocity = _physicsContext.MoveVelocity;
 		
@@ -151,38 +187,66 @@ public class JumpModule
 
         // ApplyMovement();
     }
-	
-    // Метод вызываемый при выходе из состояния прыжка
-    public void OnExitJump()
+    
+    public void StartJump()
     {
-        _positiveMoveVelocity = false;
-    }
-	
-    public bool CanFall()
-    {
-        // return (_moveVelocity.y < 0f && (_positiveMoveVelocity || _isCutJumping));
-        // return ((_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping);
+        _moveVelocity = _physicsContext.MoveVelocity;
 
-        return (_moveVelocity.y < 0f && _positiveMoveVelocity);
+        // ExecuteJump();
     }
-	
-    // Метод для выполнения прыжка
-    private void ExecuteJump()
-    {
-        Debug.Log("1");
-        // Изменения Y на высоту прыжка
-        _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
-    }
-	
-    // Метод для выполнения неполного прыжка
-    private void ExecuteVariableJumpHeight()
-    {
-        Debug.Log("2");
 
-        // Изменения Y на минимальную высоту прыжка
-        if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
+
+    private bool _yes;
+    private bool _yes2;
+
+    
+    public void TESTUpdate(InputButtonState jumpState)
+    {
+        if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
+        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished) { _physicsContext.NumberAvailableJumps -= 1f; }
+        
+        if ((jumpState.WasPressedThisFrame && _physicsContext.NumberAvailableJumps > 0) || _jumpBufferTimer.IsRunning) // || (_jumpBufferTimer.IsRunning && _collisionsChecker.IsGrounded)
         {
-            _moveVelocity.y = _playerControllerStats.MinJumpVelocity;
+            // ExecuteJump();
+
+            _yes = true;
+
+            if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
+            {
+                _yes2 = true;
+            }
+            
+            _jumpBufferTimer.Stop();
+            _jumpCoyoteTimer.Stop();
+            _jumpCoyoteTimer.Reset();
+            _jumpBufferTimer.Reset();
         }
+
+        if (jumpState.WasReleasedThisFrame)
+        {
+            // _yes2 = true;
+
+            ExecuteVariableJumpHeight();
+        }
+    }
+    
+    public void TESTFixedUpdate()
+    {
+        _moveVelocity = _physicsContext.MoveVelocity;
+
+        // if (_yes)
+        // {
+        //     ExecuteJump();
+        //     _yes = false;
+        // }
+        //
+        // if (_yes2)
+        // {
+        //     ExecuteVariableJumpHeight();
+        //     _yes2 = false;
+        // }
+        
+        _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
+        _physicsContext.MoveVelocity = _moveVelocity;
     }
 }
