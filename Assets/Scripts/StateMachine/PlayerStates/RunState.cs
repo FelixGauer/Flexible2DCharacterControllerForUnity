@@ -20,7 +20,7 @@ public class RunState : BaseState
 
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 	}
 	
 	public override void OnExit()

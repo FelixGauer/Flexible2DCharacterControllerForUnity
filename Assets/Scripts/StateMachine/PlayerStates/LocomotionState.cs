@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class LocomotionState : BaseState
 {
-	public LocomotionState(PlayerController player, Animator animator) : base(player, animator) { }
-	
+	private readonly InputReader _input;
+	private readonly PlayerControllerStats _stats;
+
+	public LocomotionState(PlayerController player, Animator animator, InputReader input, PlayerControllerStats stats) :
+		base(player, animator)
+	{
+		_input = input;
+		_stats = stats;
+	}
+
 	public override void OnEnter()
 	{
 		animator.Play("Run");
-		// player.HandleGround();	
 		
 		player.playerPhysicsController.GroundModule.HandleGround();
 
@@ -23,7 +30,7 @@ public class LocomotionState : BaseState
 
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.WalkAcceleration, player.stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		player.playerPhysicsController.MovementModule.HandleMovement(_input.GetMoveDirection(), _stats.MoveSpeed, player.stats.WalkAcceleration, _stats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 	}
 
 	public override void OnExit()

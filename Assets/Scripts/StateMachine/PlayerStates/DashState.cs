@@ -13,13 +13,13 @@ public class DashState : BaseState
 		// player.OnEnterDash();
 		// player.CalculateDashDirection();
 		
-		player.playerPhysicsController.DashModule.StartDash(player.GetMoveDirection());
+		player.playerPhysicsController.DashModule.StartDash(player.input.GetMoveDirection());
 		// player.playerPhysicsController.DashModule.CalculateDashDirection(player.input.Direction);
 	}
 
 	public override void Update()
 	{
-		if (player.playerPhysicsController.DashModule.CurrentDashDirection == -player.GetMoveDirection())
+		if (player.playerPhysicsController.DashModule.CurrentDashDirection == -player.input.GetMoveDirection())
 			player.playerPhysicsController.DashModule.StopDash(); // TODO Вынести как отдельный метод в DashModule
 	}
 
@@ -27,7 +27,7 @@ public class DashState : BaseState
 	{
 		// player.HandleDash();
 		
-		player.playerPhysicsController.DashModule.HandleDash(player.GetMoveDirection());
+		player.playerPhysicsController.DashModule.HandleDash(player.input.GetMoveDirection());
 	}
 	
 	public override void OnExit()

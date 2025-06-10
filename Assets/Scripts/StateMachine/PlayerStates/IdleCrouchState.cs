@@ -25,7 +25,7 @@ public class IdleCrouchState : BaseState
     
     public override void OnExit()
     {
-        if (player.input.DashInputButtonState.WasPressedThisFrame) return;
+        if (player.input.GetDashState().WasPressedThisFrame) return;
 
         player.playerPhysicsController.CrouchModule.SetCrouchState(false);
         

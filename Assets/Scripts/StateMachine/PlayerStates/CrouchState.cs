@@ -18,12 +18,12 @@ public class CrouchState : BaseState
 
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.CrouchMoveSpeed, player.stats.CrouchAcceleration, player.stats.CrouchDeceleration);
+		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.CrouchMoveSpeed, player.stats.CrouchAcceleration, player.stats.CrouchDeceleration);
 	}
 
 	public override void OnExit()
 	{
-		if (player.input.DashInputButtonState.WasPressedThisFrame) return;
+		if (player.input.GetDashState().WasPressedThisFrame) return;
 		
 		player.playerPhysicsController.CrouchModule.SetCrouchState(false);
 

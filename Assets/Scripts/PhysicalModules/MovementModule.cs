@@ -11,17 +11,17 @@ public class MovementModule
         _physicsContext = physicsContext;
     }
 
-    public void HandleMovement(Vector2 _moveDirection, float speed, float acceleration, float deceleration)
+    public void HandleMovement(Vector2 moveDirection, float speed, float acceleration, float deceleration)
     {
         _moveVelocity = _physicsContext.MoveVelocity;
 			
         // Вычисление вектора направления перемноженного на скорость
-        _targetVelocity = _moveDirection != Vector2.zero
-            ? new Vector2(_moveDirection.x, 0f) * speed
+        _targetVelocity = moveDirection != Vector2.zero
+            ? new Vector2(moveDirection.x, 0f) * speed
             : Vector2.zero;
 
         // Вычисление ускорения или замедления игрока в воздухе или на земле
-        float smoothFactor = _moveDirection != Vector2.zero
+        float smoothFactor = moveDirection != Vector2.zero
             ? acceleration
             : deceleration;
 

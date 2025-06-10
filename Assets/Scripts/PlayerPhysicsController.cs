@@ -64,7 +64,6 @@ public class PlayerPhysicsController
 
 		CrouchModule = new CrouchModule(PhysicsContext, _stats, playerController._capsuleCollider, playerController.spriteTransform);
 		CrouchRollModule = new CrouchRollModule(PhysicsContext, _stats, crouchRollTimer, turnChecker);
-
 	}
 
 	public void ApplyMovement()

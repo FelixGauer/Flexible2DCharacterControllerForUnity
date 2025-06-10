@@ -8,7 +8,7 @@ public class WallJumpState : BaseState
     {
         Debug.Log("WallJumpState");
         // player.playerPhysicsController.WallSlideModule.HandleWallJump(player.GetMoveDirection());
-        player.playerPhysicsController.WallJumpModule.HandleWallJump(player.GetMoveDirection());
+        player.playerPhysicsController.WallJumpModule.HandleWallJump(player.input.GetMoveDirection());
     }
 
     public override void FixedUpdate()
@@ -18,8 +18,7 @@ public class WallJumpState : BaseState
 
     public override void OnExit()
     {
-        player.input.DashInputButtonState.ResetFrameState();
-        player.input.JumpInputButtonState.ResetFrameState();
+        player.input.ResetFrameStates();
 		
         // player.playerPhysicsController.WallSlideModule.OnExitWallSliding();
     }

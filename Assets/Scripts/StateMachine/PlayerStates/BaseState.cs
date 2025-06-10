@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// TODO Будет получать ядро и тем самым ядро будет объявлять какие есть зависимости у конкретной StateMachine
+
 public abstract class BaseState : IState
 {
 	protected readonly PlayerController player;
@@ -23,7 +25,7 @@ public abstract class BaseState : IState
 
 	public virtual void OnExit()
 	{
-		// Debug.Log("----BaseState.OnExit----");
+		
 	}
 
 	public virtual void Update()

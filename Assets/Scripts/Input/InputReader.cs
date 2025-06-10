@@ -7,117 +7,107 @@ using static PlayerInputActions;
 [CreateAssetMenu(fileName = "InputReader", menuName = "Input/InputReader")]
 public class InputReader : ScriptableObject, IPlayerActions
 {
-	public event UnityAction<Vector2> Move = delegate { };
-	public event UnityAction<bool> Jump = delegate { };
-	public event UnityAction<bool> Dash = delegate { };
-	public event UnityAction<bool> Crouch = delegate { };
-	public event UnityAction<bool> Run = delegate { };
-	public event UnityAction<bool> CrouchRoll = delegate { };
-
 	private PlayerInputActions _inputActions;
 
-	public Vector3 Direction => _inputActions.Player.Move.ReadValue<Vector2>();
+    private readonly VectorInputHandler _moveHandler = new VectorInputHandler();
+    private readonly ButtonInputHandler _dashHandler = new ButtonInputHandler();
+    private readonly ButtonInputHandler _jumpHandler = new ButtonInputHandler();
+    private readonly ButtonInputHandler _runHandler = new ButtonInputHandler();
+    private readonly ButtonInputHandler _crouchHandler = new ButtonInputHandler();
 
-	private void OnEnable()
+    // События для уведомления о изменениях ввода
+    public event Action<Vector2> OnMoveChanged;
+    public event Action<InputButtonState> OnDashChanged;
+    public event Action<InputButtonState> OnJumpChanged;
+    public event Action<InputButtonState> OnRunChanged;
+    public event Action<InputButtonState> OnCrouchChanged;
+
+    private void OnEnable()
+    {
+        if (_inputActions == null)
+        {
+            _inputActions = new PlayerInputActions();
+            _inputActions.Player.SetCallbacks(this);
+        }
+        _inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _inputActions.Disable();
+    }
+
+    // Обработка ввода с вызовом событий
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _moveHandler.Update(context);
+        OnMoveChanged?.Invoke(_moveHandler.Value);
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        _dashHandler.Update(context);
+        OnDashChanged?.Invoke(_dashHandler.State);
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        _jumpHandler.Update(context);
+        OnJumpChanged?.Invoke(_jumpHandler.State);
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        _runHandler.Update(context);
+        OnRunChanged?.Invoke(_runHandler.State);
+    }
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        _crouchHandler.Update(context);
+        OnCrouchChanged?.Invoke(_crouchHandler.State);
+    }
+
+    public void OnCrouchRoll(InputAction.CallbackContext context) => OnDash(context); // Переиспользование рывка
+
+    // Методы доступа с проверками на null
+    public Vector2 GetMoveDirection() => _moveHandler != null ? _moveHandler.Value : Vector2.zero;
+    public InputButtonState GetDashState() => _dashHandler != null ? _dashHandler.State : new InputButtonState();
+    public InputButtonState GetJumpState() => _jumpHandler != null ? _jumpHandler.State : new InputButtonState();
+    public InputButtonState GetRunState() => _runHandler != null ? _runHandler.State : new InputButtonState();
+    public InputButtonState GetCrouchState() => _crouchHandler != null ? _crouchHandler.State : new InputButtonState();
+
+    // Сброс состояний кадра, вызывается внешним MonoBehaviour
+    public void ResetFrameStates()
+    {
+        _dashHandler.State.ResetFrameState();
+        _jumpHandler.State.ResetFrameState();
+        _runHandler.State.ResetFrameState();
+        _crouchHandler.State.ResetFrameState();
+    }
+}
+
+public interface IInputHandler
+{
+	void Update(InputAction.CallbackContext context);
+}
+
+public class VectorInputHandler : IInputHandler
+{
+	public Vector2 Value { get; private set; }
+
+	public void Update(InputAction.CallbackContext context)
 	{
-		if (_inputActions == null)
-		{
-			_inputActions = new PlayerInputActions();
-			_inputActions.Player.SetCallbacks(this);
-
-		}
-		_inputActions.Enable();
+		Value = context.ReadValue<Vector2>();
 	}
+}
 
-	private void OnDisable() 
+public class ButtonInputHandler : IInputHandler
+{
+	public InputButtonState State { get; private set; } = new InputButtonState();
+
+	public void Update(InputAction.CallbackContext context)
 	{
-		_inputActions.Disable();
+		State.Update(context);
 	}
-
-	public void OnMove(InputAction.CallbackContext context)
-	{
-		Move.Invoke(context.ReadValue<Vector2>());
-	}
-    
-    public InputButtonState DashInputButtonState { get; private set; } = new();
-    public InputButtonState JumpInputButtonState { get; private set; } = new();
-    public InputButtonState RunInputButtonState { get; private set; } = new();
-    public InputButtonState CrouchInputButtonState { get; private set; } = new();
-
-    public void OnDash(InputAction.CallbackContext context) => DashInputButtonState.Update(context);
-
-    public void OnJump(InputAction.CallbackContext context) => JumpInputButtonState.Update(context);
-    
-    public void OnRun(InputAction.CallbackContext context) => RunInputButtonState.Update(context);
-    
-    public void OnCrouch(InputAction.CallbackContext context) => CrouchInputButtonState.Update(context);
-    
-    public void OnCrouchRoll(InputAction.CallbackContext context) => DashInputButtonState.Update(context);
-    
-    
-    // public void OnJump(InputAction.CallbackContext context)
-    // {
-    // 	switch (context.phase)
-    // 	{
-    // 		case InputActionPhase.Started:
-    // 			Jump.Invoke(true);
-    // 			break;
-    // 		case InputActionPhase.Canceled:
-    // 			Jump.Invoke(false);
-    // 			break;
-    // 	}
-    //
-    // }
-	
-    // public void OnDash(InputAction.CallbackContext context)
-    // {
-    // 	if (context.performed)
-    // 	{
-    // 		// Отправляем true только один раз, когда кнопка реально «нажата»
-    // 		Dash.Invoke(true);
-    // 	}
-    // 	else if (context.canceled)
-    // 	{
-    // 		// Это когда кнопку отпустили
-    // 		Dash.Invoke(false);
-    // 	}
-    // }
-
-    //   public void OnCrouch(InputAction.CallbackContext context)
-    //   {
-    //       switch (context.phase)
-    // {
-    // 	case InputActionPhase.Started:
-    // 		Crouch.Invoke(true);
-    // 		break;
-    // 	case InputActionPhase.Canceled: //FIXME
-    // 		Crouch.Invoke(false);
-    // 		break;
-    // }
-    //   }
-    //
-    //   public void OnRun(InputAction.CallbackContext context)
-    //   {
-    //       switch (context.phase)
-    // {
-    // 	case InputActionPhase.Started:
-    // 		Run.Invoke(true);
-    // 		break;
-    // 	case InputActionPhase.Canceled: //FIXME
-    // 		Run.Invoke(false);
-    // 		break;
-    // }
-    //   }
-    //   public void OnCrouchRoll(InputAction.CallbackContext context)
-    //   {
-    //       switch (context.phase)
-    // {
-    // 	case InputActionPhase.Started:
-    // 		CrouchRoll.Invoke(true);
-    // 		break;
-    // 	case InputActionPhase.Canceled:
-    // 		CrouchRoll.Invoke(false);
-    // 		break;
-    // }
-    //   }
 }

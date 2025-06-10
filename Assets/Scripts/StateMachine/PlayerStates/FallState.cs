@@ -18,9 +18,9 @@ public class FallState : BaseState
 	{
 		// player.playerPhysicsController.FallModule.Test(player.input.JumpInputButtonState);
 		
-		player.playerPhysicsController.FallModule.BufferJump(player.input.JumpInputButtonState);
-		player.playerPhysicsController.FallModule.RequestVariableJump(player.input.JumpInputButtonState);
-		player.playerPhysicsController.FallModule.SetHoldState(player.input.JumpInputButtonState.IsHeld);
+		player.playerPhysicsController.FallModule.BufferJump(player.input.GetJumpState());
+		player.playerPhysicsController.FallModule.RequestVariableJump(player.input.GetJumpState());
+		player.playerPhysicsController.FallModule.SetHoldState(player.input.GetJumpState().IsHeld);
 	}
 
 	public override void FixedUpdate()
@@ -33,7 +33,7 @@ public class FallState : BaseState
 		
 		// player.playerPhysicsController.FallModule.HandleFalling(player.input.JumpInputButtonState);
 		player.playerPhysicsController.FallModule.HandleFalling();
-		player.playerPhysicsController.MovementModule.HandleMovement(player.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
 	}
 	

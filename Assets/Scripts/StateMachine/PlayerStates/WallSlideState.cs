@@ -23,7 +23,7 @@ public class WallSlideState : BaseState
 		
 		// player.playerPhysicsController.WallSlideModule.HandleWallInteraction(player.GetMoveDirection(), player.input.JumpInputButtonState);
 		
-		player.playerPhysicsController.WallSlideModule.HandleWallSlide(player.GetMoveDirection());
+		player.playerPhysicsController.WallSlideModule.HandleWallSlide(player.input.GetMoveDirection());
 	}
 
     public override void OnExit()
