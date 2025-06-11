@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class RunState : BaseState
 {
-	public RunState(PlayerController player, Animator animator) : base(player, animator) { }
+	public RunState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 
 	public override void OnEnter()
 	{		
@@ -17,10 +18,13 @@ public class RunState : BaseState
 	public override void Update()
 	{
 	}
+	
+	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		_moveVelocity = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAcceleration, playerControllerStats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 	
 	public override void OnExit()

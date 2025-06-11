@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CrouchRollState : BaseState
 {
-	public CrouchRollState(PlayerController player, Animator animator) 
-		: base(player, animator)
+	public CrouchRollState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) 
 	{
 		// найдём клип по имени (можно оптимизировать и вынести на инициализацию)
 		_clip = animator.runtimeAnimatorController
@@ -13,7 +13,7 @@ public class CrouchRollState : BaseState
 			.First(c => c.name == "CrouchRoll");
         
 		// желаемая длительность — из ваших Stats
-		_desiredDuration = player.stats.CrouchRollTime;
+		_desiredDuration = playerControllerStats.CrouchRollTime;
 	}
 
 	private static readonly int SpeedParam = Animator.StringToHash("CrouchRollSpeedMultiplier");
@@ -35,22 +35,21 @@ public class CrouchRollState : BaseState
 		player.playerPhysicsController.CrouchRollModule.StartCrouchRoll();
 	}
 
+	private Vector2 _moveVelocity;
+
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.CrouchRollModule.CrouchRoll();
+		_moveVelocity.x = player.playerPhysicsController.CrouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
 	public override void OnExit()
 	{
 		animator.SetFloat(SpeedParam, 1f);
+		
+		// player._physicsHandler2D.AddVelocity(_moveVelocity);
 
 		player.playerPhysicsController.CrouchRollModule.StopCrouchRoll();
 	}
-	
-	public static float Map(float value, float min1, float max1, float min2, float max2, bool clamp = false)
-	{
-		float val = min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
-        
-		return clamp ? Mathf.Clamp(val, Mathf.Min(min2, max2), Mathf.Min(min2, max2)) : val;
-	}
+
 }

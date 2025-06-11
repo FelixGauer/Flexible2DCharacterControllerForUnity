@@ -18,6 +18,9 @@ public class JumpModule
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _jumpCoyoteTimer;
     private readonly CountdownTimer _jumpBufferTimer;
+    
+    private readonly PhysicsHandler2D _physicsHandler2D;
+
 	
     private Vector2 _moveVelocity;
     private bool _variableJumpHeight;
@@ -44,16 +47,14 @@ public class JumpModule
         _jumpState = jumpState;
     }
     
-    public void Test1FixedUpdate(InputButtonState jumpState)
+    public Vector2 Test1FixedUpdate(InputButtonState jumpState, Vector2 old)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        _moveVelocity = old;
+        // _moveVelocity = _physicsContext.MoveVelocity;
 
         if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
         if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
-        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
-        {
-            _physicsContext.NumberAvailableJumps -= 1f;
-        }
+        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished) { _physicsContext.NumberAvailableJumps -= 1f; }
 
         if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
         // if (_jumpBufferTimer.IsRunning || _collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)
@@ -79,7 +80,11 @@ public class JumpModule
         }
 
         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
-        _physicsContext.MoveVelocity = _moveVelocity;
+        
+        // _physicsHandler2D.AddVelocity(_moveVelocity);
+        // _physicsContext.MoveVelocity = _moveVelocity;
+
+        return _moveVelocity;
     }
 	
     // Метод вызываемый при выходе из состояния прыжка
@@ -92,6 +97,7 @@ public class JumpModule
     {
         // return (_moveVelocity.y < 0f && (_positiveMoveVelocity || _isCutJumping));
         // return ((_moveVelocity.y < 0f && _positiveMoveVelocity) || _isCutJumping);
+        
 
         return (_moveVelocity.y < 0f && _positiveMoveVelocity);
     }
@@ -102,7 +108,6 @@ public class JumpModule
         // Изменения Y на высоту прыжка
         _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
         _physicsContext.NumberAvailableJumps -= 1;
-
     }
 	
     // Метод для выполнения неполного прыжка

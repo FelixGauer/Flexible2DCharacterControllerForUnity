@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 690232519}
   - component: {fileID: 690232523}
   - component: {fileID: 690232524}
+  - component: {fileID: 690232525}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -475,17 +476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467c597ac7d104b9e9707e1826bc4935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
-  stats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
+  _inputReader: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
+  _playerControllerStats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
   spriteTransform: {fileID: 1681974918}
+  _physicsHandler2D: {fileID: 690232525}
+  _rigidbody: {fileID: 690232522}
   _capsuleCollider: {fileID: 0}
-  _moveVelocity: {x: 0, y: 0}
-  _jumpKeyIsPressed: 0
-  _jumpKeyWasPressed: 0
-  _jumpKeyWasLetGo: 0
-  _dashKeyIsPressed: 0
-  runToMoveThreshold: 0.9
-  thresholdFactor: 0.1
   markerPrefab: {fileID: 1594843421}
 --- !u!212 &690232520
 SpriteRenderer:
@@ -718,6 +714,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &690232525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690232518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b97e2da19b4a7c8feec2677616bd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &793879262
 GameObject:
   m_ObjectHideFlags: 0

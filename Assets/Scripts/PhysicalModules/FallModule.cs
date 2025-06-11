@@ -22,6 +22,8 @@ public class FallModule
     private readonly CountdownTimer _jumpBufferTimer;
 
     private readonly PhysicsContext _physicsContext;
+    
+    private readonly PhysicsHandler2D _physicsHandler2D;
 
     private Vector2 _moveVelocity;
     private bool _coyoteUsable;
@@ -41,9 +43,11 @@ public class FallModule
 
     public void SetHoldState(bool isHeld) => _isHeld = isHeld;
     
-    public void HandleFalling()
+    public Vector2 HandleFalling(Vector2 _moveVelocity)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
+        
+        // _moveVelocity.y = _physicsHandler2D.GetVelocity().y;
         
         float gravityMultiplier;
 
@@ -67,9 +71,13 @@ public class FallModule
         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, gravityMultiplier);
 
         // Ограничиваем максимальную скорость падения:
-        _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -_playerControllerStats.maxFallSpeed, 50f);
+        _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -_playerControllerStats.maxFallSpeed, 50f); // TODO В отдельный метод
 
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _physicsContext.MoveVelocity = _moveVelocity;
+        
+        // _physicsHandler2D.AddVelocity(_moveVelocity);
+
+        return _moveVelocity;
     }
 
     
@@ -79,7 +87,7 @@ public class FallModule
     // Метод отвечающий за запуск таймера койота при входе в состояние падения
     // public void CoyoteTimerStart() // TODO Его место не тут
     // {
-    // При спуске с платформы запускаем таймер кайота прыжка
+    // При спуске с платформы запускаем таймер койота прыжка
     // if (_coyoteUsable && !_isJumping) 
     // if (_coyoteUsable) 
     // {
@@ -93,6 +101,7 @@ public class FallModule
     // Метод вызываемый при выходе из состояния падения
     public void OnExitFall() // FIXME 
     {
+        _moveVelocity = Vector2.zero;
     // Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
     // Также используется для конкретной реализации буферного прыжка в StateMachine
     // if (_collisionsChecker.IsGrounded) _coyoteUsable = true;;
@@ -104,7 +113,7 @@ public class FallModule
         _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
         _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
     
-        // _coyoteUsable = true; // Установка флага разрешающего делать кайот прыжок
+        // _coyoteUsable = true; // Установка флага разрешающего делать койот прыжок
     
         // _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
     }

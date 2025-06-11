@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class CrouchState : BaseState
 {
-	public CrouchState(PlayerController player, Animator animator) : base(player, animator) { }
+	public CrouchState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 
 	public override void OnEnter()
 	{		
@@ -16,14 +17,17 @@ public class CrouchState : BaseState
 		player.playerPhysicsController.GroundModule.HandleGround();
 	}
 
+	private Vector2 _moveVelocity;
+
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.CrouchMoveSpeed, player.stats.CrouchAcceleration, player.stats.CrouchDeceleration);
+		_moveVelocity = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
 	public override void OnExit()
 	{
-		if (player.input.GetDashState().WasPressedThisFrame) return;
+		if (inputReader.GetDashState().WasPressedThisFrame) return;
 		
 		player.playerPhysicsController.CrouchModule.SetCrouchState(false);
 

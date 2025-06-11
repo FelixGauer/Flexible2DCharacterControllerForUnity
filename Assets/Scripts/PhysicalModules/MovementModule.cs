@@ -10,10 +10,10 @@ public class MovementModule
     {
         _physicsContext = physicsContext;
     }
-
-    public void HandleMovement(Vector2 moveDirection, float speed, float acceleration, float deceleration)
+    
+    public Vector2 HandleMovement(Vector2 _moveVelocity, Vector2 moveDirection, float speed, float acceleration, float deceleration)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity.x = _physicsHandler2D.GetVelocity().x;
 			
         // Вычисление вектора направления перемноженного на скорость
         _targetVelocity = moveDirection != Vector2.zero
@@ -26,8 +26,23 @@ public class MovementModule
             : deceleration;
 
         // Обработка позиции игрока по X
-        _moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x;
-		
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x; // Старый метод, сейчас использую MoveTowards
+        //
+        // if (Mathf.Abs(_moveVelocity.x) < 0.1f) 
+        // {
+        //     _moveVelocity.x = 0f;
+        // }
+        
+        _moveVelocity.x = Mathf.MoveTowards(
+            _moveVelocity.x,
+            _targetVelocity.x,
+            smoothFactor * Time.fixedDeltaTime
+        );
+        
+        // _physicsContext.MoveVelocity = _moveVelocity;
+        
+        // _physicsHandler2D.AddVelocity(_moveVelocity);
+        
+        return _moveVelocity;
     }
 }

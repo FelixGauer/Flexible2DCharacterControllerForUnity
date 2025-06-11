@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class DashState : BaseState
 {
-	public DashState(PlayerController player, Animator animator) : base(player, animator) { }
+	public DashState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 
 	public override void OnEnter()
 	{		
@@ -13,21 +14,23 @@ public class DashState : BaseState
 		// player.OnEnterDash();
 		// player.CalculateDashDirection();
 		
-		player.playerPhysicsController.DashModule.StartDash(player.input.GetMoveDirection());
+		player.playerPhysicsController.DashModule.StartDash(inputReader.GetMoveDirection());
 		// player.playerPhysicsController.DashModule.CalculateDashDirection(player.input.Direction);
 	}
 
 	public override void Update()
 	{
-		if (player.playerPhysicsController.DashModule.CurrentDashDirection == -player.input.GetMoveDirection())
+		if (player.playerPhysicsController.DashModule.CurrentDashDirection == -inputReader.GetMoveDirection())
 			player.playerPhysicsController.DashModule.StopDash(); // TODO Вынести как отдельный метод в DashModule
 	}
 
+	private Vector2 _moveVelocity;
 	public override void FixedUpdate()
 	{
 		// player.HandleDash();
 		
-		player.playerPhysicsController.DashModule.HandleDash(player.input.GetMoveDirection());
+		_moveVelocity = player.playerPhysicsController.DashModule.HandleDash(physicsHandler2D.GetVelocity());
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 	
 	public override void OnExit()

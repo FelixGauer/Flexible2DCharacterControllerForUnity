@@ -9,21 +9,26 @@ public class GroundModule
 	
     private Vector2 _moveVelocity;
 
-    public GroundModule(PlayerControllerStats playerControllerStats , PhysicsContext physicsContext) 
+    private PhysicsHandler2D _physicsHandler2D;
+
+    public GroundModule(PlayerControllerStats playerControllerStats , PhysicsContext physicsContext, PhysicsHandler2D physicsHandler2D) 
     {
         _playerControllerStats = playerControllerStats;
         _physicsContext = physicsContext;
+        _physicsHandler2D = physicsHandler2D;
     }
 
     public void HandleGround()
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
         
         _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
         _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
 
         _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
-
-        _physicsContext.MoveVelocity = _moveVelocity;
+        
+        _physicsHandler2D.AddVelocity(_moveVelocity);
+        
+        // _physicsContext.MoveVelocity = _moveVelocity;
     }
 }

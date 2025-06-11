@@ -6,6 +6,7 @@ public class DashModule
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _dashTimer;
     private readonly TurnChecker _turnChecker;
+    private readonly PhysicsHandler2D _physicsHandler2D;
 	
     private Vector2 _moveVelocity;
     private Vector2 _dashDirection;
@@ -22,7 +23,7 @@ public class DashModule
     
     public Vector2 CurrentDashDirection => _dashDirection;
 	
-    public void HandleDash(Vector2 moveDirection)
+    public Vector2 HandleDash(Vector2 _moveVelocity)
     {
         _moveVelocity = _physicsContext.MoveVelocity;
 
@@ -45,6 +46,8 @@ public class DashModule
         _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.DashGravityMultiplayer);
 		
         _physicsContext.MoveVelocity = _moveVelocity;
+        
+        return _moveVelocity;
     }
 
     // Метод вызываемый при входе в состояние рывка

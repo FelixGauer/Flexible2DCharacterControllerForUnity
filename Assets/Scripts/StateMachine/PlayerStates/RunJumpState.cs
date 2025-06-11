@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class RunJumpState : BaseState
 {
-    public RunJumpState(PlayerController player, Animator animator) : base(player, animator) { }
+    public RunJumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 	
     public override void OnEnter()
     {
@@ -13,8 +14,10 @@ public class RunJumpState : BaseState
     
     public override void Update()
     {
-        player.playerPhysicsController.JumpModule.Test1Update(player.input.GetJumpState());
+        player.playerPhysicsController.JumpModule.Test1Update(inputReader.GetJumpState());
     }
+
+    private Vector2 _moveVelocity;
 
     public override void FixedUpdate()
     {		
@@ -27,9 +30,9 @@ public class RunJumpState : BaseState
         // player.playerPhysicsController.JumpModule.HandleJump(player.input.JumpInputButtonState);
 
         
-        player.playerPhysicsController.JumpModule.Test1FixedUpdate(player.input.GetJumpState());
-        player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.RunSpeed, player.stats.RunAcceleration, player.stats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
-
+        _moveVelocity.y = player.playerPhysicsController.JumpModule.Test1FixedUpdate(inputReader.GetJumpState(), physicsHandler2D.GetVelocity()).y;
+        _moveVelocity.x = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        physicsHandler2D.AddVelocity(_moveVelocity);
     }
 
     public override void OnExit()

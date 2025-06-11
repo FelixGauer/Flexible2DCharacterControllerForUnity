@@ -2,24 +2,23 @@ using UnityEngine;
 
 public class WallJumpState : BaseState
 {
-    public WallJumpState(PlayerController player, Animator animator) : base(player, animator) { }
+    public WallJumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 
+    private Vector2 _moveVelocity;
     public override void OnEnter()
     {
         Debug.Log("WallJumpState");
-        // player.playerPhysicsController.WallSlideModule.HandleWallJump(player.GetMoveDirection());
-        player.playerPhysicsController.WallJumpModule.HandleWallJump(player.input.GetMoveDirection());
+        _moveVelocity = player.playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection());
+        physicsHandler2D.AddVelocity(_moveVelocity);
     }
 
     public override void FixedUpdate()
     {
-        // player.playerPhysicsController.WallSlideModule.HandleWallJump(player.GetMoveDirection());
     }
 
     public override void OnExit()
     {
-        player.input.ResetFrameStates();
-		
-        // player.playerPhysicsController.WallSlideModule.OnExitWallSliding();
+        inputReader.ResetFrameStates();
     }
 }

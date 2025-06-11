@@ -20,11 +20,12 @@ public class CrouchRollModule
         _turnChecker = turnChecker;
     }
 	
-    public void CrouchRoll()
+    public Vector2 CrouchRoll(Vector2 moveVelocity)
     {
-        var moveVelocity = _physicsContext.MoveVelocity;
+        // moveVelocity = _physicsContext.MoveVelocity;
         moveVelocity.x = _crouchRollDirection.x * _playerControllerStats.CrouchRollVelocity;
-        _physicsContext.MoveVelocity = moveVelocity;
+        // _physicsContext.MoveVelocity = moveVelocity;
+        return moveVelocity;
     }
 	
     // Метод вызываемый при входе в состояние кувырка в приседе

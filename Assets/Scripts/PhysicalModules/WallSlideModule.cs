@@ -9,7 +9,7 @@ public class WallSlideModule
 	
     private Vector2 _moveVelocity;
     private bool _wasWallSliding;
-	
+
     private bool IsFacingRight => _turnChecker.IsFacingRight;
 
     public WallSlideModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer wallJumpTimer) 
@@ -18,31 +18,32 @@ public class WallSlideModule
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _wallJumpTimer = wallJumpTimer;
+
     }
 	
-    public void HandleWallInteraction(Vector2 _moveDirection, InputButtonState jumpInputButtonState)
-    {
-        _moveVelocity = _physicsContext.MoveVelocity;
-
-        HandleWallSlide(_moveDirection);
-		
-        if (jumpInputButtonState.WasPressedThisFrame)
-        {
-            HandleWallJump(_moveDirection);
-        }
-		
-        _physicsContext.MoveVelocity = _moveVelocity;
-
-        // if (_jumpKeyWasPressed)
-        // {
-        // 	HandleWallJump(Vector2 _moveDirection);
-        // }
-    }
+    // public void HandleWallInteraction(Vector2 _moveDirection, InputButtonState jumpInputButtonState)
+    // {
+    //     _moveVelocity = _physicsContext.MoveVelocity;
+    //
+    //     HandleWallSlide(_moveDirection);
+		  //
+    //     if (jumpInputButtonState.WasPressedThisFrame)
+    //     {
+    //         HandleWallJump(_moveDirection);
+    //     }
+		  //
+    //     _physicsContext.MoveVelocity = _moveVelocity;
+    //
+    //     // if (_jumpKeyWasPressed)
+    //     // {
+    //     // 	HandleWallJump(Vector2 _moveDirection);
+    //     // }
+    // }
 
     // Обработка скольжения по стене WallSlide
-    public void HandleWallSlide(Vector2 _moveDirection)
+    public Vector2 HandleWallSlide(Vector2 _moveVelocity, Vector2 _moveDirection)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
         // Плавное Изменение Y на стене,для скольжения 
         // Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
         _moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -_playerControllerStats.WallSlideSpeedMax, _playerControllerStats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
@@ -56,7 +57,11 @@ public class WallSlideModule
             _wallJumpTimer.Start();
         }
 
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _physicsContext.MoveVelocity = _moveVelocity;
+        
+        // _physicsHandler2D.AddVelocity(_moveVelocity);
+        
+        return _moveVelocity;
     }
 
     // Метод управления таймером
@@ -87,7 +92,7 @@ public class WallSlideModule
     // Применение прыжка со стены WallJump
     public void HandleWallJump(Vector2 _moveDirection)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
 
         // Расчет направление персонажа по X
         float wallDirectionX = CalculateWallDirectionX();
@@ -108,7 +113,7 @@ public class WallSlideModule
             _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallLeap.x, _playerControllerStats.WallLeap.y);
         }
 		
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _physicsContext.MoveVelocity = _moveVelocity;
     }
     
     // Метод вызываемый при входе в состояние wallJump/Slide
@@ -116,6 +121,9 @@ public class WallSlideModule
     public void OnEnterWallSliding()
     {
         // Начальная скорость скольжения, x = 0 - персонаж падает вниз после окончания скольжения, то есть не сохраняет скорость
+        // _physicsHandler2D.ResetVelocity();
+
+        
         _moveVelocity = new Vector2(0f, -_playerControllerStats.StartVelocityWallSlide);
         _physicsContext.MoveVelocity = _moveVelocity;
 		
@@ -141,55 +149,4 @@ public class WallSlideModule
     }
 	
 	
-}
-
-public class WallJumpModule
-{
-    private readonly PhysicsContext _physicsContext;
-    private readonly PlayerControllerStats _playerControllerStats;
-    private readonly TurnChecker _turnChecker;
-	
-    private Vector2 _moveVelocity;
-	
-    private bool IsFacingRight => _turnChecker.IsFacingRight;
-
-    public WallJumpModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker) 
-    {
-        _physicsContext = physicsContext;
-        _playerControllerStats = playerControllerStats;
-        _turnChecker = turnChecker;
-    }
-    
-    public void HandleWallJump(Vector2 _moveDirection)
-    {
-        _moveVelocity = _physicsContext.MoveVelocity;
-
-        // Расчет направление персонажа по X
-        float wallDirectionX = CalculateWallDirectionX();
-
-	
-        if (_moveDirection.x == wallDirectionX) // Если ввод в сторону стены
-        {
-            // Прыжок вверх по стене
-            _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpClimb.x, _playerControllerStats.WallJumpClimb.y);
-        }
-        else if (_moveDirection.x == 0f) // Если ввод равен 0
-        {
-            // Прыжок от стены
-            _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpOff.x, _playerControllerStats.WallJumpOff.y);
-        }
-        else // Если ввод сторону от стены, обратную сторону
-        {
-            // Прыжок в сторону от стены
-            _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallLeap.x, _playerControllerStats.WallLeap.y);
-        }
-		
-        _physicsContext.MoveVelocity = _moveVelocity;
-    }
-    
-    // Метод вычисляет направление стены по X
-    public float CalculateWallDirectionX()
-    {
-        return IsFacingRight ? 1f : -1f;
-    }
 }

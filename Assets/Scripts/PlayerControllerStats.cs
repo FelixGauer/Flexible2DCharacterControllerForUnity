@@ -9,13 +9,13 @@ public class PlayerControllerStats : ScriptableObject
 	// [Tooltip("Set this to the layer your player is on")]
 
 	[Header("Movement")]
-	[Range(0f, 100f)] public float MoveSpeed = 12.5f;
-	[Range(0f, 100f)] public float WalkAcceleration = 5f;
-	[Range(0f, 100f)] public float WalkDeceleration = 20f;
-	[Range(0f, 100f)] public float RunAcceleration = 15f;
-	[Range(0f, 100f)] public float RunDeceleration = 30f;
-	[Range(0f, 100f)] public float CrouchAcceleration = 15f;
-	[Range(0f, 100f)] public float CrouchDeceleration = 30f;
+	[Range(0f, 200f)] public float MoveSpeed = 12.5f;
+	[Range(0f, 200f)] public float WalkAcceleration = 5f;
+	[Range(0f, 200f)] public float WalkDeceleration = 20f;
+	[Range(0f, 200f)] public float RunAcceleration = 15f;
+	[Range(0f, 200f)] public float RunDeceleration = 30f;
+	[Range(0f, 200f)] public float CrouchAcceleration = 15f;
+	[Range(0f, 200f)] public float CrouchDeceleration = 30f;
 
 	[Header("Collision Check")]
 	public LayerMask GroundLayer;
@@ -28,8 +28,8 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Jump")]
 	[Range(0f, 100f)] public float maxJumpHeight = 5f;
 	[Range(0f, 100f)] public float minJumpHeight = 2f;
-	[Range(0f, 100f)] public float airAcceleration = 30f;
-	[Range(0f, 100f)] public float airDeceleration = 5f;
+	[Range(0f, 200f)] public float airAcceleration = 30f;
+	[Range(0f, 200f)] public float airDeceleration = 5f;
 	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
 	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;

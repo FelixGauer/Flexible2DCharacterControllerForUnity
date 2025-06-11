@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PlayerControllerStats
   m_EditorClassIdentifier: 
   MoveSpeed: 12
-  WalkAcceleration: 15
-  WalkDeceleration: 30
-  RunAcceleration: 15
-  RunDeceleration: 30
-  CrouchAcceleration: 15
-  CrouchDeceleration: 30
+  WalkAcceleration: 150
+  WalkDeceleration: 150
+  RunAcceleration: 160
+  RunDeceleration: 150
+  CrouchAcceleration: 150
+  CrouchDeceleration: 150
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -29,8 +29,8 @@ MonoBehaviour:
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
   minJumpHeight: 1
-  airAcceleration: 8
-  airDeceleration: 5
+  airAcceleration: 150
+  airDeceleration: 17
   MaxNumberJumps: 2
   timeTillJumpApex: 0.3
   jumpHeightCompensationFactor: 1.06

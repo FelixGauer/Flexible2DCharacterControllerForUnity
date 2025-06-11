@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class JumpState : BaseState
 {
-	public JumpState(PlayerController player, Animator animator) : base(player, animator) { }
+	public JumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 	
 	public override void OnEnter()
 	{
@@ -13,16 +14,19 @@ public class JumpState : BaseState
 
 	public override void Update()
 	{
-		if (player.input.GetJumpState().WasPressedThisFrame && player.playerPhysicsController.PhysicsContext.NumberAvailableJumps == 1)
-			animator.Play("MultiJump");
+		// if (inputReader.GetJumpState().WasPressedThisFrame && player.playerPhysicsController.PhysicsContext.NumberAvailableJumps == 1)
+		// 	animator.Play("MultiJump");
 		
-		player.playerPhysicsController.JumpModule.Test1Update(player.input.GetJumpState());
+		player.playerPhysicsController.JumpModule.Test1Update(inputReader.GetJumpState());
 	}
+	
+	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
-		player.playerPhysicsController.JumpModule.Test1FixedUpdate(player.input.GetJumpState());
-		player.playerPhysicsController.MovementModule.HandleMovement(player.input.GetMoveDirection(), player.stats.MoveSpeed, player.stats.airAcceleration, player.stats.airDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		_moveVelocity.y = player.playerPhysicsController.JumpModule.Test1FixedUpdate(inputReader.GetJumpState(), physicsHandler2D.GetVelocity()).y;
+		_moveVelocity.x = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
     public override void OnExit()

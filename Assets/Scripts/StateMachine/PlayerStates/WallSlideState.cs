@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class WallSlideState : BaseState
 {
-	public WallSlideState(PlayerController player, Animator animator) : base(player, animator) { }
+	public WallSlideState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
 
 	public override void OnEnter()
 	{
@@ -11,26 +12,21 @@ public class WallSlideState : BaseState
 
 		Debug.Log("WallSlideState");
 
-		// player.OnEnterWallSliding();	
-		
 		player.playerPhysicsController.WallSlideModule.OnEnterWallSliding();
-
+		
+		// player.playerPhysicsController.MovementModule.ResetMoveVelocity();
 	}
+
+	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
-		// player.HandleWallInteraction();
-		
-		// player.playerPhysicsController.WallSlideModule.HandleWallInteraction(player.GetMoveDirection(), player.input.JumpInputButtonState);
-		
-		player.playerPhysicsController.WallSlideModule.HandleWallSlide(player.input.GetMoveDirection());
+		_moveVelocity = player.playerPhysicsController.WallSlideModule.HandleWallSlide(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection());
+		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
     public override void OnExit()
     {
-        // player.OnExitWallSliding();
-        
         player.playerPhysicsController.WallSlideModule.OnExitWallSliding();
-
     }
 }
