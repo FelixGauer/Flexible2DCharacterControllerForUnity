@@ -17,8 +17,10 @@ public class DashModule
     {
         _physicsContext = physicsContext;
         _playerControllerStats = playerControllerStats;
-        _dashTimer = dashTimer;
         _turnChecker = turnChecker;
+        _dashTimer = dashTimer;
+
+        // _dashTimer = new CountdownTimer(playerControllerStats.DashTime);
     }
     
     public Vector2 CurrentDashDirection => _dashDirection;
@@ -76,6 +78,10 @@ public class DashModule
 		
         _dashDirection = GetClosestDirection(moveDirection); // Поиск ближайшего допустимого направления
     }
+    
+    public bool IsDashTimerRunning() => _dashTimer.IsRunning;
+    public bool IsDashTimerFinished() => _dashTimer.IsFinished;
+    public void UpdateTimer() => _dashTimer.Tick(Time.deltaTime); 
 	
     // Метод для поиска ближайшего направления рывка
     private Vector2 GetClosestDirection(Vector2 targetDirection)

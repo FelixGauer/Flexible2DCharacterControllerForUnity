@@ -34,6 +34,11 @@ public class CrouchRollState : BaseState
 		
 		player.playerPhysicsController.CrouchRollModule.StartCrouchRoll();
 	}
+	
+	public override void Update()
+	{
+		// player.playerPhysicsController.CrouchRollModule.UpdateTimer();
+	}
 
 	private Vector2 _moveVelocity;
 
@@ -42,12 +47,16 @@ public class CrouchRollState : BaseState
 		_moveVelocity.x = player.playerPhysicsController.CrouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
+	
+
 
 	public override void OnExit()
 	{
 		animator.SetFloat(SpeedParam, 1f);
 		
 		// player._physicsHandler2D.AddVelocity(_moveVelocity);
+		
+		player.playerPhysicsController.CrouchModule.SetCrouchState(false);
 
 		player.playerPhysicsController.CrouchRollModule.StopCrouchRoll();
 	}

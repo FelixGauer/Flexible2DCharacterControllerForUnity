@@ -2,25 +2,25 @@ using UnityEngine;
 
 public class JumpModule
 {
-    public JumpModule(PhysicsContext physicsContext, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer)
+    public JumpModule(PhysicsContext physicsContext, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CountdownTimer jumpCoyoteTimer)
     {
         _collisionsChecker = collisionsChecker;
         _playerControllerStats = playerControllerStats;
 
         _jumpCoyoteTimer = jumpCoyoteTimer;
         _jumpBufferTimer = jumpBufferTimer;
-
+        
         _physicsContext = physicsContext;
     }
 
     private readonly PhysicsContext _physicsContext;
     private readonly CollisionsChecker _collisionsChecker;
     private readonly PlayerControllerStats _playerControllerStats;
+    
     private readonly CountdownTimer _jumpCoyoteTimer;
     private readonly CountdownTimer _jumpBufferTimer;
     
     private readonly PhysicsHandler2D _physicsHandler2D;
-
 	
     private Vector2 _moveVelocity;
     private bool _variableJumpHeight;

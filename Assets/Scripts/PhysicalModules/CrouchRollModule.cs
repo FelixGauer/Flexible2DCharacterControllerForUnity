@@ -12,33 +12,35 @@ public class CrouchRollModule
     // private Vector2 _moveVelocity;
     private Vector2 _crouchRollDirection;
 
-    public CrouchRollModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, CountdownTimer crouchRollTimer, TurnChecker turnChecker) 
+    public CrouchRollModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer crouchRollTimer) 
     {
         _physicsContext = physicsContext;
         _playerControllerStats = playerControllerStats;
-        _crouchRollTimer = crouchRollTimer;
         _turnChecker = turnChecker;
+        _crouchRollTimer = crouchRollTimer;
+
+        // _crouchRollTimer = new CountdownTimer(playerControllerStats.CrouchRollTime);
     }
 	
     public Vector2 CrouchRoll(Vector2 moveVelocity)
     {
-        // moveVelocity = _physicsContext.MoveVelocity;
         moveVelocity.x = _crouchRollDirection.x * _playerControllerStats.CrouchRollVelocity;
-        // _physicsContext.MoveVelocity = moveVelocity;
         return moveVelocity;
     }
 	
-    // Метод вызываемый при входе в состояние кувырка в приседе
     public void StartCrouchRoll()
     {
         _crouchRollTimer.Start();
         _crouchRollDirection = IsFacingRight ? Vector2.right : Vector2.left;
     }
 	
-    // Метод вызываемый при выходе из кувырка в приседе
     public void StopCrouchRoll()
     {
         _crouchRollTimer.Stop();
         _crouchRollTimer.Reset();
     }
+    //
+    // public bool IsCrouchRollTimerRunning() => _crouchRollTimer.IsRunning;
+    // public bool IsCrouchRollTimerFinished() => _crouchRollTimer.IsFinished;
+    // public void UpdateTimer() => _crouchRollTimer.Tick(Time.deltaTime);
 }

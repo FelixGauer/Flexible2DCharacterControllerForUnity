@@ -18,7 +18,6 @@ public class WallSlideModule
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _wallJumpTimer = wallJumpTimer;
-
     }
 	
     // public void HandleWallInteraction(Vector2 _moveDirection, InputButtonState jumpInputButtonState)

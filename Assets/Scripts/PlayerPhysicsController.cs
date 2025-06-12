@@ -24,46 +24,39 @@ public class PlayerPhysicsController
 	private readonly TurnChecker _turnChecker;
 
 	private readonly PhysicsHandler2D _physicsHandler2D;
+	private readonly PlayerTimerRegistry _playerTimerRegistry;
 
 	private readonly CountdownTimer _jumpCoyoteTimer;
 	private readonly CountdownTimer _jumpBufferTimer;
-	private readonly CountdownTimer _dashTimer;
 	private readonly CountdownTimer _wallJumpTimer;
 	
 	public PlayerPhysicsController(
 		Rigidbody2D rigidbody,
-		CountdownTimer jumpCoyoteTimer,
-		CountdownTimer jumpBufferTimer,
 		CollisionsChecker collisionsChecker,
 		PlayerControllerStats playerControllerStats,
 		PlayerController playerController,
-		CountdownTimer dashTimer,
 		TurnChecker turnChecker,
-		CountdownTimer wallJumpTimer,
-		CountdownTimer crouchRollTimer,
-		PhysicsHandler2D physicsHandler2D)
+		PhysicsHandler2D physicsHandler2D,
+		PlayerTimerRegistry playerTimerRegistry)
 	{
 		_rigidbody = rigidbody;
-		_jumpCoyoteTimer = jumpCoyoteTimer;
-		_jumpBufferTimer = jumpBufferTimer;
 		_collisionsChecker = collisionsChecker;
 		_playerControllerStats = playerControllerStats;
-		_dashTimer = dashTimer;
 		_turnChecker = turnChecker;
-		_wallJumpTimer = wallJumpTimer;
 		_physicsHandler2D = physicsHandler2D;
+		_playerTimerRegistry = playerTimerRegistry;
 
 		PhysicsContext = new PhysicsContext();
 
 		MovementModule = new MovementModule(PhysicsContext);
 		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D);
-		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, _jumpCoyoteTimer, _jumpBufferTimer);
-		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _playerControllerStats, _jumpCoyoteTimer, _jumpBufferTimer);
-		DashModule = new DashModule(PhysicsContext, _playerControllerStats, _turnChecker, _dashTimer);
-		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, _wallJumpTimer);
+		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer);
+		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer);
+		DashModule = new DashModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
+		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
 		WallJumpModule = new WallJumpModule(PhysicsContext, _playerControllerStats, _turnChecker);
 		CrouchModule = new CrouchModule(PhysicsContext, _playerControllerStats, playerController._capsuleCollider, playerController.spriteTransform);
-		CrouchRollModule = new CrouchRollModule(PhysicsContext, _playerControllerStats, crouchRollTimer, turnChecker);
+		CrouchRollModule = new CrouchRollModule(PhysicsContext, _playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
 	}
 	
 	public void ApplyMovement()
@@ -92,7 +85,8 @@ public class PlayerPhysicsController
 	{
 		if (!_collisionsChecker.IsGrounded)
 		{
-			_jumpCoyoteTimer.Start();
+			// _jumpCoyoteTimer.Start();
+			_playerTimerRegistry.jumpCoyoteTimer.Start();
 		}
 	}
 	
@@ -114,5 +108,3 @@ public class PlayerPhysicsController
 	// 	PhysicsContext.MoveVelocity = Vector2.zero;
 	// }
 }
-
-

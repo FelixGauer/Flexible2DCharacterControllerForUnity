@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class FallModule 
 {
-    public FallModule(PhysicsContext physicsContext, Rigidbody2D rigidbody, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpCoyoteTimer, CountdownTimer jumpBufferTimer)
+    public FallModule(PhysicsContext physicsContext, Rigidbody2D rigidbody, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
     {
         _rigidbody = rigidbody;
         _collisionsChecker = collisionsChecker;
         _playerControllerStats = playerControllerStats;
 		
-        _jumpCoyoteTimer = jumpCoyoteTimer;
         _jumpBufferTimer = jumpBufferTimer;
+
+        // _jumpBufferTimer = new CountdownTimer(playerControllerStats.BufferTime);
 
         _physicsContext = physicsContext;
     }
@@ -17,9 +18,8 @@ public class FallModule
     private readonly Rigidbody2D _rigidbody;
     private readonly CollisionsChecker _collisionsChecker;
     private readonly PlayerControllerStats _playerControllerStats;
-	
-    private readonly CountdownTimer _jumpCoyoteTimer;
     private readonly CountdownTimer _jumpBufferTimer;
+    
 
     private readonly PhysicsContext _physicsContext;
     
@@ -79,24 +79,6 @@ public class FallModule
 
         return _moveVelocity;
     }
-
-    
-    public bool canCoyoteJump => _jumpCoyoteTimer.IsRunning && !_collisionsChecker.IsGrounded; // TODO
-    public bool canBufferedJump => _jumpBufferTimer.IsRunning && !_collisionsChecker.IsGrounded;
-    
-    // Метод отвечающий за запуск таймера койота при входе в состояние падения
-    // public void CoyoteTimerStart() // TODO Его место не тут
-    // {
-    // При спуске с платформы запускаем таймер койота прыжка
-    // if (_coyoteUsable && !_isJumping) 
-    // if (_coyoteUsable) 
-    // {
-    // 	_coyoteUsable = false;
-    // 	_jumpCoyoteTimer.Start();
-    // }
-		
-    // _jumpCoyoteTimer.Start();
-    // }
 
     // Метод вызываемый при выходе из состояния падения
     public void OnExitFall() // FIXME 
