@@ -31,61 +31,64 @@ public class JumpModule
 
     private InputButtonState _jumpState;
 
-    
-    public void Test1Update(InputButtonState jumpState)
-    {
-        // Обработка ввода
-        if (jumpState.WasPressedThisFrame)
-        {
-            _jumpBufferTimer.Start();
-        }
-        if (jumpState.WasReleasedThisFrame)
-        {
-            _jumpKeyReleased = true;
-        }
+    private bool _wasPressedThisFrame;
+    private bool _isHeld;
 
-        _jumpState = jumpState;
+    
+    public void HandleInput(InputButtonState jumpState)
+    {
+        if (jumpState.WasPressedThisFrame) _wasPressedThisFrame = true;
+        if (jumpState.WasReleasedThisFrame) _jumpKeyReleased = true;
+        if (jumpState.IsHeld)
+            _isHeld = true;
+        else
+            _isHeld = false;
     }
-    
-    public Vector2 Test1FixedUpdate(InputButtonState jumpState, Vector2 old)
-    {
-        _moveVelocity = old;
-        // _moveVelocity = _physicsContext.MoveVelocity;
 
-        if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
+    public Vector2 UpdatePhysics(InputButtonState jumpState, Vector2 currentVelocity)
+    {
+        _moveVelocity = currentVelocity;
+        
+        // if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
         if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
         if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished) { _physicsContext.NumberAvailableJumps -= 1f; }
 
-        if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
-        // if (_jumpBufferTimer.IsRunning || _collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)
+        if (_wasPressedThisFrame && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f))
         {
             ExecuteJump();
-            
-            // if (_jumpBufferTimer.IsRunning && _jumpKeyReleased)
-            if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
-                ExecuteVariableJumpHeight();
-            
-            // _physicsContext.NumberAvailableJumps -= 1;
-            
-            _jumpBufferTimer.Stop();
+
+            _wasPressedThisFrame = false;
+
             _jumpCoyoteTimer.Stop();
             _jumpCoyoteTimer.Reset();
-            _jumpBufferTimer.Reset();
         }
 
+        if (_jumpBufferTimer.IsRunning)
+        {
+            ExecuteJump();
+
+            if (!jumpState.IsHeld)
+            {
+                ExecuteVariableJumpHeight();
+                // _isHeld = true;
+            }
+            
+            _jumpBufferTimer.Stop();
+            _jumpBufferTimer.Reset();
+        }
+        
         if (_jumpKeyReleased)
         {
             ExecuteVariableJumpHeight();
             _jumpKeyReleased = false;
         }
-
+        
         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
         
-        // _physicsHandler2D.AddVelocity(_moveVelocity);
-        // _physicsContext.MoveVelocity = _moveVelocity;
-
         return _moveVelocity;
     }
+
+
 	
     // Метод вызываемый при выходе из состояния прыжка
     public void OnExitJump()
@@ -125,7 +128,7 @@ public class JumpModule
         _moveVelocity = _physicsContext.MoveVelocity;
 		
         // Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
-        if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
+        // if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
 
         // Запуск буфера прыжка при нажатии пробела
         // if (_jumpKeyWasPressed) { _jumpBufferTimer.Start(); }
@@ -193,65 +196,60 @@ public class JumpModule
         // ApplyMovement();
     }
     
-    public void StartJump()
-    {
-        _moveVelocity = _physicsContext.MoveVelocity;
-
-        // ExecuteJump();
-    }
-
-
-    private bool _yes;
-    private bool _yes2;
-
+    // public void Test1Update(InputButtonState jumpState)
+    // {
+    //     // Обработка ввода
+    //     if (jumpState.WasPressedThisFrame)
+    //     {
+    //         _jumpBufferTimer.Start();
+    //     }
+    //     if (jumpState.WasReleasedThisFrame)
+    //     {
+    //         _jumpKeyReleased = true;
+    //     }
+    //
+    //     _jumpState = jumpState;
+    // }
+    //
+    // public Vector2 Test1FixedUpdate(InputButtonState jumpState, Vector2 old)
+    // {
+    //     _moveVelocity = old;
+    //     // _moveVelocity = _physicsContext.MoveVelocity;
+    //
+    //     if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
+    //     if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
+    //     if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished) { _physicsContext.NumberAvailableJumps -= 1f; }
+    //
+    //     if (_jumpBufferTimer.IsRunning && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)) 
+    //         // if (_jumpBufferTimer.IsRunning || _collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _physicsContext.NumberAvailableJumps > 0f)
+    //     {
+    //         ExecuteJump();
+    //         
+    //         // if (_jumpBufferTimer.IsRunning && _jumpKeyReleased)
+    //         if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
+    //             ExecuteVariableJumpHeight();
+    //         
+    //         // _physicsContext.NumberAvailableJumps -= 1;
+    //         
+    //         _jumpBufferTimer.Stop();
+    //         _jumpCoyoteTimer.Stop();
+    //         _jumpCoyoteTimer.Reset();
+    //         _jumpBufferTimer.Reset();
+    //     }
+    //
+    //     if (_jumpKeyReleased)
+    //     {
+    //         ExecuteVariableJumpHeight();
+    //         _jumpKeyReleased = false;
+    //     }
+    //
+    //     _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
+    //     
+    //     // _physicsHandler2D.AddVelocity(_moveVelocity);
+    //     // _physicsContext.MoveVelocity = _moveVelocity;
+    //
+    //     return _moveVelocity;
+    // }
     
-    public void TESTUpdate(InputButtonState jumpState)
-    {
-        if (_moveVelocity.y > 0f) { _positiveMoveVelocity = true; }
-        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished) { _physicsContext.NumberAvailableJumps -= 1f; }
-        
-        if ((jumpState.WasPressedThisFrame && _physicsContext.NumberAvailableJumps > 0) || _jumpBufferTimer.IsRunning) // || (_jumpBufferTimer.IsRunning && _collisionsChecker.IsGrounded)
-        {
-            // ExecuteJump();
-
-            _yes = true;
-
-            if (_jumpBufferTimer.IsRunning && !jumpState.IsHeld)
-            {
-                _yes2 = true;
-            }
-            
-            _jumpBufferTimer.Stop();
-            _jumpCoyoteTimer.Stop();
-            _jumpCoyoteTimer.Reset();
-            _jumpBufferTimer.Reset();
-        }
-
-        if (jumpState.WasReleasedThisFrame)
-        {
-            // _yes2 = true;
-
-            ExecuteVariableJumpHeight();
-        }
-    }
-    
-    public void TESTFixedUpdate()
-    {
-        _moveVelocity = _physicsContext.MoveVelocity;
-
-        // if (_yes)
-        // {
-        //     ExecuteJump();
-        //     _yes = false;
-        // }
-        //
-        // if (_yes2)
-        // {
-        //     ExecuteVariableJumpHeight();
-        //     _yes2 = false;
-        // }
-        
-        _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
-        _physicsContext.MoveVelocity = _moveVelocity;
-    }
+   
 }

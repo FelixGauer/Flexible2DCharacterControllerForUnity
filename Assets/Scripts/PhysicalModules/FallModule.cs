@@ -37,8 +37,8 @@ public class FallModule
     
     public void RequestVariableJump(InputButtonState jumpState)
     {
-        if (_jumpBufferTimer.IsRunning && jumpState.WasReleasedThisFrame)
-            _physicsContext.VariableJumpHeight = true;
+        // if (_jumpBufferTimer.IsRunning && jumpState.WasReleasedThisFrame)
+        //     _physicsContext.VariableJumpHeight = true;
     }
 
     public void SetHoldState(bool isHeld) => _isHeld = isHeld;
