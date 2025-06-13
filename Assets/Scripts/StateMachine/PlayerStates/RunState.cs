@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class RunState : BaseState
 {
-	public RunState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+	public RunState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
 	public override void OnEnter()
 	{		
@@ -17,6 +17,7 @@ public class RunState : BaseState
 	
 	public override void Update()
 	{
+		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 	
 	private Vector2 _moveVelocity;

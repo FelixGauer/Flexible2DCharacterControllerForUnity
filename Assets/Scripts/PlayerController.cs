@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>(); // TODO Мб создать класс который будет возвращать уменьшенный коллайдер
 		_trailRenderer = GetComponent<TrailRenderer>();
 		
-		_turnChecker = new TurnChecker(); // FIXME
+		_turnChecker = new TurnChecker(this.transform); // FIXME
 		
 		_collisionsChecker.IsSitting = () => _isSitting;
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight;
@@ -59,19 +59,19 @@ public class PlayerController : MonoBehaviour
 	    _stateMachine = new StateMachine();
 
 	    // Инициализация состояний
-	    var idleState = new IdleState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var locomotionState = new LocomotionState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var runState = new RunState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var idleCrouchState = new IdleCrouchState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var crouchState = new CrouchState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var jumpState = new JumpState(this, _animator, _inputReader, _playerControllerStats,_physicsHandler2D);
-	    var fallState = new FallState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var dashState = new DashState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var crouchRollState = new CrouchRollState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var wallSlideState = new WallSlideState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var wallJumpState = new WallJumpState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var runJumpState = new RunJumpState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
-	    var runFallState = new RunFallState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D);
+	    var idleState = new IdleState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var locomotionState = new LocomotionState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var runState = new RunState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var idleCrouchState = new IdleCrouchState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var crouchState = new CrouchState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var jumpState = new JumpState(this, _animator, _inputReader, _playerControllerStats,_physicsHandler2D, _turnChecker);
+	    var fallState = new FallState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var dashState = new DashState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var crouchRollState = new CrouchRollState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var wallSlideState = new WallSlideState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var wallJumpState = new WallJumpState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var runJumpState = new RunJumpState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
+	    var runFallState = new RunFallState(this, _animator, _inputReader, _playerControllerStats, _physicsHandler2D, _turnChecker);
 
 	    // Переходы из idleState
 	    At(idleState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
 	    At(crouchState, locomotionState, new FuncPredicate(() => !_inputReader.GetCrouchState().IsHeld && _collisionsChecker.IsGrounded && !_collisionsChecker.BumpedHead));
 
 	    // Переходы из jumpState
-	    At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && playerPhysicsController.JumpModule.CanFall()));
+	    At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && (playerPhysicsController.JumpModule.CanFall() || _collisionsChecker.BumpedHead)));
 	    // At(jumpState, jumpState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && input.JumpInputButtonState.WasPressedThisFrame));
 	    At(jumpState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
 
@@ -152,7 +152,9 @@ public class PlayerController : MonoBehaviour
 	    At(wallSlideState, wallJumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
 	    At(wallSlideState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
 	    At(wallSlideState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
-	    At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));
+	    // At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));
+	    At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerTimerRegistry.wallJumpTimer.IsFinished || !_collisionsChecker.IsTouchingWall)));
+
 	    At(wallSlideState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.WallSlideModule.CalculateWallDirectionX() != _inputReader.GetMoveDirection().x));
 	    At(wallSlideState, idleCrouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection()[0] == 0));
 
@@ -185,7 +187,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_stateMachine.Update();
 		
-		_turnChecker.TurnCheck(_inputReader.GetMoveDirection(), transform, playerPhysicsController.PhysicsContext.WasWallSliding);
+		// _turnChecker.TurnCheck(_inputReader.GetMoveDirection());
 		
 		HandleTimers();
 		
@@ -196,7 +198,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_stateMachine.FixedUpdate();
 
-		playerPhysicsController.BumpedHead();
+		// playerPhysicsController.BumpedHead();
 		// playerPhysicsController.ApplyMovement();
 	}
 

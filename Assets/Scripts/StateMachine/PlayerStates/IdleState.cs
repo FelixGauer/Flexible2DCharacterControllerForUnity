@@ -4,8 +4,8 @@ using UnityEngine;
 public class IdleState : BaseState
 {
 	public IdleState(PlayerController player, Animator animator, InputReader inputReader,
-		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
 	public override void OnEnter()
 	{
@@ -29,6 +29,8 @@ public class IdleState : BaseState
 		// 	// Анимация "Land" полностью проиграна
 		// 	animator.Play("Idle");
 		// }
+		
+		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
 	public override void FixedUpdate()

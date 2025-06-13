@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class WallSlideState : BaseState
 {
-	public WallSlideState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+	public WallSlideState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
 	public override void OnEnter()
 	{
@@ -21,12 +21,13 @@ public class WallSlideState : BaseState
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity = player.playerPhysicsController.WallSlideModule.HandleWallSlide(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection());
+		_moveVelocity = player.playerPhysicsController.WallSlideModule.HandleWallSlide( inputReader.GetMoveDirection());
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
     public override void OnExit()
     {
         player.playerPhysicsController.WallSlideModule.OnExitWallSliding();
+        // turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
 }

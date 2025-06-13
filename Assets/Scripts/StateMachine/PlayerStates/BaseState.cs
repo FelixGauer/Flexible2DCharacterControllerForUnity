@@ -9,14 +9,16 @@ public abstract class BaseState : IState
 	protected readonly PlayerControllerStats playerControllerStats;
 	protected readonly InputReader inputReader;
 	protected readonly PhysicsHandler2D physicsHandler2D;
+	protected readonly TurnChecker turnChecker;
 	
-	protected BaseState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D)
+	protected BaseState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker)
 	{
 		this.player = player;
 		this.animator = animator;
 		this.playerControllerStats = playerControllerStats;
 		this.inputReader = inputReader;
 		this.physicsHandler2D = physicsHandler2D;
+		this.turnChecker = turnChecker;
 	}
 
 	public virtual void FixedUpdate()

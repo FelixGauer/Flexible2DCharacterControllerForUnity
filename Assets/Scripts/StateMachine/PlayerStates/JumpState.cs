@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class JumpState : BaseState
 {
-	public JumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+	public JumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 	
 	public override void OnEnter()
 	{
@@ -16,9 +16,13 @@ public class JumpState : BaseState
 	{
 		// if (inputReader.GetJumpState().WasPressedThisFrame && player.playerPhysicsController.PhysicsContext.NumberAvailableJumps == 1)
 		// 	animator.Play("MultiJump");
+
+		// animator.Play(jumpCount > 1 ? "MultiJump" : "Jump");
 		
 		// player.playerPhysicsController.JumpModule.Test1Update(inputReader.GetJumpState());
 		player.playerPhysicsController.JumpModule.HandleInput(inputReader.GetJumpState());
+		
+		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 
 	}
 	
@@ -35,7 +39,5 @@ public class JumpState : BaseState
     public override void OnExit()
     {
         player.playerPhysicsController.JumpModule.OnExitJump();
-
     }
-	
 }

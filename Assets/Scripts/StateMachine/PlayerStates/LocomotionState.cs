@@ -6,8 +6,8 @@ public class LocomotionState : BaseState
 	// TODO Заменить PlayerController player на playerPhysicsController
 	
 	public LocomotionState(PlayerController player, Animator animator, InputReader inputReader,
-		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D)
+		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker)
 	{
 		// _movementModule = new MovementModule(player.playerPhysicsController.PhysicsContext, );
 		// _groundModule = new GroundModule(playerControllerStats, player.playerPhysicsController.PhysicsContext);
@@ -30,7 +30,9 @@ public class LocomotionState : BaseState
 
 	public override void Update()
 	{
-
+		// turnChecker.TurnCheck(inputReader.GetMoveDirection());
+		
+		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
 	public override void FixedUpdate()

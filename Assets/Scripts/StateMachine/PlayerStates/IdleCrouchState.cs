@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class IdleCrouchState : BaseState
 {
-    public IdleCrouchState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-        base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+    public IdleCrouchState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
     public override void OnEnter()
     {		
@@ -18,7 +18,12 @@ public class IdleCrouchState : BaseState
         // player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
         // player.playerPhysicsController.CrouchModule.OnEnterCrouch();
     }
-    
+
+    public override void Update()
+    {
+        turnChecker.TurnCheck(inputReader.GetMoveDirection());
+    }
+
     public override void OnExit()
     {
         if (inputReader.GetDashState().WasPressedThisFrame) return;

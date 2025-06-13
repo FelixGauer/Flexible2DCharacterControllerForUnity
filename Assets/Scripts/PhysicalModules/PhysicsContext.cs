@@ -4,7 +4,7 @@ public class PhysicsContext
 {
     public Vector2 MoveVelocity { get; set; }
     // public bool VariableJumpHeight { get; set; }
-    public bool WasWallSliding {get; set;}
+    // public bool WasWallSliding {get; set;}
 
     public float NumberAvailableJumps { get; set; }
     public float NumberAvailableDash { get; set; }

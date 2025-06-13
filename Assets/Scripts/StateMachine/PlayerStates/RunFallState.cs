@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RunFallState : BaseState
 {
-    public RunFallState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-        base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+    public RunFallState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
     public override void OnEnter()
     {
@@ -23,6 +23,8 @@ public class RunFallState : BaseState
         player.playerPhysicsController.FallModule.BufferJump(inputReader.GetJumpState());
         player.playerPhysicsController.FallModule.RequestVariableJump(inputReader.GetJumpState());
         player.playerPhysicsController.FallModule.SetHoldState(inputReader.GetJumpState().IsHeld);
+        
+        turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
     
     private Vector2 _moveVelocity;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CrouchRollState : BaseState
 {
-	public CrouchRollState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D) 
+	public CrouchRollState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) 
 	{
 		// найдём клип по имени (можно оптимизировать и вынести на инициализацию)
 		_clip = animator.runtimeAnimatorController
@@ -38,6 +38,8 @@ public class CrouchRollState : BaseState
 	public override void Update()
 	{
 		// player.playerPhysicsController.CrouchRollModule.UpdateTimer();
+		turnChecker.TurnCheck(inputReader.GetMoveDirection());
+
 	}
 
 	private Vector2 _moveVelocity;

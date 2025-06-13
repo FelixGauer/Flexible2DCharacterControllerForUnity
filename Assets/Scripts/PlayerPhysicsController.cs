@@ -72,12 +72,19 @@ public class PlayerPhysicsController
 	public void BumpedHead()
 	{
 		// Проверка не ударился ли персонаж головой платформы
+		// if (_collisionsChecker.BumpedHead)
+		// {
+		// 	var moveVelocity = PhysicsContext.MoveVelocity;
+		// 	// Отправить персонажа вниз
+		// 	moveVelocity.y = Mathf.Min(0, moveVelocity.y);
+		// 	PhysicsContext.MoveVelocity = moveVelocity;
+		// }
+		
 		if (_collisionsChecker.BumpedHead)
 		{
-			var moveVelocity = PhysicsContext.MoveVelocity;
-			// Отправить персонажа вниз
+			var moveVelocity = _physicsHandler2D.GetVelocity();
 			moveVelocity.y = Mathf.Min(0, moveVelocity.y);
-			PhysicsContext.MoveVelocity = moveVelocity;
+			_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity.y));
 		}
 	}
 	

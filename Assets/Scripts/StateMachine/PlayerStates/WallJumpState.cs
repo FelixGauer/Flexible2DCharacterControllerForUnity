@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class WallJumpState : BaseState
 {
-    public WallJumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D) :
-        base(player, animator, inputReader, playerControllerStats, physicsHandler2D) { }
+    public WallJumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
     private Vector2 _moveVelocity;
     public override void OnEnter()

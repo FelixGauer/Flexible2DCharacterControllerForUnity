@@ -27,14 +27,12 @@ public class JumpModule
     private bool _positiveMoveVelocity;
     private float _numberAvailableJumps;
 	
-    private bool _jumpKeyReleased;
-
     private InputButtonState _jumpState;
 
+    private bool _jumpKeyReleased;
     private bool _wasPressedThisFrame;
     private bool _isHeld;
 
-    
     public void HandleInput(InputButtonState jumpState)
     {
         if (jumpState.WasPressedThisFrame) _wasPressedThisFrame = true;
@@ -125,7 +123,7 @@ public class JumpModule
     
     public void HandleJumpOLD(InputButtonState jumpState)
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
 		
         // Проверка на забуферизированный минимальный прыжок (пробел для буфера сразу прожат и отпущен)
         // if (_jumpBufferTimer.IsFinished) { _physicsContext.VariableJumpHeight = false; }
@@ -191,7 +189,7 @@ public class JumpModule
         // SetGravity(_playerControllerStats.JumpGravityMultiplayer);
         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
 
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _physicsContext.MoveVelocity = _moveVelocity;
 
         // ApplyMovement();
     }

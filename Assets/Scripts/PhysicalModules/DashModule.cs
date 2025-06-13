@@ -25,9 +25,9 @@ public class DashModule
     
     public Vector2 CurrentDashDirection => _dashDirection;
 	
-    public Vector2 HandleDash(Vector2 _moveVelocity)
+    public Vector2 HandleDash()
     {
-        _moveVelocity = _physicsContext.MoveVelocity;
+        // _moveVelocity = _physicsContext.MoveVelocity;
 
         // Изменение скорости по оси X для совершения рывка
         _moveVelocity.x = _dashDirection.x * _playerControllerStats.DashVelocity;
@@ -47,7 +47,7 @@ public class DashModule
         // Применение гравитации во время рывка
         _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.DashGravityMultiplayer);
 		
-        _physicsContext.MoveVelocity = _moveVelocity;
+        // _physicsContext.MoveVelocity = _moveVelocity;
         
         return _moveVelocity;
     }
@@ -60,7 +60,7 @@ public class DashModule
         _dashTimer.Start(); // Запуск таймера рывка
         _physicsContext.NumberAvailableDash -= 1;
         _moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
-        _physicsContext.MoveVelocity = Vector2.zero;
+        // _physicsContext.MoveVelocity = Vector2.zero;
     }
 
     // Метод вызываемый при выходе из состояния рывка
