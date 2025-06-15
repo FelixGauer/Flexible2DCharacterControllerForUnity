@@ -69,19 +69,25 @@ public class DashModule
         _dashTimer.Stop(); // Остановка таймера
         _dashTimer.Reset(); // Сброс таймера
     }
+    
+    public bool CanDash() // FIXME Thinking
+    {
+        return _physicsContext.NumberAvailableDash > 0f;
+    }
+
+    public void ResetNumberAvailableDash() // FIXME Thinking
+    {
+        _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
+    }
 
     // Расчет направления рывка
-    public void CalculateDashDirection(Vector2 moveDirection) // Убрать из FallState и вызывать сразу в EnterState
+    private void CalculateDashDirection(Vector2 moveDirection) // Убрать из FallState и вызывать сразу в EnterState
     {
         // _dashDirection = input.Direction;
         // _dashDirection = moveDirection;
 		
         _dashDirection = GetClosestDirection(moveDirection); // Поиск ближайшего допустимого направления
     }
-    
-    public bool IsDashTimerRunning() => _dashTimer.IsRunning;
-    public bool IsDashTimerFinished() => _dashTimer.IsFinished;
-    public void UpdateTimer() => _dashTimer.Tick(Time.deltaTime); 
 	
     // Метод для поиска ближайшего направления рывка
     private Vector2 GetClosestDirection(Vector2 targetDirection)

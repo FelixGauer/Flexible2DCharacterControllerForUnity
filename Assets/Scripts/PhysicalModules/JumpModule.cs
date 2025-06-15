@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class JumpModule
 {
-    public JumpModule(PhysicsContext physicsContext, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CountdownTimer jumpCoyoteTimer)
+    public JumpModule(PhysicsContext physicsContext, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CountdownTimer jumpCoyoteTimer, PlayerPhysicsController playerPhysicsController)
     {
         _collisionsChecker = collisionsChecker;
         _playerControllerStats = playerControllerStats;
@@ -11,6 +11,8 @@ public class JumpModule
         _jumpBufferTimer = jumpBufferTimer;
         
         _physicsContext = physicsContext;
+        
+        playerPhysicsController.CanMultiJumpRequested += () => CanMultiJump();
     }
 
     private readonly PhysicsContext _physicsContext;
@@ -37,10 +39,8 @@ public class JumpModule
     {
         if (jumpState.WasPressedThisFrame) _wasPressedThisFrame = true;
         if (jumpState.WasReleasedThisFrame) _jumpKeyReleased = true;
-        if (jumpState.IsHeld)
-            _isHeld = true;
-        else
-            _isHeld = false;
+        // if (jumpState.IsHeld) _isHeld = true;
+        // else _isHeld = false;
     }
 
     public Vector2 UpdatePhysics(InputButtonState jumpState, Vector2 currentVelocity)
@@ -85,13 +85,21 @@ public class JumpModule
         
         return _moveVelocity;
     }
-
-
-	
+    
     // Метод вызываемый при выходе из состояния прыжка
     public void OnExitJump()
     {
         _positiveMoveVelocity = false;
+    }
+    
+    public bool CanMultiJump()
+    {
+        return _physicsContext.NumberAvailableJumps > 0f;
+    }
+
+    public void ResetNumberAvailableJumps()
+    {
+        _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps;
     }
 	
     public bool CanFall()

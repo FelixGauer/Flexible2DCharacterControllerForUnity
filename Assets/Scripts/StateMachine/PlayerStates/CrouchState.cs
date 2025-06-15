@@ -15,6 +15,7 @@ public class CrouchState : BaseState
 		player.playerPhysicsController.CrouchModule.SetCrouchState(true);
 		
 		player.playerPhysicsController.GroundModule.HandleGround();
+		
 	}
 
 	private Vector2 _moveVelocity;

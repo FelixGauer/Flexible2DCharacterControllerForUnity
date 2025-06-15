@@ -1,36 +1,37 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] private InputReader _inputReader;
 	[SerializeField] private PlayerControllerStats _playerControllerStats;
-	[SerializeField] public Transform spriteTransform;
+	[SerializeField] private Transform _spriteTransform;
+	[SerializeField] private CapsuleCollider2D _capsuleCollider;
 	[SerializeField] private PhysicsHandler2D _physicsHandler2D;
 
 	private PlayerTimerRegistry _playerTimerRegistry;
-
 	private CollisionsChecker _collisionsChecker;
+	private StateMachine _stateMachine;
+	private ColliderSpriteResizer _colliderSpriteResizer;
+	private TurnChecker _turnChecker;
+
+	
 	public Rigidbody2D _rigidbody;
-	public CapsuleCollider2D _capsuleCollider;
-
-	// InputReader parameters
-	// private Vector2 _moveDirection;
-
+	
 	//Debug var
 	private float maxYPosition;
 	private TrailRenderer _trailRenderer;
 	private List<GameObject> markers = new List<GameObject>();
 	
 	// State Machine Var
-	private StateMachine _stateMachine;
 
 	public PlayerPhysicsController playerPhysicsController;
-
+	
 	private Animator _animator;
 	
-	private TurnChecker _turnChecker;
 	private bool IsFacingRight => _turnChecker.IsFacingRight;
 	private bool _isSitting = false;
 	
@@ -47,7 +48,11 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight;
 
 		_playerTimerRegistry = new PlayerTimerRegistry(_playerControllerStats);
-		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _collisionsChecker, _playerControllerStats, this, _turnChecker, _physicsHandler2D, _playerTimerRegistry);
+		// _colliderSpriteController = new ColliderSpriteController(_capsuleCollider, spriteTransform);
+
+		_colliderSpriteResizer = new ColliderSpriteResizer(_capsuleCollider, _spriteTransform);
+
+		playerPhysicsController = new PlayerPhysicsController(_rigidbody, _collisionsChecker, _playerControllerStats, this, _turnChecker, _physicsHandler2D, _playerTimerRegistry, _colliderSpriteResizer);
 		
 		_animator = GetComponentInChildren<Animator>(); // FIXME
 		
@@ -85,7 +90,7 @@ public class PlayerController : MonoBehaviour
 	    At(locomotionState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 	    At(locomotionState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
 	    At(locomotionState, runState, new FuncPredicate(() => _inputReader.GetRunState().IsHeld && _collisionsChecker.IsGrounded));
-	    At(locomotionState, idleCrouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(playerPhysicsController.PhysicsContext.MoveVelocity.x) < 0.1f));
+	    At(locomotionState, idleCrouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
 	    At(locomotionState, crouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld));
 	    At(locomotionState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
 	    At(locomotionState, idleState, new FuncPredicate(() => _inputReader.GetMoveDirection() == Vector2.zero && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
@@ -102,13 +107,13 @@ public class PlayerController : MonoBehaviour
 	    At(runState, crouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld));
 
 	    // Переходы из idleCrouchState
-	    At(idleCrouchState, crouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] != 0));
-	    At(idleCrouchState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
-	    At(idleCrouchState, idleState, new FuncPredicate(() => !_inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
+	    At(idleCrouchState, crouchState, new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] != 0));
+	    At(idleCrouchState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && !_collisionsChecker.BumpedHead));
+	    At(idleCrouchState, idleState, new FuncPredicate(() => !_inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && !_collisionsChecker.BumpedHead));
 	    At(idleCrouchState, crouchRollState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
 
 	    // Переходы из crouchState
-	    At(crouchState, idleCrouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
+	    At(crouchState, idleCrouchState, new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
 	    At(crouchState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
 	    At(crouchState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
 	    At(crouchState, crouchRollState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
@@ -119,11 +124,11 @@ public class PlayerController : MonoBehaviour
 	    // Переходы из jumpState
 	    At(jumpState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && (playerPhysicsController.JumpModule.CanFall() || _collisionsChecker.BumpedHead)));
 	    // At(jumpState, jumpState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && input.JumpInputButtonState.WasPressedThisFrame));
-	    At(jumpState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
+	    At(jumpState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.DashModule.CanDash()));
 
 	    // Переходы из fallState
-	    At(fallState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f)));
-	    At(fallState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
+	    At(fallState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || playerPhysicsController.CanMultiJump())));
+	    At(fallState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.DashModule.CanDash()));
 	    At(fallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
 	    At(fallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero && Mathf.Abs(_physicsHandler2D.GetVelocity().x) < 0.1f));
 	    At(fallState, idleCrouchState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
@@ -133,19 +138,19 @@ public class PlayerController : MonoBehaviour
 	    At(fallState, wallSlideState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 
 	    // Переходы из dashState
-	    At(dashState, idleState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
-	    At(dashState, runState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
-	    At(dashState, fallState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && !_collisionsChecker.IsGrounded));
+	    At(dashState, idleState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
+	    At(dashState, runState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+	    At(dashState, fallState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
 	    At(dashState, wallSlideState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
-	    At(dashState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f));
-	    At(dashState, idleCrouchState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
-	    At(dashState, crouchState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld));
-	    At(dashState, locomotionState, new FuncPredicate(() => !playerPhysicsController.DashModule.IsDashTimerRunning() && _collisionsChecker.IsGrounded));
+	    At(dashState, jumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && playerPhysicsController.JumpModule.CanMultiJump()));
+	    At(dashState, idleCrouchState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
+	    At(dashState, crouchState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld));
+	    At(dashState, locomotionState, new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded));
 
 	    // Переходы из crouchRollState
-	    At(crouchRollState, idleState, new FuncPredicate(() => !_playerTimerRegistry.crouchRollTimer.IsRunning && !_inputReader.GetCrouchState().IsHeld));
+	    At(crouchRollState, idleState, new FuncPredicate(() => !_playerTimerRegistry.crouchRollTimer.IsRunning && !_inputReader.GetCrouchState().IsHeld && !_collisionsChecker.BumpedHead));
 	    At(crouchRollState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded));
-	    At(crouchRollState, idleCrouchState, new FuncPredicate(() => !_playerTimerRegistry.crouchRollTimer.IsRunning && _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
+	    At(crouchRollState, idleCrouchState, new FuncPredicate(() => !_playerTimerRegistry.crouchRollTimer.IsRunning && (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] == 0));
 	    At(crouchRollState, crouchState, new FuncPredicate(() => !_playerTimerRegistry.crouchRollTimer.IsRunning));
 
 	    // Переходы из wallSlideState
@@ -154,8 +159,8 @@ public class PlayerController : MonoBehaviour
 	    At(wallSlideState, locomotionState, new FuncPredicate(() => _collisionsChecker.IsGrounded));
 	    // At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && !_collisionsChecker.IsTouchingWall));
 	    At(wallSlideState, fallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerTimerRegistry.wallJumpTimer.IsFinished || !_collisionsChecker.IsTouchingWall)));
-
 	    At(wallSlideState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.WallSlideModule.CalculateWallDirectionX() != _inputReader.GetMoveDirection().x));
+	    // At(wallSlideState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.WallSlideModule.CalculateWallDirectionX() != _inputReader.GetMoveDirection().x));
 	    At(wallSlideState, idleCrouchState, new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection()[0] == 0));
 
 	    // Переходы из wallJumpState
@@ -164,15 +169,15 @@ public class PlayerController : MonoBehaviour
 	    // Переходы из runJumpState
 	    At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && playerPhysicsController.JumpModule.CanFall()));
 	    // At(runJumpState, runFallState, new FuncPredicate(() => !_collisionsChecker.IsGrounded && ((playerPhysicsController.PhysicsContext.MoveVelocity.y < 0f && playerPhysicsController.JumpModule.CanFall()))));
-	    At(runJumpState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f));
+	    At(runJumpState, dashState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.DashModule.CanDash()));
 
 	    // Переходы из runFallState
 	    At(runFallState, jumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && !_inputReader.GetRunState().IsHeld));
 	    At(runFallState, fallState, new FuncPredicate(() => !_inputReader.GetRunState().IsHeld && !_collisionsChecker.IsGrounded));
 	    At(runFallState, idleState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
 	    At(runFallState, runJumpState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
-	    At(runFallState, runJumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || playerPhysicsController.PhysicsContext.NumberAvailableJumps > 0f)));
-	    At(runFallState, runJumpState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.PhysicsContext.NumberAvailableDash > 0f)); //FIXME
+	    At(runFallState, runJumpState, new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || playerPhysicsController.JumpModule.CanMultiJump())));
+	    At(runFallState, runJumpState, new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && playerPhysicsController.DashModule.CanDash())); //FIXME
 	    At(runFallState, wallSlideState, new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
 	    At(runFallState, runState, new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
 		//TODO runfall to locomotion

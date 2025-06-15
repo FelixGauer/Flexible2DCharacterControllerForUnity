@@ -38,7 +38,7 @@ public class CollisionsChecker : MonoBehaviour
 	private void CheckBumpedHead()
 	{
 		var bounds = FeetCollider.bounds;
-		float currentHeadDetectionRayLength = IsSitting() ? 0.2f : stats.HeadDetectionRayLength;
+		float currentHeadDetectionRayLength = IsSitting() ? 0.4f : stats.HeadDetectionRayLength; // FIXME Заменить 0.4
 
 		Vector2 boxCastOrigin = new Vector2(bounds.center.x, BodyCollider.bounds.max.y);
 		Vector2 boxCastSize = new Vector2(bounds.size.x * stats.HeadWidth, stats.HeadDetectionRayLength);

@@ -37,7 +37,8 @@ public class PlayerPhysicsController
 		PlayerController playerController,
 		TurnChecker turnChecker,
 		PhysicsHandler2D physicsHandler2D,
-		PlayerTimerRegistry playerTimerRegistry)
+		PlayerTimerRegistry playerTimerRegistry,
+		ColliderSpriteResizer colliderSpriteResizer)
 	{
 		_rigidbody = rigidbody;
 		_collisionsChecker = collisionsChecker;
@@ -47,26 +48,29 @@ public class PlayerPhysicsController
 		_playerTimerRegistry = playerTimerRegistry;
 
 		PhysicsContext = new PhysicsContext();
-
 		MovementModule = new MovementModule(PhysicsContext);
-		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D);
-		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer);
+		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer, this);
 		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer);
 		DashModule = new DashModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
 		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
 		WallJumpModule = new WallJumpModule(PhysicsContext, _playerControllerStats, _turnChecker);
-		CrouchModule = new CrouchModule(PhysicsContext, _playerControllerStats, playerController._capsuleCollider, playerController.spriteTransform);
+		CrouchModule = new CrouchModule(_playerControllerStats, _collisionsChecker, colliderSpriteResizer);
 		CrouchRollModule = new CrouchRollModule(PhysicsContext, _playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
+		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D, JumpModule, DashModule); // FIXME
 	}
 	
-	public void ApplyMovement()
-	{
-		_rigidbody.linearVelocity = PhysicsContext.MoveVelocity;
-	}
+	public event Func<bool> CanMultiJumpRequested;
 	
-	public void ApplyMovementTestVer1(Vector2 moveVelocity)
+	public bool CanMultiJump() => CanMultiJumpRequested?.Invoke() ?? false;
+	
+		
+	public void CoyoteTimerStart()
 	{
-		_rigidbody.linearVelocity = moveVelocity;
+		if (!_collisionsChecker.IsGrounded)
+		{
+			// _jumpCoyoteTimer.Start();
+			_playerTimerRegistry.jumpCoyoteTimer.Start();
+		}
 	}
 	
 	public void BumpedHead()
@@ -87,16 +91,8 @@ public class PlayerPhysicsController
 			_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity.y));
 		}
 	}
-	
-	public void CoyoteTimerStart()
-	{
-		if (!_collisionsChecker.IsGrounded)
-		{
-			// _jumpCoyoteTimer.Start();
-			_playerTimerRegistry.jumpCoyoteTimer.Start();
-		}
-	}
-	
+
+
 	private bool IsFacingRight => _turnChecker.IsFacingRight;
 	
 	public float CalculateWallDirectionX()
@@ -106,12 +102,24 @@ public class PlayerPhysicsController
 	
 	public void HandleGround()
 	{
-		PhysicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-		PhysicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+		// _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+		// _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+
+		JumpModule.ResetNumberAvailableJumps();
+		DashModule.ResetNumberAvailableDash();
+
+		var moveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
+        
+		_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity));
+        
+	}
+	
+	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
+	{
+		// Применение гравитации
+		moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+		return moveVelocity;
 	}
 
-	// public void VelocityReset()
-	// {
-	// 	PhysicsContext.MoveVelocity = Vector2.zero;
-	// }
+
 }

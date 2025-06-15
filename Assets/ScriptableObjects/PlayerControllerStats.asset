@@ -30,7 +30,7 @@ MonoBehaviour:
   maxJumpHeight: 3.5
   minJumpHeight: 1
   airAcceleration: 150
-  airDeceleration: 17
+  airDeceleration: 23
   MaxNumberJumps: 2
   timeTillJumpApex: 0.3
   jumpHeightCompensationFactor: 1.06
