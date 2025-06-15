@@ -51,6 +51,8 @@ public class RunFallState : BaseState
         // player.playerPhysicsController.OnExitFall();
         
         // player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
+        
+        player.playerPhysicsController.FallModule.OnExitFall(); // FIXME
 
     }
 	
