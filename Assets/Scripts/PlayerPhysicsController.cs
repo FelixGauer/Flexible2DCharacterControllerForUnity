@@ -59,11 +59,28 @@ public class PlayerPhysicsController
 		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D, JumpModule, DashModule); // FIXME
 	}
 	
-	public event Func<bool> CanMultiJumpRequested;
-	
-	public bool CanMultiJump() => CanMultiJumpRequested?.Invoke() ?? false;
-	
 		
+	public void HandleGround()
+	{
+		// _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
+		// _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
+
+		JumpModule.ResetNumberAvailableJumps();
+		DashModule.ResetNumberAvailableDash();
+
+		var moveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
+        
+		_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity));
+	}
+	
+	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
+	{
+		// Применение гравитации
+		moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+		return moveVelocity;
+	}
+	
+
 	public void CoyoteTimerStart()
 	{
 		if (!_collisionsChecker.IsGrounded)
@@ -99,27 +116,10 @@ public class PlayerPhysicsController
 	{
 		return IsFacingRight ? 1f : -1f;
 	}
+
+
+	public event Func<bool> CanMultiJumpRequested;
 	
-	public void HandleGround()
-	{
-		// _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-		// _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
-
-		JumpModule.ResetNumberAvailableJumps();
-		DashModule.ResetNumberAvailableDash();
-
-		var moveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
-        
-		_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity));
-        
-	}
-	
-	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
-	{
-		// Применение гравитации
-		moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
-		return moveVelocity;
-	}
-
+	public bool CanMultiJump() => CanMultiJumpRequested?.Invoke() ?? false;
 
 }

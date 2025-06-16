@@ -19,11 +19,9 @@ public class DashModule
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _dashTimer = dashTimer;
-
-        // _dashTimer = new CountdownTimer(playerControllerStats.DashTime);
     }
     
-    public Vector2 CurrentDashDirection => _dashDirection;
+    // public Vector2 CurrentDashDirection => _dashDirection;
 	
     public Vector2 HandleDash()
     {
@@ -52,6 +50,12 @@ public class DashModule
         return _moveVelocity;
     }
 
+    public void CheckForDirectionChange(Vector2 moveDirection)
+    {
+        if (_dashDirection == -moveDirection)
+            StopDash(); // TODO Вынести как отдельный метод в DashModule
+    }
+
     // Метод вызываемый при входе в состояние рывка
     public void StartDash(Vector2 moveDirection)
     {
@@ -60,7 +64,6 @@ public class DashModule
         _dashTimer.Start(); // Запуск таймера рывка
         _physicsContext.NumberAvailableDash -= 1;
         _moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
-        // _physicsContext.MoveVelocity = Vector2.zero;
     }
 
     // Метод вызываемый при выходе из состояния рывка
@@ -80,13 +83,9 @@ public class DashModule
         _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
     }
 
-    // Расчет направления рывка
     private void CalculateDashDirection(Vector2 moveDirection) // Убрать из FallState и вызывать сразу в EnterState
     {
-        // _dashDirection = input.Direction;
-        // _dashDirection = moveDirection;
-		
-        _dashDirection = GetClosestDirection(moveDirection); // Поиск ближайшего допустимого направления
+        _dashDirection = GetClosestDirection(moveDirection);
     }
 	
     // Метод для поиска ближайшего направления рывка

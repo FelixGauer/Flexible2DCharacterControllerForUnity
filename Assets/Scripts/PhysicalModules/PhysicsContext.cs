@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PhysicsContext 
 {
-    public Vector2 MoveVelocity { get; set; }
+    // public Vector2 MoveVelocity { get; set; }
     // public bool VariableJumpHeight { get; set; }
     // public bool WasWallSliding {get; set;}
 
