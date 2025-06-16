@@ -2,88 +2,68 @@ using UnityEngine;
 
 public class DashModule 
 {
-    private readonly PhysicsContext _physicsContext;
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _dashTimer;
     private readonly TurnChecker _turnChecker;
-    private readonly PhysicsHandler2D _physicsHandler2D;
+
+    private float _numberAvailableDash;
 	
     private Vector2 _moveVelocity;
     private Vector2 _dashDirection;
 	
     private bool IsFacingRight => _turnChecker.IsFacingRight;
 
-    public DashModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
+    public DashModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
     {
-        _physicsContext = physicsContext;
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _dashTimer = dashTimer;
     }
-    
-    // public Vector2 CurrentDashDirection => _dashDirection;
 	
     public Vector2 HandleDash()
     {
-        // _moveVelocity = _physicsContext.MoveVelocity;
-
-        // Изменение скорости по оси X для совершения рывка
         _moveVelocity.x = _dashDirection.x * _playerControllerStats.DashVelocity;
 
-        // Если скорость по y не равна 0, применяем рывок в оси Y
         if (_dashDirection.y != 0)
         {
             _moveVelocity.y = _dashDirection.y * _playerControllerStats.DashVelocity;
         }
 
-        // Отмена рывка, если игрок проживаем противоположное направление
-        // if (_dashDirection == -moveDirection)
-        // {
-        //     StopDash();
-        // }
-
-        // Применение гравитации во время рывка
-        _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.DashGravityMultiplayer);
-		
-        // _physicsContext.MoveVelocity = _moveVelocity;
-        
         return _moveVelocity;
     }
 
     public void CheckForDirectionChange(Vector2 moveDirection)
     {
         if (_dashDirection == -moveDirection)
-            StopDash(); // TODO Вынести как отдельный метод в DashModule
+            StopDash();
     }
 
-    // Метод вызываемый при входе в состояние рывка
     public void StartDash(Vector2 moveDirection)
     {
         CalculateDashDirection(moveDirection);
         
-        _dashTimer.Start(); // Запуск таймера рывка
-        _physicsContext.NumberAvailableDash -= 1;
-        _moveVelocity.y = 0f; // Сброс скорости по Y, для расчета правильного направления рывка
+        _dashTimer.Start();
+        _numberAvailableDash -= 1;
+        _moveVelocity.y = 0f; 
     }
 
-    // Метод вызываемый при выходе из состояния рывка
     public void StopDash()
     {
-        _dashTimer.Stop(); // Остановка таймера
-        _dashTimer.Reset(); // Сброс таймера
+        _dashTimer.Stop(); 
+        _dashTimer.Reset(); 
     }
     
     public bool CanDash() // FIXME Thinking
     {
-        return _physicsContext.NumberAvailableDash > 0f;
+        return _numberAvailableDash > 0f;
     }
 
     public void ResetNumberAvailableDash() // FIXME Thinking
     {
-        _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
+        _numberAvailableDash = _playerControllerStats.MaxNumberDash;
     }
 
-    private void CalculateDashDirection(Vector2 moveDirection) // Убрать из FallState и вызывать сразу в EnterState
+    private void CalculateDashDirection(Vector2 moveDirection)
     {
         _dashDirection = GetClosestDirection(moveDirection);
     }
@@ -91,20 +71,19 @@ public class DashModule
     // Метод для поиска ближайшего направления рывка
     private Vector2 GetClosestDirection(Vector2 targetDirection)
     {
-        Vector2 closestDirection = Vector2.zero; // Начальное значение для ближайшего направления
-        float minDistance = float.MaxValue;      // Минимальная дистанция для поиска ближайшего направления
+        Vector2 closestDirection = Vector2.zero;
+        float minDistance = float.MaxValue;
 
-        // Перебор всех допустимых направления в общем массиве направлений
         foreach (var dashDirection in _playerControllerStats.DashDirections)
         {
             float distance = Vector2.Distance(targetDirection, dashDirection);
-
-            // Проверка на диагональное направление
-            if (IsDiagonal(dashDirection))
+        
+            // ИСПРАВЛЕНО: Приоритет диагональным направлениям
+            if (IsDiagonal(dashDirection) && IsDiagonal(targetDirection))
             {
-                distance = 1f;
+                distance *= 0.5f; // Делаем диагональные направления более приоритетными
             }
-            // Если найдено близкое направление, обновляем ближайшее и минимальную дистанцию
+        
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -112,10 +91,8 @@ public class DashModule
             }
         }
 
-        // Если стоит на месте, применяем рывок в сторону поворота игрока, иначе в найденое ближайшее направление
-        // return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
-        return closestDirection == Vector2.zero ? (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
-
+        return closestDirection == Vector2.zero ? 
+            (IsFacingRight ? Vector2.right : Vector2.left) : closestDirection;
     }
 	
     // Проверка является ли направление диагональным

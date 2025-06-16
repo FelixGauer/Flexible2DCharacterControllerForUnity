@@ -89,6 +89,13 @@ public class FallModule
     // if (_collisionsChecker.IsGrounded) _coyoteUsable = true;;
         if (_collisionsChecker.IsGrounded) HandleGround();
     }
+    
+    public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
+    {
+        // Применение гравитации
+        moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+        return moveVelocity;
+    }
 	
     private void HandleGround()
     {

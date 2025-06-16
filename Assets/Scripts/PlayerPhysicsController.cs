@@ -51,11 +51,11 @@ public class PlayerPhysicsController
 		MovementModule = new MovementModule(PhysicsContext);
 		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer, this);
 		FallModule = new FallModule(PhysicsContext, _rigidbody, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer);
-		DashModule = new DashModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
+		DashModule = new DashModule(_playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
 		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
 		WallJumpModule = new WallJumpModule(PhysicsContext, _playerControllerStats, _turnChecker);
 		CrouchModule = new CrouchModule(_playerControllerStats, _collisionsChecker, colliderSpriteResizer);
-		CrouchRollModule = new CrouchRollModule(PhysicsContext, _playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
+		CrouchRollModule = new CrouchRollModule(_playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
 		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D, JumpModule, DashModule); // FIXME
 	}
 	

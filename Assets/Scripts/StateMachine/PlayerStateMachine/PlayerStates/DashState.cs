@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DashState : BaseState
 {
+	// private Vector2 _moveVelocity;
+
 	public DashState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
 		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
 
@@ -17,27 +19,22 @@ public class DashState : BaseState
 
 	public override void Update()
 	{
-		// if (player.playerPhysicsController.DashModule.CurrentDashDirection == -inputReader.GetMoveDirection())
-		// 	player.playerPhysicsController.DashModule.StopDash(); // TODO Вынести как отдельный метод в DashModule
-		
 		player.playerPhysicsController.DashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
 		
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
-	private Vector2 _moveVelocity;
 	public override void FixedUpdate()
 	{
-		// player.HandleDash();
+		var moveVelocity = player.playerPhysicsController.DashModule.HandleDash();
+		var gravityVelocity = player.playerPhysicsController.FallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
 		
-		_moveVelocity = player.playerPhysicsController.DashModule.HandleDash();
-		physicsHandler2D.AddVelocity(_moveVelocity);
+		physicsHandler2D.AddVelocity(moveVelocity);
+		physicsHandler2D.AddVelocity(new Vector2(0f, gravityVelocity));
 	}
 	
 	public override void OnExit()
 	{
-		// player.OnExitDash();
-		
 		player.playerPhysicsController.DashModule.StopDash();
 	}
 }
