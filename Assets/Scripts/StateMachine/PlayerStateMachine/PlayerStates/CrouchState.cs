@@ -14,7 +14,7 @@ public class CrouchState : BaseState
 		
 		player.playerPhysicsController.CrouchModule.SetCrouchState(true);
 		
-		player.playerPhysicsController.GroundModule.HandleGround();
+		// player.playerPhysicsController.GroundModule.HandleGround();
 		
 	}
 

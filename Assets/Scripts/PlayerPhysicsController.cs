@@ -56,9 +56,10 @@ public class PlayerPhysicsController
 		WallJumpModule = new WallJumpModule(PhysicsContext, _playerControllerStats, _turnChecker);
 		CrouchModule = new CrouchModule(_playerControllerStats, _collisionsChecker, colliderSpriteResizer);
 		CrouchRollModule = new CrouchRollModule(_playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
-		GroundModule = new GroundModule(_playerControllerStats, PhysicsContext, _physicsHandler2D, JumpModule, DashModule); // FIXME
+		
+		_collisionsChecker.OnGroundTouched += HandleGround;
+		_collisionsChecker.OnWallTouched += HandleGround;
 	}
-	
 		
 	public void HandleGround()
 	{
@@ -68,9 +69,9 @@ public class PlayerPhysicsController
 		JumpModule.ResetNumberAvailableJumps();
 		DashModule.ResetNumberAvailableDash();
 
-		var moveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
+		// var moveVelocity = _playerControllerStats.GroundGravity; // Гравитация на земле 
         
-		_physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity));
+		// _physicsHandler2D.AddVelocity(new Vector2(0f, moveVelocity));
 	}
 	
 	public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)

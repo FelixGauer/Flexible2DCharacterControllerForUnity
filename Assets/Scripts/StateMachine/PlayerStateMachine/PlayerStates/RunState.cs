@@ -12,7 +12,8 @@ public class RunState : BaseState
 		
 		animator.Play("Run");
 
-		player.playerPhysicsController.GroundModule.HandleGround();
+		// player.playerPhysicsController.GroundModule.HandleGround();
+		// player.playerPhysicsController.HandleGround();
 	}
 	
 	public override void Update()

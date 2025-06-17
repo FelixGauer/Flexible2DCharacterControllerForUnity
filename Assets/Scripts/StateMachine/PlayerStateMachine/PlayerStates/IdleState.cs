@@ -17,7 +17,7 @@ public class IdleState : BaseState
 		// player.playerPhysicsController.VelocityReset();
 		// physicsHandler2D.ResetVelocity();
 		
-		player.playerPhysicsController.GroundModule.HandleGround();
+		// player.playerPhysicsController.GroundModule.HandleGround();
 	}
 
 	public override void Update()

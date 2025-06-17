@@ -95,8 +95,8 @@ public class WallSlideModule
         // _physicsContext.WasWallSliding = true;
 
         // Обнуления максКолвоПрыжков, максКолвоРывков
-        _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps;
-        _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
+        // _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+        // _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
     }
 
     // Метод вызываемый при выходе в состояние wallJump/Slide

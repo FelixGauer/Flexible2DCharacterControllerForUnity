@@ -12,7 +12,9 @@ public class JumpModule
         
         _physicsContext = physicsContext;
         
-        playerPhysicsController.CanMultiJumpRequested += () => CanMultiJump();
+        // playerPhysicsController.CanMultiJumpRequested += () => CanMultiJump();
+        
+        collisionsChecker.OnGroundTouched += () => CanMultiJump();
     }
 
     private readonly PhysicsContext _physicsContext;

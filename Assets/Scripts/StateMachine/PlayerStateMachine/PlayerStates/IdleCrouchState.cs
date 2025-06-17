@@ -13,7 +13,7 @@ public class IdleCrouchState : BaseState
 
 
         player.playerPhysicsController.CrouchModule.SetCrouchState(true);
-        player.playerPhysicsController.GroundModule.HandleGround();
+        // player.playerPhysicsController.GroundModule.HandleGround();
         
         // player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
         // player.playerPhysicsController.CrouchModule.OnEnterCrouch();

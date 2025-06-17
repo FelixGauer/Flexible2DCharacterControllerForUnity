@@ -23,7 +23,7 @@ public class LocomotionState : BaseState
 
 		animator.Play("Run");
 		
-		player.playerPhysicsController.GroundModule.HandleGround();
+		// player.playerPhysicsController.GroundModule.HandleGround();
 		// _groundModule.HandleGround();
 
 	}
