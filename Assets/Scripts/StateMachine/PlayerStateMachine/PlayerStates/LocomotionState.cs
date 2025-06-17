@@ -39,6 +39,7 @@ public class LocomotionState : BaseState
 	{
 		// _movementModule.HandleMovement(inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		var moveVelocity = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		moveVelocity.y = playerControllerStats.GroundGravity;
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}
 

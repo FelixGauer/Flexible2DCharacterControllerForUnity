@@ -30,8 +30,8 @@ public class GroundModule
         _jumpModule.ResetNumberAvailableJumps();
         _dashModule.ResetNumberAvailableDash();
 
-        _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
+        // _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
         
-        _physicsHandler2D.AddVelocity(_moveVelocity);
+        // _physicsHandler2D.AddVelocity(_moveVelocity);
     }
 }

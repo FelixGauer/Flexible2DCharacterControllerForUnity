@@ -15,7 +15,7 @@ public class IdleState : BaseState
 
 		// player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
 		// player.playerPhysicsController.VelocityReset();
-		// _physicsHandler2D.ResetVelocity();
+		// physicsHandler2D.ResetVelocity();
 		
 		player.playerPhysicsController.GroundModule.HandleGround();
 	}

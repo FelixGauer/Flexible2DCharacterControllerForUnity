@@ -87,6 +87,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
+	[Range(0, 200f)] public float maxUpwardSpeed = 50f;
 	
 	public float AdjustedJumpHeight => maxJumpHeight * jumpHeightCompensationFactor;  
 	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);  

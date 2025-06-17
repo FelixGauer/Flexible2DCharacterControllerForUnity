@@ -10,6 +10,8 @@ public class JumpState : BaseState
 		animator.Play("Jump");
 		
 		Debug.Log("JumpEnter");
+		
+		player.playerPhysicsController.JumpModule.StartJumpState();
 	}
 
 	public override void Update()

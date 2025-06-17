@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Bits: 256
   GroundDetectionRayLenght: 0.02
   HeadDetectionRayLength: 0.02
-  HeadWidth: 1.04
+  HeadWidth: 1
   WallDetectionRayLength: 0.015
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
@@ -50,7 +50,7 @@ MonoBehaviour:
   CrouchMoveSpeed: 7
   CrouchHeight: 0.6
   CrouchOffset: 0.2
-  CrouchRollVelocity: 10
+  CrouchRollVelocity: 0
   RunSpeed: 20
   CoyoteTime: 0.13
   BufferTime: 0.2
@@ -59,3 +59,4 @@ MonoBehaviour:
   CrouchRollTime: 0.25
   maxFallSpeed: 30
   GroundGravity: -1.5
+  maxUpwardSpeed: 50

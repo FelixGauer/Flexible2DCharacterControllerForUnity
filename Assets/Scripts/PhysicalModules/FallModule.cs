@@ -2,31 +2,14 @@ using UnityEngine;
 
 public class FallModule 
 {
-    public FallModule(PhysicsContext physicsContext, Rigidbody2D rigidbody, CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
+    public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
     {
-        _rigidbody = rigidbody;
-        _collisionsChecker = collisionsChecker;
         _playerControllerStats = playerControllerStats;
-		
         _jumpBufferTimer = jumpBufferTimer;
-
-        // _jumpBufferTimer = new CountdownTimer(playerControllerStats.BufferTime);
-
-        _physicsContext = physicsContext;
     }
-	
-    private readonly Rigidbody2D _rigidbody;
-    private readonly CollisionsChecker _collisionsChecker;
+    
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _jumpBufferTimer;
-    
-
-    private readonly PhysicsContext _physicsContext;
-    
-    private readonly PhysicsHandler2D _physicsHandler2D;
-
-    private Vector2 _moveVelocity;
-    private bool _coyoteUsable;
 
     private bool _isHeld;
 
@@ -35,110 +18,51 @@ public class FallModule
         if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
     }
     
-    public void RequestVariableJump(InputButtonState jumpState)
-    {
-        // if (_jumpBufferTimer.IsRunning && jumpState.WasReleasedThisFrame)
-        //     _physicsContext.VariableJumpHeight = true;
-    }
-
     public void SetHoldState(bool isHeld) => _isHeld = isHeld;
     
-    public Vector2 HandleFalling(Vector2 _moveVelocity)
+    public Vector2 HandleFalling(Vector2 currentVelocity)
     {
-        // _moveVelocity = _physicsContext.MoveVelocity;
+        float gravityMultiplier = GetGravityMultiplier(currentVelocity.y);
         
-        // _moveVelocity.y = _physicsHandler2D.GetVelocity().y;
-        
-        float gravityMultiplier;
-
-        // 1) Если «висим» на верхней точке прыжка (ниже порога hang-time):
-        if (Mathf.Abs(_rigidbody.linearVelocity.y) < _playerControllerStats.jumpHangTimeThreshold)
-        {
-            gravityMultiplier = _playerControllerStats.jumpHangGravityMult;
-        }
-        // 2) Если ещё держат кнопку прыжка — уменьшаем силу гравитации (более мягкий подъем):
-        else if (_isHeld)
-        {
-            gravityMultiplier = _playerControllerStats.JumpGravityMultiplayer;
-        }
-        // 3) Иначе (мы либо в свободном падении, либо отпустили кнопку — максимальная гравитация):
-        else
-        {
-            gravityMultiplier = _playerControllerStats.FallGravityMultiplayer;
-        }
-
         // Применяем гравитацию
-        _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, gravityMultiplier);
-
-        // Ограничиваем максимальную скорость падения:
-        _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -_playerControllerStats.maxFallSpeed, 50f); // TODO В отдельный метод
-
-        // _physicsContext.MoveVelocity = _moveVelocity;
+        Vector2 newVelocity = ApplyGravity(currentVelocity, _playerControllerStats.Gravity, gravityMultiplier);
         
-        // _physicsHandler2D.AddVelocity(_moveVelocity);
+        // Ограничиваем максимальную скорость падения
+        newVelocity.y = ClampFallSpeed(newVelocity.y);
 
-        return _moveVelocity;
+        return newVelocity;
     }
 
-    // Метод вызываемый при выходе из состояния падения
-    public void OnExitFall() // FIXME 
-    {
-        _moveVelocity = Vector2.zero;
-    // Когда персонаж оказывается на земле, вернуть все флаги, которые обновляются на земле
-    // Также используется для конкретной реализации буферного прыжка в StateMachine
-    // if (_collisionsChecker.IsGrounded) _coyoteUsable = true;;
-        if (_collisionsChecker.IsGrounded) HandleGround();
-    }
-    
     public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
     {
         // Применение гравитации
         moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
         return moveVelocity;
     }
-	
-    private void HandleGround()
+    
+    private float GetGravityMultiplier(float verticalVelocity)
     {
-        _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
-        _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
-    
-        // _coyoteUsable = true; // Установка флага разрешающего делать койот прыжок
-    
-        // _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле
+        // Если «висим» на верхней точке прыжка (ниже порога hang-time)
+        if (Mathf.Abs(verticalVelocity) < _playerControllerStats.jumpHangTimeThreshold)
+        {
+            return _playerControllerStats.jumpHangGravityMult;
+        }
+        // Если ещё держат кнопку прыжка — уменьшаем силу гравитации
+        else if (_isHeld)
+        {
+            return _playerControllerStats.JumpGravityMultiplayer;
+        }
+        // Свободное падение или отпустили кнопку
+        else
+        {
+            return _playerControllerStats.FallGravityMultiplayer;
+        }
     }
-    // public void HandleFalling(InputButtonState jumpState)
-    // {
-    //     _moveVelocity = _physicsContext.MoveVelocity;
-    //     // Проверка на удар головой об платформу
-    //     // BumpedHead(); //FIXME
-    //
-    //     // Запуск таймера прыжка в падении
-    //     // if (jumpState.WasPressedThisFrame) { _jumpBufferTimer.Start(); }
-    //     // Сохранение переменной для буферизации минимального прыжка
-    //     // if (_jumpBufferTimer.IsRunning && jumpState.WasReleasedThisFrame) { _physicsContext.VariableJumpHeight = true; } //FIXME
-    //
-    //     // Применнение гравитации
-    //     // Гравитация в верхней точки прыжыка
-    //     if (Mathf.Abs(_rigidbody.linearVelocity.y) < _playerControllerStats.jumpHangTimeThreshold)
-    //     {
-    //         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.jumpHangGravityMult);
-    //
-    //     } // Гравитация в прыжке (Гравитация если удерживается кнопка прыжка)
-    //     else if (jumpState.IsHeld)
-    //     {
-    //         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
-    //
-    //     } // Гравитация в падении
-    //     else
-    //     {
-    //         _moveVelocity = _physicsContext.ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.FallGravityMultiplayer);
-    //     }
-    //
-    //     // Ограничение максимальной скорости падения
-    //     _moveVelocity.y = Mathf.Clamp(_moveVelocity.y, -_playerControllerStats.maxFallSpeed, 50f);
-		  //
-    //     _physicsContext.MoveVelocity = _moveVelocity;
-		  //
-    //     // ApplyMovement();
-    // }
+    
+    private float ClampFallSpeed(float verticalVelocity)
+    {
+        return Mathf.Clamp(verticalVelocity, 
+            -_playerControllerStats.maxFallSpeed, 
+            _playerControllerStats.maxUpwardSpeed);
+    }
 }

@@ -110,6 +110,11 @@ public class JumpModule
 
         return (_moveVelocity.y < 0f && _positiveMoveVelocity);
     }
+
+    public void StartJumpState()
+    {
+        if (_jumpBufferTimer.IsRunning) ResetNumberAvailableJumps();
+    }
 	
     // Метод для выполнения прыжка
     private void ExecuteJump()

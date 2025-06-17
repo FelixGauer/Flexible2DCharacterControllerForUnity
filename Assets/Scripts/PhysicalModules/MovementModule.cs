@@ -11,7 +11,7 @@ public class MovementModule
         _physicsContext = physicsContext;
     }
     
-    public Vector2 HandleMovement(Vector2 _moveVelocity, Vector2 moveDirection, float speed, float acceleration, float deceleration)
+    public Vector2 HandleMovement(Vector2 moveVelocity, Vector2 moveDirection, float speed, float acceleration, float deceleration)
     {
         // _moveVelocity.x = _physicsHandler2D.GetVelocity().x;
 			
@@ -33,8 +33,8 @@ public class MovementModule
         //     _moveVelocity.x = 0f;
         // }
         
-        _moveVelocity.x = Mathf.MoveTowards(
-            _moveVelocity.x,
+        moveVelocity.x = Mathf.MoveTowards(
+            moveVelocity.x,
             _targetVelocity.x,
             smoothFactor * Time.fixedDeltaTime
         );
@@ -43,6 +43,6 @@ public class MovementModule
         
         // _physicsHandler2D.AddVelocity(_moveVelocity);
         
-        return _moveVelocity;
+        return moveVelocity;
     }
 }
