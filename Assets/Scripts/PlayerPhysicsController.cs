@@ -48,7 +48,7 @@ public class PlayerPhysicsController
 		_playerTimerRegistry = playerTimerRegistry;
 
 		PhysicsContext = new PhysicsContext();
-		MovementModule = new MovementModule(PhysicsContext);
+		MovementModule = new MovementModule();
 		JumpModule = new JumpModule(_collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer);
 		FallModule = new FallModule(_playerControllerStats, playerTimerRegistry.jumpBufferTimer);
 		DashModule = new DashModule(_playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
