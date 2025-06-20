@@ -12,22 +12,19 @@ public class WallSlideState : BaseState
 
 		Debug.Log("WallSlideState");
 
-		player.playerPhysicsController.WallSlideModule.OnEnterWallSliding();
-		
-		// player.playerPhysicsController.MovementModule.ResetMoveVelocity();
+		player.playerPhysicsController.WallSlideModule.OnEnterWallSlide();
 	}
 
 	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity = player.playerPhysicsController.WallSlideModule.HandleWallSlide( inputReader.GetMoveDirection());
+		_moveVelocity = player.playerPhysicsController.WallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
     public override void OnExit()
     {
-        player.playerPhysicsController.WallSlideModule.OnExitWallSliding();
-        // turnChecker.TurnCheck(inputReader.GetMoveDirection());
+        player.playerPhysicsController.WallSlideModule.OnExitWallSlide();
     }
 }

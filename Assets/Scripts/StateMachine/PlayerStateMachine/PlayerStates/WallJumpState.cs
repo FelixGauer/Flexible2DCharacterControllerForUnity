@@ -9,7 +9,8 @@ public class WallJumpState : BaseState
     public override void OnEnter()
     {
         Debug.Log("WallJumpState");
-        _moveVelocity = player.playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection());
+        var wallDirectionX = player.playerPhysicsController.WallSlideModule.CurrentWallDirection;
+        _moveVelocity = player.playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 

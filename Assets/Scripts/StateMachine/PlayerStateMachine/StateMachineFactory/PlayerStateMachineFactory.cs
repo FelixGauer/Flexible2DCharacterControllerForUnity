@@ -248,7 +248,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.WallSlideState, states.LocomotionState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded));
         At(states.WallSlideState, states.DashState,
-            new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerPhysicsController.WallSlideModule.CalculateWallDirectionX() != _inputReader.GetMoveDirection().x)); //FIXME
+            new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerPhysicsController.WallSlideModule.CurrentWallDirection != _inputReader.GetMoveDirection().x)); //FIXME
         At(states.WallSlideState, states.IdleCrouchState,
             new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection()[0] == 0));
     }

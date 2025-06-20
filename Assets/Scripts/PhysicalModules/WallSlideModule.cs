@@ -17,139 +17,151 @@ public class WallSlideModule
         _turnChecker = turnChecker;
         _wallJumpTimer = wallJumpTimer;
     }
-	
+    
+    private float _wallDirection;
 
-
-    // Обработка скольжения по стене WallSlide
-    public Vector2 HandleWallSlide(Vector2 _moveDirection)
+    
+    public Vector2 ProcessWallSlide(Vector2 inputDirection)
     {
-        // _moveVelocity = _physicsContext.MoveVelocity;
-        // Плавное Изменение Y на стене,для скольжения 
-        // Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
-        _moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -_playerControllerStats.WallSlideSpeedMax, _playerControllerStats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
-
-        HandleWallJumpTimer(_moveDirection);
-
-        // Если ввод обратный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
-        // Запуск таймера при попытке слезть со стены, помогает выполнить прыжок от стены
-        // if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _physicsContext.WasWallSliding)
-        if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning)
-        {
-            _wallJumpTimer.Start();
-        }
-
-        // _physicsContext.MoveVelocity = _moveVelocity;
+        // Применяем скольжение по Y оси
+        ApplyWallSlidePhysics();
         
-        // _physicsHandler2D.AddVelocity(_moveVelocity);
+        // Обрабатываем таймер отрыва от стены
+        HandleWallDetachmentTimer(inputDirection);
         
         return _moveVelocity;
     }
-
-    // Метод управления таймером
-    private void HandleWallJumpTimer(Vector2 _moveDirection)
+    
+    private void ApplyWallSlidePhysics()
     {
-        if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
+        // Плавное изменение скорости падения до максимальной скорости скольжения
+        _moveVelocity.y = Mathf.Lerp(
+            _moveVelocity.y, 
+            -_playerControllerStats.WallSlideSpeedMax, 
+            _playerControllerStats.WallSlideDeceleration * Time.fixedDeltaTime
+        );
+    }
+    
+    private void HandleWallDetachmentTimer(Vector2 inputDirection)
+    {
+        bool isMovingTowardsWall = Mathf.Approximately(inputDirection.x, _wallDirection) || 
+                                   Mathf.Approximately(inputDirection.x, 0f);
+        bool isMovingAwayFromWall = !Mathf.Approximately(inputDirection.x, _wallDirection) && 
+                                    !Mathf.Approximately(inputDirection.x, 0f);
+
+        if (isMovingTowardsWall)
         {
-            _wallJumpTimer.Stop();
-            _wallJumpTimer.Reset();
+            // Игрок прижимается к стене или не двигается - останавливаем таймер
+            StopWallJumpTimer();
         }
+        else if (isMovingAwayFromWall && !_wallJumpTimer.IsRunning)
+        {
+            // Игрок пытается отойти от стены - запускаем таймер для возможности wall jump
+            _wallJumpTimer.Start();
+        }
+    }
+    
+    public void OnEnterWallSlide()
+    {
+        // Устанавливаем начальную скорость скольжения
+        _moveVelocity.x = 0f; // Убираем горизонтальную скорость
+        _moveVelocity.y = -_playerControllerStats.StartVelocityWallSlide;
         
-        // Управление состоянием таймера и скольжением по стене
-        // if (_wallJumpTimer.IsFinished)
-        // {
-        //     // Персонаж продолжает скользить по стене, сбрасываем таймер
-        //     if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
-        //     {
-        //         _wallJumpTimer.Stop();
-        //         _wallJumpTimer.Reset();
-        //     }
-        //     else // Если персонаж пытается отойти от стены, останавливаем скольжение
-        //     {
-        //         _physicsContext.WasWallSliding = false;
-        //     }
-        // }
+        // Определяем направление стены
+        _wallDirection = CalculateWallDirection();
+        
+        // Сбрасываем таймер
+        _wallJumpTimer.Reset();
+    }
+    
+    public void OnExitWallSlide()
+    {
+        StopWallJumpTimer();
     }
 
-    // Метод вычисляет направление стены по X
-    public float CalculateWallDirectionX()
+    // Возвращает текущее направление стены (для внешнего использования)
+    public float CurrentWallDirection => _wallDirection;
+
+    // Проверяет, активен ли таймер прыжка от стены
+    public bool IsWallJumpTimerActive => _wallJumpTimer.IsRunning;
+    
+    // Проверяет, закончился ли таймер прыжка от стены
+    public bool IsWallJumpTimerFinished => _wallJumpTimer.IsFinished;
+    
+    private float CalculateWallDirection()
     {
         return IsFacingRight ? 1f : -1f;
     }
 
-    // Метод вызываемый при входе в состояние wallJump/Slide
-	
-    public void OnEnterWallSliding()
+    
+    private void StopWallJumpTimer()
     {
-        // Начальная скорость скольжения, x = 0 - персонаж падает вниз после окончания скольжения, то есть не сохраняет скорость
-        // _physicsHandler2D.ResetVelocity();
-
-        _moveVelocity = new Vector2(0f, -_playerControllerStats.StartVelocityWallSlide);
-        // _physicsContext.MoveVelocity = _moveVelocity;
-		
-        // Сброс таймера
-        _wallJumpTimer.Reset();
-
-        // Флаг скольжения по стене
-        // _physicsContext.WasWallSliding = true;
-
-        // Обнуления максКолвоПрыжков, максКолвоРывков
-        // _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps;
-        // _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash;
-    }
-
-    // Метод вызываемый при выходе в состояние wallJump/Slide
-    public void OnExitWallSliding()
-    {
-        // Остановка таймера
         _wallJumpTimer.Stop();
-		
-        // Сброс флага скольжения
-        // _physicsContext.WasWallSliding = false;
+        _wallJumpTimer.Reset();
     }
 
-    // public void HandleWallInteraction(Vector2 _moveDirection, InputButtonState jumpInputButtonState)
-    // {
-    //     _moveVelocity = _physicsContext.MoveVelocity;
-    //
-    //     HandleWallSlide(_moveDirection);
-    //
-    //     if (jumpInputButtonState.WasPressedThisFrame)
-    //     {
-    //         HandleWallJump(_moveDirection);
-    //     }
-    //
-    //     _physicsContext.MoveVelocity = _moveVelocity;
-    //
-    //     // if (_jumpKeyWasPressed)
-    //     // {
-    //     // 	HandleWallJump(Vector2 _moveDirection);
-    //     // }
-    // }
-    // Применение прыжка со стены WallJump
-    // public void HandleWallJump(Vector2 _moveDirection)
-    // {
-    //     // _moveVelocity = _physicsContext.MoveVelocity;
-    //
-    //     // Расчет направление персонажа по X
-    //     float wallDirectionX = CalculateWallDirectionX();
-    //
-    //     if (_moveDirection.x == wallDirectionX) // Если ввод в сторону стены
-    //     {
-    //         // Прыжок вверх по стене
-    //         _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpClimb.x, _playerControllerStats.WallJumpClimb.y);
-    //     }
-    //     else if (_moveDirection.x == 0f) // Если ввод равен 0
-    //     {
-    //         // Прыжок от стены
-    //         _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallJumpOff.x, _playerControllerStats.WallJumpOff.y);
-    //     }
-    //     else // Если ввод сторону от стены, обратную сторону
-    //     {
-    //         // Прыжок в сторону от стены
-    //         _moveVelocity = new Vector2(-wallDirectionX * _playerControllerStats.WallLeap.x, _playerControllerStats.WallLeap.y);
-    //     }
-    //
-    //     // _physicsContext.MoveVelocity = _moveVelocity;
-    // }
 	
+    // // Обработка скольжения по стене WallSlide
+    // public Vector2 HandleWallSlide(Vector2 moveDirection)
+    // {
+    //     // Плавное Изменение Y на стене,для скольжения 
+    //     // Lerp зависит - 1. Начальная скорость скольжения (задается в Enter), 2 - макс. скорость скольжения, 3 - Deceleration скольжения
+    //     _moveVelocity.y = Mathf.Lerp(_moveVelocity.y, -_playerControllerStats.WallSlideSpeedMax, _playerControllerStats.WallSlideDeceleration * Time.fixedDeltaTime); //FIXME
+    //
+    //     HandleWallJumpTimer(moveDirection);
+    //
+    //     // Если ввод обратный вводу стены, ввод не равен 0, таймер не идет и на стене, запускаем таймер, отвечающий остаток времени на стене
+    //     // Запуск таймера при попытке слезть со стены, помогает выполнить прыжок от стены
+    //     // if (_moveDirection.x != CalculateWallDirectionX() && _moveDirection.x != 0f && !_wallJumpTimer.IsRunning && _physicsContext.WasWallSliding)
+    //     if (moveDirection.x != wallDirectionX && moveDirection.x != 0f && !_wallJumpTimer.IsRunning)
+    //     {
+    //         _wallJumpTimer.Start();
+    //     }
+    //     
+    //     return _moveVelocity;
+    // }
+    //
+    // // Метод управления таймером
+    // private void HandleWallJumpTimer(Vector2 _moveDirection)
+    // {
+    //     if (_moveDirection.x == CalculateWallDirectionX() || _moveDirection.x == 0f)
+    //     {
+    //         _wallJumpTimer.Stop();
+    //         _wallJumpTimer.Reset();
+    //     }
+    // }
+    //
+    // // Метод вычисляет направление стены по X
+    // public float CalculateWallDirectionX()
+    // {
+    //     return IsFacingRight ? 1f : -1f;
+    // }
+    //
+    // public void OnEnterWallSliding()
+    // {
+    //     // Начальная скорость скольжения, x = 0 - персонаж падает вниз после окончания скольжения, то есть не сохраняет скорость
+    //     _moveVelocity = new Vector2(0f, -_playerControllerStats.StartVelocityWallSlide);
+    //
+    //     CalculateWallDirectionXTEST();
+		  //
+    //     // Сброс таймера
+    //     _wallJumpTimer.Reset();
+    // }
+    //
+    // // Метод вызываемый при выходе в состояние wallJump/Slide
+    // public void OnExitWallSliding()
+    // {
+    //     // Остановка таймера
+    //     _wallJumpTimer.Stop();
+    // }
+    //
+    // public float wallDirectionX { get; private set;  }
+    //
+    // // Метод вычисляет направление стены по X
+    // private void CalculateWallDirectionXTEST()
+    // {
+    //     wallDirectionX = IsFacingRight ? 1f : -1f;
+    //     
+    //     // return IsFacingRight ? 1f : -1f;
+    // }
 }

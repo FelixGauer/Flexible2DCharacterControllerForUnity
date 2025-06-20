@@ -50,7 +50,7 @@ public class PlayerPhysicsController
 		FallModule = new FallModule(_playerControllerStats, playerTimerRegistry.jumpBufferTimer);
 		DashModule = new DashModule(_playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
 		WallSlideModule = new WallSlideModule(_playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
-		WallJumpModule = new WallJumpModule(_playerControllerStats, _turnChecker);
+		WallJumpModule = new WallJumpModule(_playerControllerStats);
 		CrouchModule = new CrouchModule(_playerControllerStats, _collisionsChecker, colliderSpriteResizer);
 		CrouchRollModule = new CrouchRollModule(_playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
 		
