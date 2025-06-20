@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class WallSlideModule
 {
-    private readonly PhysicsContext _physicsContext;
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly TurnChecker _turnChecker;
     private readonly CountdownTimer _wallJumpTimer;
@@ -12,9 +11,8 @@ public class WallSlideModule
 
     private bool IsFacingRight => _turnChecker.IsFacingRight;
 
-    public WallSlideModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer wallJumpTimer) 
+    public WallSlideModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer wallJumpTimer) 
     {
-        _physicsContext = physicsContext;
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _wallJumpTimer = wallJumpTimer;

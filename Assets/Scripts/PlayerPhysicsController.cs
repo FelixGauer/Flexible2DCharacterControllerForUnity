@@ -16,8 +16,6 @@ public class PlayerPhysicsController
 	public readonly CrouchRollModule CrouchRollModule;
 	public readonly WallJumpModule WallJumpModule;
 	
-	public readonly PhysicsContext PhysicsContext;
-
 	private readonly Rigidbody2D _rigidbody;
 	private readonly CollisionsChecker _collisionsChecker;
 	private readonly PlayerControllerStats _playerControllerStats;
@@ -47,13 +45,12 @@ public class PlayerPhysicsController
 		_physicsHandler2D = physicsHandler2D;
 		_playerTimerRegistry = playerTimerRegistry;
 
-		PhysicsContext = new PhysicsContext();
 		MovementModule = new MovementModule();
 		JumpModule = new JumpModule(_collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer);
 		FallModule = new FallModule(_playerControllerStats, playerTimerRegistry.jumpBufferTimer);
 		DashModule = new DashModule(_playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
-		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
-		WallJumpModule = new WallJumpModule(PhysicsContext, _playerControllerStats, _turnChecker);
+		WallSlideModule = new WallSlideModule(_playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);
+		WallJumpModule = new WallJumpModule(_playerControllerStats, _turnChecker);
 		CrouchModule = new CrouchModule(_playerControllerStats, _collisionsChecker, colliderSpriteResizer);
 		CrouchRollModule = new CrouchRollModule(_playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer);
 		

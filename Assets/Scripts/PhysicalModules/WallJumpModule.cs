@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class WallJumpModule
 {
-    private readonly PhysicsContext _physicsContext;
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly TurnChecker _turnChecker;
 	
@@ -10,9 +9,8 @@ public class WallJumpModule
 
     private bool IsFacingRight => _turnChecker.IsFacingRight;
 
-    public WallJumpModule(PhysicsContext physicsContext, PlayerControllerStats playerControllerStats, TurnChecker turnChecker) 
+    public WallJumpModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker) 
     {
-        _physicsContext = physicsContext;
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
     }
