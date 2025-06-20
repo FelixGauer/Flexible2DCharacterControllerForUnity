@@ -6,7 +6,7 @@ public class PhysicsContext
     // public bool VariableJumpHeight { get; set; }
     // public bool WasWallSliding {get; set;}
 
-    public float NumberAvailableJumps { get; set; }
+    // public float NumberAvailableJumps { get; set; }
     public float NumberAvailableDash { get; set; }
 	
     public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)

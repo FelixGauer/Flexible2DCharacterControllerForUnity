@@ -49,7 +49,7 @@ public class PlayerPhysicsController
 
 		PhysicsContext = new PhysicsContext();
 		MovementModule = new MovementModule(PhysicsContext);
-		JumpModule = new JumpModule(PhysicsContext, _collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer, this);
+		JumpModule = new JumpModule(_collisionsChecker, _playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer);
 		FallModule = new FallModule(_playerControllerStats, playerTimerRegistry.jumpBufferTimer);
 		DashModule = new DashModule(_playerControllerStats, _turnChecker, playerTimerRegistry.dashTimer);
 		WallSlideModule = new WallSlideModule(PhysicsContext, _playerControllerStats, _turnChecker, playerTimerRegistry.wallJumpTimer);

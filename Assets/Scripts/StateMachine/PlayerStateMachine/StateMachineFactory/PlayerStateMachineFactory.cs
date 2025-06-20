@@ -185,10 +185,10 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
 
     private void SetupFallTransitions(PlayerStates states)
     {
-        At(states.FallState, states.JumpState, // КОЙОТ + МУЛЬТИ
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()))); // FIXME
         At(states.FallState, states.JumpState, // БУФФЕР
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
+        At(states.FallState, states.JumpState, // КОЙОТ + МУЛЬТИ
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()))); // FIXME
         At(states.FallState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerPhysicsController.DashModule.CanDash())); // FIXME
         At(states.FallState, states.IdleState,
