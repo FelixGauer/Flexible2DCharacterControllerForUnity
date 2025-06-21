@@ -24,9 +24,6 @@ public class CollisionsChecker : MonoBehaviour
     public System.Func<bool> IsSitting;
     public System.Func<bool> IsFacingRight;
     
-    // public System.Func<bool> IsSitting = () => false;
-
-    
     // События для изменений состояния коллизий
     public event System.Action OnGroundTouched;    // Коснулся земли (не был на земле -> стал на земле)
     public event System.Action OnGroundLeft;       // Покинул землю (был на земле -> не на земле)
@@ -41,9 +38,6 @@ public class CollisionsChecker : MonoBehaviour
         _wasGrounded = IsGrounded;
         _wasBumpingHead = BumpedHead;
         _wasTouchingWall = IsTouchingWall;
-        
-        // IsSitting = () => false; 
-        // IsFacingRight = () => false; // FIXME 
     }
 
     void Update()

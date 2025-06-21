@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum ResizeTarget
+{
+    Both,
+    ColliderOnly,
+    SpriteOnly
+}
+
 public class ColliderSpriteResizer
 {
     private readonly CapsuleCollider2D _capsuleCollider;
@@ -19,15 +26,30 @@ public class ColliderSpriteResizer
         _normalSpritePosition = _spriteTransform.localPosition;
     }
 
-    public void SetSize(float height, float offset)
+    public void SetSize(float height, float offset, ResizeTarget target = ResizeTarget.Both)
     {
-        // Настройка коллайдера
-        _capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
-        _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
-        
-        // Настройка спрайта
-        _spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
-        _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, offset);
+        switch (target)
+        {
+            case ResizeTarget.Both:
+                // Настройка коллайдера
+                _capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
+                _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
+                
+                // Настройка спрайта
+                _spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, offset);
+                break;
+                
+            case ResizeTarget.ColliderOnly:
+                _capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
+                _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
+                break;
+                
+            case ResizeTarget.SpriteOnly:
+                _spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, offset);
+                break;
+        }
     }
 
     public void ResetToNormal()

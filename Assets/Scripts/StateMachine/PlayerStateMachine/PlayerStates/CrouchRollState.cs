@@ -39,7 +39,7 @@ public class CrouchRollState : BaseState
 	public override void Update()
 	{
 		// player.playerPhysicsController.CrouchRollModule.UpdateTimer();
-		turnChecker.TurnCheck(inputReader.GetMoveDirection());
+		// turnChecker.TurnCheck(inputReader.GetMoveDirection());
 
 	}
 

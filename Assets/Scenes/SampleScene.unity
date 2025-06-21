@@ -476,12 +476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467c597ac7d104b9e9707e1826bc4935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
-  _playerControllerStats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
-  _spriteTransform: {fileID: 1681974918}
-  _capsuleCollider: {fileID: 0}
-  _physicsHandler2D: {fileID: 690232525}
-  _rigidbody: {fileID: 690232522}
+  inputReader: {fileID: 11400000, guid: 3a17b689ccde947e3837b2c03eab22c7, type: 2}
+  playerControllerStats: {fileID: 11400000, guid: 3a133537fe723489ca601eadf82f3321, type: 2}
+  spriteTransform: {fileID: 1238666563}
+  capsuleCollider: {fileID: 267582931}
+  physicsHandler2D: {fileID: 690232525}
+  animator: {fileID: 1238666561}
   markerPrefab: {fileID: 1594843421}
 --- !u!212 &690232520
 SpriteRenderer:

@@ -17,7 +17,7 @@ public class CrouchModule
         
         if (isCrouching)
         {
-            _colliderSpriteResizer.SetSize(_playerControllerStats.CrouchHeight, -_playerControllerStats.CrouchOffset);
+            _colliderSpriteResizer.SetSize(_playerControllerStats.CrouchHeight, -_playerControllerStats.CrouchOffset, ResizeTarget.ColliderOnly);
         }
         else
         {

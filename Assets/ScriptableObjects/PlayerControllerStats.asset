@@ -50,7 +50,7 @@ MonoBehaviour:
   CrouchMoveSpeed: 7
   CrouchHeight: 0.6
   CrouchOffset: 0.2
-  CrouchRollVelocity: 0
+  CrouchRollVelocity: 10
   RunSpeed: 20
   CoyoteTime: 0.13
   BufferTime: 0.2

@@ -4,47 +4,39 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+	// TODO Анимации в хеши, скорость анимации зависит от скорости
+	
 	[Header("References")]
-	[SerializeField] private InputReader _inputReader;
-	[SerializeField] private PlayerControllerStats _playerControllerStats;
-	[SerializeField] private Transform _spriteTransform;
-	[SerializeField] private CapsuleCollider2D _capsuleCollider;
-	[SerializeField] private PhysicsHandler2D _physicsHandler2D;
-
+	[SerializeField] private InputReader inputReader;
+	[SerializeField] private PlayerControllerStats playerControllerStats;
+	[SerializeField] private Transform spriteTransform;
+	[SerializeField] private CapsuleCollider2D capsuleCollider;
+	[SerializeField] private PhysicsHandler2D physicsHandler2D;
+	[SerializeField] private Animator animator;
+	
 	private PlayerTimerRegistry _playerTimerRegistry;
 	private CollisionsChecker _collisionsChecker;
 	private StateMachine _stateMachine;
 	private ColliderSpriteResizer _colliderSpriteResizer;
 	private TurnChecker _turnChecker;
-
-	//Debug var
-	private float maxYPosition;
-	private TrailRenderer _trailRenderer;
-	private List<GameObject> markers = new List<GameObject>();
-	
-	// State Machine Var
+	private PlayerStateMachineFactory _stateMachineFactory;
 
 	public PlayerPhysicsController playerPhysicsController;
-	
-	private Animator _animator;
-	
-	private PlayerStateMachineFactory _stateMachineFactory;
 	
 	private void Awake()
 	{
 		_collisionsChecker = GetComponent<CollisionsChecker>();
-		_capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
+		capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
-		_animator = GetComponentInChildren<Animator>(); // FIXME
+		// _animator = GetComponentInChildren<Animator>(); // FIXME
 		
 		_turnChecker = new TurnChecker(this.transform); // FIXME
-		_playerTimerRegistry = new PlayerTimerRegistry(_playerControllerStats);
-		_colliderSpriteResizer = new ColliderSpriteResizer(_capsuleCollider, _spriteTransform);
-		playerPhysicsController = new PlayerPhysicsController(_collisionsChecker, _playerControllerStats, _turnChecker, _playerTimerRegistry, _colliderSpriteResizer);
+		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
+		_colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
+		playerPhysicsController = new PlayerPhysicsController(_collisionsChecker, playerControllerStats, _turnChecker, _playerTimerRegistry, _colliderSpriteResizer);
 		
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
 
-		
 		InitializeStateMachine();
 	}
 	
@@ -52,10 +44,10 @@ public class PlayerController : MonoBehaviour
 	{
 		_stateMachineFactory = new PlayerStateMachineFactory(
 			this,
-			_animator,
-			_inputReader,
-			_playerControllerStats,
-			_physicsHandler2D,
+			animator,
+			inputReader,
+			playerControllerStats,
+			physicsHandler2D,
 			_turnChecker,
 			_collisionsChecker,
 			_playerTimerRegistry,
@@ -82,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		_inputReader.ResetFrameStates();
+		inputReader.ResetFrameStates();
 	}
 
 	private void HandleTimers() // Сделать список
@@ -218,6 +210,11 @@ public class PlayerController : MonoBehaviour
 	//
 	// void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
 	// void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
+	
+	//Debug var
+	private float maxYPosition;
+	private TrailRenderer _trailRenderer;
+	private List<GameObject> markers = new List<GameObject>();
 	#region Debbug
 	public GameObject markerPrefab;
 
@@ -266,19 +263,19 @@ public class PlayerController : MonoBehaviour
 		// Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
 
 		// Визуализация текущего вектора скорости (_moveVelocity)
-		Debug.DrawLine(transform.position, transform.position + new Vector3(_physicsHandler2D.GetVelocity().x, 0, 0), Color.blue);
+		Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.blue);
 
 		// Визуализация направления движения (_moveDirection)
-		if (_inputReader.GetMoveDirection() != Vector2.zero)
+		if (inputReader.GetMoveDirection() != Vector2.zero)
 		{
-			Debug.DrawLine(transform.position, transform.position + new Vector3(_inputReader.GetMoveDirection().x, 0, 0), Color.green);
+			Debug.DrawLine(transform.position, transform.position + new Vector3(inputReader.GetMoveDirection().x, 0, 0), Color.green);
 		}
 		else
 		{
 			// Визуализация замедления
-			if (_physicsHandler2D.GetVelocity() != Vector2.zero)
+			if (physicsHandler2D.GetVelocity() != Vector2.zero)
 			{
-				Debug.DrawLine(transform.position, transform.position + new Vector3(_physicsHandler2D.GetVelocity().x, 0, 0), Color.yellow);
+				Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.yellow);
 			}
 		}
 	}
