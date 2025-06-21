@@ -20,6 +20,7 @@ public class CrouchRollModule
     public Vector2 CrouchRoll(Vector2 moveVelocity)
     {
         moveVelocity.x = _crouchRollDirection.x * _playerControllerStats.CrouchRollVelocity;
+
         return moveVelocity;
     }
 	

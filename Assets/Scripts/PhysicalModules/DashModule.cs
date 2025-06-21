@@ -13,11 +13,14 @@ public class DashModule
 	
     private bool IsFacingRight => _turnChecker.IsFacingRight;
 
-    public DashModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer) 
+    public DashModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer dashTimer, CollisionsChecker collisionsChecker) 
     {
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _dashTimer = dashTimer;
+        
+        collisionsChecker.OnGroundTouched += ResetNumberAvailableDash;
+        collisionsChecker.OnWallTouched += ResetNumberAvailableDash;
     }
 	
     public Vector2 HandleDash()

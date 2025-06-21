@@ -24,11 +24,14 @@ public class CollisionsChecker : MonoBehaviour
     public System.Func<bool> IsSitting;
     public System.Func<bool> IsFacingRight;
     
+    // public System.Func<bool> IsSitting = () => false;
+
+    
     // События для изменений состояния коллизий
     public event System.Action OnGroundTouched;    // Коснулся земли (не был на земле -> стал на земле)
     public event System.Action OnGroundLeft;       // Покинул землю (был на земле -> не на земле)
     public event System.Action OnHeadBumped;       // Ударился головой (не бился -> ударился)
-    public event System.Action OnHeadFreed;        // Освободил голову (бился -> не бится)
+    public event System.Action OnHeadFreed;        // Освободил голову (бился -> не бился)
     public event System.Action OnWallTouched;      // Коснулся стены (не касался -> коснулся)
     public event System.Action OnWallLeft;         // Покинул стену (касался -> не касается)
 
@@ -38,6 +41,9 @@ public class CollisionsChecker : MonoBehaviour
         _wasGrounded = IsGrounded;
         _wasBumpingHead = BumpedHead;
         _wasTouchingWall = IsTouchingWall;
+        
+        // IsSitting = () => false; 
+        // IsFacingRight = () => false; // FIXME 
     }
 
     void Update()
@@ -100,7 +106,7 @@ public class CollisionsChecker : MonoBehaviour
     private void CheckBumpedHead()
     {
        var bounds = FeetCollider.bounds;
-       float currentHeadDetectionRayLength = IsSitting() ? 0.4f : stats.HeadDetectionRayLength; // FIXME Заменить 0.4
+       float currentHeadDetectionRayLength = (IsSitting?.Invoke() ?? false) ? 0.4f : stats.HeadDetectionRayLength; // FIXME Заменить 0.4
 
        Vector2 boxCastOrigin = new Vector2(bounds.center.x, BodyCollider.bounds.max.y);
        Vector2 boxCastSize = new Vector2(bounds.size.x * stats.HeadWidth, stats.HeadDetectionRayLength);

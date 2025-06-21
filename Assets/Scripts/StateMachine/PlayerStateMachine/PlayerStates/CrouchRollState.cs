@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CrouchRollState : BaseState
 {
+	private Vector2 _moveVelocity;
+	
 	public CrouchRollState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
 		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) 
 	{
@@ -31,7 +33,6 @@ public class CrouchRollState : BaseState
 		animator.SetFloat(SpeedParam, speedMult);
 		animator.Play("CrouchRoll", 0, 0f);
 		
-		
 		player.playerPhysicsController.CrouchRollModule.StartCrouchRoll();
 	}
 	
@@ -42,15 +43,12 @@ public class CrouchRollState : BaseState
 
 	}
 
-	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
 		_moveVelocity.x = player.playerPhysicsController.CrouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
-	
-
 
 	public override void OnExit()
 	{

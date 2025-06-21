@@ -9,7 +9,6 @@ public class MovementModule
     }
     
     private Vector2 _targetVelocity;
-    // private Vector2 _moveVelocity;
 
     public MovementModule() { }
     
