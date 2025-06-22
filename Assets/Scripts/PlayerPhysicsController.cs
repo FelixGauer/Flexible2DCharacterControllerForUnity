@@ -25,7 +25,8 @@ public class PlayerPhysicsController
 		PlayerControllerStats playerControllerStats,
 		TurnChecker turnChecker,
 		PlayerTimerRegistry playerTimerRegistry,
-		ColliderSpriteResizer colliderSpriteResizer)
+		ColliderSpriteResizer colliderSpriteResizer
+		)
 	{
 		_collisionsChecker = collisionsChecker;
 		_playerControllerStats = playerControllerStats;

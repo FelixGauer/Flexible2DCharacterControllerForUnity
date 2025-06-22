@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CrouchState : BaseState
 {
-	public CrouchState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
+	public CrouchState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
 	public override void OnEnter()
 	{		

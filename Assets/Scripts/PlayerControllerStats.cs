@@ -93,4 +93,11 @@ public class PlayerControllerStats : ScriptableObject
 	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);  
 	public float MaxJumpVelocity => Gravity * timeTillJumpApex;  
 	public float MinJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * Gravity);
+	
+	[Header("Animation")]
+	public float BaseMovementAnimationSpeed = 3f;
+	public float BaseRunAnimationSpeed = 12f;
+
+
+	
 }

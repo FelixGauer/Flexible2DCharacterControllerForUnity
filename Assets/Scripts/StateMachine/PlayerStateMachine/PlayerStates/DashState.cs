@@ -5,8 +5,8 @@ public class DashState : BaseState
 {
 	// private Vector2 _moveVelocity;
 
-	public DashState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
+	public DashState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
 	public override void OnEnter()
 	{		

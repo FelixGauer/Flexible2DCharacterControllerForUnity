@@ -37,7 +37,6 @@ public class InputReader : ScriptableObject, IPlayerActions
         _inputActions.Disable();
     }
 
-    // Обработка ввода с вызовом событий
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveHandler.Update(context);
@@ -68,7 +67,7 @@ public class InputReader : ScriptableObject, IPlayerActions
         OnCrouchChanged?.Invoke(_crouchHandler.State);
     }
 
-    public void OnCrouchRoll(InputAction.CallbackContext context) => OnDash(context); // Переиспользование рывка
+    public void OnCrouchRoll(InputAction.CallbackContext context) => OnDash(context);
 
     // Методы доступа с проверками на null
     public Vector2 GetMoveDirection() => _moveHandler != null ? _moveHandler.Value : Vector2.zero;

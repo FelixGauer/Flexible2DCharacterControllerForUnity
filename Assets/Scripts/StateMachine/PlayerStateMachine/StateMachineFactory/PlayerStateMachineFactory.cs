@@ -11,7 +11,8 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private readonly CollisionsChecker _collisionsChecker;
     private readonly PlayerTimerRegistry _playerTimerRegistry;
     private readonly PlayerPhysicsController _playerPhysicsController;
-
+    private readonly AnimationController _animationController;
+    
     public PlayerStateMachineFactory(
         PlayerController playerController,
         Animator animator,
@@ -21,7 +22,8 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         TurnChecker turnChecker,
         CollisionsChecker collisionsChecker,
         PlayerTimerRegistry playerTimerRegistry,
-        PlayerPhysicsController playerPhysicsController)
+        PlayerPhysicsController playerPhysicsController,
+        AnimationController animationController)
     {
         _playerController = playerController;
         _animator = animator;
@@ -32,6 +34,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         _collisionsChecker = collisionsChecker;
         _playerTimerRegistry = playerTimerRegistry;
         _playerPhysicsController = playerPhysicsController;
+        _animationController = animationController;
     }
 
     protected override PlayerStates CreateStates()
@@ -39,31 +42,31 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         return new PlayerStates
         {
             IdleState = new IdleState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             LocomotionState = new LocomotionState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             RunState = new RunState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             IdleCrouchState = new IdleCrouchState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             CrouchState = new CrouchState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker,_animationController),
             JumpState = new JumpState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             FallState = new FallState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             DashState = new DashState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             CrouchRollState = new CrouchRollState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             WallSlideState = new WallSlideState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             WallJumpState = new WallJumpState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             RunJumpState = new RunJumpState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker),
+                _physicsHandler2D, _turnChecker, _animationController),
             RunFallState = new RunFallState(_playerController, _animator, _inputReader, _playerControllerStats,
-                _physicsHandler2D, _turnChecker)
+                _physicsHandler2D, _turnChecker, _animationController)
         };
     }
 

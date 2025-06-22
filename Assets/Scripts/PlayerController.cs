@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class PlayerController : MonoBehaviour
 {
 	// TODO Анимации в хеши, скорость анимации зависит от скорости
+	// TODO В каждом сосотоянии заменить вызов анимации с аниматора на аниматор контроллер
 	
 	[Header("References")]
 	[SerializeField] private InputReader inputReader;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	private ColliderSpriteResizer _colliderSpriteResizer;
 	private TurnChecker _turnChecker;
 	private PlayerStateMachineFactory _stateMachineFactory;
+	private AnimationController _animationController;
 
 	public PlayerPhysicsController playerPhysicsController;
 	
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour
 		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
 		_colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
 		playerPhysicsController = new PlayerPhysicsController(_collisionsChecker, playerControllerStats, _turnChecker, _playerTimerRegistry, _colliderSpriteResizer);
+
+		_animationController = new AnimationController(animator);
 		
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
 
@@ -51,7 +55,8 @@ public class PlayerController : MonoBehaviour
 			_turnChecker,
 			_collisionsChecker,
 			_playerTimerRegistry,
-			playerPhysicsController
+			playerPhysicsController,
+			_animationController
 		);
 
 		_stateMachine = _stateMachineFactory.CreateStateMachine();

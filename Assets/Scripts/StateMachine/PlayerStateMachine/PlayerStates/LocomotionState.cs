@@ -3,14 +3,9 @@ using UnityEngine;
 
 public class LocomotionState : BaseState
 {
-	
-	private float baseAnimationSpeed = 1f; // Базовая скорость анимации
-	private float baseMovementSpeed = 3f;  // Базовая скорость движения
-	
-	
 	public LocomotionState(PlayerController player, Animator animator, InputReader inputReader,
-		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
+		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 	
 	public override void OnEnter()
 	{
@@ -22,15 +17,10 @@ public class LocomotionState : BaseState
 	public override void Update()
 	{
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
-		
-		// Получаем текущую скорость движения
+        
 		float currentSpeed = physicsHandler2D.GetVelocity().magnitude;
-        
-		// Нормализуем скорость (от 0 до 1 или больше)
-		float normalizedSpeed = currentSpeed / baseMovementSpeed;
-        
-		// Передаем параметр в Animator
-		animator.SetFloat("Speed", normalizedSpeed);
+		animationController.SyncAnimationWithMovement(currentSpeed, playerControllerStats.BaseMovementAnimationSpeed);
+
 	}
 
 	public override void FixedUpdate()
@@ -42,6 +32,6 @@ public class LocomotionState : BaseState
 
 	public override void OnExit()
 	{
-		animator.SetFloat("Speed", 0f);
+		animationController.SetFloat("Speed", 0f);
 	}
 }

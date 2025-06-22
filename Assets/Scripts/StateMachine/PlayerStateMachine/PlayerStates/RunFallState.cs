@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RunFallState : BaseState
 {
-    public RunFallState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
-        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
+    public RunFallState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
     public override void OnEnter()
     {
@@ -25,8 +25,8 @@ public class RunFallState : BaseState
 
     public override void FixedUpdate()
     {
-        _moveVelocity.y = player.playerPhysicsController.FallModule.HandleFalling(physicsHandler2D.GetLastAppliedVelocity()).y;
-        _moveVelocity.x = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetLastAppliedVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        _moveVelocity.y = player.playerPhysicsController.FallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
+        _moveVelocity.x = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 	

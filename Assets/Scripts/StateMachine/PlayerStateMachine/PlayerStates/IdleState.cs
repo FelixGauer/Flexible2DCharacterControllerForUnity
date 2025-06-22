@@ -4,8 +4,8 @@ using UnityEngine;
 public class IdleState : BaseState
 {
 	public IdleState(PlayerController player, Animator animator, InputReader inputReader,
-		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker) { }
+		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
 	public override void OnEnter()
 	{
