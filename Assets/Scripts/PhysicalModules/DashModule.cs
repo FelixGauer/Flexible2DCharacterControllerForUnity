@@ -5,6 +5,8 @@ public class DashModule
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _dashTimer;
     private readonly TurnChecker _turnChecker;
+    private readonly CollisionsChecker _collisionsChecker;
+
 
     private float _numberAvailableDash;
 	
@@ -18,6 +20,7 @@ public class DashModule
         _playerControllerStats = playerControllerStats;
         _turnChecker = turnChecker;
         _dashTimer = dashTimer;
+        _collisionsChecker = collisionsChecker;
         
         collisionsChecker.OnGroundTouched += ResetNumberAvailableDash;
         collisionsChecker.OnWallTouched += ResetNumberAvailableDash;
@@ -46,7 +49,7 @@ public class DashModule
         CalculateDashDirection(moveDirection);
         
         _dashTimer.Start();
-        _numberAvailableDash -= 1;
+        if (!_collisionsChecker.IsGrounded) _numberAvailableDash -= 1;
         _moveVelocity.y = 0f; 
     }
 

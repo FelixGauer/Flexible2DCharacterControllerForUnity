@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8af4717e6014f46b13c8356369b99a, type: 3}
   m_Name: PlayerControllerStats
   m_EditorClassIdentifier: 
-  MoveSpeed: 12
+  MoveSpeed: 3
   WalkAcceleration: 150
   WalkDeceleration: 150
   RunAcceleration: 160
@@ -51,7 +51,7 @@ MonoBehaviour:
   CrouchHeight: 0.6
   CrouchOffset: 0.2
   CrouchRollVelocity: 10
-  RunSpeed: 20
+  RunSpeed: 15
   CoyoteTime: 0.13
   BufferTime: 0.2
   WallJumpTime: 0.25
@@ -60,3 +60,5 @@ MonoBehaviour:
   maxFallSpeed: 30
   GroundGravity: -1.5
   maxUpwardSpeed: 50
+  BaseMovementAnimationSpeed: 3
+  BaseRunAnimationSpeed: 12

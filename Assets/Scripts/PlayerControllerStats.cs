@@ -30,6 +30,8 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 100f)] public float minJumpHeight = 2f;
 	[Range(0f, 200f)] public float airAcceleration = 30f;
 	[Range(0f, 200f)] public float airDeceleration = 5f;
+	[Range(0f, 200f)] public float runAirAcceleration = 30f;
+	[Range(0f, 200f)] public float runAirDeceleration = 5f;
 	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
 	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
 	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
@@ -48,6 +50,9 @@ public class PlayerControllerStats : ScriptableObject
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
+	[Range(0f, 200f)] public float wallFallAirAcceleration = 30f;
+	[Range(0f, 200f)] public float wallFallAirDeceleration = 5f;
+	[Range(0f, 200f)] public float wallFallSpeed = 5f;
 	
 	[Header("Dash")]
 	[Range(0f, 200f)] public float DashVelocity = 15f;

@@ -5,6 +5,11 @@ public class InputButtonState
     public bool IsHeld { get; private set; }
     public bool WasPressedThisFrame { get; private set; }
     public bool WasReleasedThisFrame { get; private set; }
+    
+    // // Инвертированные свойства
+    // public bool IsHeldInverted => !IsHeld;
+    // public bool WasPressedThisFrameInverted => WasReleasedThisFrame;
+    // public bool WasReleasedThisFrameInverted => WasPressedThisFrame;
 
     public void Update(InputAction.CallbackContext context)
     {

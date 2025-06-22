@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_stateMachine.FixedUpdate();
+		// UnityEngine.Debug.Log(physicsHandler2D.GetVelocity());
 	}
 
 	private void LateUpdate()

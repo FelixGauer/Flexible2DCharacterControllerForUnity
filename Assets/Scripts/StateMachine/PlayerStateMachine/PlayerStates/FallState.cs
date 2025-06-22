@@ -13,6 +13,7 @@ public class FallState : BaseState
 		animator.Play("Fall");
 
 		Debug.Log("FallState");
+		
 	}
 
 	public override void Update()
