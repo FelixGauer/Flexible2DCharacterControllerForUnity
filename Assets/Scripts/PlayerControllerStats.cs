@@ -7,6 +7,9 @@ using UnityEngine;
 public class PlayerControllerStats : ScriptableObject
 {
 	// [Tooltip("Set this to the layer your player is on")]
+	
+	[Header("Movement Settings")]
+	public MovementSettings movementSettings = new MovementSettings();
 
 	[Header("Movement")]
 	[Range(0f, 200f)] public float MoveSpeed = 12.5f;

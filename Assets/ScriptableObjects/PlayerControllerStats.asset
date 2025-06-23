@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8af4717e6014f46b13c8356369b99a, type: 3}
   m_Name: PlayerControllerStats
   m_EditorClassIdentifier: 
+  movementSettings:
+    defaultMovementMode: 1
+    allowMovementToggle: 1
+    toggleMovementKey: 301
   MoveSpeed: 3
   WalkAcceleration: 150
   WalkDeceleration: 150
@@ -29,8 +33,10 @@ MonoBehaviour:
   WallDetectionRayHeightMultiplayer: 0.9
   maxJumpHeight: 3.5
   minJumpHeight: 1
-  airAcceleration: 150
-  airDeceleration: 23
+  airAcceleration: 100
+  airDeceleration: 5
+  runAirAcceleration: 150
+  runAirDeceleration: 23
   MaxNumberJumps: 2
   timeTillJumpApex: 0.3
   jumpHeightCompensationFactor: 1.06
@@ -44,6 +50,9 @@ MonoBehaviour:
   WallJumpClimb: {x: 20, y: 25}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 30, y: 15}
+  wallFallAirAcceleration: 150
+  wallFallAirDeceleration: 23
+  wallFallSpeed: 10
   DashVelocity: 20
   MaxNumberDash: 2
   DashGravityMultiplayer: 0

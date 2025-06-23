@@ -76,6 +76,39 @@ public class InputReader : ScriptableObject, IPlayerActions
     public InputButtonState GetRunState() => _runHandler != null ? _runHandler.State : new InputButtonState();
     public InputButtonState GetCrouchState() => _crouchHandler != null ? _crouchHandler.State : new InputButtonState();
 
+
+    // public PlayerControllerStats PlayerControllerStats;
+    //
+    // /// <summary>
+    // /// Определяет, должен ли игрок бежать в данный момент, основываясь на настройках движения
+    // /// </summary>
+    // public bool ShouldRun()
+    // {
+    //     if (PlayerControllerStats.movementSettings == null) return GetRunState().IsHeld;
+    //     
+    //     switch (PlayerControllerStats.movementSettings.defaultMovementMode)
+    //     {
+    //         case MovementMode.Walk:
+    //             // Ходьба по умолчанию - бежать при зажатой клавише
+    //             return GetRunState().IsHeld;
+    //             
+    //         case MovementMode.Run:
+    //             // Бег по умолчанию - идти при зажатой клавише (инвертированная логика)
+    //             return !GetRunState().IsHeld;
+    //             
+    //         default:
+    //             return GetRunState().IsHeld;
+    //     }
+    // }
+    //
+    // /// <summary>
+    // /// Определяет, должен ли игрок идти обычным шагом
+    // /// </summary>
+    // public bool ShouldWalk()
+    // {
+    //     return !ShouldRun();
+    // }
+
     // Сброс состояний кадра, вызывается внешним MonoBehaviour
     public void ResetFrameStates()
     {
@@ -110,3 +143,5 @@ public class ButtonInputHandler : IInputHandler
 		State.Update(context);
 	}
 }
+
+

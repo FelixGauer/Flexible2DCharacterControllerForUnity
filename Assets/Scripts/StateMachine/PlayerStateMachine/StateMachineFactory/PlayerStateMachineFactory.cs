@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
 {
     private readonly PlayerController _playerController;
-    private readonly Animator _animator;
     private readonly InputReader _inputReader;
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly PhysicsHandler2D _physicsHandler2D;
@@ -13,9 +12,10 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private readonly PlayerPhysicsController _playerPhysicsController;
     private readonly AnimationController _animationController;
     
+    private readonly MovementLogic _movementLogic;
+    
     public PlayerStateMachineFactory(
         PlayerController playerController,
-        Animator animator,
         InputReader inputReader,
         PlayerControllerStats playerControllerStats,
         PhysicsHandler2D physicsHandler2D,
@@ -23,10 +23,10 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         CollisionsChecker collisionsChecker,
         PlayerTimerRegistry playerTimerRegistry,
         PlayerPhysicsController playerPhysicsController,
-        AnimationController animationController)
+        AnimationController animationController,
+        MovementLogic movementLogic)
     {
         _playerController = playerController;
-        _animator = animator;
         _inputReader = inputReader;
         _playerControllerStats = playerControllerStats;
         _physicsHandler2D = physicsHandler2D;
@@ -35,39 +35,40 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         _playerTimerRegistry = playerTimerRegistry;
         _playerPhysicsController = playerPhysicsController;
         _animationController = animationController;
+        _movementLogic = movementLogic;
     }
 
     protected override PlayerStates CreateStates()
     {
         return new PlayerStates
         {
-            IdleState = new IdleState(_playerController, _animator, _inputReader, _playerControllerStats,
+            IdleState = new IdleState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            LocomotionState = new LocomotionState(_playerController, _animator, _inputReader, _playerControllerStats,
+            LocomotionState = new LocomotionState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            RunState = new RunState(_playerController, _animator, _inputReader, _playerControllerStats,
+            RunState = new RunState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            IdleCrouchState = new IdleCrouchState(_playerController, _animator, _inputReader, _playerControllerStats,
+            IdleCrouchState = new IdleCrouchState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            CrouchState = new CrouchState(_playerController, _animator, _inputReader, _playerControllerStats,
+            CrouchState = new CrouchState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker,_animationController),
-            JumpState = new JumpState(_playerController, _animator, _inputReader, _playerControllerStats,
+            JumpState = new JumpState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            FallState = new FallState(_playerController, _animator, _inputReader, _playerControllerStats,
+            FallState = new FallState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            DashState = new DashState(_playerController, _animator, _inputReader, _playerControllerStats,
+            DashState = new DashState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            CrouchRollState = new CrouchRollState(_playerController, _animator, _inputReader, _playerControllerStats,
+            CrouchRollState = new CrouchRollState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            WallSlideState = new WallSlideState(_playerController, _animator, _inputReader, _playerControllerStats,
+            WallSlideState = new WallSlideState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            WallJumpState = new WallJumpState(_playerController, _animator, _inputReader, _playerControllerStats,
+            WallJumpState = new WallJumpState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            RunJumpState = new RunJumpState(_playerController, _animator, _inputReader, _playerControllerStats,
+            RunJumpState = new RunJumpState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            RunFallState = new RunFallState(_playerController, _animator, _inputReader, _playerControllerStats,
+            RunFallState = new RunFallState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController),
-            JumpWallFallState = new JumpWallFallState(_playerController, _animator, _inputReader, _playerControllerStats,
+            JumpWallFallState = new JumpWallFallState(_playerPhysicsController, _inputReader, _playerControllerStats,
                 _physicsHandler2D, _turnChecker, _animationController)
         };
     }
@@ -98,7 +99,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupIdleTransitions(PlayerStates states)
     {
         At(states.IdleState, states.RunJumpState,
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.IdleState, states.JumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.IdleState, states.DashState,
@@ -108,9 +109,9 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.IdleState, states.CrouchState,
             new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld));
         At(states.IdleState, states.RunState,
-            new FuncPredicate(() => _inputReader.GetRunState().IsHeld && _inputReader.GetMoveDirection() != Vector2.zero));
+            new FuncPredicate(() => _movementLogic.ShouldRun(_inputReader.GetRunState()) && _inputReader.GetMoveDirection() != Vector2.zero));
         At(states.IdleState, states.LocomotionState,
-            new FuncPredicate(() => _inputReader.GetMoveDirection() != Vector2.zero));
+            new FuncPredicate(() => _inputReader.GetMoveDirection() != Vector2.zero && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
     }
 
     private void SetupLocomotionTransitions(PlayerStates states)
@@ -120,7 +121,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.LocomotionState, states.JumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.LocomotionState, states.RunState,
-            new FuncPredicate(() => _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.LocomotionState, states.IdleCrouchState,
             new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
         At(states.LocomotionState, states.CrouchState,
@@ -144,7 +145,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         // At(states.RunState, states.IdleState,
         // 	new FuncPredicate(() => !_inputReader.GetRunState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
         At(states.RunState, states.LocomotionState,
-            new FuncPredicate(() => !_inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _movementLogic.ShouldWalk(_inputReader.GetRunState())));
         At(states.RunState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
         At(states.RunState, states.JumpState,
@@ -176,7 +177,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.CrouchState, states.CrouchRollState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
         At(states.CrouchState, states.RunState,
-            new FuncPredicate(() => _inputReader.GetRunState().IsHeld && !_inputReader.GetCrouchState().IsHeld && !_collisionsChecker.BumpedHead));
+            new FuncPredicate(() => _movementLogic.ShouldRun(_inputReader.GetRunState()) && !_inputReader.GetCrouchState().IsHeld && !_collisionsChecker.BumpedHead));
         At(states.CrouchState, states.IdleState,
             new FuncPredicate(() => _inputReader.GetMoveDirection() == Vector2.zero && !_inputReader.GetCrouchState().IsHeld && !_collisionsChecker.BumpedHead));
         At(states.CrouchState, states.LocomotionState,
@@ -194,9 +195,9 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupFallTransitions(PlayerStates states)
     {
         At(states.FallState, states.RunJumpState, // БУФФЕР
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.FallState, states.RunJumpState, // КОЙОТ + МУЛЬТИ
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()) && _inputReader.GetRunState().IsHeld)); // FIXME
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()) &&_movementLogic.ShouldRun(_inputReader.GetRunState()))); // FIXME
 
         At(states.FallState, states.JumpState, // БУФФЕР
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
@@ -211,7 +212,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.FallState, states.CrouchState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld));
         At(states.FallState, states.RunState,
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.FallState, states.LocomotionState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded));
         At(states.FallState, states.WallSlideState,
@@ -221,13 +222,13 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupDashTransitions(PlayerStates states)
     {
         At(states.DashState, states.RunFallState,
-            new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.DashState, states.FallState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
         At(states.DashState, states.IdleState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
         At(states.DashState, states.RunState,
-            new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.DashState, states.WallSlideState,
             new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
         At(states.DashState, states.JumpState,
@@ -277,9 +278,9 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupJumpWallFallTransitions(PlayerStates states)
     {
         At(states.JumpWallFallState, states.RunJumpState, // БУФФЕР
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.JumpWallFallState, states.RunJumpState, // КОЙОТ + МУЛЬТИ
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()) && _inputReader.GetRunState().IsHeld)); // FIXME
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerPhysicsController.JumpModule.CanMultiJump()) && _movementLogic.ShouldRun(_inputReader.GetRunState()))); // FIXME
         At(states.JumpWallFallState, states.JumpState, // БУФФЕР
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
         At(states.JumpWallFallState, states.JumpState, // КОЙОТ + МУЛЬТИ
@@ -293,7 +294,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.JumpWallFallState, states.CrouchState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld));
         At(states.JumpWallFallState, states.RunState,
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.JumpWallFallState, states.LocomotionState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded));
         At(states.JumpWallFallState, states.WallSlideState,
@@ -311,7 +312,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupRunFallTransitions(PlayerStates states)
     {
         At(states.RunFallState, states.JumpState,
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && !_inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
         At(states.RunFallState, states.RunJumpState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
         At(states.RunFallState, states.RunJumpState,
@@ -325,7 +326,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.RunFallState, states.WallSlideState,
             new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
         At(states.RunFallState, states.RunState,
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetRunState().IsHeld));
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.RunFallState, states.LocomotionState,
             new FuncPredicate(() => _collisionsChecker.IsGrounded));
     }

@@ -5,29 +5,29 @@ public class DashState : BaseState
 {
 	// private Vector2 _moveVelocity;
 
-	public DashState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	public DashState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
 	public override void OnEnter()
 	{		
-		animator.Play("Dash");
-
 		Debug.Log("DashState");
+
+		animationController.PlayAnimation("Dash");
 		
-		player.playerPhysicsController.DashModule.StartDash(inputReader.GetMoveDirection());
+		playerPhysicsController.DashModule.StartDash(inputReader.GetMoveDirection());
 	}
 
 	public override void Update()
 	{
-		player.playerPhysicsController.DashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
+		playerPhysicsController.DashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
 		
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
 	public override void FixedUpdate()
 	{
-		var moveVelocity = player.playerPhysicsController.DashModule.HandleDash();
-		var gravityVelocity = player.playerPhysicsController.FallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
+		var moveVelocity = playerPhysicsController.DashModule.HandleDash();
+		var gravityVelocity = playerPhysicsController.FallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
 		
 		physicsHandler2D.AddVelocity(moveVelocity);
 		physicsHandler2D.AddVelocity(new Vector2(0f, gravityVelocity));
@@ -35,6 +35,6 @@ public class DashState : BaseState
 	
 	public override void OnExit()
 	{
-		player.playerPhysicsController.DashModule.StopDash();
+		playerPhysicsController.DashModule.StopDash();
 	}
 }

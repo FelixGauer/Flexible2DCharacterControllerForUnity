@@ -4,14 +4,17 @@ public class WallJumpState : BaseState
 {
     private Vector2 _moveVelocity;
 
-    public WallJumpState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-        base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+    public WallJumpState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+        base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
     public override void OnEnter()
     {
         Debug.Log("WallJumpState");
-        var wallDirectionX = player.playerPhysicsController.WallSlideModule.CurrentWallDirection;
-        _moveVelocity = player.playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
+        
+        animationController.PlayAnimation("Jump");
+
+        var wallDirectionX = playerPhysicsController.WallSlideModule.CurrentWallDirection;
+        _moveVelocity = playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
     

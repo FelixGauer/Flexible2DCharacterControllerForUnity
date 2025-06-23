@@ -6,8 +6,8 @@ public class CrouchRollState : BaseState
 {
 	private Vector2 _moveVelocity;
 	
-	public CrouchRollState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	public CrouchRollState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 	
 	public override void OnEnter()
 	{		
@@ -19,7 +19,7 @@ public class CrouchRollState : BaseState
 			"CrouchRollSpeedMultiplier"
 		);
 		
-		player.playerPhysicsController.CrouchRollModule.StartCrouchRoll();
+		playerPhysicsController.CrouchRollModule.StartCrouchRoll();
 	}
 	
 	public override void Update()
@@ -30,7 +30,7 @@ public class CrouchRollState : BaseState
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity.x = player.playerPhysicsController.CrouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
+		_moveVelocity.x = playerPhysicsController.CrouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
@@ -38,9 +38,9 @@ public class CrouchRollState : BaseState
 	{
 		animationController.ResetSpeedParameter("CrouchRollSpeedMultiplier");
 		
-		player.playerPhysicsController.CrouchModule.SetCrouchState(false);
+		playerPhysicsController.CrouchModule.SetCrouchState(false);
 
-		player.playerPhysicsController.CrouchRollModule.StopCrouchRoll();
+		playerPhysicsController.CrouchRollModule.StopCrouchRoll();
 	}
 
 }

@@ -4,19 +4,18 @@ using UnityEngine;
 
 public abstract class BaseState : IState
 {
-	protected readonly PlayerController player;
 	protected readonly Animator animator;
 	protected readonly PlayerControllerStats playerControllerStats;
 	protected readonly InputReader inputReader;
 	protected readonly PhysicsHandler2D physicsHandler2D;
 	protected readonly TurnChecker turnChecker;
 	protected readonly AnimationController animationController;
+	protected readonly PlayerPhysicsController playerPhysicsController;
 
 	
-	protected BaseState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController)
+	protected BaseState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController)
 	{
-		this.player = player;
-		this.animator = animator;
+		this.playerPhysicsController = playerPhysicsController;
 		this.playerControllerStats = playerControllerStats;
 		this.inputReader = inputReader;
 		this.physicsHandler2D = physicsHandler2D;

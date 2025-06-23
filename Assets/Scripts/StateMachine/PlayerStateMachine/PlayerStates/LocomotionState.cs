@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class LocomotionState : BaseState
 {
-	public LocomotionState(PlayerController player, Animator animator, InputReader inputReader,
+	public LocomotionState(PlayerPhysicsController playerPhysicsController, InputReader inputReader,
 		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 	
 	public override void OnEnter()
 	{
 		Debug.Log("MoveEnter");
 		
-		animator.Play("Walk");
+		animationController.PlayAnimation("Walk");
 	}
 
 	public override void Update()
@@ -25,7 +25,7 @@ public class LocomotionState : BaseState
 
 	public override void FixedUpdate()
 	{
-		var moveVelocity = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		var moveVelocity = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		moveVelocity.y = playerControllerStats.GroundGravity;
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}

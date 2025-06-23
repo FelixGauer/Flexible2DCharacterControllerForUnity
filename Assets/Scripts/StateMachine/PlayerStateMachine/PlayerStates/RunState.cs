@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class RunState : BaseState
 {
-	public RunState(PlayerController player, Animator animator, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(player, animator, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	public RunState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
+		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
 
 	public override void OnEnter()
 	{		
 		Debug.Log("RunState");
 		
-		animator.Play("Run");
+		animationController.PlayAnimation("Run");
 	}
 	
 	public override void Update()
@@ -24,7 +24,7 @@ public class RunState : BaseState
 	
 	public override void FixedUpdate()
 	{
-		var moveVelocity = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAcceleration, playerControllerStats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		var moveVelocity = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAcceleration, playerControllerStats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}
 	

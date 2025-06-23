@@ -4,9 +4,6 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-	// TODO Анимации в хеши, скорость анимации зависит от скорости
-	// TODO В каждом сосотоянии заменить вызов анимации с аниматора на аниматор контроллер
-	
 	[Header("References")]
 	[SerializeField] private InputReader inputReader;
 	[SerializeField] private PlayerControllerStats playerControllerStats;
@@ -23,7 +20,9 @@ public class PlayerController : MonoBehaviour
 	private PlayerStateMachineFactory _stateMachineFactory;
 	private AnimationController _animationController;
 
-	public PlayerPhysicsController playerPhysicsController;
+	private MovementLogic _movementLogic;
+	
+	private PlayerPhysicsController _playerPhysicsController;
 	
 	private void Awake()
 	{
@@ -31,11 +30,13 @@ public class PlayerController : MonoBehaviour
 		capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
 		// _animator = GetComponentInChildren<Animator>(); // FIXME
+
+		_movementLogic = new MovementLogic(playerControllerStats);
 		
-		_turnChecker = new TurnChecker(this.transform); // FIXME
+		_turnChecker = new TurnChecker(this.transform);
 		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
 		_colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
-		playerPhysicsController = new PlayerPhysicsController(_collisionsChecker, playerControllerStats, _turnChecker, _playerTimerRegistry, _colliderSpriteResizer);
+		_playerPhysicsController = new PlayerPhysicsController(_collisionsChecker, playerControllerStats, _turnChecker, _playerTimerRegistry, _colliderSpriteResizer);
 
 		_animationController = new AnimationController(animator);
 		
@@ -48,15 +49,15 @@ public class PlayerController : MonoBehaviour
 	{
 		_stateMachineFactory = new PlayerStateMachineFactory(
 			this,
-			animator,
 			inputReader,
 			playerControllerStats,
 			physicsHandler2D,
 			_turnChecker,
 			_collisionsChecker,
 			_playerTimerRegistry,
-			playerPhysicsController,
-			_animationController
+			_playerPhysicsController,
+			_animationController,
+			_movementLogic
 		);
 
 		_stateMachine = _stateMachineFactory.CreateStateMachine();
