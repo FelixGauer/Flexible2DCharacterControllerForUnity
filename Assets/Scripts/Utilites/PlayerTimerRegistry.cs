@@ -10,11 +10,11 @@ public class PlayerTimerRegistry
 
     public PlayerTimerRegistry(PlayerControllerStats playerControllerStats)
     {
-        jumpCoyoteTimer = new CountdownTimer(playerControllerStats.CoyoteTime);
-        jumpBufferTimer = new CountdownTimer(playerControllerStats.BufferTime);
-        wallJumpTimer = new CountdownTimer(playerControllerStats.WallJumpTime);
-        dashTimer = new CountdownTimer(playerControllerStats.DashTime);
-        crouchRollTimer = new CountdownTimer(playerControllerStats.CrouchRollTime);
+        jumpCoyoteTimer = new CountdownTimer(() => playerControllerStats.CoyoteTime);
+        jumpBufferTimer = new CountdownTimer(() => playerControllerStats.BufferTime);
+        wallJumpTimer = new CountdownTimer(() => playerControllerStats.WallJumpTime);
+        dashTimer = new CountdownTimer(() => playerControllerStats.DashTime);
+        crouchRollTimer = new CountdownTimer(() => playerControllerStats.CrouchRollTime);
     }
 	
     public void UpdateAll() // Сделать список

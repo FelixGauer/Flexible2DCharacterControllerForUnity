@@ -33,7 +33,7 @@ public class FallModule
         return newVelocity;
     }
 
-    public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
+    private Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
     {
         // Применение гравитации
         moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;

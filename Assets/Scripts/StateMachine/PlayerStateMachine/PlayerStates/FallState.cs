@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class FallState : BaseState
 {
+	private readonly FallModule _fallModule;
+	private readonly MovementModule _movementModule;
+	
 	private Vector2 _moveVelocity;
 
-	public FallState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	public FallState(PlayerStateContext context, FallModule fallModule, MovementModule movementModule) :
+		base(context)
+	{
+		_fallModule = fallModule;
+		_movementModule = movementModule;
+	}
 
 	public override void OnEnter()
 	{
@@ -17,8 +24,8 @@ public class FallState : BaseState
 
 	public override void Update()
 	{
-		playerPhysicsController.FallModule.BufferJump(inputReader.GetJumpState());
-		playerPhysicsController.FallModule.SetHoldState(inputReader.GetJumpState().IsHeld);
+		_fallModule.BufferJump(inputReader.GetJumpState());
+		_fallModule.SetHoldState(inputReader.GetJumpState().IsHeld);
 		
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
@@ -28,8 +35,8 @@ public class FallState : BaseState
 		// _moveVelocity.y = player.playerPhysicsController.FallModule.HandleFalling(physicsHandler2D.GetLastAppliedVelocity()).y;
 		// _moveVelocity.x = player.playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetLastAppliedVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
-		_moveVelocity.y = playerPhysicsController.FallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
-		_moveVelocity.x = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		_moveVelocity.y = _fallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
+		_moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}

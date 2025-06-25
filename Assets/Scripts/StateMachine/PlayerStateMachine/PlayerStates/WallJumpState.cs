@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class WallJumpState : BaseState
 {
+    private readonly WallJumpModule _wallJumpModule;
+    private readonly WallSlideModule _wallSlideModule;
+    
     private Vector2 _moveVelocity;
 
-    public WallJumpState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-        base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+    public WallJumpState(PlayerStateContext context, WallJumpModule wallJumpModule, WallSlideModule wallSlideModule) : base(context)
+    {
+        _wallJumpModule = wallJumpModule;
+        _wallSlideModule = wallSlideModule;
+    }
 
     public override void OnEnter()
     {
@@ -13,8 +19,8 @@ public class WallJumpState : BaseState
         
         animationController.PlayAnimation("Jump");
 
-        var wallDirectionX = playerPhysicsController.WallSlideModule.CurrentWallDirection;
-        _moveVelocity = playerPhysicsController.WallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
+        var wallDirectionX = _wallSlideModule.CurrentWallDirection;
+        _moveVelocity = _wallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
     

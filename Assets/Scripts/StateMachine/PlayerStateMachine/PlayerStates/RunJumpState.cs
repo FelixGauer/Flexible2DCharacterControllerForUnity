@@ -2,8 +2,17 @@ using UnityEngine;
 
 public class RunJumpState : BaseState
 {
-    public RunJumpState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-        base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+    private readonly JumpModule _jumpModule;
+    private readonly FallModule _fallModule;
+    private readonly MovementModule _movementModule;
+
+    public RunJumpState(PlayerStateContext context, JumpModule jumpModule, FallModule fallModule, MovementModule movementModule) :
+        base(context)
+    {
+        _jumpModule = jumpModule;
+        _fallModule = fallModule;
+        _movementModule = movementModule;
+    }
 	
     public override void OnEnter()
     {
@@ -14,27 +23,33 @@ public class RunJumpState : BaseState
     
     public override void Update()
     {
-        playerPhysicsController.JumpModule.HandleInput(inputReader.GetJumpState());
+        _jumpModule.HandleInput(inputReader.GetJumpState());
         
         turnChecker.TurnCheck(inputReader.GetMoveDirection());
         
-        playerPhysicsController.JumpModule.OnMultiJump += () => animationController.PlayAnimation("MultiJump");
+        _jumpModule.OnMultiJump += () => animationController.PlayAnimation("MultiJump");
     }
 
     private Vector2 _moveVelocity;
 
     public override void FixedUpdate()
-    {		
-        _moveVelocity.y = playerPhysicsController.JumpModule.UpdatePhysics(inputReader.GetJumpState(), physicsHandler2D.GetVelocity()).y;
-        _moveVelocity.x = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+    {
+        _moveVelocity.y = _jumpModule.UpdatePhysics(inputReader.GetJumpState(), physicsHandler2D.GetVelocity()).y;
+        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         // physicsHandler2D.AddVelocity(_moveVelocity);
         
-        var gravity = playerPhysicsController.FallModule.ApplyGravity(_moveVelocity, playerControllerStats.Gravity, playerControllerStats.JumpGravityMultiplayer);
-        physicsHandler2D.AddVelocity(gravity);
+        // var gravity = _fallModule.ApplyGravity(_moveVelocity, playerControllerStats.Gravity, playerControllerStats.JumpGravityMultiplayer);
+        // var gravity = _fallModule.HandleFalling(_moveVelocity).y;
+
+        _moveVelocity.y = _fallModule.HandleFalling(_moveVelocity).y;
+
+        // physicsHandler2D.AddVelocity(gravity);
+        physicsHandler2D.AddVelocity(_moveVelocity);
+
     }
 
     public override void OnExit()
     {
-        playerPhysicsController.JumpModule.OnExitJump();
+        _jumpModule.OnExitJump();
     }
 }

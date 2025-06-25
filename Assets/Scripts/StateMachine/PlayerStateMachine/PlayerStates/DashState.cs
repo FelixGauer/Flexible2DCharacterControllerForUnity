@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class DashState : BaseState
 {
+	private readonly DashModule _dashModule;
+	private readonly FallModule _fallModule;
+	
 	// private Vector2 _moveVelocity;
 
-	public DashState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	public DashState(PlayerStateContext context, DashModule dashModule,  FallModule fallModule) :
+		base(context)
+	{
+		_dashModule = dashModule;
+		_fallModule = fallModule;
+	}
 
 	public override void OnEnter()
 	{		
@@ -14,27 +21,30 @@ public class DashState : BaseState
 
 		animationController.PlayAnimation("Dash");
 		
-		playerPhysicsController.DashModule.StartDash(inputReader.GetMoveDirection());
+		_dashModule.StartDash(inputReader.GetMoveDirection());
 	}
 
 	public override void Update()
 	{
-		playerPhysicsController.DashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
+		_dashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
 		
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
 	public override void FixedUpdate()
 	{
-		var moveVelocity = playerPhysicsController.DashModule.HandleDash();
-		var gravityVelocity = playerPhysicsController.FallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
+		var moveVelocity = _dashModule.HandleDash();
+		// var gravityVelocity = _fallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
+		// var gravityVelocity.y = _fallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
+		// moveVelocity.y = _fallModule.HandleFalling(moveVelocity).y;
+
 		
 		physicsHandler2D.AddVelocity(moveVelocity);
-		physicsHandler2D.AddVelocity(new Vector2(0f, gravityVelocity));
+		// physicsHandler2D.AddVelocity(new Vector2(0f, gravityVelocity));
 	}
 	
 	public override void OnExit()
 	{
-		playerPhysicsController.DashModule.StopDash();
+		_dashModule.StopDash();
 	}
 }

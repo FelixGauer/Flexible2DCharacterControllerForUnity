@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class CrouchState : BaseState
 {
-	public CrouchState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	private readonly CrouchModule _crouchModule;
+	private readonly MovementModule _movementModule;
+	
+	private Vector2 _moveVelocity;
+
+	public CrouchState(PlayerStateContext context, CrouchModule crouchModule, MovementModule movementModule) :
+		base(context)
+	{
+		_crouchModule = crouchModule;
+		_movementModule = movementModule;
+	}
 
 	public override void OnEnter()
 	{		
@@ -12,10 +21,8 @@ public class CrouchState : BaseState
 		
 		animationController.PlayAnimation("CrouchWalk");
 		
-		playerPhysicsController.CrouchModule.SetCrouchState(true);
+		_crouchModule.SetCrouchState(true);
 	}
-
-	private Vector2 _moveVelocity;
 	
 	public override void Update()
 	{
@@ -24,7 +31,7 @@ public class CrouchState : BaseState
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
+		_moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
@@ -32,7 +39,7 @@ public class CrouchState : BaseState
 	{
 		if (inputReader.GetDashState().WasPressedThisFrame) return;
 		
-		playerPhysicsController.CrouchModule.SetCrouchState(false);
+		_crouchModule.SetCrouchState(false);
 
 		// player.OnExitCrouch();
 		// player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);

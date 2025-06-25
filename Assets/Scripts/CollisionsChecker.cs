@@ -61,7 +61,6 @@ public class CollisionsChecker : MonoBehaviour
         {
             OnGroundLeft?.Invoke();
         }
-
         // Проверка изменений удара головой
         if (!_wasBumpingHead && BumpedHead)
         {

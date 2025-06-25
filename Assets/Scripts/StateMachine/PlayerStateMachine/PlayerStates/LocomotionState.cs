@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class LocomotionState : BaseState
 {
-	public LocomotionState(PlayerPhysicsController playerPhysicsController, InputReader inputReader,
-		PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	private readonly MovementModule _movementModule;
+
+	public LocomotionState(PlayerStateContext context, MovementModule movementModule) :
+		base(context)
+	{
+		_movementModule = movementModule;
+	}
 	
 	public override void OnEnter()
 	{
@@ -25,7 +29,7 @@ public class LocomotionState : BaseState
 
 	public override void FixedUpdate()
 	{
-		var moveVelocity = playerPhysicsController.MovementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		var moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		moveVelocity.y = playerControllerStats.GroundGravity;
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}

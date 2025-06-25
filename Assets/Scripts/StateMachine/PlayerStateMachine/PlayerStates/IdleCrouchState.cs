@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class IdleCrouchState : BaseState
 {
-    public IdleCrouchState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-        base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+    private readonly CrouchModule _crouchModule;
+
+    public IdleCrouchState(PlayerStateContext context, CrouchModule crouchModule) :
+        base(context)
+    {
+        _crouchModule = crouchModule;
+    }
 
     public override void OnEnter()
     {		
@@ -13,7 +18,7 @@ public class IdleCrouchState : BaseState
         
 
 
-        playerPhysicsController.CrouchModule.SetCrouchState(true);
+        _crouchModule.SetCrouchState(true);
         // player.playerPhysicsController.GroundModule.HandleGround();
         
         // player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
@@ -29,7 +34,7 @@ public class IdleCrouchState : BaseState
     {
         if (inputReader.GetDashState().WasPressedThisFrame) return;
 
-        playerPhysicsController.CrouchModule.SetCrouchState(false);
+        _crouchModule.SetCrouchState(false);
         
         // player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
     }

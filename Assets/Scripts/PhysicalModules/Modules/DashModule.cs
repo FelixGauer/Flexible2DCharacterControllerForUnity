@@ -7,7 +7,6 @@ public class DashModule
     private readonly TurnChecker _turnChecker;
     private readonly CollisionsChecker _collisionsChecker;
 
-
     private float _numberAvailableDash;
 	
     private Vector2 _moveVelocity;

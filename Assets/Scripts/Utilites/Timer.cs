@@ -11,7 +11,7 @@ public abstract class Timer
 
 	public Action OnTimerStart = delegate { };
 	public Action OnTimerStop = delegate { };
-
+	
 	protected Timer(float value)
 	{
 		initialTime = value;
@@ -20,6 +20,7 @@ public abstract class Timer
 
 	public void Start()
 	{
+
 		Time = initialTime;
 		if (!IsRunning)
 		{
@@ -45,7 +46,31 @@ public abstract class Timer
 
 public class CountdownTimer : Timer
 {
-	public CountdownTimer(float value) : base(value) { }
+	private System.Func<float> getInitialTime; // Делегат для получения актуального времени
+
+	// public CountdownTimer(float value) : base(value)
+	// {
+	// }
+	
+	public CountdownTimer(System.Func<float> getTime) : base(0)
+	{
+		getInitialTime = getTime;
+		initialTime = getTime();
+	}
+	
+	public new void Start()
+	{
+		if (getInitialTime != null)
+		{
+			initialTime = getInitialTime();
+		}
+		Time = initialTime;
+		if (!IsRunning)
+		{
+			IsRunning = true;
+			OnTimerStart.Invoke();
+		}
+	}
 
 	public override void Tick(float deltaTime)
 	{

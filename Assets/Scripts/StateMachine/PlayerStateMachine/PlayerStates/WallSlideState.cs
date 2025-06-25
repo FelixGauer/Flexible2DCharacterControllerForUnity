@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class WallSlideState : BaseState
 {
-	public WallSlideState(PlayerPhysicsController playerPhysicsController, InputReader inputReader, PlayerControllerStats playerControllerStats, PhysicsHandler2D physicsHandler2D, TurnChecker turnChecker, AnimationController animationController) :
-		base(playerPhysicsController, inputReader, playerControllerStats, physicsHandler2D, turnChecker, animationController) { }
+	private readonly WallSlideModule _wallSlideModule;
+
+	public WallSlideState(PlayerStateContext context, WallSlideModule wallSlideModule) : base(context)
+	{
+		_wallSlideModule = wallSlideModule;
+	}
 
 	public override void OnEnter()
 	{
@@ -12,19 +16,19 @@ public class WallSlideState : BaseState
 		
 		animationController.PlayAnimation("WallSlide");
 
-		playerPhysicsController.WallSlideModule.OnEnterWallSlide();
+		_wallSlideModule.OnEnterWallSlide();
 	}
 
 	private Vector2 _moveVelocity;
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity = playerPhysicsController.WallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());
+		_moveVelocity = _wallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
     public override void OnExit()
     {
-        playerPhysicsController.WallSlideModule.OnExitWallSlide();
+	    _wallSlideModule.OnExitWallSlide();
     }
 }

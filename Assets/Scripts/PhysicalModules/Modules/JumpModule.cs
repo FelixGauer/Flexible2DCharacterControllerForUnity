@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class JumpModule
 {
-    public JumpModule(CollisionsChecker collisionsChecker,
-        PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CountdownTimer jumpCoyoteTimer)
+    public JumpModule(CollisionsChecker collisionsChecker, PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CountdownTimer jumpCoyoteTimer)
     {
         _collisionsChecker = collisionsChecker;
         _playerControllerStats = playerControllerStats;
 
         _jumpCoyoteTimer = jumpCoyoteTimer;
         _jumpBufferTimer = jumpBufferTimer;
-
 
         _collisionsChecker.OnGroundLeft += StartCoyoteTime;
 
@@ -92,7 +90,6 @@ public class JumpModule
             _shouldExecuteBufferJump = false;
             _positiveMoveVelocity = false;
 
-
             _numberAvailableJumps -= 1;
         }
 
@@ -157,11 +154,13 @@ public class JumpModule
         }
     }
     
-    
     private void StartCoyoteTime()
     {
+        Debug.Log(_numberAvailableJumps);
         // Тут я запускаю через событие койот таймер, для этого проверяю что он сошел с земли
         bool fallWithoutJump = _numberAvailableJumps == _playerControllerStats.MaxNumberJumps;
         if (fallWithoutJump) _jumpCoyoteTimer.Start();
     }
+    
+
 }
