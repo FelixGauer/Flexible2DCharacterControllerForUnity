@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.Playables;
 
 public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
 {
@@ -87,6 +88,8 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
 
     private void SetupIdleTransitions(PlayerStates states)
     {
+        At(states.IdleState, states.FallState,
+            new FuncPredicate(() => !_collisionsChecker.IsGrounded));
         At(states.IdleState, states.RunJumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.IdleState, states.JumpState,
