@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 	private TurnChecker _turnChecker;
 	private PlayerStateMachineFactory _stateMachineFactory;
 	private AnimationController _animationController;
+	
+	[SerializeField] private Transform _spiritTransformForTurn;
 
 	private MovementLogic _movementLogic;
 	
@@ -33,7 +35,9 @@ public class PlayerController : MonoBehaviour
 		capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
 		
-		_turnChecker = new TurnChecker(this.transform);
+		_turnChecker = new TurnChecker(_spiritTransformForTurn);
+		// _turnChecker = new TurnChecker(this.transform);
+
 
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
 		

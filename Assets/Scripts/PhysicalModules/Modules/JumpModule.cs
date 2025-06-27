@@ -10,12 +10,12 @@ public class JumpModule
         _jumpCoyoteTimer = jumpCoyoteTimer;
         _jumpBufferTimer = jumpBufferTimer;
 
-        _collisionsChecker.OnGroundLeft += StartCoyoteTime;
-
         _numberAvailableJumps = playerControllerStats.MaxNumberJumps;
         
         _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
         _collisionsChecker.OnWallTouched += ResetNumberAvailableJumps;
+        
+        _collisionsChecker.OnGroundLeft += StartCoyoteTime;
     }
     
     public event System.Action OnMultiJump; // Покинул землю (был на земле -> не на земле)

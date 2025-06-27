@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
-    allowMovementToggle: 1
-    toggleMovementKey: 301
   MoveSpeed: 3
   WalkAcceleration: 150
   WalkDeceleration: 150
@@ -53,7 +51,7 @@ MonoBehaviour:
   wallFallAirAcceleration: 150
   wallFallAirDeceleration: 23
   wallFallSpeed: 10
-  DashVelocity: 20
+  DashVelocity: 30
   MaxNumberDash: 2
   DashGravityMultiplayer: 0
   CrouchMoveSpeed: 7
