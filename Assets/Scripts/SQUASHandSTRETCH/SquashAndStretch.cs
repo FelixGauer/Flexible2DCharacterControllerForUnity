@@ -1,18 +1,20 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SquashAndStretch : MonoBehaviour
 {
-    public Transform Sprite;
-    public float Stretch = 0.1f;
+    public Transform sprite;
+    public float stretch = 0.1f;
     [SerializeField] private Transform squashParent;
- 
+
+    
     private Rigidbody2D _rigidbody;
     private Vector3 _originalScale;
  
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _originalScale = Sprite.transform.localScale;
+        _originalScale = sprite.transform.localScale;
  
         if(!squashParent)
             squashParent = new GameObject(string.Format("_squash_{0}", name)).transform;
@@ -20,10 +22,10 @@ public class SquashAndStretch : MonoBehaviour
  
     private void Update()
     {
-        Sprite.parent = transform;
-        Sprite.localPosition = Vector3.zero;
-        Sprite.localScale = _originalScale;
-        Sprite.localRotation = Quaternion.identity;
+        sprite.parent = transform;
+        sprite.localPosition = Vector3.zero;
+        sprite.localScale = _originalScale;
+        sprite.localRotation = Quaternion.identity;
  
         squashParent.localScale = Vector3.one;
         squashParent.position = transform.position;
@@ -34,9 +36,10 @@ public class SquashAndStretch : MonoBehaviour
             squashParent.rotation = Quaternion.FromToRotation(Vector3.right, velocity);
         }
  
-        var scaleX = 1.0f + (velocity.magnitude * Stretch);
+        var scaleX = 1.0f + (velocity.magnitude * stretch);
         var scaleY = 1.0f / scaleX;
-        Sprite.parent = squashParent;
+        sprite.parent = squashParent;
         squashParent.localScale = new Vector3(scaleX, scaleY, 1.0f);
     }
+    
 }

@@ -9,15 +9,17 @@ public class PlayerController : MonoBehaviour
 	[Header("References")]
 	[SerializeField] private InputReader inputReader;
 	[SerializeField] private PlayerControllerStats playerControllerStats;
-	[SerializeField] private Transform spriteTransform;
-	[SerializeField] private CapsuleCollider2D capsuleCollider;
+	// [SerializeField] private Transform spriteTransform;
+	// [SerializeField] private CapsuleCollider2D capsuleCollider;
+	[SerializeField] private ColliderSpriteResizer _colliderSpriteResizer;
+
 	[SerializeField] private PhysicsHandler2D physicsHandler2D;
 	[SerializeField] private Animator animator;
 	
 	private PlayerTimerRegistry _playerTimerRegistry;
 	private CollisionsChecker _collisionsChecker;
 	private StateMachine _stateMachine;
-	private ColliderSpriteResizer _colliderSpriteResizer;
+	// private ColliderSpriteResizer _colliderSpriteResizer;
 	private TurnChecker _turnChecker;
 	private PlayerStateMachineFactory _stateMachineFactory;
 	private AnimationController _animationController;
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		_collisionsChecker = GetComponent<CollisionsChecker>();
-		capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
+		// capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
 		
 		_turnChecker = new TurnChecker(_spiritTransformForTurn);
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
 		
 		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
-		_colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
+		// _colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
 		_movementLogic = new MovementLogic(playerControllerStats);
 		_animationController = new AnimationController(animator);
 		

@@ -9,6 +9,7 @@ public class WallJumpModule
     public WallJumpModule(PlayerControllerStats playerControllerStats) 
     {
         _playerControllerStats = playerControllerStats;
+        
     }
     
     public Vector2 HandleWallJump(Vector2 moveVelocity, Vector2 moveDirection, float wallDirectionX)

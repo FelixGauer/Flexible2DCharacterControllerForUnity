@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum ResizeTarget
 {
@@ -7,59 +9,57 @@ public enum ResizeTarget
     SpriteOnly
 }
 
-public class ColliderSpriteResizer
+public class ColliderSpriteResizer : MonoBehaviour
 {
-    private readonly CapsuleCollider2D _capsuleCollider;
-    private readonly Transform _spriteTransform;
-    private readonly Vector2 _normalColliderSize;
-    private readonly Vector2 _normalSpriteScale;
-    private readonly Vector2 _normalSpritePosition;
+    [SerializeField] private CapsuleCollider2D capsuleCollider;
+    [SerializeField] private Transform spriteTransform;
+    [SerializeField] private ResizeTarget resizeTarget;
 
-    public ColliderSpriteResizer(CapsuleCollider2D capsuleCollider, Transform spriteTransform)
+    private Vector2 _normalColliderSize;
+    private Vector2 _normalSpriteScale;
+    private Vector2 _normalSpritePosition;
+    private Vector2 _normalColliderOffset;
+
+    private void Awake()
     {
-        _capsuleCollider = capsuleCollider;
-        _spriteTransform = spriteTransform;
-        
-        // Сохраняем изначальные значения
-        _normalColliderSize = _capsuleCollider.size;
-        _normalSpriteScale = _spriteTransform.localScale;
-        _normalSpritePosition = _spriteTransform.localPosition;
+        _normalColliderSize = capsuleCollider.size;
+        _normalColliderOffset = capsuleCollider.offset; 
+        _normalSpriteScale = spriteTransform.localScale;
+        _normalSpritePosition = spriteTransform.localPosition;
     }
-
-    public void SetSize(float height, float offset, ResizeTarget target = ResizeTarget.Both)
+    
+    // public void SetSize(float height, float offset, ResizeTarget target = ResizeTarget.Both)
+    public void SetSize(float height, float offset, ResizeTarget? target = null)
     {
-        switch (target)
+        ResizeTarget actualTarget = target ?? resizeTarget;
+        switch (actualTarget)
         {
             case ResizeTarget.Both:
-                // Настройка коллайдера
-                _capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
-                _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
-                
-                // Настройка спрайта
-                _spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
-                _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, offset);
+                capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
+                capsuleCollider.offset = new Vector2(_normalColliderOffset.x, offset);
+                spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
                 break;
-                
+            
             case ResizeTarget.ColliderOnly:
-                _capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
-                _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, offset);
+                capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
+                capsuleCollider.offset = new Vector2(_normalColliderOffset.x, offset);
                 break;
-                
+            
             case ResizeTarget.SpriteOnly:
-                _spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
-                _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, offset);
+                spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
                 break;
         }
     }
 
     public void ResetToNormal()
     {
-        // Возвращаем к изначальным значениям
-        _capsuleCollider.size = _normalColliderSize;
-        _capsuleCollider.offset = new Vector2(_capsuleCollider.offset.x, 0);
+        capsuleCollider.size = _normalColliderSize;
+        capsuleCollider.offset = _normalColliderOffset; 
         
-        _spriteTransform.localScale = _normalSpriteScale;
-        _spriteTransform.localPosition = new Vector2(_spriteTransform.localPosition.x, _normalSpritePosition.y);
+        spriteTransform.localScale = _normalSpriteScale;
+        spriteTransform.localPosition = _normalSpritePosition;
     }
 
     // Методы для плавного изменения размеров
@@ -69,14 +69,16 @@ public class ColliderSpriteResizer
         // Пока что просто вызываем SetSize
         SetSize(height, offset);
     }
+    
     public void SetCustomSize(Vector2 colliderSize, Vector2 spriteScale, Vector2 spritePosition, Vector2 colliderOffset)
     {
-        _capsuleCollider.size = colliderSize;
-        _capsuleCollider.offset = colliderOffset;
-        _spriteTransform.localScale = spriteScale;
-        _spriteTransform.localPosition = spritePosition;
+        capsuleCollider.size = colliderSize;
+        capsuleCollider.offset = colliderOffset;
+        spriteTransform.localScale = spriteScale;
+        spriteTransform.localPosition = spritePosition;
     }
 
     public Vector2 GetNormalColliderSize() => _normalColliderSize;
-    public Vector2 GetCurrentColliderSize() => _capsuleCollider.size;
+    public Vector2 GetCurrentColliderSize() => capsuleCollider.size;
+    public Vector2 GetNormalSpritePosition() => _normalSpritePosition;
 }

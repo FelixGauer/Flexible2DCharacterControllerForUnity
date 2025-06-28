@@ -16,17 +16,14 @@ public class IdleCrouchState : BaseState
         
         animationController.PlayAnimation("CrouchIdle");
         
-
-
         _crouchModule.SetCrouchState(true);
-        // player.playerPhysicsController.GroundModule.HandleGround();
-        
-        // player.playerPhysicsController.PhysicsContext.MoveVelocity = Vector2.zero;
-        // player.playerPhysicsController.CrouchModule.OnEnterCrouch();
+
     }
 
     public override void Update()
     {
+        // Debug.Log(turnChecker.IsFacingRight);
+
         turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
 

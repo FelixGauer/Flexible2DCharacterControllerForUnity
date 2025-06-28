@@ -217,14 +217,16 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.DashState, states.FallState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && !_collisionsChecker.IsGrounded));
+        At(states.DashState, states.JumpState,
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _playerModules.JumpModule.CanMultiJump() && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
+        At(states.DashState, states.RunJumpState,
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _playerModules.JumpModule.CanMultiJump()));
         At(states.DashState, states.IdleState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
         At(states.DashState, states.RunState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.DashState, states.WallSlideState,
             new FuncPredicate(() => _collisionsChecker.IsTouchingWall));
-        At(states.DashState, states.JumpState,
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _playerModules.JumpModule.CanMultiJump()));
         At(states.DashState, states.IdleCrouchState,
             new FuncPredicate(() => !_playerTimerRegistry.dashTimer.IsRunning && _collisionsChecker.IsGrounded && _inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0));
         At(states.DashState, states.CrouchState,

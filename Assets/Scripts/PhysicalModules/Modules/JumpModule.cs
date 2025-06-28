@@ -156,7 +156,6 @@ public class JumpModule
     
     private void StartCoyoteTime()
     {
-        Debug.Log(_numberAvailableJumps);
         // Тут я запускаю через событие койот таймер, для этого проверяю что он сошел с земли
         bool fallWithoutJump = _numberAvailableJumps == _playerControllerStats.MaxNumberJumps;
         if (fallWithoutJump) _jumpCoyoteTimer.Start();

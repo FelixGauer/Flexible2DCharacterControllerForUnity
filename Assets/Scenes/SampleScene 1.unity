@@ -585,6 +585,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 267582931}
   physicsHandler2D: {fileID: 690232525}
   animator: {fileID: 1238666561}
+  _spiritTransformForTurn: {fileID: 690232521}
   markerPrefab: {fileID: 1594843421}
 --- !u!212 &690232520
 SpriteRenderer:
