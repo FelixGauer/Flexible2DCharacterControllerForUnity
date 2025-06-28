@@ -12,8 +12,8 @@ public class PlayerModulesFactory
             new JumpModule(collisionsChecker, playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer),
             new FallModule(playerControllerStats, playerTimerRegistry.jumpBufferTimer),
             new DashModule(playerControllerStats, turnChecker, playerTimerRegistry.dashTimer, collisionsChecker),
-            new WallSlideModule(playerControllerStats, turnChecker, playerTimerRegistry.wallJumpTimer),
-            new WallJumpModule(playerControllerStats),
+            new WallSlideModule(playerControllerStats, turnChecker, playerTimerRegistry.wallFallTimer),
+            new WallJumpModule(playerControllerStats, playerTimerRegistry.wallJumpTimer),
             new CrouchModule(playerControllerStats, collisionsChecker, colliderSpriteResizer),
             new CrouchRollModule(playerControllerStats, turnChecker, playerTimerRegistry.crouchRollTimer)
         );

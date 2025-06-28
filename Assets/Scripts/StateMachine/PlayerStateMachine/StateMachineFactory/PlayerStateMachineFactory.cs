@@ -247,8 +247,10 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
 
     private void SetupWallSlideTransitions(PlayerStates states)
     {
+        At(states.WallSlideState, states.RunFallState,
+            new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerTimerRegistry.wallFallTimer.IsFinished || !_collisionsChecker.IsTouchingWall) && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.WallSlideState, states.FallState,
-            new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerTimerRegistry.wallJumpTimer.IsFinished || !_collisionsChecker.IsTouchingWall)));
+            new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerTimerRegistry.wallFallTimer.IsFinished || !_collisionsChecker.IsTouchingWall)));
         At(states.WallSlideState, states.WallJumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.WallSlideState, states.IdleState,

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "PlayerControllerStats", menuName = "PlayerControllerStats")]
 public class PlayerControllerStats : ScriptableObject
@@ -88,9 +89,11 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Timers")]
 	public float CoyoteTime = 1.5f;
 	public float BufferTime = 0.2f;
-	public float WallJumpTime = 0.25f;
+	public float WallFallTime = 0.25f;
 	public float DashTime = 0.11f;
 	public float CrouchRollTime = 0.1f;
+	public float WallJumpTime = 0.05f;
+
 	
 	[Header("Fall")]
 	[Range(0f, 100f)] public float maxFallSpeed = 20f;
