@@ -27,6 +27,9 @@ public class CrouchState : BaseState
 	public override void Update()
 	{
 		turnChecker.TurnCheck(inputReader.GetMoveDirection());
+		
+		float currentSpeed = physicsHandler2D.GetVelocity().magnitude;
+		animationController.SyncAnimationWithMovement(currentSpeed, playerControllerStats.BaseCrouchAnimationSpeed);
 	}
 
 	public override void FixedUpdate()

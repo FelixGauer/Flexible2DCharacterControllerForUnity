@@ -28,16 +28,22 @@ public class ColliderSpriteResizer : MonoBehaviour
         _normalSpritePosition = spriteTransform.localPosition;
     }
     
-    // public void SetSize(float height, float offset, ResizeTarget target = ResizeTarget.Both)
     public void SetSize(float height, float offset, ResizeTarget? target = null)
     {
         ResizeTarget actualTarget = target ?? resizeTarget;
+        float currentScaleX = Mathf.Abs(_normalSpriteScale.x) * GetCurrentScaleXSign();
+
         switch (actualTarget)
         {
             case ResizeTarget.Both:
+                // Коллайдер - абсолютные размеры
+
                 capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
                 capsuleCollider.offset = new Vector2(_normalColliderOffset.x, offset);
-                spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                
+                // Спрайт - относительное масштабирование
+                float scaleMultiplier = height / _normalColliderSize.y;
+                spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y * scaleMultiplier);
                 spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
                 break;
             
@@ -47,18 +53,23 @@ public class ColliderSpriteResizer : MonoBehaviour
                 break;
             
             case ResizeTarget.SpriteOnly:
-                spriteTransform.localScale = new Vector2(_normalSpriteScale.x, height);
+                // Спрайт - относительное масштабирование
+                float spriteScaleMultiplier = height / _normalColliderSize.y;
+                spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y * spriteScaleMultiplier);
                 spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
                 break;
         }
     }
-
+    
     public void ResetToNormal()
     {
         capsuleCollider.size = _normalColliderSize;
         capsuleCollider.offset = _normalColliderOffset; 
         
-        spriteTransform.localScale = _normalSpriteScale;
+        float currentScaleX = Mathf.Abs(_normalSpriteScale.x) * GetCurrentScaleXSign();
+
+        // spriteTransform.localScale = _normalSpriteScale;
+        spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y);
         spriteTransform.localPosition = _normalSpritePosition;
     }
 
@@ -81,4 +92,10 @@ public class ColliderSpriteResizer : MonoBehaviour
     public Vector2 GetNormalColliderSize() => _normalColliderSize;
     public Vector2 GetCurrentColliderSize() => capsuleCollider.size;
     public Vector2 GetNormalSpritePosition() => _normalSpritePosition;
+    
+    private float GetCurrentScaleXSign()
+    {
+        return spriteTransform.localScale.x >= 0 ? 1f : -1f;
+    }
 }
+

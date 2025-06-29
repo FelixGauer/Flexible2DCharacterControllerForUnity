@@ -10,11 +10,14 @@ public class SquashAndStretch : MonoBehaviour
     
     private Rigidbody2D _rigidbody;
     private Vector3 _originalScale;
- 
+    private Vector3 _originalPosition;
+
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _originalScale = sprite.transform.localScale;
+        _originalPosition = sprite.localPosition;
  
         if(!squashParent)
             squashParent = new GameObject(string.Format("_squash_{0}", name)).transform;
@@ -24,7 +27,6 @@ public class SquashAndStretch : MonoBehaviour
     {
         sprite.parent = transform;
         sprite.localPosition = Vector3.zero;
-        sprite.localScale = _originalScale;
         sprite.localRotation = Quaternion.identity;
  
         squashParent.localScale = Vector3.one;
@@ -41,5 +43,4 @@ public class SquashAndStretch : MonoBehaviour
         sprite.parent = squashParent;
         squashParent.localScale = new Vector3(scaleX, scaleY, 1.0f);
     }
-    
 }

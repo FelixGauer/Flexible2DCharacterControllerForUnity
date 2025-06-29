@@ -151,7 +151,9 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.IdleCrouchState, states.CrouchState,
             new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] != 0));
         At(states.IdleCrouchState, states.JumpState,
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && !_collisionsChecker.BumpedHead));
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
+        At(states.IdleCrouchState, states.RunJumpState,
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.IdleCrouchState, states.IdleState,
             new FuncPredicate(() => !_inputReader.GetCrouchState().IsHeld && _inputReader.GetMoveDirection()[0] == 0 && !_collisionsChecker.BumpedHead));
         At(states.IdleCrouchState, states.CrouchRollState,
@@ -162,10 +164,12 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     {
         At(states.CrouchState, states.FallState,
             new FuncPredicate(() => !_collisionsChecker.IsGrounded));
+        At(states.CrouchState, states.JumpState,
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
+        At(states.CrouchState, states.RunJumpState,
+            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.CrouchState, states.IdleCrouchState,
             new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
-        At(states.CrouchState, states.JumpState,
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame));
         At(states.CrouchState, states.CrouchRollState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
         At(states.CrouchState, states.RunState,

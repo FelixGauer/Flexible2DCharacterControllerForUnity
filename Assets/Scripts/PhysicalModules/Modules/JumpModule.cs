@@ -13,6 +13,7 @@ public class JumpModule
         _numberAvailableJumps = playerControllerStats.MaxNumberJumps;
         
         _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
+
         _collisionsChecker.OnWallTouched += ResetNumberAvailableJumps;
         
         _collisionsChecker.OnGroundLeft += StartCoyoteTime;
@@ -38,7 +39,7 @@ public class JumpModule
     private bool _isHeld;
 
     private bool _shouldExecuteBufferJump;
-
+    
     public void HandleInput(InputButtonState jumpState)
     {
         if (jumpState.WasPressedThisFrame) _wasPressedThisFrame = true;
@@ -46,24 +47,43 @@ public class JumpModule
         _isHeld = jumpState.IsHeld;
 
         if (_jumpBufferTimer.IsRunning)
+        {
             _shouldExecuteBufferJump = true; // FIXME Тут проблема в том, что уже в FixedUpdate таймер успевает пройти
+            _wasPressedThisFrame = false;
+        }
     }
 
 
     public Vector2 UpdatePhysics(InputButtonState jumpState, Vector2 currentVelocity)
     {
+        // HandleInput(jumpState);
+        
         _moveVelocity = currentVelocity;
 
         if (_moveVelocity.y > 0f)
             _positiveMoveVelocity = true;
 
         if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
+        {
             _numberAvailableJumps -= 1f;
-
+            Debug.Log("jumpCoyoteTimerBUG");
+        }
+        
+        
         bool isMultiJump = _wasPressedThisFrame && !_collisionsChecker.IsGrounded && !_jumpCoyoteTimer.IsRunning;
-
+        
+        if (_wasPressedThisFrame)
+        {
+            Debug.Log($"Jump attempt: Grounded={_collisionsChecker.IsGrounded}, " +
+                      $"Coyote={_jumpCoyoteTimer.IsRunning}, " +
+                      $"AvailableJumps={_numberAvailableJumps}, " +
+                      $"CanMultiJump={isMultiJump}");
+        }
+        
         if (_wasPressedThisFrame && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))
         {
+            Debug.Log("NormJump");
+            
             ExecuteJump();
 
             _wasPressedThisFrame = false;
@@ -77,6 +97,8 @@ public class JumpModule
         // if (_jumpBufferTimer.IsRunning || _shouldExecuteBufferJump)
         if (_shouldExecuteBufferJump)
         {
+            Debug.Log("BufferJump");
+
             ExecuteJump();
 
             if (!_isHeld)
@@ -105,6 +127,10 @@ public class JumpModule
         }
 
         // _moveVelocity = ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
+        
+        // _wasPressedThisFrame = false;
+        // _jumpKeyReleased = false;
+        // _shouldExecuteBufferJump = false;
 
         return _moveVelocity;
     }
@@ -123,12 +149,14 @@ public class JumpModule
 
     public bool CanMultiJump()
     {
+        Debug.Log(_numberAvailableJumps > 0f);
         return _numberAvailableJumps > 0f;
     }
 
     public void ResetNumberAvailableJumps()
     {
         _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+        Debug.Log("_numberAvailableJumpsRESET");
     }
 
     public bool CanFall()
@@ -158,8 +186,10 @@ public class JumpModule
     {
         // Тут я запускаю через событие койот таймер, для этого проверяю что он сошел с земли
         bool fallWithoutJump = _numberAvailableJumps == _playerControllerStats.MaxNumberJumps;
-        if (fallWithoutJump) _jumpCoyoteTimer.Start();
+        if (fallWithoutJump)
+        {
+            // Debug.Log("COYOTESTART");
+            _jumpCoyoteTimer.Start();
+        }
     }
-    
-
 }

@@ -108,7 +108,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Animation")]
 	public float BaseMovementAnimationSpeed = 3f;
 	public float BaseRunAnimationSpeed = 12f;
-
+	public float BaseCrouchAnimationSpeed = 7f;
 
 	
 }

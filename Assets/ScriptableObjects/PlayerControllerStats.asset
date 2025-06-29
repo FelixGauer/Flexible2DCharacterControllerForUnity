@@ -47,26 +47,27 @@ MonoBehaviour:
   WallSlideDeceleration: 5
   WallJumpClimb: {x: 20, y: 25}
   WallJumpOff: {x: 5, y: 8}
-  WallLeap: {x: 30, y: 15}
+  WallLeap: {x: 40, y: 15}
   wallFallAirAcceleration: 150
   wallFallAirDeceleration: 23
   wallFallSpeed: 10
   DashVelocity: 30
   MaxNumberDash: 2
   DashGravityMultiplayer: 0
-  CrouchMoveSpeed: 7
+  CrouchMoveSpeed: 5
   CrouchHeight: 0.6
   CrouchOffset: 0.2
   CrouchRollVelocity: 10
   RunSpeed: 15
   CoyoteTime: 0.13
   BufferTime: 0.2
-  WallJumpTime: 0.25
+  WallFallTime: 0.25
   DashTime: 0.11
   CrouchRollTime: 0.25
-  TestJumpTime: 0.1
+  WallJumpTime: 0.08
   maxFallSpeed: 30
   GroundGravity: -1.5
   maxUpwardSpeed: 50
   BaseMovementAnimationSpeed: 3
   BaseRunAnimationSpeed: 12
+  BaseCrouchAnimationSpeed: 5
