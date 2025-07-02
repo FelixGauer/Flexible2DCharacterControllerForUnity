@@ -13,14 +13,25 @@ public class JumpModule
         _numberAvailableJumps = playerControllerStats.MaxNumberJumps;
         
         _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
-
-        _collisionsChecker.OnWallTouched += ResetNumberAvailableJumps;
-        
-        _collisionsChecker.OnGroundLeft += StartCoyoteTime;
-    }
+        _collisionsChecker.OnGroundTouched += ResetJumpCoyoteTimer;
     
-    public event System.Action OnMultiJump; // Покинул землю (был на земле -> не на земле)
+        _collisionsChecker.OnWallTouched += ResetNumberAvailableJumps;
+        _collisionsChecker.OnWallTouched += ResetJumpCoyoteTimer;
+        
+        // _collisionsChecker.OnGroundLeft += StartCoyoteTime;
 
+        // _jumpCoyoteTimer.OnTimerFinished += CoyoteJumpDeleteJump;
+        
+        _collisionsChecker.OnGroundLeft += () => {
+            if (fullSetOfJumps) _jumpCoyoteTimer.Start();
+        };
+        
+        _jumpCoyoteTimer.OnTimerFinished += () => {
+            if (fullSetOfJumps) _numberAvailableJumps--;
+        };
+    }
+
+    public event System.Action OnMultiJump;
 
     private readonly CollisionsChecker _collisionsChecker;
     private readonly PlayerControllerStats _playerControllerStats;
@@ -35,161 +46,358 @@ public class JumpModule
     private InputButtonState _jumpState;
 
     private bool _jumpKeyReleased;
-    private bool _wasPressedThisFrame;
+    private bool _jumpInputPressed;
     private bool _isHeld;
-
     private bool _shouldExecuteBufferJump;
-    
+
+    public void TestStartJump()
+    {
+        _jumpInputPressed = true;
+    }
+
     public void HandleInput(InputButtonState jumpState)
     {
-        if (jumpState.WasPressedThisFrame) _wasPressedThisFrame = true;
-        if (jumpState.WasReleasedThisFrame) _jumpKeyReleased = true;
+        if (jumpState.WasPressedThisFrame) 
+            _jumpInputPressed = true;
+        
+        if (jumpState.WasReleasedThisFrame) 
+            _jumpKeyReleased = true;
+        
         _isHeld = jumpState.IsHeld;
-
+        
         if (_jumpBufferTimer.IsRunning)
         {
-            _shouldExecuteBufferJump = true; // FIXME Тут проблема в том, что уже в FixedUpdate таймер успевает пройти
-            _wasPressedThisFrame = false;
-        }
-    }
-
-
-    public Vector2 UpdatePhysics(InputButtonState jumpState, Vector2 currentVelocity)
-    {
-        // HandleInput(jumpState);
-        
-        _moveVelocity = currentVelocity;
-
-        if (_moveVelocity.y > 0f)
-            _positiveMoveVelocity = true;
-
-        if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
-        {
-            _numberAvailableJumps -= 1f;
-            Debug.Log("jumpCoyoteTimerBUG");
-        }
-        
-        
-        bool isMultiJump = _wasPressedThisFrame && !_collisionsChecker.IsGrounded && !_jumpCoyoteTimer.IsRunning;
-        
-        if (_wasPressedThisFrame)
-        {
-            Debug.Log($"Jump attempt: Grounded={_collisionsChecker.IsGrounded}, " +
-                      $"Coyote={_jumpCoyoteTimer.IsRunning}, " +
-                      $"AvailableJumps={_numberAvailableJumps}, " +
-                      $"CanMultiJump={isMultiJump}");
-        }
-        
-        if (_wasPressedThisFrame && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))
-        {
-            Debug.Log("NormJump");
+            _shouldExecuteBufferJump = true;
             
-            ExecuteJump();
-
-            _wasPressedThisFrame = false;
-
-            _jumpCoyoteTimer.Stop();
-            _jumpCoyoteTimer.Reset();
-
-            _numberAvailableJumps -= 1;
-        }
-
-        // if (_jumpBufferTimer.IsRunning || _shouldExecuteBufferJump)
-        if (_shouldExecuteBufferJump)
-        {
-            Debug.Log("BufferJump");
-
-            ExecuteJump();
-
-            if (!_isHeld)
-            {
-                ExecuteVariableJumpHeight();
-            }
-
             _jumpBufferTimer.Stop();
             _jumpBufferTimer.Reset();
+            
+            _jumpInputPressed = false;
+        } 
+        
+        // TrackJumpHeight();
+    }
 
-            _shouldExecuteBufferJump = false;
-            _positiveMoveVelocity = false;
+    public Vector2 JumpPhysicsProcessing(Vector2 currentVelocity)
+    {
+        var moveVelocity = currentVelocity;
+        
+        if (moveVelocity.y > 0f)
+            _positiveMoveVelocity = true;
+        
+        // if (_jumpCoyoteTimer.IsFinished)
+        //     _numberAvailableJumps -= 1f;
+        
+        bool jump = _jumpInputPressed && _numberAvailableJumps > 0f;
+        bool multiJump = jump && !fullSetOfJumps;
+        bool variableJump = _jumpKeyReleased;
+        bool coyoteJump = _jumpCoyoteTimer.IsRunning;
+        bool bufferJump = _shouldExecuteBufferJump;
+        bool bufferVariableJump = bufferJump && !_isHeld;
+        
+        if (jump || bufferJump || coyoteJump) // FIXME
+        {
+            moveVelocity = PerformJump(currentVelocity);
 
             _numberAvailableJumps -= 1;
+
+            _shouldExecuteBufferJump = false;
+            
+            ResetJumpCoyoteTimer();
         }
 
-        if (_jumpKeyReleased)
+        if (variableJump)
         {
-            ExecuteVariableJumpHeight();
+            moveVelocity = PerformVariableJumpHeight(moveVelocity);
             _jumpKeyReleased = false;
         }
-
-        if (isMultiJump)
-        {
-            OnMultiJump?.Invoke();
-        }
-
-        // _moveVelocity = ApplyGravity(_moveVelocity, _playerControllerStats.Gravity, _playerControllerStats.JumpGravityMultiplayer);
         
-        // _wasPressedThisFrame = false;
-        // _jumpKeyReleased = false;
-        // _shouldExecuteBufferJump = false;
-
-        return _moveVelocity;
-    }
-    
-    public Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
-    {
-        // Применение гравитации
-        moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
+        if (bufferVariableJump)
+        {
+            moveVelocity = PerformVariableJumpHeight(moveVelocity);
+            _shouldExecuteBufferJump = false;
+        }
+        
+        if (multiJump) OnMultiJump?.Invoke();
+        
+        _jumpInputPressed = false;
+        
         return moveVelocity;
     }
 
     public void OnExitJump()
     {
+        // FinishJumpHeightTracking();
         _positiveMoveVelocity = false;
+    }
+    
+    public bool CanFall(Vector2 currentVelocity)
+    {
+        return (currentVelocity.y < 0f && _positiveMoveVelocity && !_jumpInputPressed);
     }
 
     public bool CanMultiJump()
     {
-        Debug.Log(_numberAvailableJumps > 0f);
         return _numberAvailableJumps > 0f;
     }
 
-    public void ResetNumberAvailableJumps()
+    private Vector2 PerformJump(Vector2 currentVelocity)
+    {
+        // StartJumpHeightTracking(); // Начинаем отслеживание высоты
+
+        currentVelocity.y = _playerControllerStats.MaxJumpVelocity;
+        return currentVelocity;
+    }
+
+    private Vector2 PerformVariableJumpHeight(Vector2 currentVelocity)
+    {
+        if (currentVelocity.y > _playerControllerStats.MinJumpVelocity)
+        {
+            currentVelocity.y = _playerControllerStats.MinJumpVelocity;
+        }
+
+        return currentVelocity;
+    }
+
+    private bool fullSetOfJumps => _numberAvailableJumps >= _playerControllerStats.MaxNumberJumps;
+    
+    private void ResetJumpCoyoteTimer()
+    {
+        _jumpCoyoteTimer.Stop();
+        _jumpCoyoteTimer.Reset();
+    }
+    
+    private void ResetNumberAvailableJumps()
     {
         _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
-        Debug.Log("_numberAvailableJumpsRESET");
+    }
+    
+
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    //
+    //
+    // public void StartJump(InputButtonState jumpState)
+    // {
+    //     _jumpInputPressed = true;
+    //     _positiveMoveVelocity = false;
+    // }
+    //
+    // public void HandleInput(InputButtonState jumpState)
+    // {
+    //     if (jumpState.WasPressedThisFrame)
+    //     {
+    //         CreateJumpVisual();
+    //     }
+    //     
+    //     if (jumpState.WasPressedThisFrame) _jumpInputPressed = true;
+    //     if (jumpState.WasReleasedThisFrame) _jumpKeyReleased = true;
+    //     _isHeld = jumpState.IsHeld;
+    //
+    //     if (_jumpBufferTimer.IsRunning)
+    //     {
+    //         _shouldExecuteBufferJump = true;
+    //         _jumpInputPressed = false;
+    //     }
+    // }
+    //
+    // public Vector2 UpdatePhysics(InputButtonState jumpState, Vector2 currentVelocity)
+    // {
+    //     _moveVelocity = currentVelocity;
+    //
+    //     if (_moveVelocity.y > 0f)
+    //         _positiveMoveVelocity = true;
+    //
+    //     // Отслеживание высоты прыжка
+    //     StartJumpHeightTracking(); // Начинаем отслеживание высоты
+    //
+    //
+    //     if (!_collisionsChecker.IsGrounded && _jumpCoyoteTimer.IsFinished)
+    //     {
+    //         _numberAvailableJumps -= 1f;
+    //     }
+    //     
+    //     bool isMultiJump = _jumpInputPressed && !_collisionsChecker.IsGrounded && !_jumpCoyoteTimer.IsRunning && _numberAvailableJumps > 0f;
+    //     
+    //     if (_jumpInputPressed && (_collisionsChecker.IsGrounded || _jumpCoyoteTimer.IsRunning || _numberAvailableJumps > 0f))
+    //     {
+    //         TrackJumpHeight();
+    //
+    //         ExecuteJump();
+    //
+    //         _jumpInputPressed = false;
+    //
+    //         _jumpCoyoteTimer.Stop();
+    //         _jumpCoyoteTimer.Reset();
+    //
+    //         _numberAvailableJumps -= 1;
+    //         
+    //         _positiveMoveVelocity = false;
+    //     }
+    //
+    //     if (_shouldExecuteBufferJump)
+    //     {
+    //         ExecuteJump();
+    //         StartJumpHeightTracking(); // Начинаем отслеживание высоты
+    //
+    //         if (!_isHeld)
+    //         {
+    //             ExecuteVariableJumpHeight();
+    //         }
+    //
+    //         _jumpBufferTimer.Stop();
+    //         _jumpBufferTimer.Reset();
+    //
+    //         _shouldExecuteBufferJump = false;
+    //         _positiveMoveVelocity = false;
+    //
+    //         _numberAvailableJumps -= 1;
+    //     }
+    //
+    //     if (_jumpKeyReleased)
+    //     {
+    //         ExecuteVariableJumpHeight();
+    //         _jumpKeyReleased = false;
+    //     }
+    //
+    //     if (isMultiJump)
+    //     {
+    //         OnMultiJump?.Invoke();
+    //     }
+    //
+    //     return _moveVelocity;
+    // }
+    //
+    // public void OnExitJump()
+    // {
+    //     _positiveMoveVelocity = false;
+    // }
+    //
+    //
+    //
+    // public void ResetNumberAvailableJumps()
+    // {
+    //     _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+    //     
+    //     // Завершаем отслеживание прыжка при приземлении
+    //     // if (_isTrackingJump)
+    //     // {
+    //     //     FinishJumpHeightTracking();
+    //     // }
+    // }
+    //
+    // public bool CanFall()
+    // {
+    //     return (_moveVelocity.y < 0f && _positiveMoveVelocity && !_jumpInputPressed);
+    // }
+    //
+    // private void ExecuteJump()
+    // {
+    //     _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
+    // }
+    //
+    // private void ExecuteVariableJumpHeight()
+    // {
+    //     if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
+    //     {
+    //         _moveVelocity.y = _playerControllerStats.MinJumpVelocity;
+    //     }
+    // }
+    //
+    // private void StartCoyoteTime()
+    // {
+    //     // bool fallWithoutJump = _numberAvailableJumps >= _playerControllerStats.MaxNumberJumps;
+    //     if (fullSetOfJumps)
+    //     {
+    //         _jumpCoyoteTimer.Start();
+    //     }
+    // }
+    //
+    // private void CoyoteJumpDeleteJump()
+    // {
+    //     if (fullSetOfJumps)
+    //     {
+    //         _numberAvailableJumps -= 1f;
+    //     }
+    // }
+
+    
+    
+    // Ссылка на игрока для получения позиции
+    private Transform _playerTransform;
+    
+    // Переменные для отслеживания высоты прыжка
+    private bool _isTrackingJump = false; // Отслеживаем ли сейчас прыжок
+    private float _jumpStartY; // Y координата начала прыжка
+    private float _maxJumpHeight; // Максимальная высота текущего прыжка
+    private int _jumpCounter = 0; // Счетчик прыжков для логов
+    
+    // Метод для установки ссылки на игрока
+    public void SetPlayerTransform(Transform playerTransform)
+    {
+        _playerTransform = playerTransform;
     }
 
-    public bool CanFall()
+    // Создание визуального эффекта в месте прыжка
+    private void CreateJumpVisual()
     {
-        return (_moveVelocity.y < 0f && _positiveMoveVelocity);
-    }
+        if (_playerTransform == null) return;
 
-    // Метод для выполнения прыжка
-    private void ExecuteJump()
-    {
-        // Изменения Y на высоту прыжка
-        _moveVelocity.y = _playerControllerStats.MaxJumpVelocity;
-        // _physicsContext.NumberAvailableJumps -= 1;
+        Vector3 jumpPosition = _playerTransform.position;
+        JumpVisualEffect.CreateJumpMark(jumpPosition);
     }
-
-    // Метод для выполнения неполного прыжка
-    private void ExecuteVariableJumpHeight()
+    
+    // Начинаем отслеживание высоты прыжка
+    private void StartJumpHeightTracking()
     {
-        // Изменения Y на минимальную высоту прыжка
-        if (_moveVelocity.y > _playerControllerStats.MinJumpVelocity)
+        if (_playerTransform == null) return;
+        
+        _isTrackingJump = true;
+        _jumpStartY = _playerTransform.position.y;
+        _maxJumpHeight = 0f;
+        _jumpCounter++;
+        
+        Debug.Log($"[JUMP #{_jumpCounter}] Начало отслеживания прыжка. Стартовая высота: {_jumpStartY:F2}");
+    }
+    
+    // Отслеживаем максимальную высоту во время прыжка
+    private void TrackJumpHeight()
+    {
+        if (!_isTrackingJump || _playerTransform == null) return;
+        
+        float currentHeight = _playerTransform.position.y - _jumpStartY;
+        
+        // Обновляем максимальную высоту если текущая больше
+        if (currentHeight > _maxJumpHeight)
         {
-            _moveVelocity.y = _playerControllerStats.MinJumpVelocity;
+            _maxJumpHeight = currentHeight;
+        }
+        
+        // Если игрок начал падать (скорость отрицательная) и мы еще отслеживаем
+        // это означает что мы достигли пика прыжка
+        if (_moveVelocity.y <= 0f && _maxJumpHeight > 0.1f)
+        {
+            // Debug.Log($"[JUMP #{_jumpCounter}] Пик прыжка достигнут! Максимальная высота: {_maxJumpHeight:F2} units");
         }
     }
     
-    private void StartCoyoteTime()
+    // Завершаем отслеживание прыжка (при приземлении)
+    private void FinishJumpHeightTracking()
     {
-        // Тут я запускаю через событие койот таймер, для этого проверяю что он сошел с земли
-        bool fallWithoutJump = _numberAvailableJumps == _playerControllerStats.MaxNumberJumps;
-        if (fallWithoutJump)
-        {
-            // Debug.Log("COYOTESTART");
-            _jumpCoyoteTimer.Start();
-        }
+        if (!_isTrackingJump) return;
+        
+        Debug.Log($"[JUMP #{_jumpCounter}] Приземление! Итоговая максимальная высота прыжка: {_maxJumpHeight:F2} units");
+        
+        _isTrackingJump = false;
+        _maxJumpHeight = 0f;
     }
 }

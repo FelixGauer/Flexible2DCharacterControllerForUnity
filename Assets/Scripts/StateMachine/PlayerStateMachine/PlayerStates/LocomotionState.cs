@@ -24,13 +24,13 @@ public class LocomotionState : BaseState
         
 		float currentSpeed = physicsHandler2D.GetVelocity().magnitude;
 		animationController.SyncAnimationWithMovement(currentSpeed, playerControllerStats.BaseMovementAnimationSpeed);
-
 	}
 
 	public override void FixedUpdate()
 	{
 		var moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.MoveSpeed, playerControllerStats.WalkAcceleration, playerControllerStats.WalkDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		moveVelocity.y = playerControllerStats.GroundGravity;
+
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}
 

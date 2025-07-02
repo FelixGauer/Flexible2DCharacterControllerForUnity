@@ -60,6 +60,7 @@ public class CollisionsChecker : MonoBehaviour
         else if (_wasGrounded && !IsGrounded)
         {
             OnGroundLeft?.Invoke();
+            // Debug.Log("YES");
         }
         // Проверка изменений удара головой
         if (!_wasBumpingHead && BumpedHead)

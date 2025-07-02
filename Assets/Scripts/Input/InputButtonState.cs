@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.InputSystem;
 
 public class InputButtonState
@@ -5,7 +6,7 @@ public class InputButtonState
     public bool IsHeld { get; private set; }
     public bool WasPressedThisFrame { get; private set; }
     public bool WasReleasedThisFrame { get; private set; }
-    
+
     public void Update(InputAction.CallbackContext context)
     {
         switch (context.phase)

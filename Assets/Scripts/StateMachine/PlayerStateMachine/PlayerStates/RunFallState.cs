@@ -22,8 +22,7 @@ public class RunFallState : BaseState
     public override void Update()
     {
         _fallModule.BufferJump(inputReader.GetJumpState());
-        _fallModule.SetHoldState(inputReader.GetJumpState().IsHeld);
-        
+         
         turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
     

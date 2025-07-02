@@ -11,8 +11,8 @@ public class GroundModule
 
     public GroundModule(PlayerControllerStats playerControllerStats, JumpModule jumpModule, DashModule dashModule) 
     {
-        _playerControllerStats = playerControllerStats;
         _jumpModule = jumpModule;
+        _playerControllerStats = playerControllerStats;
         _dashModule = dashModule;
     }
 
@@ -21,8 +21,8 @@ public class GroundModule
         // _physicsContext.NumberAvailableJumps = _playerControllerStats.MaxNumberJumps; // При касании земли возвращение прыжков
         // _physicsContext.NumberAvailableDash = _playerControllerStats.MaxNumberDash; // При касании земли возвращение рывков
         
-        _jumpModule.ResetNumberAvailableJumps();
-        _dashModule.ResetNumberAvailableDash();
+        // _jumpModule.ResetNumberAvailableJumps();
+        // _dashModule.ResetNumberAvailableDash();
 
         // _moveVelocity.y = _playerControllerStats.GroundGravity; // Гравитация на земле 
         

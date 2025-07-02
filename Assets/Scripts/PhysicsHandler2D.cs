@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public interface IPhysicsHandler
@@ -10,7 +11,6 @@ public class PhysicsHandler2D : MonoBehaviour, IPhysicsHandler
     private Rigidbody2D _rb;
     private Vector2 _accumulatedVelocity;
     private Vector2 _lastAppliedVelocity;
-
 
     void Awake() => _rb = GetComponent<Rigidbody2D>();
 

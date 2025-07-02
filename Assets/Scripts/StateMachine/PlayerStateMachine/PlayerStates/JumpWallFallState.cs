@@ -38,6 +38,6 @@ public class JumpWallFallState : BaseState
 	
     public override void OnExit()
     {
-		
+
     }
 }

@@ -48,6 +48,8 @@ public class CountdownTimer : Timer
 {
 	private System.Func<float> getInitialTime; // Делегат для получения актуального времени
 
+	public Action OnTimerFinished = delegate { };
+
 	// public CountdownTimer(float value) : base(value)
 	// {
 	// }
@@ -83,6 +85,11 @@ public class CountdownTimer : Timer
 		{
 			Stop();
 		}
+
+		if (IsFinished)
+		{
+			OnTimerFinished?.Invoke();
+		}
 	}
 
 	public bool IsFinished => Time <= 0;
@@ -94,6 +101,9 @@ public class CountdownTimer : Timer
 		initialTime = newTime;
 		Reset();
 	}
+	
+	
+	
 }
 
 public class StopwatchTimer : Timer

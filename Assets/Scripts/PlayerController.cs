@@ -4,52 +4,43 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-	// TODO _playerControllerStats убрать из модулей
-	
 	[Header("References")]
 	[SerializeField] private InputReader inputReader;
 	[SerializeField] private PlayerControllerStats playerControllerStats;
-	// [SerializeField] private Transform spriteTransform;
-	// [SerializeField] private CapsuleCollider2D capsuleCollider;
-	[SerializeField] private ColliderSpriteResizer _colliderSpriteResizer;
-
+	[SerializeField] private ColliderSpriteResizer colliderSpriteResizer;
 	[SerializeField] private PhysicsHandler2D physicsHandler2D;
+	[SerializeField] private CollisionsChecker collisionsChecker;
+	
 	[SerializeField] private Animator animator;
 	
-	private PlayerTimerRegistry _playerTimerRegistry;
-	private CollisionsChecker _collisionsChecker;
-	private StateMachine _stateMachine;
-	// private ColliderSpriteResizer _colliderSpriteResizer;
-	private TurnChecker _turnChecker;
-	private PlayerStateMachineFactory _stateMachineFactory;
-	private AnimationController _animationController;
-	
-	[SerializeField] private Transform _spiritTransformForTurn;
+	[SerializeField] private Transform transformForTurn;
 
+	private AnimationController _animationController;
+	private TurnChecker _turnChecker;
+	private PlayerTimerRegistry _playerTimerRegistry;
 	private MovementLogic _movementLogic;
 	
 	private PlayerModulesFactory _playerModulesFactory;
 	private PlayerModules _playerModules;
 	
+	private StateMachine _stateMachine;
+	private PlayerStateMachineFactory _stateMachineFactory;
+
+	
 	private void Awake()
 	{
-		_collisionsChecker = GetComponent<CollisionsChecker>();
-		// capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
 		
-		_turnChecker = new TurnChecker(_spiritTransformForTurn);
-		// _turnChecker = new TurnChecker(this.transform);
-
-
-		_collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
+		_turnChecker = new TurnChecker(transformForTurn);
+		
+		collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
 		
 		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
-		// _colliderSpriteResizer = new ColliderSpriteResizer(capsuleCollider, spriteTransform);
 		_movementLogic = new MovementLogic(playerControllerStats);
 		_animationController = new AnimationController(animator);
 		
 		_playerModulesFactory  = new PlayerModulesFactory();
-		_playerModules = _playerModulesFactory.CreateModules(playerControllerStats, _collisionsChecker, _playerTimerRegistry, _turnChecker, _colliderSpriteResizer);
+		_playerModules = _playerModulesFactory.CreateModules(playerControllerStats, collisionsChecker, _playerTimerRegistry, _turnChecker, colliderSpriteResizer);
 
 		InitializeStateMachine();
 	}
@@ -61,7 +52,7 @@ public class PlayerController : MonoBehaviour
 			playerControllerStats,
 			physicsHandler2D,
 			_turnChecker,
-			_collisionsChecker,
+			collisionsChecker,
 			_playerTimerRegistry,
 			_animationController,
 			_movementLogic,
@@ -77,11 +68,17 @@ public class PlayerController : MonoBehaviour
 		
 		HandleTimers();
 		Debbuging();
+		
+		// Debug.Log(inputReader.GetMoveDirection() == Vector2.zero);
+		// Debug.Log(Mathf.Abs(physicsHandler2D.GetVelocity().x));
+		// Debug.Log(GetComponent<Rigidbody2D>().linearVelocity);
 	}
 
 	private void FixedUpdate()
 	{
 		_stateMachine.FixedUpdate();
+		
+		inputReader.JumpResetFrameStates();
 	}
 
 	private void LateUpdate()

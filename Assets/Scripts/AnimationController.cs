@@ -6,6 +6,8 @@ public class AnimationController
     private readonly Animator _animator;
     private readonly Dictionary<string, AnimationClip> _clipCache;
     private readonly Dictionary<string, int> _parameterHashCache;
+
+    public Transform test => _animator.transform; 
     
     // Константы для общих параметров
     private readonly int _speedHash = Animator.StringToHash("Speed");

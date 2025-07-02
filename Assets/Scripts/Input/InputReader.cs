@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using static PlayerInputActions;
 
 [CreateAssetMenu(fileName = "InputReader", menuName = "Input/InputReader")]
-public class InputReader : ScriptableObject, IPlayerActions
+public class InputReader : MonoBehaviour, IPlayerActions
 {
 	private PlayerInputActions _inputActions;
 
@@ -21,7 +21,7 @@ public class InputReader : ScriptableObject, IPlayerActions
     public event Action<InputButtonState> OnJumpChanged;
     public event Action<InputButtonState> OnRunChanged;
     public event Action<InputButtonState> OnCrouchChanged;
-
+    
     private void OnEnable()
     {
         if (_inputActions == null)
@@ -54,7 +54,7 @@ public class InputReader : ScriptableObject, IPlayerActions
         _jumpHandler.Update(context);
         OnJumpChanged?.Invoke(_jumpHandler.State);
     }
-
+    
     public void OnRun(InputAction.CallbackContext context)
     {
         _runHandler.Update(context);
@@ -83,6 +83,11 @@ public class InputReader : ScriptableObject, IPlayerActions
         _jumpHandler.State.ResetFrameState();
         _runHandler.State.ResetFrameState();
         _crouchHandler.State.ResetFrameState();
+    }
+    
+    public void JumpResetFrameStates()
+    {
+        // _jumpHandler.State.ResetFrameState();
     }
 }
 
