@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee8af4717e6014f46b13c8356369b99a, type: 3}
-  m_Name: PlayerControllerStats
+  m_Name: PlayerControllerStatsSAVE
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
-  MoveSpeed: 100
+  MoveSpeed: 3
   WalkAcceleration: 150
-  WalkDeceleration: 1
+  WalkDeceleration: 150
   RunAcceleration: 160
   RunDeceleration: 150
   CrouchAcceleration: 150
