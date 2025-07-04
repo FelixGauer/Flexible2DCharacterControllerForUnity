@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TestButtonAnim : MonoBehaviour
+public class UIButtonOpenClose : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
 
@@ -29,6 +29,7 @@ public class TestButtonAnim : MonoBehaviour
         if (_opened)
         {
             _opened = false;
+            _openButton.text = "Open";
             _scrollView.style.display = DisplayStyle.None;
             
             // _scrollView.RemoveFromClassList("bottomsheet--up");
@@ -36,6 +37,7 @@ public class TestButtonAnim : MonoBehaviour
         }
         else
         {
+            _openButton.text = "Close";
             _opened = true;
             _scrollView.style.display = DisplayStyle.Flex;
             

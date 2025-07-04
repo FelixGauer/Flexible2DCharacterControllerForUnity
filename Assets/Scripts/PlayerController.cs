@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private ColliderSpriteResizer colliderSpriteResizer;
 	[SerializeField] private PhysicsHandler2D physicsHandler2D;
 	[SerializeField] private CollisionsChecker collisionsChecker;
-	// private TrailRenderer _trailRenderer;
 
 	
 	[SerializeField] private Animator animator;
@@ -31,8 +30,6 @@ public class PlayerController : MonoBehaviour
 	
 	private void Awake()
 	{
-		// _trailRenderer = GetComponent<TrailRenderer>();
-		
 		_turnChecker = new TurnChecker(transformForTurn);
 		
 		collisionsChecker.IsFacingRight = () => _turnChecker.IsFacingRight; 
@@ -70,10 +67,6 @@ public class PlayerController : MonoBehaviour
 		
 		HandleTimers();
 		// Debbuging();
-		
-		// Debug.Log(inputReader.GetMoveDirection() == Vector2.zero);
-		// Debug.Log(Mathf.Abs(physicsHandler2D.GetVelocity().x));
-		// Debug.Log(GetComponent<Rigidbody2D>().linearVelocity);
 	}
 
 	private void FixedUpdate()

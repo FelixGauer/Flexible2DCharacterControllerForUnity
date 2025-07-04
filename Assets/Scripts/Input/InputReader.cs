@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using static PlayerInputActions;
 
-[CreateAssetMenu(fileName = "InputReader", menuName = "Input/InputReader")]
+// [CreateAssetMenu(fileName = "InputReader", menuName = "Input/InputReader")]
 public class InputReader : MonoBehaviour, IPlayerActions
 {
 	private PlayerInputActions _inputActions;
