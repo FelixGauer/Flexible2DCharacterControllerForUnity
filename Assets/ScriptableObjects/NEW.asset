@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee8af4717e6014f46b13c8356369b99a, type: 3}
-  m_Name: PlayerControllerStats
+  m_Name: NEW
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
@@ -18,19 +18,19 @@ MonoBehaviour:
   WalkAcceleration: 150
   WalkDeceleration: 150
   RunSpeed: 15
-  RunAcceleration: 160
+  RunAcceleration: 150
   RunDeceleration: 150
-  MaxJumpHeight: 5
-  MinJumpHeight: 2
-  TimeTillJumpApex: 0.35
+  MaxJumpHeight: 3.5
+  MinJumpHeight: 1
+  TimeTillJumpApex: 0.3
   JumpHeightCompensationFactor: 1.06
   MaxNumberJumps: 2
   JumpGravityMultiplayer: 1
   FallGravityMultiplayer: 1.2
   AirAcceleration: 100
   AirDeceleration: 5
-  RunAirAcceleration: 30
-  RunAirDeceleration: 5
+  RunAirAcceleration: 150
+  RunAirDeceleration: 23
   JumpHangTimeThreshold: 1
   JumpHangGravityMultiplier: 0.5
   StartVelocityWallSlide: 2.5
@@ -39,9 +39,9 @@ MonoBehaviour:
   WallJumpClimb: {x: 20, y: 25}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 40, y: 15}
-  WallFallAirAcceleration: 30
-  WallFallAirDeceleration: 5
-  WallFallSpeed: 5
+  WallFallAirAcceleration: 150
+  WallFallAirDeceleration: 23
+  WallFallSpeed: 10
   DashVelocity: 30
   MaxNumberDash: 2
   DashGravityMultiplayer: 0
@@ -56,8 +56,8 @@ MonoBehaviour:
   WallFallTime: 0.25
   DashTime: 0.11
   CrouchRollTime: 0.25
-  WallJumpTime: 0.08
-  MaxFallSpeed: 20
+  WallJumpTime: 0.05
+  MaxFallSpeed: 30
   GroundGravity: -1.5
   MaxUpwardSpeed: 50
   BaseMovementAnimationSpeed: 3

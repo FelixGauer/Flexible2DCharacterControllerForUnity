@@ -47,7 +47,7 @@ public class RunJumpState : BaseState
         // _moveVelocity.y = _jumpModule.UpdatePhysics(inputReader.GetJumpState(), physicsHandler2D.GetVelocity()).y;
         _moveVelocity.y = _jumpModule.JumpPhysicsProcessing(physicsHandler2D.GetVelocity()).y;
 
-        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.airAcceleration, playerControllerStats.airDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.AirAcceleration, playerControllerStats.AirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         
         _moveVelocity.y = _fallModule.HandleFalling(_moveVelocity).y;
 

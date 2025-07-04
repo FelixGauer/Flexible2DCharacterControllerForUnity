@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private ColliderSpriteResizer colliderSpriteResizer;
 	[SerializeField] private PhysicsHandler2D physicsHandler2D;
 	[SerializeField] private CollisionsChecker collisionsChecker;
+	// private TrailRenderer _trailRenderer;
+
 	
 	[SerializeField] private Animator animator;
 	
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
 	
 	private void Awake()
 	{
-		_trailRenderer = GetComponent<TrailRenderer>();
+		// _trailRenderer = GetComponent<TrailRenderer>();
 		
 		_turnChecker = new TurnChecker(transformForTurn);
 		
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
 		_stateMachine.Update();
 		
 		HandleTimers();
-		Debbuging();
+		// Debbuging();
 		
 		// Debug.Log(inputReader.GetMoveDirection() == Vector2.zero);
 		// Debug.Log(Mathf.Abs(physicsHandler2D.GetVelocity().x));
@@ -91,74 +93,73 @@ public class PlayerController : MonoBehaviour
 		_playerTimerRegistry.UpdateAll();
 	}
 	
-	#region Debbug
-
-	//Debug var
-	private float maxYPosition;
-	private TrailRenderer _trailRenderer;
-	private List<GameObject> markers = new List<GameObject>();
-	public GameObject markerPrefab;
-
-	void AddJumpMarker()
-	{
-		// Получаем позицию конца линии TrailRenderer
-		Vector3 trailEndPosition = GetTrailEndPosition();
-
-		// Спавним метку на этой позиции и сохраняем её в список markers
-		GameObject newMarker = Instantiate(markerPrefab, trailEndPosition, Quaternion.identity);
-		markers.Add(newMarker); // Добавляем созданную метку в список
-	}
-
-	public void ClearMarkers()
-	{
-		foreach (GameObject marker in markers)
-		{
-			Destroy(marker);
-		}
-
-		markers.Clear();
-	}
-
-	Vector3 GetTrailEndPosition()
-	{
-		// Trail Renderer хранит все точки следа, берем последнюю из них
-		Vector3[] positions = new Vector3[_trailRenderer.positionCount];
-		_trailRenderer.GetPositions(positions);
-
-		if (positions.Length > 0)
-		{
-			// Конец линии - это последняя точка в массиве
-			return positions[positions.Length - 1];
-		}
-		else
-		{
-			// Если точек нет, возвращаем позицию игрока
-			return transform.position;
-		}
-	}
-
-	//TODO Дебаг для Grounded
-	private void Debbuging()
-	{
-		// Визуализация целевой скорости (Target Velocity)
-		// Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
-
-		// Визуализация текущего вектора скорости (_moveVelocity)
-		Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.blue);
-
-		// Визуализация направления движения (_moveDirection)
-		if (inputReader.GetMoveDirection() != Vector2.zero)
-		{
-			Debug.DrawLine(transform.position, transform.position + new Vector3(inputReader.GetMoveDirection().x, 0, 0), Color.green);
-		}
-		else
-		{
-			// Визуализация замедления
-			if (physicsHandler2D.GetVelocity() != Vector2.zero)
-			{
-				Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.yellow);
-			}
-		}
-	}
-	#endregion
+	// #region Debbug
+	//
+	// //Debug var
+	// private float maxYPosition;
+	// private List<GameObject> markers = new List<GameObject>();
+	// public GameObject markerPrefab;
+	//
+	// void AddJumpMarker()
+	// {
+	// 	// Получаем позицию конца линии TrailRenderer
+	// 	Vector3 trailEndPosition = GetTrailEndPosition();
+	//
+	// 	// Спавним метку на этой позиции и сохраняем её в список markers
+	// 	GameObject newMarker = Instantiate(markerPrefab, trailEndPosition, Quaternion.identity);
+	// 	markers.Add(newMarker); // Добавляем созданную метку в список
+	// }
+	//
+	// public void ClearMarkers()
+	// {
+	// 	foreach (GameObject marker in markers)
+	// 	{
+	// 		Destroy(marker);
+	// 	}
+	//
+	// 	markers.Clear();
+	// }
+	//
+	// Vector3 GetTrailEndPosition()
+	// {
+	// 	// Trail Renderer хранит все точки следа, берем последнюю из них
+	// 	Vector3[] positions = new Vector3[_trailRenderer.positionCount];
+	// 	_trailRenderer.GetPositions(positions);
+	//
+	// 	if (positions.Length > 0)
+	// 	{
+	// 		// Конец линии - это последняя точка в массиве
+	// 		return positions[positions.Length - 1];
+	// 	}
+	// 	else
+	// 	{
+	// 		// Если точек нет, возвращаем позицию игрока
+	// 		return transform.position;
+	// 	}
+	// }
+	//
+	// //TODO Дебаг для Grounded
+	// private void Debbuging()
+	// {
+	// 	// Визуализация целевой скорости (Target Velocity)
+	// 	// Debug.DrawLine(transform.position, transform.position + new Vector3(_targetVelocity.x, 0, 0), Color.red);
+	//
+	// 	// Визуализация текущего вектора скорости (_moveVelocity)
+	// 	Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.blue);
+	//
+	// 	// Визуализация направления движения (_moveDirection)
+	// 	if (inputReader.GetMoveDirection() != Vector2.zero)
+	// 	{
+	// 		Debug.DrawLine(transform.position, transform.position + new Vector3(inputReader.GetMoveDirection().x, 0, 0), Color.green);
+	// 	}
+	// 	else
+	// 	{
+	// 		// Визуализация замедления
+	// 		if (physicsHandler2D.GetVelocity() != Vector2.zero)
+	// 		{
+	// 			Debug.DrawLine(transform.position, transform.position + new Vector3(physicsHandler2D.GetVelocity().x, 0, 0), Color.yellow);
+	// 		}
+	// 	}
+	// }
+	// #endregion
 }

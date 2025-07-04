@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee8af4717e6014f46b13c8356369b99a, type: 3}
-  m_Name: PlayerControllerStats
+  m_Name: PlayerControllerStatsSAVE 1
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
@@ -27,16 +27,16 @@ MonoBehaviour:
   MaxNumberJumps: 2
   JumpGravityMultiplayer: 1
   FallGravityMultiplayer: 1.2
-  AirAcceleration: 100
-  AirDeceleration: 5
-  RunAirAcceleration: 30
-  RunAirDeceleration: 5
+  AirAcceleration: 200
+  AirDeceleration: 200
+  RunAirAcceleration: 200
+  RunAirDeceleration: 200
   JumpHangTimeThreshold: 1
   JumpHangGravityMultiplier: 0.5
   StartVelocityWallSlide: 2.5
   WallSlideSpeedMax: 3.5
   WallSlideDeceleration: 5
-  WallJumpClimb: {x: 20, y: 25}
+  WallJumpClimb: {x: 7.1, y: 25}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 40, y: 15}
   WallFallAirAcceleration: 30

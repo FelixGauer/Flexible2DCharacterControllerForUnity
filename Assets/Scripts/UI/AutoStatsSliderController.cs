@@ -29,14 +29,52 @@ public class AutoStatsSliderController : MonoBehaviour
     [SerializeField] private Color headerColor = Color.white;
     [SerializeField] private Color sliderLabelColor = Color.gray;
     [SerializeField] private int sliderHeight = 30;
+    [SerializeField] private int vector2Height = 60; // Высота для Vector2 контейнера
     [SerializeField] private int headerHeight = 40;
     [SerializeField] private int spacing = 5;
 
     private VisualElement _root;
     private ScrollView _scrollView;
     private readonly Dictionary<Slider, FieldInfo> _sliderFieldMap = new Dictionary<Slider, FieldInfo>();
+    private readonly Dictionary<string, Vector2SliderGroup> _vector2SliderGroups = new Dictionary<string, Vector2SliderGroup>();
     private readonly Dictionary<string, List<FieldInfo>> _fieldsByCategory = new Dictionary<string, List<FieldInfo>>();
     private bool _isInitializing = false;
+
+    #region Helper Classes
+
+    /// <summary>
+    /// Класс для управления парой слайдеров Vector2
+    /// </summary>
+    private class Vector2SliderGroup
+    {
+        public FieldInfo Field { get; set; }
+        public Slider XSlider { get; set; }
+        public Slider YSlider { get; set; }
+        public Label ValueLabel { get; set; }
+        
+        public Vector2 GetValue()
+        {
+            return new Vector2(XSlider.value, YSlider.value);
+        }
+        
+        public void SetValue(Vector2 value)
+        {
+            XSlider.value = value.x;
+            YSlider.value = value.y;
+            UpdateValueLabel();
+        }
+        
+        public void UpdateValueLabel()
+        {
+            if (ValueLabel != null)
+            {
+                var value = GetValue();
+                ValueLabel.text = $"({value.x:F2}, {value.y:F2})";
+            }
+        }
+    }
+
+    #endregion
 
     #region Unity Lifecycle
     
@@ -125,7 +163,7 @@ public class AutoStatsSliderController : MonoBehaviour
             
         SynchronizeSlidersFromStats();
         
-        Debug.Log($"[AutoStatsSliderController] Сгенерировано {_sliderFieldMap.Count} слайдеров.");
+        Debug.Log($"[AutoStatsSliderController] Сгенерировано {_sliderFieldMap.Count} слайдеров и {_vector2SliderGroups.Count} Vector2 групп.");
     }
 
     private void AnalyzeFields()
@@ -170,7 +208,8 @@ public class AutoStatsSliderController : MonoBehaviour
     {
         return fieldType == typeof(float) || 
                fieldType == typeof(int) || 
-               fieldType == typeof(bool);
+               fieldType == typeof(bool) ||
+               fieldType == typeof(Vector2);
     }
 
     private void GenerateGroupedSliders()
@@ -227,6 +266,18 @@ public class AutoStatsSliderController : MonoBehaviour
 
     private void CreateSliderForField(FieldInfo field)
     {
+        if (field.FieldType == typeof(Vector2))
+        {
+            CreateVector2Slider(field);
+        }
+        else
+        {
+            CreateSingleValueSlider(field);
+        }
+    }
+
+    private void CreateSingleValueSlider(FieldInfo field)
+    {
         var container = new VisualElement();
         container.style.height = sliderHeight;
         container.style.flexDirection = FlexDirection.Row;
@@ -234,7 +285,6 @@ public class AutoStatsSliderController : MonoBehaviour
         container.style.marginBottom = spacing;
         container.style.paddingLeft = 10;
         container.style.paddingRight = 10;
-
 
         // Создаем лейбл
         var label = new Label(GetFieldDisplayName(field));
@@ -265,19 +315,112 @@ public class AutoStatsSliderController : MonoBehaviour
         {
             controlElement.style.width = Length.Percent(50);
             container.Add(controlElement);
-
-            // Создаем поле для отображения значения
-            // var valueLabel = new Label();
-            // valueLabel.style.width = Length.Percent(20);
-            // valueLabel.style.minWidth = 60;
-            // valueLabel.style.unityTextAlign = TextAnchor.MiddleRight;
-            // valueLabel.style.color = Color.white;
-            // valueLabel.name = $"value_{field.Name}";
-            //
-            // container.Add(valueLabel);
         }
 
         _scrollView.Add(container);
+    }
+
+    private void CreateVector2Slider(FieldInfo field)
+    {
+        var mainContainer = new VisualElement();
+        mainContainer.style.height = vector2Height;
+        mainContainer.style.flexDirection = FlexDirection.Column;
+        mainContainer.style.marginBottom = spacing;
+        mainContainer.style.paddingLeft = 10;
+        mainContainer.style.paddingRight = 10;
+        mainContainer.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.3f);
+        // mainContainer.style.borderRadius = 5;
+
+        // Заголовок Vector2
+        var headerContainer = new VisualElement();
+        headerContainer.style.height = 25;
+        headerContainer.style.flexDirection = FlexDirection.Row;
+        headerContainer.style.alignItems = Align.Center;
+        headerContainer.style.justifyContent = Justify.SpaceBetween;
+        
+        var fieldLabel = new Label(GetFieldDisplayName(field));
+        fieldLabel.style.color = sliderLabelColor;
+        fieldLabel.style.fontSize = 12;
+        fieldLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+        
+        var valueLabel = new Label();
+        valueLabel.style.color = Color.white;
+        valueLabel.style.fontSize = 10;
+        valueLabel.name = $"vector2_value_{field.Name}";
+        
+        headerContainer.Add(fieldLabel);
+        headerContainer.Add(valueLabel);
+        mainContainer.Add(headerContainer);
+
+        // Контейнер для слайдеров
+        var slidersContainer = new VisualElement();
+        slidersContainer.style.flexGrow = 1;
+        slidersContainer.style.flexDirection = FlexDirection.Column;
+        slidersContainer.style.justifyContent = Justify.SpaceAround;
+
+        // Получаем диапазон значений
+        var rangeAttr = field.GetCustomAttribute<RangeAttribute>();
+        float minValue = rangeAttr?.min ?? defaultMinValue;
+        float maxValue = rangeAttr?.max ?? defaultMaxValue;
+
+        // X слайдер
+        var xContainer = new VisualElement();
+        xContainer.style.flexDirection = FlexDirection.Row;
+        xContainer.style.alignItems = Align.Center;
+        xContainer.style.height = 15;
+        
+        var xLabel = new Label("X:");
+        xLabel.style.width = 20;
+        xLabel.style.color = Color.white;
+        xLabel.style.fontSize = 10;
+        
+        var xSlider = new Slider(minValue, maxValue);
+        xSlider.name = $"vector2_x_{field.Name}";
+        xSlider.style.flexGrow = 1;
+        xSlider.showInputField = false;
+        
+        xContainer.Add(xLabel);
+        xContainer.Add(xSlider);
+        slidersContainer.Add(xContainer);
+
+        // Y слайдер
+        var yContainer = new VisualElement();
+        yContainer.style.flexDirection = FlexDirection.Row;
+        yContainer.style.alignItems = Align.Center;
+        yContainer.style.height = 15;
+        
+        var yLabel = new Label("Y:");
+        yLabel.style.width = 20;
+        yLabel.style.color = Color.white;
+        yLabel.style.fontSize = 10;
+        
+        var ySlider = new Slider(minValue, maxValue);
+        ySlider.name = $"vector2_y_{field.Name}";
+        ySlider.style.flexGrow = 1;
+        ySlider.showInputField = false;
+        
+        yContainer.Add(yLabel);
+        yContainer.Add(ySlider);
+        slidersContainer.Add(yContainer);
+
+        mainContainer.Add(slidersContainer);
+
+        // Создаем группу для управления Vector2
+        var sliderGroup = new Vector2SliderGroup
+        {
+            Field = field,
+            XSlider = xSlider,
+            YSlider = ySlider,
+            ValueLabel = valueLabel
+        };
+
+        _vector2SliderGroups[field.Name] = sliderGroup;
+
+        // Подписываемся на изменения
+        xSlider.RegisterValueChangedCallback(evt => OnVector2ValueChanged(sliderGroup));
+        ySlider.RegisterValueChangedCallback(evt => OnVector2ValueChanged(sliderGroup));
+
+        _scrollView.Add(mainContainer);
     }
 
     private Slider CreateFloatSlider(FieldInfo field)
@@ -353,7 +496,6 @@ public class AutoStatsSliderController : MonoBehaviour
         if (_isInitializing) return;
 
         field.SetValue(playerStats, evt.newValue);
-        UpdateValueLabel(field.Name, evt.newValue.ToString("F2"));
         
         Debug.Log($"📊 {field.Name}: {evt.previousValue:F2} → {evt.newValue:F2}");
     }
@@ -363,7 +505,6 @@ public class AutoStatsSliderController : MonoBehaviour
         if (_isInitializing) return;
 
         field.SetValue(playerStats, evt.newValue);
-        UpdateValueLabel(field.Name, evt.newValue.ToString());
         
         Debug.Log($"📊 {field.Name}: {evt.previousValue} → {evt.newValue}");
     }
@@ -373,18 +514,19 @@ public class AutoStatsSliderController : MonoBehaviour
         if (_isInitializing) return;
 
         field.SetValue(playerStats, evt.newValue);
-        UpdateValueLabel(field.Name, evt.newValue.ToString());
         
         Debug.Log($"📊 {field.Name}: {evt.previousValue} → {evt.newValue}");
     }
 
-    private void UpdateValueLabel(string fieldName, string value)
+    private void OnVector2ValueChanged(Vector2SliderGroup sliderGroup)
     {
-        var valueLabel = _scrollView.Q<Label>($"value_{fieldName}");
-        if (valueLabel != null)
-        {
-            valueLabel.text = value;
-        }
+        if (_isInitializing) return;
+
+        var newValue = sliderGroup.GetValue();
+        sliderGroup.Field.SetValue(playerStats, newValue);
+        sliderGroup.UpdateValueLabel();
+        
+        Debug.Log($"📊 {sliderGroup.Field.Name}: → ({newValue.x:F2}, {newValue.y:F2})");
     }
 
     #endregion
@@ -403,7 +545,6 @@ public class AutoStatsSliderController : MonoBehaviour
             
             var value = field.GetValue(playerStats);
             slider.value = Convert.ToSingle(value);
-            UpdateValueLabel(field.Name, value.ToString());
         }
 
         // Синхронизируем int слайдеры
@@ -416,7 +557,6 @@ public class AutoStatsSliderController : MonoBehaviour
             {
                 var value = (int)field.GetValue(playerStats);
                 slider.value = value;
-                UpdateValueLabel(fieldName, value.ToString());
             }
         }
 
@@ -430,8 +570,15 @@ public class AutoStatsSliderController : MonoBehaviour
             {
                 var value = (bool)field.GetValue(playerStats);
                 toggle.value = value;
-                UpdateValueLabel(fieldName, value.ToString());
             }
+        }
+
+        // Синхронизируем Vector2 слайдеры
+        foreach (var kvp in _vector2SliderGroups)
+        {
+            var sliderGroup = kvp.Value;
+            var value = (Vector2)sliderGroup.Field.GetValue(playerStats);
+            sliderGroup.SetValue(value);
         }
 
         _isInitializing = false;
@@ -445,6 +592,7 @@ public class AutoStatsSliderController : MonoBehaviour
             _scrollView.Clear();
         }
         _sliderFieldMap.Clear();
+        _vector2SliderGroups.Clear();
     }
 
     #endregion

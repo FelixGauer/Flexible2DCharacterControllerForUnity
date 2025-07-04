@@ -1,18 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="MainRoot" style="flex-grow: 1; background-color: rgba(255, 132, 132, 0); position: absolute; width: 100%; height: 100%; -unity-background-scale-mode: stretch-to-fill; background-position-y: center 0; background-position-x: center 0; flex-wrap: nowrap; flex-direction: column;">
-        <engine:ScrollView focusable="false" mode="Vertical" nested-interaction-kind="Default" usage-hints="None" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" touch-scroll-type="Clamped" enabled="true" name="StatsScrollView" style="position: absolute; top: 0; right: 0; width: 25%; height: 100%; background-color: rgba(148, 255, 187, 0.35); opacity: 1; visibility: visible; display: flex; overflow: visible; flex-wrap: nowrap; flex-direction: column; align-self: auto; align-content: flex-start; align-items: flex-start; justify-content: center;">
-            <engine:VisualElement name="MovementRoot" style="flex-grow: 1; position: relative; width: 100%; flex-direction: column; flex-wrap: nowrap; top: 0;">
-                <engine:Label text="HELLO" enable-rich-text="true" emoji-fallback-support="true" parse-escape-sequences="false" selectable="false" double-click-selects-word="true" style="flex-direction: column; justify-content: flex-start; align-items: stretch; align-self: center;" />
-                <engine:Slider label="Slider" value="100" high-value="200" fill="false" show-input-field="true" name="MySlider" />
-                <engine:Slider label="Slider" value="100" high-value="200" show-input-field="true" name="MySlider2" style="overflow: visible;" />
-                <engine:Slider label="Slider" value="100" high-value="200" inverted="false" show-input-field="true" name="MySlider3" />
-            </engine:VisualElement>
-            <engine:VisualElement name="JumpRoot" style="flex-grow: 1; position: relative; width: 100%; flex-direction: column;">
-                <engine:Label text="BITCH" style="align-content: flex-start; align-self: center;" />
-                <engine:Slider label="Slider" value="100" high-value="200" fill="false" show-input-field="true" name="MySlider" />
-                <engine:Slider label="Slider" value="100" high-value="200" show-input-field="true" name="MySlider2" style="overflow: visible;" />
-                <engine:Slider label="Slider" value="100" high-value="200" inverted="false" show-input-field="true" name="MySlider3" />
-            </engine:VisualElement>
-        </engine:ScrollView>
+    <Style src="project://database/Assets/UI/Test.uss?fileID=7433441132597879392&amp;guid=c1c507c76ad06f249b54efd8c1e8ce6a&amp;type=3#Test" />
+    <engine:VisualElement name="MainRoot" style="flex-grow: 1; background-color: rgba(255, 132, 132, 0); position: absolute; width: 100%; height: 100%; -unity-background-scale-mode: stretch-to-fill; background-position-y: center 0; background-position-x: center 0; flex-wrap: wrap; flex-direction: row-reverse; opacity: 1; right: auto; top: auto; left: auto; bottom: auto; justify-content: flex-start; align-items: auto; align-self: auto; align-content: auto;">
+        <engine:ScrollView focusable="false" mode="Vertical" nested-interaction-kind="Default" usage-hints="None" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" touch-scroll-type="Clamped" enabled="true" name="StatsScrollView" class="bottomsheet" style="translate: 0 0; transition-duration: 0s; align-items: flex-start; justify-content: center; align-self: auto;" />
+        <engine:Button text="Button" name="ButtonPanel" style="justify-content: space-between; align-items: stretch; align-content: flex-start; opacity: 1; align-self: flex-start; background-position-y: center 0; visibility: visible; overflow: hidden;" />
     </engine:VisualElement>
 </engine:UXML>

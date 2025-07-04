@@ -32,7 +32,7 @@ public class RunFallState : BaseState
     public override void FixedUpdate()
     {
         _moveVelocity.y = _fallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
-        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.runAirAcceleration, playerControllerStats.runAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAirAcceleration, playerControllerStats.RunAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 	

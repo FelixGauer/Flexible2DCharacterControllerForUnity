@@ -1,0 +1,29 @@
+.bottomsheet {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    background-color: rgba(148, 255, 187, 0.35);
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+    overflow: visible;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-self: auto;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
+    translate: 100% 0;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-bounce;
+}
+
+.bottomsheet--up {
+    translate: 0 0;
+}
+
+.FLoatFieldTest {
+    min-width: 0px;
+}

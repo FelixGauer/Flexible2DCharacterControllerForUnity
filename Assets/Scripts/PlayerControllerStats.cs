@@ -16,51 +16,51 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 200f)] public float MoveSpeed = 12.5f;
 	[Range(0f, 200f)] public float WalkAcceleration = 5f;
 	[Range(0f, 200f)] public float WalkDeceleration = 20f;
+	
+	[Header("Run")]
+	[Range(0f, 200f)] public float RunSpeed = 20f;
 	[Range(0f, 200f)] public float RunAcceleration = 15f;
 	[Range(0f, 200f)] public float RunDeceleration = 30f;
-	[Range(0f, 200f)] public float CrouchAcceleration = 15f;
-	[Range(0f, 200f)] public float CrouchDeceleration = 30f;
-
-	[Header("Collision Check")]
-	public LayerMask GroundLayer;
-	public float GroundDetectionRayLenght = 0.02f;
-	public float HeadDetectionRayLength = 0.02f;
-	[Range(0f, 5f)] public float HeadWidth = 0.75f;
-	public float WallDetectionRayLength	 = 0.125f;
-	[Range(0.01f, 3f)]public float WallDetectionRayHeightMultiplayer = 0.9f;
 
 	[Header("Jump")]
-	[Range(0f, 100f)] public float maxJumpHeight = 5f;
-	[Range(0f, 100f)] public float minJumpHeight = 2f;
-	[Range(0f, 200f)] public float airAcceleration = 30f;
-	[Range(0f, 200f)] public float airDeceleration = 5f;
-	[Range(0f, 200f)] public float runAirAcceleration = 30f;
-	[Range(0f, 200f)] public float runAirDeceleration = 5f;
+	[Range(0f, 100f)] public float MaxJumpHeight = 5f;
+	[Range(0f, 100f)] public float MinJumpHeight = 2f;
+	[Range(0f, 5f)] public float TimeTillJumpApex = 0.35f;
+	[Range(0f, 5f)] public float JumpHeightCompensationFactor = 1.06f;
+	
+	[Header("MultiJump")]
 	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
-	[Range(0f, 5f)] public float timeTillJumpApex = 0.35f;
-	[Range(0f, 5f)] public float jumpHeightCompensationFactor = 1.06f;
+
+	[Header("JumpGravity")]
 	[Range(0f, 5f)] public float JumpGravityMultiplayer = 1.5f;
 	[Range(0f, 5f)] public float FallGravityMultiplayer = 1.5f;
 	
-	[Header("JumpHang")]
-	public float jumpHangTimeThreshold = 1f;
-	public float jumpHangGravityMult = 0.5f;
+	[Header("Jump/Air Movement")]
+	[Range(0f, 200f)] public float AirAcceleration = 30f;
+	[Range(0f, 200f)] public float AirDeceleration = 5f;
+	[Range(0f, 200f)] public float RunAirAcceleration = 30f;
+	[Range(0f, 200f)] public float RunAirDeceleration = 5f;
 	
-	[Header("WallSlide/Jump")]
+	[Header("JumpHang")]
+	public float JumpHangTimeThreshold = 1f;
+	public float JumpHangGravityMultiplier = 0.5f;
+	
+	[Header("WallSlide")]
 	public float StartVelocityWallSlide = 3f;
 	public float WallSlideSpeedMax = 5f;
 	// public float WallSlideGravityMultiplayer = 1f;
 	public float WallSlideDeceleration = 0.1f;
+	
+	[Header("WallJump")]
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
-	[Range(0f, 200f)] public float wallFallAirAcceleration = 30f;
-	[Range(0f, 200f)] public float wallFallAirDeceleration = 5f;
-	[Range(0f, 200f)] public float wallFallSpeed = 5f;
+	[Range(0f, 200f)] public float WallFallAirAcceleration = 30f;
+	[Range(0f, 200f)] public float WallFallAirDeceleration = 5f;
+	[Range(0f, 200f)] public float WallFallSpeed = 5f;
 	
 	[Header("Dash")]
 	[Range(0f, 200f)] public float DashVelocity = 15f;
-	
 	public float MaxNumberDash = 2f;
 	public float DashGravityMultiplayer = 0f;	
 	public readonly Vector2[] DashDirections = new Vector2[]
@@ -81,11 +81,9 @@ public class PlayerControllerStats : ScriptableObject
 	public float CrouchHeight = 0.6f;
 	public float CrouchOffset = 0.2f;
 	public float CrouchRollVelocity = 10f;
-	
-	[Header("Run")]
-	public float RunSpeed = 20f;
-	
-	
+	[Range(0f, 200f)] public float CrouchAcceleration = 15f;
+	[Range(0f, 200f)] public float CrouchDeceleration = 30f;
+
 	[Header("Timers")]
 	public float CoyoteTime = 1.5f;
 	public float BufferTime = 0.2f;
@@ -94,21 +92,29 @@ public class PlayerControllerStats : ScriptableObject
 	public float CrouchRollTime = 0.1f;
 	public float WallJumpTime = 0.05f;
 
-	
 	[Header("Fall")]
-	[Range(0f, 100f)] public float maxFallSpeed = 20f;
+	[Range(0f, 100f)] public float MaxFallSpeed = 20f;
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
-	[Range(0, 200f)] public float maxUpwardSpeed = 50f;
-	
-	public float AdjustedJumpHeight => maxJumpHeight * jumpHeightCompensationFactor;  
-	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(timeTillJumpApex, 2f);  
-	public float MaxJumpVelocity => Gravity * timeTillJumpApex;  
-	public float MinJumpVelocity => Mathf.Sqrt(2 * minJumpHeight * Gravity);
-	
+	[Range(0, 200f)] public float MaxUpwardSpeed = 50f;
+
 	[Header("Animation")]
 	public float BaseMovementAnimationSpeed = 3f;
 	public float BaseRunAnimationSpeed = 12f;
 	public float BaseCrouchAnimationSpeed = 7f;
 
+	[Header("Collision Check")]
+	public float GroundDetectionRayLenght = 0.02f;
+	public float HeadDetectionRayLength = 0.02f;
+	[Range(0f, 5f)] public float HeadWidth = 0.75f;
+	public float WallDetectionRayLength	 = 0.125f;
+	[Range(0.01f, 3f)]public float WallDetectionRayHeightMultiplayer = 0.9f;
+	public LayerMask GroundLayer;
 	
+	
+	
+		
+	public float AdjustedJumpHeight => MaxJumpHeight * JumpHeightCompensationFactor;  
+	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(TimeTillJumpApex, 2f);  
+	public float MaxJumpVelocity => Gravity * TimeTillJumpApex;  
+	public float MinJumpVelocity => Mathf.Sqrt(2 * MinJumpHeight * Gravity);
 }

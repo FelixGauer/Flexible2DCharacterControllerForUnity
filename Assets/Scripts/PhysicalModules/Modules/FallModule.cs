@@ -43,9 +43,9 @@ public class FallModule
     private float GetGravityMultiplier(float verticalVelocity)
     {
         // Если «висим» на верхней точке прыжка (ниже порога hang-time)
-        if (Mathf.Abs(verticalVelocity) < _playerControllerStats.jumpHangTimeThreshold)
+        if (Mathf.Abs(verticalVelocity) < _playerControllerStats.JumpHangTimeThreshold)
         {
-            return _playerControllerStats.jumpHangGravityMult;
+            return _playerControllerStats.JumpHangGravityMultiplier;
         }
         // Если ещё держат кнопку прыжка — уменьшаем силу гравитации
         else if (_isHeld)
@@ -62,7 +62,7 @@ public class FallModule
     private float ClampFallSpeed(float verticalVelocity)
     {
         return Mathf.Clamp(verticalVelocity, 
-            -_playerControllerStats.maxFallSpeed, 
-            _playerControllerStats.maxUpwardSpeed);
+            -_playerControllerStats.MaxFallSpeed, 
+            _playerControllerStats.MaxUpwardSpeed);
     }
 }
