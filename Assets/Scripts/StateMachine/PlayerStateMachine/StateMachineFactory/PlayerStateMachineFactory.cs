@@ -277,14 +277,18 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     
     private void SetupJumpWallFallTransitions(PlayerStates states)
     {
-        At(states.JumpWallFallState, states.RunJumpState, // БУФФЕР
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldRun(_inputReader.GetRunState())));
+        At(states.JumpWallFallState, states.WallJumpState, // БУФФЕР
+            new FuncPredicate(() => _collisionsChecker.IsTouchingWall && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldRun(_inputReader.GetRunState())));
+        
+        At(states.JumpWallFallState, states.RunJumpState, // БУФФЕР _inputReader.GetMoveDirection().x != _playerModules.WallSlideModule.CurrentWallDirection
+            new FuncPredicate(() =>  _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning && _movementLogic.ShouldRun(_inputReader.GetRunState())));
         At(states.JumpWallFallState, states.RunJumpState, // КОЙОТ + МУЛЬТИ
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerModules.JumpModule.CanMultiJump()) && _movementLogic.ShouldRun(_inputReader.GetRunState()))); // FIXME
+            new FuncPredicate(() => !_collisionsChecker.IsInWallZone && _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerModules.JumpModule.CanMultiJump()) && _movementLogic.ShouldRun(_inputReader.GetRunState()))); // FIXME
         At(states.JumpWallFallState, states.JumpState, // БУФФЕР
             new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerTimerRegistry.jumpBufferTimer.IsRunning));
         At(states.JumpWallFallState, states.JumpState, // КОЙОТ + МУЛЬТИ
-            new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerModules.JumpModule.CanMultiJump()))); // FIXME
+            new FuncPredicate(() => !_collisionsChecker.IsInWallZone && _inputReader.GetJumpState().WasPressedThisFrame && (_playerTimerRegistry.jumpCoyoteTimer.IsRunning || _playerModules.JumpModule.CanMultiJump()))); // FIXME
+        
         At(states.JumpWallFallState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerModules.DashModule.CanDash())); // FIXME
         At(states.JumpWallFallState, states.IdleState,

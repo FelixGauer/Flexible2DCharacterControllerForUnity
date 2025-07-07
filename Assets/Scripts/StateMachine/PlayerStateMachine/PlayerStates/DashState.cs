@@ -45,6 +45,8 @@ public class DashState : BaseState
 	
 	public override void OnExit()
 	{
+		// Сбрасываем горизонтальную скорость
+		
 		_dashModule.StopDash();
 	}
 }

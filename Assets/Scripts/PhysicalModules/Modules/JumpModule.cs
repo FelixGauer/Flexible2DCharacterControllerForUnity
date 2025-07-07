@@ -15,9 +15,16 @@ public class JumpModule
         _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
         _collisionsChecker.OnGroundTouched += ResetJumpCoyoteTimer;
     
-        _collisionsChecker.OnWallTouched += ResetNumberAvailableJumps;
-        _collisionsChecker.OnWallTouched += ResetJumpCoyoteTimer;
+        _collisionsChecker.OnWallLeft += ResetNumberAvailableJumps;
+        _collisionsChecker.OnWallLeft += ResetJumpCoyoteTimer;
         
+        // _collisionsChecker.OnWallTouched += () => {
+        //     if (CanFall(_moveVelocity)) ResetNumberAvailableJumps();
+        // };
+        // _collisionsChecker.OnWallTouched += () => {
+        //     if (CanFall(_moveVelocity)) ResetJumpCoyoteTimer();
+        // };
+        //
         // _collisionsChecker.OnGroundLeft += StartCoyoteTime;
 
         // _jumpCoyoteTimer.OnTimerFinished += CoyoteJumpDeleteJump;

@@ -10,10 +10,12 @@ public class CollisionsChecker : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool BumpedHead { get; private set; }
     public bool IsTouchingWall { get; private set; }
+    public bool IsInWallZone { get; private set; } // Новое свойство для проверки зоны стены
 
     private RaycastHit2D _headHit;
     private RaycastHit2D _wallHit;
     private RaycastHit2D _lastWallHit;
+    private bool _lastWallFacingRight; // Направление, когда касались стены
     
     // Предыдущие состояния для отслеживания изменений
     private bool _wasGrounded;
@@ -22,8 +24,8 @@ public class CollisionsChecker : MonoBehaviour
     
     // Делегаты для получения состояния персонажа
     public System.Func<bool> IsSitting;
-    public System.Func<bool> IsFacingRight;
-    
+    public System.Func<bool> IsFacingRight;    
+
     // События для изменений состояния коллизий
     public event System.Action OnGroundTouched;    // Коснулся земли (не был на земле -> стал на земле)
     public event System.Action OnGroundLeft;       // Покинул землю (был на земле -> не на земле)
@@ -45,6 +47,11 @@ public class CollisionsChecker : MonoBehaviour
        CheckIsGrounded();
        CheckBumpedHead();
        CheckTouchWall();
+
+       if (stats.CanWallJumpTowardsTheWall)
+           CheckWallZone();
+       else
+           IsInWallZone = false;
        
        // Проверяем изменения и вызываем соответствующие события
        CheckStateTransitions();
@@ -128,6 +135,7 @@ public class CollisionsChecker : MonoBehaviour
        if (_wallHit.collider != null)
        {
           _lastWallHit = _wallHit;
+          _lastWallFacingRight = IsFacingRight(); // Запоминаем направление при касании стены
           IsTouchingWall = true;
        }
        else
@@ -153,8 +161,112 @@ public class CollisionsChecker : MonoBehaviour
        #endregion
     }
 
+    // Новый метод для проверки зоны стены
+    private void CheckWallZone()
+    {
+        // Проверяем только если у нас есть информация о последней стене и игрок смотрит в ту же сторону
+        if (_lastWallHit.collider == null || IsFacingRight() != _lastWallFacingRight)
+        {
+            IsInWallZone = false;
+            _lastWallHit = new RaycastHit2D();
+            return;
+        }
+
+        // Получаем позицию игрока (центр)
+        Vector2 playerCenter = BodyCollider.bounds.center;
+        
+        // Получаем позицию последней стены
+        Vector2 wallPosition = _lastWallHit.point;
+        
+        // Направление от игрока к стене
+        Vector2 directionToWall = (wallPosition - playerCenter).normalized;
+        Vector2 rayDirection = IsFacingRight() ? Vector2.right : Vector2.left;
+
+        
+        // Расстояние до стены
+        float distanceToWall = Vector2.Distance(playerCenter, wallPosition);
+        
+        // Кастим луч от центра игрока к стене
+        RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, distanceToWall, stats.GroundLayer);
+        
+        // Игрок в зоне стены, если луч попадает в ту же стену
+        IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;
+
+
+        #region Debug Wall Zone
+        if (_lastWallHit.collider != null && IsFacingRight() == _lastWallFacingRight)
+        {
+            // Цвет луча: зеленый если в зоне стены, красный если нет
+            Color rayColor = IsInWallZone ? Color.green : Color.red;
+            
+            // Отрисовка луча от центра игрока к стене
+            Debug.DrawRay(playerCenter, rayDirection * distanceToWall, rayColor);
+            
+            // Отрисовка точки стены
+            Debug.DrawRay(wallPosition, Vector2.up * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.down * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.left * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.right * 0.2f, Color.magenta);
+        }
+        #endregion
+    }
+    
+    
+    // Новый метод для проверки зоны стены
+    private void CheckWallZone2()
+    {
+        // Проверяем только если у нас есть информация о последней стене и игрок смотрит в ту же сторону
+        if (_lastWallHit.collider == null || IsFacingRight() != _lastWallFacingRight)
+        {
+            IsInWallZone = false;
+            _lastWallHit = new RaycastHit2D();
+            return;
+        }
+
+        // Получаем позицию игрока (центр)
+        Vector2 playerCenter = BodyCollider.bounds.center;
+    
+        // Направление луча (вправо или влево в зависимости от того, куда смотрит игрок)
+        Vector2 rayDirection = IsFacingRight() ? Vector2.right : Vector2.left;
+    
+        // Расстояние для проверки (можете настроить это значение)
+        float checkDistance =  100f; // или любое другое значение
+    
+        // Кастим луч от центра игрока в сторону, куда он смотрит
+        RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, checkDistance, stats.GroundLayer);
+    
+        // Игрок в зоне стены, если луч попадает в ту же стену, что и раньше
+        IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;
+
+        #region Debug Wall Zone
+        if (_lastWallHit.collider != null && IsFacingRight() == _lastWallFacingRight)
+        {
+            // Цвет луча: зеленый если в зоне стены, красный если нет
+            Color rayColor = IsInWallZone ? Color.green : Color.red;
+        
+            // Отрисовка луча от центра игрока в сторону взгляда
+            Debug.DrawRay(playerCenter, rayDirection * checkDistance, rayColor);
+        
+            // Отрисовка точки стены для справки
+            Vector2 wallPosition = _lastWallHit.point;
+            Debug.DrawRay(wallPosition, Vector2.up * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.down * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.left * 0.2f, Color.magenta);
+            Debug.DrawRay(wallPosition, Vector2.right * 0.2f, Color.magenta);
+        }
+        #endregion
+    }
+
     // Дополнительные методы для получения информации о последних коллизиях
     public RaycastHit2D GetLastWallHit() => _lastWallHit;
     public RaycastHit2D GetCurrentHeadHit() => _headHit;
     public RaycastHit2D GetCurrentWallHit() => _wallHit;
+    
+    // Метод для проверки, можно ли прыгать по стене
+    public bool CanWallJump()
+    {
+        // Игрок может прыгать по стене только если он касается её, но не находится в её зоне
+        // Или добавьте свою логику здесь
+        return IsTouchingWall && !IsInWallZone;
+    }
 }

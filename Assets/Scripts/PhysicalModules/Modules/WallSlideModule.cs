@@ -5,11 +5,15 @@ public class WallSlideModule
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly TurnChecker _turnChecker;
     private readonly CountdownTimer _wallJumpTimer;
+    
+
 	
     private Vector2 _moveVelocity;
     private bool _wasWallSliding;
 
     private bool IsFacingRight => _turnChecker.IsFacingRight;
+    
+    private float _wallDirection;
 
     public WallSlideModule(PlayerControllerStats playerControllerStats, TurnChecker turnChecker, CountdownTimer wallJumpTimer) 
     {
@@ -17,9 +21,6 @@ public class WallSlideModule
         _turnChecker = turnChecker;
         _wallJumpTimer = wallJumpTimer;
     }
-    
-    private float _wallDirection;
-
     
     public Vector2 ProcessWallSlide(Vector2 inputDirection)
     {
@@ -30,6 +31,28 @@ public class WallSlideModule
         HandleWallDetachmentTimer(inputDirection);
         
         return _moveVelocity;
+    }
+    
+    // public event System.Action OnSlide;    // Коснулся земли (не был на земле -> стал на земле)
+
+    public void OnEnterWallSlide()
+    {
+        // Устанавливаем начальную скорость скольжения
+        _moveVelocity.x = 0f; // Убираем горизонтальную скорость
+        _moveVelocity.y = -_playerControllerStats.StartVelocityWallSlide;
+        
+        // Определяем направление стены
+        _wallDirection = CalculateWallDirection();
+        
+        // OnSlide.Invoke();
+        
+        // Сбрасываем таймер
+        _wallJumpTimer.Reset();
+    }
+    
+    public void OnExitWallSlide()
+    {
+        StopWallJumpTimer();
     }
     
     private void ApplyWallSlidePhysics()
@@ -61,24 +84,6 @@ public class WallSlideModule
         }
     }
     
-    public void OnEnterWallSlide()
-    {
-        // Устанавливаем начальную скорость скольжения
-        _moveVelocity.x = 0f; // Убираем горизонтальную скорость
-        _moveVelocity.y = -_playerControllerStats.StartVelocityWallSlide;
-        
-        // Определяем направление стены
-        _wallDirection = CalculateWallDirection();
-        
-        // Сбрасываем таймер
-        _wallJumpTimer.Reset();
-    }
-    
-    public void OnExitWallSlide()
-    {
-        StopWallJumpTimer();
-    }
-
     // Возвращает текущее направление стены (для внешнего использования)
     public float CurrentWallDirection => _wallDirection;
 
@@ -92,7 +97,6 @@ public class WallSlideModule
     {
         return IsFacingRight ? 1f : -1f;
     }
-
     
     private void StopWallJumpTimer()
     {

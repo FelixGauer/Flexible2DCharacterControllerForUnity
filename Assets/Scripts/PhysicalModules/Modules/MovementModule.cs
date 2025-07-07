@@ -18,12 +18,11 @@ public class MovementModule
         _targetVelocity = moveDirection != Vector2.zero
             ? new Vector2(moveDirection.x, 0f) * speed
             : Vector2.zero;
-
+        
         // Вычисление ускорения или замедления игрока в воздухе или на земле
         float smoothFactor = moveDirection != Vector2.zero
             ? acceleration
             : deceleration;
-
 
         switch (interpolationType)
         {
@@ -34,6 +33,7 @@ public class MovementModule
                 moveVelocity.x = ApplyLerp(moveVelocity, smoothFactor);
                 break;
         }
+
         
         return moveVelocity;
         

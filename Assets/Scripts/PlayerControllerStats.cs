@@ -50,8 +50,9 @@ public class PlayerControllerStats : ScriptableObject
 	public float WallSlideSpeedMax = 5f;
 	// public float WallSlideGravityMultiplayer = 1f;
 	public float WallSlideDeceleration = 0.1f;
-	
-	[Header("WallJump")]
+
+	[Header("WallJump")] 
+	public bool CanWallJumpTowardsTheWall;
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
