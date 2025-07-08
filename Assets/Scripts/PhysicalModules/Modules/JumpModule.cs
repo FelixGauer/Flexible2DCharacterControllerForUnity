@@ -12,11 +12,17 @@ public class JumpModule
 
         _numberAvailableJumps = playerControllerStats.MaxNumberJumps;
         
-        _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
-        _collisionsChecker.OnGroundTouched += ResetJumpCoyoteTimer;
-    
-        _collisionsChecker.OnWallLeft += ResetNumberAvailableJumps;
+        
+        // _collisionsChecker.OnWallLeft += ResetNumberAvailableJumps;
+        // _collisionsChecker.OnWallLeft += ResetNumberAvailableJumpsOnWall;
+        _collisionsChecker.OnWallLeft += () => ResetNumberAvailableJump(isWall: true);
         _collisionsChecker.OnWallLeft += ResetJumpCoyoteTimer;
+        
+        // _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
+        _collisionsChecker.OnGroundTouched += () => ResetNumberAvailableJump(isWall: false);
+
+        _collisionsChecker.OnGroundTouched += ResetJumpCoyoteTimer;
+        
         
         // _collisionsChecker.OnWallTouched += () => {
         //     if (CanFall(_moveVelocity)) ResetNumberAvailableJumps();
@@ -174,9 +180,29 @@ public class JumpModule
         _jumpCoyoteTimer.Reset();
     }
     
-    private void ResetNumberAvailableJumps()
+    // private void ResetNumberAvailableJumps()
+    // {
+    //     _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+    // }
+    //
+    // private void ResetNumberAvailableJumpsOnWall()
+    // {
+    //     if (_playerControllerStats.WallJumpRecovery)
+    //         _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+    //     else
+    //         _numberAvailableJumps = 0f;
+    // }
+    
+    private void ResetNumberAvailableJump(bool isWall)
     {
-        _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
+        if (isWall && !_playerControllerStats.ResetNumberJumpOnWall)
+        {
+            _numberAvailableJumps = 0f;
+        }
+        else
+        {
+            _numberAvailableJumps = _playerControllerStats.MaxNumberDash;
+        }
     }
     
 

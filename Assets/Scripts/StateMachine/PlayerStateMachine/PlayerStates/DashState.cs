@@ -19,7 +19,8 @@ public class DashState : BaseState
 	{		
 		Debug.Log("DashState");
 
-		animationController.PlayAnimation("Dash");
+		// animationController.PlayAnimation("Dash");
+		animationController.PlayAnimationWithDuration("Dash", playerControllerStats.DashTime, "DashMultiplier");
 		
 		_dashModule.StartDash(inputReader.GetMoveDirection());
 	}

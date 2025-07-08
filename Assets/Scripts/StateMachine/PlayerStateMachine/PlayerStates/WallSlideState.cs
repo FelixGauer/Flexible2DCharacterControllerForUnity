@@ -21,6 +21,11 @@ public class WallSlideState : BaseState
 
 	private Vector2 _moveVelocity;
 
+	public override void Update()
+	{
+		_wallSlideModule.HandleWallDetachmentTimer(inputReader.GetMoveDirection());
+	}
+
 	public override void FixedUpdate()
 	{
 		_moveVelocity = _wallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());

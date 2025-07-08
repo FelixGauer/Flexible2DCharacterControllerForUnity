@@ -21,8 +21,17 @@ public class DashModule
         _dashTimer = dashTimer;
         _collisionsChecker = collisionsChecker;
         
-        collisionsChecker.OnGroundTouched += ResetNumberAvailableDash;
-        collisionsChecker.OnWallTouched += ResetNumberAvailableDash;
+
+        // collisionsChecker.OnGroundTouched += ResetNumberAvailableDash;
+        // collisionsChecker.OnWallTouched += ResetNumberAvailableDash;
+        // collisionsChecker.OnWallTouched += ResetNumberAvailableDashOnWall;
+        
+        collisionsChecker.OnGroundTouched += () => ResetNumberAvailableDash(isWall: false);
+        collisionsChecker.OnWallTouched += () => ResetNumberAvailableDash(isWall: true);
+
+        
+        // if (playerControllerStats.WallDashRecovery) _collisionsChecker.OnWallTouched += ResetNumberAvailableDash;
+
     }
 	
     public Vector2 HandleDash()
@@ -63,9 +72,29 @@ public class DashModule
         return _numberAvailableDash > 0f;
     }
 
-    public void ResetNumberAvailableDash() // FIXME Thinking
+    // public void ResetNumberAvailableDash() // FIXME Thinking
+    // {
+    //     _numberAvailableDash = _playerControllerStats.MaxNumberDash;
+    // }
+    //
+    // public void ResetNumberAvailableDashOnWall() // FIXME Thinking
+    // {
+    //     if (_playerControllerStats.WallDashRecovery)
+    //         _numberAvailableDash = _playerControllerStats.MaxNumberDash;
+    //     else
+    //         _numberAvailableDash = 0f;
+    // }
+    
+    private void ResetNumberAvailableDash(bool isWall)
     {
-        _numberAvailableDash = _playerControllerStats.MaxNumberDash;
+        if (isWall && !_playerControllerStats.ResetNumberDashOnWall)
+        {
+            _numberAvailableDash = 0f;
+        }
+        else
+        {
+            _numberAvailableDash = _playerControllerStats.MaxNumberDash;
+        }
     }
 
     private void CalculateDashDirection(Vector2 moveDirection)

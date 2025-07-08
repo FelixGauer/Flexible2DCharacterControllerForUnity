@@ -14,5 +14,7 @@ public class PlayerStates
     public IState RunJumpState { get; set; }
     public IState RunFallState { get; set; }
     public IState JumpWallFallState { get; set; }
+    public IState DashFallState { get; set; }
+
 
 }

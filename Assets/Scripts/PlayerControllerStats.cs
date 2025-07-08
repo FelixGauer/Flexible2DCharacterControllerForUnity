@@ -12,6 +12,11 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Movement Settings")]
 	public MovementSettings movementSettings = new MovementSettings();
 
+
+	public bool ResetNumberJumpOnWall;
+	public bool ResetNumberDashOnWall;
+
+	
 	[Header("Movement")]
 	[Range(0f, 200f)] public float MoveSpeed = 12.5f;
 	[Range(0f, 200f)] public float WalkAcceleration = 5f;
@@ -63,7 +68,10 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Dash")]
 	[Range(0f, 200f)] public float DashVelocity = 15f;
 	public float MaxNumberDash = 2f;
-	public float DashGravityMultiplayer = 0f;	
+	public float DashGravityMultiplayer = 0f;
+	[Range(0f, 200f)] public float DashFallSpeed = 5f;
+	[Range(0f, 200f)] public float DashFallAirAcceleration = 30f;
+	[Range(0f, 200f)] public float DashFallAirDeceleration = 5f;
 	public readonly Vector2[] DashDirections = new Vector2[]
 	{
 		new Vector2(0, 0), // Nothing
@@ -95,6 +103,7 @@ public class PlayerControllerStats : ScriptableObject
 
 	[Header("Fall")]
 	[Range(0f, 100f)] public float MaxFallSpeed = 20f;
+	
 	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
 	[Range(0, 200f)] public float MaxUpwardSpeed = 50f;
 

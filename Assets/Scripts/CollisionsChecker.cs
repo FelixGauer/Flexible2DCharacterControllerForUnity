@@ -192,6 +192,11 @@ public class CollisionsChecker : MonoBehaviour
         // Игрок в зоне стены, если луч попадает в ту же стену
         IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;
 
+        if (_lastWallHit && !wallZoneHit)
+        {
+            _lastWallHit = new RaycastHit2D();
+        }
+
 
         #region Debug Wall Zone
         if (_lastWallHit.collider != null && IsFacingRight() == _lastWallFacingRight)

@@ -28,7 +28,7 @@ public class WallSlideModule
         ApplyWallSlidePhysics();
         
         // Обрабатываем таймер отрыва от стены
-        HandleWallDetachmentTimer(inputDirection);
+        // HandleWallDetachmentTimer(inputDirection);
         
         return _moveVelocity;
     }
@@ -47,7 +47,9 @@ public class WallSlideModule
         // OnSlide.Invoke();
         
         // Сбрасываем таймер
-        _wallJumpTimer.Reset();
+        // _wallJumpTimer.Reset();
+
+        StopWallJumpTimer();
     }
     
     public void OnExitWallSlide()
@@ -65,11 +67,17 @@ public class WallSlideModule
         );
     }
     
-    private void HandleWallDetachmentTimer(Vector2 inputDirection)
+    public void HandleWallDetachmentTimer(Vector2 inputDirection)
     {
-        bool isMovingTowardsWall = Mathf.Approximately(inputDirection.x, _wallDirection) || 
+        
+        // bool isMovingTowardsWall = Mathf.Approximately(inputDirection.x, _wallDirection) || 
+        //                            Mathf.Approximately(inputDirection.x, 0f);
+        // bool isMovingAwayFromWall = !Mathf.Approximately(inputDirection.x, _wallDirection) && 
+        //                             !Mathf.Approximately(inputDirection.x, 0f);
+        
+        bool isMovingTowardsWall = Mathf.Sign(inputDirection.x) == Mathf.Sign(_wallDirection) || 
                                    Mathf.Approximately(inputDirection.x, 0f);
-        bool isMovingAwayFromWall = !Mathf.Approximately(inputDirection.x, _wallDirection) && 
+        bool isMovingAwayFromWall = Mathf.Sign(inputDirection.x) != Mathf.Sign(_wallDirection) && 
                                     !Mathf.Approximately(inputDirection.x, 0f);
 
         if (isMovingTowardsWall)
@@ -100,6 +108,7 @@ public class WallSlideModule
     
     private void StopWallJumpTimer()
     {
+        _wallJumpTimer.Start();
         _wallJumpTimer.Stop();
         _wallJumpTimer.Reset();
     }

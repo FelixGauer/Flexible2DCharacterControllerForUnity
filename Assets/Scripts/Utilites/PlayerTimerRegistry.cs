@@ -7,9 +7,7 @@ public class PlayerTimerRegistry
     public CountdownTimer wallFallTimer { get; private set; }
     public CountdownTimer dashTimer { get; private set; }
     public CountdownTimer crouchRollTimer { get; private set; }
-    
     public CountdownTimer wallJumpTimer { get; private set; }
- 
 
     public PlayerTimerRegistry(PlayerControllerStats playerControllerStats)
     {
@@ -18,7 +16,6 @@ public class PlayerTimerRegistry
         wallFallTimer = new CountdownTimer(() => playerControllerStats.WallFallTime);
         dashTimer = new CountdownTimer(() => playerControllerStats.DashTime);
         crouchRollTimer = new CountdownTimer(() => playerControllerStats.CrouchRollTime);
-        
         wallJumpTimer = new CountdownTimer(() => playerControllerStats.WallJumpTime);
     }
 	
@@ -29,7 +26,6 @@ public class PlayerTimerRegistry
         wallFallTimer.Tick(Time.deltaTime);
         dashTimer.Tick(Time.deltaTime);
         crouchRollTimer.Tick(Time.deltaTime);
-        
         wallJumpTimer.Tick(Time.deltaTime);
     }
 }

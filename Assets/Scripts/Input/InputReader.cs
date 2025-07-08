@@ -71,6 +71,14 @@ public class InputReader : MonoBehaviour, IPlayerActions
 
     // Методы доступа с проверками на null
     public Vector2 GetMoveDirection() => _moveHandler != null ? _moveHandler.Value : Vector2.zero;
+    
+    public float GetRawHorizontalDirection() 
+    {
+        if (_moveHandler == null) return 0f;
+    
+        float x = _moveHandler.Value.x;
+        return Mathf.Approximately(x, 0f) ? 0f : Mathf.Sign(x);
+    }
     public InputButtonState GetDashState() => _dashHandler != null ? _dashHandler.State : new InputButtonState();
     public InputButtonState GetJumpState() => _jumpHandler != null ? _jumpHandler.State : new InputButtonState();
     public InputButtonState GetRunState() => _runHandler != null ? _runHandler.State : new InputButtonState();

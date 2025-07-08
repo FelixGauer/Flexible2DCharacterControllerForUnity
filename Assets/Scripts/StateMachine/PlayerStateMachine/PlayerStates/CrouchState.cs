@@ -34,7 +34,10 @@ public class CrouchState : BaseState
 
 	public override void FixedUpdate()
 	{
-		_moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
+		Vector2 rawInput = inputReader.GetMoveDirection();
+		Vector2 horizontalInput = new Vector2(rawInput.x, 0f);
+		
+		_moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), horizontalInput.normalized, playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
 
