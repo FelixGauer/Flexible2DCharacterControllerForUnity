@@ -103,9 +103,9 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.IdleState, states.CrouchState,
             new FuncPredicate(() => _inputReader.GetCrouchState().IsHeld));
         At(states.IdleState, states.RunState,
-            new FuncPredicate(() => _movementLogic.ShouldRun(_inputReader.GetRunState()) && _inputReader.GetMoveDirection().x != 0f));
+            new FuncPredicate(() => _movementLogic.ShouldRun(_inputReader.GetRunState()) && _inputReader.GetMoveDirection().x != 0f && !_collisionsChecker.IsTouchingWall));
         At(states.IdleState, states.LocomotionState,
-            new FuncPredicate(() => _inputReader.GetMoveDirection().x != 0f && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
+            new FuncPredicate(() => _inputReader.GetMoveDirection().x != 0f && !_collisionsChecker.IsTouchingWall && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
     }
 
     private void SetupLocomotionTransitions(PlayerStates states)
@@ -123,7 +123,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.LocomotionState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
         At(states.LocomotionState, states.IdleState,
-            new FuncPredicate(() => _inputReader.GetMoveDirection().x == 0f && _physicsHandler2D.GetVelocity() == Vector2.zero));
+            new FuncPredicate(() => (_inputReader.GetMoveDirection().x == 0f && _physicsHandler2D.GetVelocity() == Vector2.zero) || _collisionsChecker.IsTouchingWall));
     }
 
     private void SetupRunTransitions(PlayerStates states)
@@ -135,7 +135,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.RunState, states.RunFallState,
             new FuncPredicate(() => !_collisionsChecker.IsGrounded)); // !_inputReader.GetJumpState().WasPressedThisFrame
         At(states.RunState, states.IdleState,
-            new FuncPredicate(() => _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection().x == 0f && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
+            new FuncPredicate(() => (_collisionsChecker.IsGrounded && _inputReader.GetMoveDirection().x == 0f && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f) || _collisionsChecker.IsTouchingWall));
         // At(states.RunState, states.IdleState,
         // 	new FuncPredicate(() => !_inputReader.GetRunState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
         At(states.RunState, states.LocomotionState,
@@ -151,7 +151,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupIdleCrouchTransitions(PlayerStates states)
     {
         At(states.IdleCrouchState, states.CrouchState,
-            new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] != 0));
+            new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection().x != 0 && !_collisionsChecker.IsTouchingWall));
         At(states.IdleCrouchState, states.JumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && !_collisionsChecker.BumpedHead && _movementLogic.ShouldWalk(_inputReader.GetRunState())));
         At(states.IdleCrouchState, states.RunJumpState,
@@ -171,7 +171,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.CrouchState, states.RunJumpState,
             new FuncPredicate(() => _inputReader.GetJumpState().WasPressedThisFrame && !_collisionsChecker.BumpedHead));
         At(states.CrouchState, states.IdleCrouchState,
-            new FuncPredicate(() => (_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f));
+            new FuncPredicate(() => ((_inputReader.GetCrouchState().IsHeld || _collisionsChecker.BumpedHead) && _inputReader.GetMoveDirection()[0] == 0 && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f) || _collisionsChecker.IsTouchingWall));
         At(states.CrouchState, states.CrouchRollState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame));
         At(states.CrouchState, states.IdleState,

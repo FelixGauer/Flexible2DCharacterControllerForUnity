@@ -178,6 +178,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -722,7 +735,31 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Door-Sheet_0: 2774111426448763615
+      Door-Sheet_1: -4109463427754199131
+      Door-Sheet_10: 7320424105233489653
+      Door-Sheet_11: -5274532506856338390
+      Door-Sheet_12: -3845852968441994048
+      Door-Sheet_13: -6738054214350678758
+      Door-Sheet_14: 5186854671648630142
+      Door-Sheet_15: -2929099106688921677
+      Door-Sheet_16: -7200545022830913918
+      Door-Sheet_17: -608702125629989764
+      Door-Sheet_18: 817967055897189151
+      Door-Sheet_19: 1728041555647366983
+      Door-Sheet_2: -2883751553598282177
+      Door-Sheet_20: 2515444037936858706
+      Door-Sheet_21: -8709384343039206274
+      Door-Sheet_22: 4012048792429590557
+      Door-Sheet_23: 1016580230744610062
+      Door-Sheet_3: -2026103275926937954
+      Door-Sheet_4: 5813376728233583217
+      Door-Sheet_5: -6539469505518656722
+      Door-Sheet_6: 7830265234838795941
+      Door-Sheet_7: -6657250246401462530
+      Door-Sheet_8: -2432345321366159573
+      Door-Sheet_9: 7848126539924955788
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

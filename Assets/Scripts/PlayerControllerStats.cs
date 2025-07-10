@@ -68,7 +68,7 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Dash")]
 	[Range(0f, 200f)] public float DashVelocity = 15f;
 	public float MaxNumberDash = 2f;
-	public float DashGravityMultiplayer = 0f;
+	// public float DashGravityMultiplayer = 0f;
 	[Range(0f, 200f)] public float DashFallSpeed = 5f;
 	[Range(0f, 200f)] public float DashFallAirAcceleration = 30f;
 	[Range(0f, 200f)] public float DashFallAirDeceleration = 5f;
