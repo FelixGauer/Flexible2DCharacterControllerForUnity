@@ -48,7 +48,7 @@ public class CollisionsChecker : MonoBehaviour
        CheckBumpedHead();
        CheckTouchWall();
 
-       if (stats.CanWallJumpTowardsTheWall)
+       if (stats.CanJumpInTheAirTowardsTheWall)
            CheckWallZone();
        else
            IsInWallZone = false;
@@ -187,7 +187,7 @@ public class CollisionsChecker : MonoBehaviour
         float distanceToWall = Vector2.Distance(playerCenter, wallPosition);
         
         // Кастим луч от центра игрока к стене
-        RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, distanceToWall, stats.GroundLayer);
+        RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, distanceToWall * 10f, stats.GroundLayer);
         
         // Игрок в зоне стены, если луч попадает в ту же стену
         IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;

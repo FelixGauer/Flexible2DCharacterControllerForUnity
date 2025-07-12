@@ -107,9 +107,10 @@ public class JumpModule
         bool coyoteJump = _jumpCoyoteTimer.IsRunning;
         bool bufferJump = _shouldExecuteBufferJump;
         bool bufferVariableJump = bufferJump && !_isHeld;
-        
+
         if (jump || bufferJump || coyoteJump) // FIXME
         {
+            Debug.Log(_numberAvailableJumps);
             moveVelocity = PerformJump(currentVelocity);
 
             _numberAvailableJumps -= 1;
@@ -127,6 +128,7 @@ public class JumpModule
         
         if (bufferVariableJump)
         {
+            Debug.Log("VAR");
             moveVelocity = PerformVariableJumpHeight(moveVelocity);
             _shouldExecuteBufferJump = false;
         }
@@ -201,7 +203,7 @@ public class JumpModule
         }
         else
         {
-            _numberAvailableJumps = _playerControllerStats.MaxNumberDash;
+            _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
         }
     }
     

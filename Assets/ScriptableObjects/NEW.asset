@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
-  MoveSpeed: 3
+  ResetNumberJumpOnWall: 1
+  ResetNumberDashOnWall: 1
+  CanJumpInTheAirTowardsTheWall: 1
+  WalkSpeed: 3
   WalkAcceleration: 150
   WalkDeceleration: 150
   RunSpeed: 15
@@ -24,31 +27,29 @@ MonoBehaviour:
   MinJumpHeight: 1
   TimeTillJumpApex: 0.3
   JumpHeightCompensationFactor: 1.06
-  MaxNumberJumps: 2
   JumpGravityMultiplayer: 1
   FallGravityMultiplayer: 1.2
+  JumpHangTimeThreshold: 1
+  JumpHangGravityMultiplier: 0.5
+  MaxNumberJumps: 2
   AirAcceleration: 100
   AirDeceleration: 5
   RunAirAcceleration: 150
   RunAirDeceleration: 23
-  JumpHangTimeThreshold: 1
-  JumpHangGravityMultiplier: 0.5
-  StartVelocityWallSlide: 2.5
-  WallSlideSpeedMax: 3.5
-  WallSlideDeceleration: 5
-  CanWallJumpTowardsTheWall: 1
-  WallJumpClimb: {x: 20, y: 25}
-  WallJumpOff: {x: 5, y: 8}
-  WallLeap: {x: 40, y: 15}
+  WallFallSpeed: 10
   WallFallAirAcceleration: 150
   WallFallAirDeceleration: 23
-  WallFallSpeed: 10
-  DashVelocity: 30
-  MaxNumberDash: 2
-  DashGravityMultiplayer: 0
   DashFallSpeed: 15
   DashFallAirAcceleration: 80
   DashFallAirDeceleration: 80
+  StartVelocityWallSlide: 2.5
+  WallSlideSpeedMax: 3.5
+  WallSlideDeceleration: 5
+  WallJumpClimb: {x: 20, y: 25}
+  WallJumpOff: {x: 5, y: 8}
+  WallLeap: {x: 40, y: 15}
+  DashVelocity: 30
+  MaxNumberDash: 2
   CrouchMoveSpeed: 5
   CrouchHeight: 0.6
   CrouchOffset: 0.2
@@ -62,8 +63,8 @@ MonoBehaviour:
   CrouchRollTime: 0.25
   WallJumpTime: 0.05
   MaxFallSpeed: 30
-  GroundGravity: -1.5
   MaxUpwardSpeed: 50
+  GroundGravity: -1.5
   BaseMovementAnimationSpeed: 3
   BaseRunAnimationSpeed: 12
   BaseCrouchAnimationSpeed: 5

@@ -12,13 +12,12 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Movement Settings")]
 	public MovementSettings movementSettings = new MovementSettings();
 
-
 	public bool ResetNumberJumpOnWall;
 	public bool ResetNumberDashOnWall;
+	public bool CanJumpInTheAirTowardsTheWall;
 
-	
 	[Header("Movement")]
-	[Range(0f, 200f)] public float MoveSpeed = 12.5f;
+	[Range(0f, 200f)] public float WalkSpeed = 3f;
 	[Range(0f, 200f)] public float WalkAcceleration = 5f;
 	[Range(0f, 200f)] public float WalkDeceleration = 20f;
 	
@@ -33,22 +32,29 @@ public class PlayerControllerStats : ScriptableObject
 	[Range(0f, 5f)] public float TimeTillJumpApex = 0.35f;
 	[Range(0f, 5f)] public float JumpHeightCompensationFactor = 1.06f;
 	
-	[Header("MultiJump")]
-	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
-
 	[Header("JumpGravity")]
 	[Range(0f, 5f)] public float JumpGravityMultiplayer = 1.5f;
 	[Range(0f, 5f)] public float FallGravityMultiplayer = 1.5f;
+	
+	[Header("JumpHang")]
+	public float JumpHangTimeThreshold = 1f;
+	public float JumpHangGravityMultiplier = 0.5f;
+	
+	[Header("MultiJump")]
+	[Range(0f, 50f)] public float MaxNumberJumps = 2f;
 	
 	[Header("Jump/Air Movement")]
 	[Range(0f, 200f)] public float AirAcceleration = 30f;
 	[Range(0f, 200f)] public float AirDeceleration = 5f;
 	[Range(0f, 200f)] public float RunAirAcceleration = 30f;
 	[Range(0f, 200f)] public float RunAirDeceleration = 5f;
+	[Range(0f, 200f)] public float WallFallSpeed = 5f;
+	[Range(0f, 200f)] public float WallFallAirAcceleration = 30f;
+	[Range(0f, 200f)] public float WallFallAirDeceleration = 5f;
+	[Range(0f, 200f)] public float DashFallSpeed = 5f;
+	[Range(0f, 200f)] public float DashFallAirAcceleration = 30f;
+	[Range(0f, 200f)] public float DashFallAirDeceleration = 5f;
 	
-	[Header("JumpHang")]
-	public float JumpHangTimeThreshold = 1f;
-	public float JumpHangGravityMultiplier = 0.5f;
 	
 	[Header("WallSlide")]
 	public float StartVelocityWallSlide = 3f;
@@ -57,21 +63,16 @@ public class PlayerControllerStats : ScriptableObject
 	public float WallSlideDeceleration = 0.1f;
 
 	[Header("WallJump")] 
-	public bool CanWallJumpTowardsTheWall;
 	public Vector2 WallJumpClimb;
 	public Vector2 WallJumpOff;
 	public Vector2 WallLeap;
-	[Range(0f, 200f)] public float WallFallAirAcceleration = 30f;
-	[Range(0f, 200f)] public float WallFallAirDeceleration = 5f;
-	[Range(0f, 200f)] public float WallFallSpeed = 5f;
+
 	
 	[Header("Dash")]
 	[Range(0f, 200f)] public float DashVelocity = 15f;
 	public float MaxNumberDash = 2f;
 	// public float DashGravityMultiplayer = 0f;
-	[Range(0f, 200f)] public float DashFallSpeed = 5f;
-	[Range(0f, 200f)] public float DashFallAirAcceleration = 30f;
-	[Range(0f, 200f)] public float DashFallAirDeceleration = 5f;
+
 	public readonly Vector2[] DashDirections = new Vector2[]
 	{
 		new Vector2(0, 0), // Nothing
@@ -103,10 +104,9 @@ public class PlayerControllerStats : ScriptableObject
 
 	[Header("Fall")]
 	[Range(0f, 100f)] public float MaxFallSpeed = 20f;
-	
-	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
 	[Range(0, 200f)] public float MaxUpwardSpeed = 50f;
-
+	[Range(-3f, 3f)] public float GroundGravity = -1.5f;
+	
 	[Header("Animation")]
 	public float BaseMovementAnimationSpeed = 3f;
 	public float BaseRunAnimationSpeed = 12f;
