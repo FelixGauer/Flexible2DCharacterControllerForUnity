@@ -34,24 +34,7 @@ public class MovementModule
                 break;
         }
 
-        
         return moveVelocity;
-        
-        // Обработка позиции игрока по X
-        // _moveVelocity.x = Vector2.Lerp(_moveVelocity, _targetVelocity, smoothFactor * Time.fixedDeltaTime).x; // Старый метод, сейчас использую MoveTowards
-        //
-        // if (Mathf.Abs(_moveVelocity.x) < 0.1f) 
-        // {
-        //     _moveVelocity.x = 0f;
-        // }
-        
-        // moveVelocity.x = Mathf.MoveTowards(
-        //     moveVelocity.x,
-        //     _targetVelocity.x,
-        //     smoothFactor * Time.fixedDeltaTime
-        // );
-
-        // moveVelocity.x = ApplyMoveTowards(moveVelocity, smoothFactor);
     }
 
     private float ApplyMoveTowards(Vector2 currentVelocity, float smoothFactor)

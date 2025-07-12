@@ -72,6 +72,20 @@ public class InputReader : MonoBehaviour, IPlayerActions
     // Методы доступа с проверками на null
     public Vector2 GetMoveDirection() => _moveHandler != null ? _moveHandler.Value : Vector2.zero;
     
+    public Vector2 GetNormalizedHorizontalDirection() 
+    {
+        if (_moveHandler == null) return Vector2.zero;
+        
+        float x = _moveHandler.Value.x;
+        float normalizedX = Mathf.Approximately(x, 0f) ? 0f : Mathf.Sign(x);
+        return new Vector2(normalizedX, 0f);
+    }
+    
+    public InputButtonState GetDashState() => _dashHandler != null ? _dashHandler.State : new InputButtonState();
+    public InputButtonState GetJumpState() => _jumpHandler != null ? _jumpHandler.State : new InputButtonState();
+    public InputButtonState GetRunState() => _runHandler != null ? _runHandler.State : new InputButtonState();
+    public InputButtonState GetCrouchState() => _crouchHandler != null ? _crouchHandler.State : new InputButtonState();
+    
     public float GetRawHorizontalDirection() 
     {
         if (_moveHandler == null) return 0f;
@@ -79,10 +93,6 @@ public class InputReader : MonoBehaviour, IPlayerActions
         float x = _moveHandler.Value.x;
         return Mathf.Approximately(x, 0f) ? 0f : Mathf.Sign(x);
     }
-    public InputButtonState GetDashState() => _dashHandler != null ? _dashHandler.State : new InputButtonState();
-    public InputButtonState GetJumpState() => _jumpHandler != null ? _jumpHandler.State : new InputButtonState();
-    public InputButtonState GetRunState() => _runHandler != null ? _runHandler.State : new InputButtonState();
-    public InputButtonState GetCrouchState() => _crouchHandler != null ? _crouchHandler.State : new InputButtonState();
 
     // Сброс состояний кадра, вызывается внешним MonoBehaviour
     public void ResetFrameStates()

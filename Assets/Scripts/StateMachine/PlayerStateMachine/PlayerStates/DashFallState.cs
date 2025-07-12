@@ -32,7 +32,7 @@ public class DashFallState : BaseState
     public override void FixedUpdate()
     {
         _moveVelocity.y = _fallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
-        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), playerControllerStats.DashFallSpeed, playerControllerStats.DashFallAirAcceleration, playerControllerStats.DashFallAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.DashFallSpeed, playerControllerStats.DashFallAirAcceleration, playerControllerStats.DashFallAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 	
