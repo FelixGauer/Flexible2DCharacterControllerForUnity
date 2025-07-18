@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private PhysicsHandler2D physicsHandler2D;
 	[SerializeField] private CollisionsChecker collisionsChecker;
 
-	
 	[SerializeField] private Animator animator;
 	
 	[SerializeField] private Transform transformForTurn;
@@ -36,6 +35,7 @@ public class PlayerController : MonoBehaviour
 		
 		_playerTimerRegistry = new PlayerTimerRegistry(playerControllerStats);
 		_movementLogic = new MovementLogic(playerControllerStats);
+		
 		_animationController = new AnimationController(animator);
 		
 		_playerModulesFactory  = new PlayerModulesFactory();

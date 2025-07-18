@@ -135,7 +135,7 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
         At(states.RunState, states.RunFallState,
             new FuncPredicate(() => !_collisionsChecker.IsGrounded)); // !_inputReader.GetJumpState().WasPressedThisFrame
         At(states.RunState, states.IdleState,
-            new FuncPredicate(() => (_collisionsChecker.IsGrounded && _inputReader.GetMoveDirection().x == 0f && Mathf.Abs(_physicsHandler2D.GetVelocity().x) == 0f) || _collisionsChecker.IsTouchingWall));
+            new FuncPredicate(() => (_collisionsChecker.IsGrounded && _inputReader.GetMoveDirection().x == 0f && _physicsHandler2D.GetVelocity() == Vector2.zero) || _collisionsChecker.IsTouchingWall));
         // At(states.RunState, states.IdleState,
         // 	new FuncPredicate(() => !_inputReader.GetRunState().IsHeld && _collisionsChecker.IsGrounded && _inputReader.GetMoveDirection() == Vector2.zero));
         At(states.RunState, states.LocomotionState,

@@ -93,6 +93,7 @@ public class JumpModule
 
     public Vector2 JumpPhysicsProcessing(Vector2 currentVelocity)
     {
+        
         var moveVelocity = currentVelocity;
         
         if (moveVelocity.y > 0f)
@@ -110,12 +111,13 @@ public class JumpModule
 
         if (jump || bufferJump || coyoteJump) // FIXME
         {
-            Debug.Log(_numberAvailableJumps);
             moveVelocity = PerformJump(currentVelocity);
 
             _numberAvailableJumps -= 1;
 
             _shouldExecuteBufferJump = false;
+
+            _positiveMoveVelocity = false;
             
             ResetJumpCoyoteTimer();
         }
@@ -128,7 +130,6 @@ public class JumpModule
         
         if (bufferVariableJump)
         {
-            Debug.Log("VAR");
             moveVelocity = PerformVariableJumpHeight(moveVelocity);
             _shouldExecuteBufferJump = false;
         }

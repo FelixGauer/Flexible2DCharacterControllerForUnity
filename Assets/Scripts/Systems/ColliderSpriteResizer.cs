@@ -11,7 +11,7 @@ public enum ResizeTarget
 
 public class ColliderSpriteResizer : MonoBehaviour
 {
-    [SerializeField] private CapsuleCollider2D capsuleCollider;
+    [SerializeField] private Collider2D targetCollider;
     [SerializeField] private Transform spriteTransform;
     [SerializeField] private ResizeTarget resizeTarget;
 
@@ -22,8 +22,11 @@ public class ColliderSpriteResizer : MonoBehaviour
 
     private void Awake()
     {
-        _normalColliderSize = capsuleCollider.size;
-        _normalColliderOffset = capsuleCollider.offset; 
+        if (targetCollider == null)
+            targetCollider = GetComponent<Collider2D>();
+            
+        _normalColliderSize = GetColliderSize();
+        _normalColliderOffset = GetColliderOffset();
         _normalSpriteScale = spriteTransform.localScale;
         _normalSpritePosition = spriteTransform.localPosition;
     }
@@ -37,9 +40,8 @@ public class ColliderSpriteResizer : MonoBehaviour
         {
             case ResizeTarget.Both:
                 // Коллайдер - абсолютные размеры
-
-                capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
-                capsuleCollider.offset = new Vector2(_normalColliderOffset.x, offset);
+                SetColliderSize(new Vector2(_normalColliderSize.x, height));
+                SetColliderOffset(new Vector2(_normalColliderOffset.x, offset));
                 
                 // Спрайт - относительное масштабирование
                 float scaleMultiplier = height / _normalColliderSize.y;
@@ -48,8 +50,8 @@ public class ColliderSpriteResizer : MonoBehaviour
                 break;
             
             case ResizeTarget.ColliderOnly:
-                capsuleCollider.size = new Vector2(_normalColliderSize.x, height);
-                capsuleCollider.offset = new Vector2(_normalColliderOffset.x, offset);
+                SetColliderSize(new Vector2(_normalColliderSize.x, height));
+                SetColliderOffset(new Vector2(_normalColliderOffset.x, offset));
                 break;
             
             case ResizeTarget.SpriteOnly:
@@ -63,12 +65,10 @@ public class ColliderSpriteResizer : MonoBehaviour
     
     public void ResetToNormal()
     {
-        capsuleCollider.size = _normalColliderSize;
-        capsuleCollider.offset = _normalColliderOffset; 
+        SetColliderSize(_normalColliderSize);
+        SetColliderOffset(_normalColliderOffset);
         
         float currentScaleX = Mathf.Abs(_normalSpriteScale.x) * GetCurrentScaleXSign();
-
-        // spriteTransform.localScale = _normalSpriteScale;
         spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y);
         spriteTransform.localPosition = _normalSpritePosition;
     }
@@ -83,19 +83,73 @@ public class ColliderSpriteResizer : MonoBehaviour
     
     public void SetCustomSize(Vector2 colliderSize, Vector2 spriteScale, Vector2 spritePosition, Vector2 colliderOffset)
     {
-        capsuleCollider.size = colliderSize;
-        capsuleCollider.offset = colliderOffset;
+        SetColliderSize(colliderSize);
+        SetColliderOffset(colliderOffset);
         spriteTransform.localScale = spriteScale;
         spriteTransform.localPosition = spritePosition;
     }
 
     public Vector2 GetNormalColliderSize() => _normalColliderSize;
-    public Vector2 GetCurrentColliderSize() => capsuleCollider.size;
+    public Vector2 GetCurrentColliderSize() => GetColliderSize();
     public Vector2 GetNormalSpritePosition() => _normalSpritePosition;
     
     private float GetCurrentScaleXSign()
     {
         return spriteTransform.localScale.x >= 0 ? 1f : -1f;
     }
+    
+    // Универсальные методы для работы с разными типами коллайдеров
+    private Vector2 GetColliderSize()
+    {
+        return targetCollider switch
+        {
+            BoxCollider2D box => box.size,
+            CapsuleCollider2D capsule => capsule.size,
+            CircleCollider2D circle => new Vector2(circle.radius * 2, circle.radius * 2),
+            _ => Vector2.one
+        };
+    }
+    
+    private void SetColliderSize(Vector2 size)
+    {
+        switch (targetCollider)
+        {
+            case BoxCollider2D box:
+                box.size = size;
+                break;
+            case CapsuleCollider2D capsule:
+                capsule.size = size;
+                break;
+            case CircleCollider2D circle:
+                circle.radius = Mathf.Max(size.x, size.y) / 2f;
+                break;
+        }
+    }
+    
+    private Vector2 GetColliderOffset()
+    {
+        return targetCollider switch
+        {
+            BoxCollider2D box => box.offset,
+            CapsuleCollider2D capsule => capsule.offset,
+            CircleCollider2D circle => circle.offset,
+            _ => Vector2.zero
+        };
+    }
+    
+    private void SetColliderOffset(Vector2 offset)
+    {
+        switch (targetCollider)
+        {
+            case BoxCollider2D box:
+                box.offset = offset;
+                break;
+            case CapsuleCollider2D capsule:
+                capsule.offset = offset;
+                break;
+            case CircleCollider2D circle:
+                circle.offset = offset;
+                break;
+        }
+    }
 }
-

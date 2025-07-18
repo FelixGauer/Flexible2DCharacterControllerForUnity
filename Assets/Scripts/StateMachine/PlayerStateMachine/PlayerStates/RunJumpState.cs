@@ -14,6 +14,7 @@ public class RunJumpState : BaseState
         _jumpModule = jumpModule;
         _fallModule = fallModule;
         _movementModule = movementModule;
+        
     }
 	
     public override void OnEnter()
@@ -25,8 +26,6 @@ public class RunJumpState : BaseState
 
         // _jumpModule.StartJump(inputReader.GetJumpState()); 
         _jumpModule.TestStartJump(); 
-        
-        _jumpModule.SetPlayerTransform(animationController.test); // FIXME
         
         // Debug.Log(physicsHandler2D.GetVelocity());
     }

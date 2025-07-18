@@ -28,9 +28,10 @@ public class RunState : BaseState
 	
 	public override void FixedUpdate()
 	{
-
-		
 		var moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAcceleration, playerControllerStats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+		// moveVelocity.y = 0f;
+		moveVelocity.y = playerControllerStats.GroundGravity;
+
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}
 	
