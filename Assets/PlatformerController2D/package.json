@@ -1,6 +1,6 @@
 {
   "name": "com.yourcompany.platformercontroller2d",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "displayName": "_PlatformerController2D",
   "description": "Convenient customizable 2d platformer controller",
   "unity": "2025.1",
