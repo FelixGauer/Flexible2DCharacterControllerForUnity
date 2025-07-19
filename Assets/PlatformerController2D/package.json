@@ -2,18 +2,23 @@
   "name": "com.yourcompany.platformercontroller2d",
   "version": "1.0.0",
   "displayName": "_PlatformerController2D",
-  "description": "This is an example package",
+  "description": "Convenient customizable 2d platformer controller",
   "unity": "2025.1",
   "unityRelease": "38f1",
+  "documentationUrl": "https://github.com/Vladislav-EG/Platformer2D/",
   "dependencies": {
     "com.unity.inputsystem": "1.14.1",
     "com.unity.cinemachine": "3.1.4"
   },
+  "author": {
+    "name": "ilovevladislav",
+    "url": "https://github.com/Vladislav-EG"
+  },
   "samples": [
     {
-      "displayName" : "TEST", 
-      "description": "description",
-      "path": "Samples~/Gray"
+      "displayName" : "GrayScene", 
+      "description": "Scene with level and character to test all mechanics",
+      "path": "Samples~/CheckingTheController"
   }
   ]
 }
