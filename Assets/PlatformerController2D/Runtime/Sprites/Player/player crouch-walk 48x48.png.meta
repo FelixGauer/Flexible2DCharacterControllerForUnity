@@ -1,43 +1,37 @@
 fileFormatVersion: 2
-guid: 66f2d5959e13cca4f80733eeb4a4050b
+guid: 636f5e5febad1e4458a12b8338a2fbe6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1720110187308095367
-    second: player run 48x48_0
+      213: -3501540991144534565
+    second: player crouch-walk 48x48_0
   - first:
-      213: 6803943742847199345
-    second: player run 48x48_1
+      213: 6949548005444769606
+    second: player crouch-walk 48x48_1
   - first:
-      213: -2846645112065283218
-    second: player run 48x48_2
+      213: 4063281719370450837
+    second: player crouch-walk 48x48_2
   - first:
-      213: -8978280707783338654
-    second: player run 48x48_3
+      213: 4369745543758730650
+    second: player crouch-walk 48x48_3
   - first:
-      213: -3926936333873914696
-    second: player run 48x48_4
+      213: -4698321721044533971
+    second: player crouch-walk 48x48_4
   - first:
-      213: -2989707818509195116
-    second: player run 48x48_5
+      213: 6576826956546989169
+    second: player crouch-walk 48x48_5
   - first:
-      213: 7610630201961088622
-    second: player run 48x48_6
+      213: 8195099221594068158
+    second: player crouch-walk 48x48_6
   - first:
-      213: -6672111311939437008
-    second: player run 48x48_7
+      213: -819847542535416671
+    second: player crouch-walk 48x48_7
   - first:
-      213: -7369312405922531478
-    second: player run 48x48_8
+      213: -3763785006355946578
+    second: player crouch-walk 48x48_8
   - first:
-      213: 1979127354437918419
-    second: player run 48x48_9
-  - first:
-      213: 7879773315606213927
-    second: player run 48x48_10
-  - first:
-      213: 8264831699864723746
-    second: player run 48x48_11
+      213: -1976618435671211153
+    second: player crouch-walk 48x48_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,11 +136,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player run 48x48_0
+      name: player crouch-walk 48x48_0
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97868fee5e0f028e0800000000000000
-      internalID: -1720110187308095367
+      spriteID: bdd5c504507086fc0800000000000000
+      internalID: -3501540991144534565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_1
+      name: player crouch-walk 48x48_1
       rect:
         serializedVersion: 2
         x: 48
@@ -183,14 +190,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 178262809c67c6e50800000000000000
-      internalID: 6803943742847199345
+      spriteID: 6475f063711c17060800000000000000
+      internalID: 6949548005444769606
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_2
+      name: player crouch-walk 48x48_2
       rect:
         serializedVersion: 2
         x: 96
@@ -205,14 +212,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6b2fbd4a5fae78d0800000000000000
-      internalID: -2846645112065283218
+      spriteID: 5970a61123da36830800000000000000
+      internalID: 4063281719370450837
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_3
+      name: player crouch-walk 48x48_3
       rect:
         serializedVersion: 2
         x: 144
@@ -227,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 265d4d6e34db66380800000000000000
-      internalID: -8978280707783338654
+      spriteID: a95d59e8b6474ac30800000000000000
+      internalID: 4369745543758730650
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_4
+      name: player crouch-walk 48x48_4
       rect:
         serializedVersion: 2
         x: 192
@@ -249,14 +256,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8bcdedbc538b089c0800000000000000
-      internalID: -3926936333873914696
+      spriteID: d2d73a899453cceb0800000000000000
+      internalID: -4698321721044533971
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_5
+      name: player crouch-walk 48x48_5
       rect:
         serializedVersion: 2
         x: 240
@@ -271,14 +278,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4982d87449c6286d0800000000000000
-      internalID: -2989707818509195116
+      spriteID: 17c523e7545954b50800000000000000
+      internalID: 6576826956546989169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_6
+      name: player crouch-walk 48x48_6
       rect:
         serializedVersion: 2
         x: 288
@@ -293,14 +300,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6600c888d36e9960800000000000000
-      internalID: 7610630201961088622
+      spriteID: eb4d1329257dab170800000000000000
+      internalID: 8195099221594068158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player run 48x48_7
+      name: player crouch-walk 48x48_7
       rect:
         serializedVersion: 2
         x: 336
@@ -315,8 +322,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03efbf5bc16e763a0800000000000000
-      internalID: -6672111311939437008
+      spriteID: 1a41339f0015f94f0800000000000000
+      internalID: -819847542535416671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player crouch-walk 48x48_8
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea366356a7954cbc0800000000000000
+      internalID: -3763785006355946578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player crouch-walk 48x48_9
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f63445d5104a194e0800000000000000
+      internalID: -1976618435671211153
       vertices: []
       indices: 
       edges: []
@@ -325,7 +376,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 439903cfadf7dc145a0f68c474e9b0b7
+    spriteID: e03851d3827cb964eb72b65301051ae4
     internalID: 0
     vertices: []
     indices: 
@@ -335,14 +386,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player run 48x48_0: -1720110187308095367
-      player run 48x48_1: 6803943742847199345
-      player run 48x48_2: -2846645112065283218
-      player run 48x48_3: -8978280707783338654
-      player run 48x48_4: -3926936333873914696
-      player run 48x48_5: -2989707818509195116
-      player run 48x48_6: 7610630201961088622
-      player run 48x48_7: -6672111311939437008
+      player crouch-walk 48x48_0: -3501540991144534565
+      player crouch-walk 48x48_1: 6949548005444769606
+      player crouch-walk 48x48_2: 4063281719370450837
+      player crouch-walk 48x48_3: 4369745543758730650
+      player crouch-walk 48x48_4: -4698321721044533971
+      player crouch-walk 48x48_5: 6576826956546989169
+      player crouch-walk 48x48_6: 8195099221594068158
+      player crouch-walk 48x48_7: -819847542535416671
+      player crouch-walk 48x48_8: -3763785006355946578
+      player crouch-walk 48x48_9: -1976618435671211153
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

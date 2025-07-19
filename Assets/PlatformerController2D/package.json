@@ -1,0 +1,19 @@
+{
+  "name": "com.yourcompany.platformercontroller2d",
+  "version": "1.0.0",
+  "displayName": "_PlatformerController2D",
+  "description": "This is an example package",
+  "unity": "2025.1",
+  "unityRelease": "38f1",
+  "dependencies": {
+    "com.unity.inputsystem": "1.14.1",
+    "com.unity.cinemachine": "3.1.4"
+  },
+  "samples": [
+    {
+      "displayName" : "TEST", 
+      "description": "description",
+      "path": "Samples~/Gray"
+  }
+  ]
+}

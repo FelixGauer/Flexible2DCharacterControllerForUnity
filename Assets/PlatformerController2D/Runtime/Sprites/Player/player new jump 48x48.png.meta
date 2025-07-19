@@ -1,46 +1,40 @@
 fileFormatVersion: 2
-guid: db7b1a3bc21c45f4aa6cbdd404b64700
+guid: 57dd7b319a166d84abdd3fc8c0459957
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4602387570072316280
-    second: player land 48x48_0
+      213: -1371029052870881117
+    second: player new jump 48x48_0
   - first:
-      213: -7050213367843157162
-    second: player land 48x48_1
+      213: -2315129620777849004
+    second: player new jump 48x48_1
   - first:
-      213: -4760751101728093800
-    second: player land 48x48_2
+      213: 3525680688647848675
+    second: player new jump 48x48_2
   - first:
-      213: -1216246304953843119
-    second: player land 48x48_3
+      213: -6961841436348922279
+    second: player new jump 48x48_3
   - first:
-      213: -4517810991248364758
-    second: player land 48x48_4
+      213: -8838444428936912337
+    second: player new jump 48x48_4
   - first:
-      213: -4591912065576111590
-    second: player land 48x48_5
+      213: 5615097069923012861
+    second: player new jump 48x48_5
   - first:
-      213: 1349274582653079552
-    second: player land 48x48_6
+      213: -2335703473165064500
+    second: player new jump 48x48_6
   - first:
-      213: 5904941268907416396
-    second: player land 48x48_7
+      213: 9167086494364418317
+    second: player new jump 48x48_7
   - first:
-      213: -5832747298177718580
-    second: player land 48x48_8
+      213: -1654628250928881350
+    second: player new jump 48x48_8
   - first:
-      213: 3267701472246858424
-    second: player land 48x48_9
+      213: -4118337328299782798
+    second: player new jump 48x48_9
   - first:
-      213: 4074859373326206203
-    second: player land 48x48_10
-  - first:
-      213: 5161187548481875975
-    second: player land 48x48_11
-  - first:
-      213: 6225700723224678848
-    second: player land 48x48_12
+      213: 4330072777175347421
+    second: player new jump 48x48_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -145,11 +139,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player land 48x48_0
+      name: player new jump 48x48_0
       rect:
         serializedVersion: 2
         x: 0
@@ -164,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87965d84c17fedf30800000000000000
-      internalID: 4602387570072316280
+      spriteID: 3a014e6275029fce0800000000000000
+      internalID: -1371029052870881117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player land 48x48_1
+      name: player new jump 48x48_1
       rect:
         serializedVersion: 2
         x: 48
@@ -186,14 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65b8ffaab4c982e90800000000000000
-      internalID: -7050213367843157162
+      spriteID: 45f2d8040e10fdfd0800000000000000
+      internalID: -2315129620777849004
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player land 48x48_2
+      name: player new jump 48x48_2
       rect:
         serializedVersion: 2
         x: 96
@@ -208,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8998275b81a6eedb0800000000000000
-      internalID: -4760751101728093800
+      spriteID: 3e24f4e08ebbde030800000000000000
+      internalID: 3525680688647848675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player land 48x48_3
+      name: player new jump 48x48_3
       rect:
         serializedVersion: 2
         x: 144
@@ -230,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 15248d9fd660f1fe0800000000000000
-      internalID: -1216246304953843119
+      spriteID: 956c3db5912926f90800000000000000
+      internalID: -6961841436348922279
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player land 48x48_4
+      name: player new jump 48x48_4
       rect:
         serializedVersion: 2
         x: 192
@@ -252,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2b294007d28d41c0800000000000000
-      internalID: -4517810991248364758
+      spriteID: f226f26be99875580800000000000000
+      internalID: -8838444428936912337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player land 48x48_5
+      name: player new jump 48x48_5
       rect:
         serializedVersion: 2
         x: 240
@@ -274,74 +281,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a12718b2e404640c0800000000000000
-      internalID: -4591912065576111590
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player land 48x48_6
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 000108b851699b210800000000000000
-      internalID: 1349274582653079552
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player land 48x48_7
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c4b55c06cc092f150800000000000000
-      internalID: 5904941268907416396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player land 48x48_8
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cc66f7b4c3bed0fa0800000000000000
-      internalID: -5832747298177718580
+      spriteID: df01918f805dced40800000000000000
+      internalID: 5615097069923012861
       vertices: []
       indices: 
       edges: []
@@ -350,7 +291,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 993f2cd4e37e32d4fbe6cda300feb6fb
+    spriteID: 531e13c9572a21342be6eafd8d7d7f3a
     internalID: 0
     vertices: []
     indices: 
@@ -360,15 +301,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player land 48x48_0: 4602387570072316280
-      player land 48x48_1: -7050213367843157162
-      player land 48x48_2: -4760751101728093800
-      player land 48x48_3: -1216246304953843119
-      player land 48x48_4: -4517810991248364758
-      player land 48x48_5: -4591912065576111590
-      player land 48x48_6: 1349274582653079552
-      player land 48x48_7: 5904941268907416396
-      player land 48x48_8: -5832747298177718580
+      player new jump 48x48_0: -1371029052870881117
+      player new jump 48x48_1: -2315129620777849004
+      player new jump 48x48_2: 3525680688647848675
+      player new jump 48x48_3: -6961841436348922279
+      player new jump 48x48_4: -8838444428936912337
+      player new jump 48x48_5: 5615097069923012861
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,37 +1,31 @@
 fileFormatVersion: 2
-guid: b51a8573b82424047a0513160145e6a6
+guid: f8eb2bf025ff4274d921cdf29cd511f7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8490345850630462282
-    second: Player Crouch-Idle 48x48_0
+      213: -1629873349854716425
+    second: PlayerWalk 48x48_0
   - first:
-      213: -2907367982778163315
-    second: Player Crouch-Idle 48x48_1
+      213: 811178005538749272
+    second: PlayerWalk 48x48_1
   - first:
-      213: 3296366073916849593
-    second: Player Crouch-Idle 48x48_2
+      213: 2465954802655335613
+    second: PlayerWalk 48x48_2
   - first:
-      213: -7258259275048380974
-    second: Player Crouch-Idle 48x48_3
+      213: -4759400719645970326
+    second: PlayerWalk 48x48_3
   - first:
-      213: -423718205833850649
-    second: Player Crouch-Idle 48x48_4
+      213: -6525545897827947706
+    second: PlayerWalk 48x48_4
   - first:
-      213: -5161594819010820556
-    second: Player Crouch-Idle 48x48_5
+      213: 423964053055586815
+    second: PlayerWalk 48x48_5
   - first:
-      213: 98505748432901037
-    second: Player Crouch-Idle 48x48_6
+      213: 6491062460823051978
+    second: PlayerWalk 48x48_6
   - first:
-      213: 9209594372852345979
-    second: Player Crouch-Idle 48x48_7
-  - first:
-      213: -4788990647667620130
-    second: Player Crouch-Idle 48x48_8
-  - first:
-      213: 4392699413294262386
-    second: Player Crouch-Idle 48x48_9
+      213: 7033123163119209441
+    second: PlayerWalk 48x48_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -136,11 +130,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_0
+      name: PlayerWalk 48x48_0
       rect:
         serializedVersion: 2
         x: 0
@@ -155,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a4b5a0f3194c3d570800000000000000
-      internalID: 8490345850630462282
+      spriteID: 7fd9801e2d68169e0800000000000000
+      internalID: -1629873349854716425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_1
+      name: PlayerWalk 48x48_1
       rect:
         serializedVersion: 2
         x: 48
@@ -177,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8fd92b3934f6a7d0800000000000000
-      internalID: -2907367982778163315
+      spriteID: 85b3fb52912e14b00800000000000000
+      internalID: 811178005538749272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_2
+      name: PlayerWalk 48x48_2
       rect:
         serializedVersion: 2
         x: 96
@@ -199,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9bd7675ba7b0fbd20800000000000000
-      internalID: 3296366073916849593
+      spriteID: db4907ce3d4d83220800000000000000
+      internalID: 2465954802655335613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_3
+      name: PlayerWalk 48x48_3
       rect:
         serializedVersion: 2
         x: 144
@@ -221,14 +228,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d59e0f25ab754b90800000000000000
-      internalID: -7258259275048380974
+      spriteID: a6073c9034633fdb0800000000000000
+      internalID: -4759400719645970326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_4
+      name: PlayerWalk 48x48_4
       rect:
         serializedVersion: 2
         x: 192
@@ -243,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e058686986ae1af0800000000000000
-      internalID: -423718205833850649
+      spriteID: 64b257a649a9075a0800000000000000
+      internalID: -6525545897827947706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_5
+      name: PlayerWalk 48x48_5
       rect:
         serializedVersion: 2
         x: 240
@@ -265,14 +272,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4360d520cd45e58b0800000000000000
-      internalID: -5161594819010820556
+      spriteID: ff1c9eb5f0932e500800000000000000
+      internalID: 423964053055586815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_6
+      name: PlayerWalk 48x48_6
       rect:
         serializedVersion: 2
         x: 288
@@ -287,14 +294,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da35dafc476fd5100800000000000000
-      internalID: 98505748432901037
+      spriteID: ace1b30cae2e41a50800000000000000
+      internalID: 6491062460823051978
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_7
+      name: PlayerWalk 48x48_7
       rect:
         serializedVersion: 2
         x: 336
@@ -309,52 +316,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b7cec4f994d0fcf70800000000000000
-      internalID: 9209594372852345979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_8
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ed68a1d01661a8db0800000000000000
-      internalID: -4788990647667620130
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Crouch-Idle 48x48_9
-      rect:
-        serializedVersion: 2
-        x: 432
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3638512f1b4b7934ba5a7752e0cb1b64
-      internalID: -269011297
+      spriteID: 1ebca47f04caa9160800000000000000
+      internalID: 7033123163119209441
       vertices: []
       indices: 
       edges: []
@@ -363,7 +326,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 79f5501caf8a26147b5187f4d763c24d
+    spriteID: a963c6bf3346703499d6853d492d8a9e
     internalID: 0
     vertices: []
     indices: 
@@ -373,16 +336,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player Crouch-Idle 48x48_0: 8490345850630462282
-      Player Crouch-Idle 48x48_1: -2907367982778163315
-      Player Crouch-Idle 48x48_2: 3296366073916849593
-      Player Crouch-Idle 48x48_3: -7258259275048380974
-      Player Crouch-Idle 48x48_4: -423718205833850649
-      Player Crouch-Idle 48x48_5: -5161594819010820556
-      Player Crouch-Idle 48x48_6: 98505748432901037
-      Player Crouch-Idle 48x48_7: 9209594372852345979
-      Player Crouch-Idle 48x48_8: -4788990647667620130
-      Player Crouch-Idle 48x48_9: -269011297
+      PlayerWalk 48x48_0: -1629873349854716425
+      PlayerWalk 48x48_1: 811178005538749272
+      PlayerWalk 48x48_2: 2465954802655335613
+      PlayerWalk 48x48_3: -4759400719645970326
+      PlayerWalk 48x48_4: -6525545897827947706
+      PlayerWalk 48x48_5: 423964053055586815
+      PlayerWalk 48x48_6: 6491062460823051978
+      PlayerWalk 48x48_7: 7033123163119209441
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
