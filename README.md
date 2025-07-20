@@ -9,20 +9,33 @@
 
 <p align="center">
   <!-- GitHub profile -->
-  <a href="https://github.com/Vladislav-EG">
-    <img src="https://img.shields.io/static/v1?style=flat&label=GitHub&message=Vladislav-EG&color=6243c4&logo=github" alt="GitHub badge" style="border: none; display: block">
+  <a href="https://github.com/Vladislav-EG" style="text-decoration: none !important;">
+    <img
+      src="https://img.shields.io/static/v1?style=flat&label=GitHub&message=Vladislav-EG&color=6243c4&logo=github"
+      alt="GitHub badge"
+      style="border: none;"
+    />
   </a>
-  &nbsp;
+   
   <!-- Unity version -->
-  <a href="https://unity3d.com/">
-    <img src="https://img.shields.io/badge/Unity-6000.0.38f1-6243c4?style=flat&logo=unity" alt="Unity badge" style="border: none; display: block">
+  <a href="https://unity3d.com/" style="text-decoration: none !important;">
+    <img
+      src="https://img.shields.io/badge/Unity-6000.0.38f1-6243c4?style=flat&logo=unity"
+      alt="Unity badge"
+      style="border: none;"
+    />
   </a>
-  &nbsp;
+   
   <!-- Itch.io profile -->
-  <a href="https://itch.io/profile/ilovevladislav">
-    <img src="https://img.shields.io/static/v1?style=flat&label=Itch.io&message=ilovevladislav&color=6243c4&logo=Itch.io&logoColor=white" alt="Itch.io badge" style="border: none; display: block">
+  <a href="https://itch.io/profile/ilovevladislav" style="text-decoration: none !important;">
+    <img
+      src="https://img.shields.io/static/v1?style=flat&label=Itch.io&message=ilovevladislav&color=6243c4&logo=Itch.io&logoColor=white"
+      alt="Itch.io badge"
+      style="border: none;"
+    />
   </a>
 </p>
+
 
 
 
@@ -43,7 +56,7 @@
 
 ## Установка как проект для Unity
 
-1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git Clone`
+1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git clone`
 
 ```console
 git clone https://github.com/Vladislav-EG/Platformer2D.git
@@ -63,7 +76,7 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git
 
 ### Установка с диска
 
-1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git Clone`
+1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git clone`
 
 ```console
 git clone https://github.com/Vladislav-EG/Platformer2D.git
@@ -112,20 +125,25 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 >Снизу есть настройка GroundLayer, создайте слой земли и добавьте его туда, всем блокам земли тоже добавьте этот слой.
 
 Пример части настроек для персонажа объекта Player:  
-![BasePreset](Assets/ForGithub/BasePreset.png)
+![BasePreset](Assets/ForGithub/BasePreset.PNG)
 
 3. Настройте все компоненты используя примеры ниже 
 
 Пример компонентов объекта Player:  
-![PlayerComponents](Assets/ForGithub/PlayerComponents.png)
+![PlayerComponents](Assets/ForGithub/PlayerComponents.PNG)
 
 Пример физического материала объекта Player:  
-![PhysicalMaterial](Assets/ForGithub/PhysicalMaterial.png)
+![PhysicalMaterial](Assets/ForGithub/PhysicalMaterial.PNG)
 
 Пример коллайдеров Player:  
-![PlayerColliderExample](Assets/ForGithub/PlayerColliderExample.png)
+![PlayerColliderExample](Assets/ForGithub/PlayerColliderExample.PNG)
 
 ## Создание уровня 
+
+Для создания уровня перетащите из папки `Prefabs` на сцену `GridForScene`, выберите этот объект и в окне `Scene` нажмите `Open Tile Palette`,
+выделите нужно палитру и создавайте уровень в окне `Scene`.
+
+
 
 
 
