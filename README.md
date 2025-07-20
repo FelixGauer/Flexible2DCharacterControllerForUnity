@@ -163,6 +163,7 @@ Go to [about page](POSSIBILITIES.md)
 
 
 
+![Walk](Assets/ForGithub/640_360_25frames/1_Walk.gif)
 
 
 
