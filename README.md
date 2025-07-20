@@ -132,8 +132,9 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 Пример компонентов объекта Player:  
 
-[//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
-<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="300">
+![PlayerComponents](Assets/ForGithub/PlayerComponents.PNG)
+
+[//]: # (<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="300">)
 
 
 Пример физического материала объекта Player:  
@@ -155,7 +156,7 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 [//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/Grid.PNG&#41;)
 
-<img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="300">
+<img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="500">
 
 
 
