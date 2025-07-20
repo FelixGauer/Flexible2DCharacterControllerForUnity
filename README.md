@@ -132,15 +132,14 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 Пример компонентов объекта Player:  
 
-![PlayerComponents](Assets/ForGithub/PlayerComponents.PNG)
-
-[//]: # (<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="300">)
+[//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
+<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="500">
 
 
 Пример физического материала объекта Player:  
 
 [//]: # (![PhysicalMaterial]&#40;Assets/ForGithub/PhysicalMaterial.PNG&#41;)
-<img src="Assets/ForGithub/PhysicalMaterial.PNG" alt="Grid" height="300">
+<img src="Assets/ForGithub/PhysicalMaterial.PNG" alt="Grid" height="150">
 
 
 Пример коллайдеров Player:  
@@ -157,6 +156,12 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 [//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/Grid.PNG&#41;)
 
 <img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="500">
+
+## Configuration 
+
+![PlayerColliderExample](Assets/ForGithub/GIF_320_180/Timeline 1_00000183.gif)
+
+
 
 
 
