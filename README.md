@@ -109,7 +109,10 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
     - Feet (Box Collider 2D)
 
 Пример иерархии объектов:  
-![ObjectHierarchy](Assets/ForGithub/ObjectHierarchy.png)
+
+[//]: # (![ObjectHierarchy]&#40;Assets/ForGithub/ObjectHierarchy.png&#41;)
+<img src="Assets/ForGithub/ObjectHierarchy.png" alt="Grid" height="300">
+
 
 2. Создайте пресет настроек для персонажа
 
@@ -120,23 +123,39 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 >Снизу есть настройка GroundLayer, создайте слой земли и добавьте его туда, всем блокам земли тоже добавьте этот слой.
 
 Пример части настроек для персонажа объекта Player:  
-![BasePreset](Assets/ForGithub/BasePreset.PNG)
+
+[//]: # (![BasePreset]&#40;Assets/ForGithub/BasePreset.PNG&#41;)
+<img src="Assets/ForGithub/BasePreset.PNG" alt="Grid" height="300">
+
 
 3. Настройте все компоненты используя примеры ниже 
 
 Пример компонентов объекта Player:  
-![PlayerComponents](Assets/ForGithub/PlayerComponents.PNG)
+
+[//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
+<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="300">
+
 
 Пример физического материала объекта Player:  
-![PhysicalMaterial](Assets/ForGithub/PhysicalMaterial.PNG)
+
+[//]: # (![PhysicalMaterial]&#40;Assets/ForGithub/PhysicalMaterial.PNG&#41;)
+<img src="Assets/ForGithub/PhysicalMaterial.PNG" alt="Grid" height="300">
+
 
 Пример коллайдеров Player:  
-![PlayerColliderExample](Assets/ForGithub/PlayerColliderExample.PNG)
+
+[//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/PlayerColliderExample.PNG&#41;)
+<img src="Assets/ForGithub/PlayerColliderExample.PNG" alt="Grid" height="300">
+
 
 ## Создание уровня 
 
 Для создания уровня перетащите из папки `Prefabs` на сцену `GridForScene`, выберите этот объект и в окне `Scene` нажмите `Open Tile Palette`,
 выделите нужно палитру и создавайте уровень в окне `Scene`.
+
+[//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/Grid.PNG&#41;)
+
+<img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="300">
 
 
 
