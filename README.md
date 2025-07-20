@@ -159,7 +159,7 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 ## Configuration 
 
-![PlayerColliderExample](Assets/ForGithub/GIF_320_180/Timeline 1_00000183.gif)
+![PlayerColliderExample](Assets/ForGithub/GIF_320_180/1_00000183.gif)
 
 
 
