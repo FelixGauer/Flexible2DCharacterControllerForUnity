@@ -12,12 +12,12 @@
   <a href="https://github.com/Vladislav-EG" style="text-decoration: none; display: inline-block">
     <img src="https://img.shields.io/static/v1?style=flat&label=GitHub&message=Vladislav-EG&color=6243c4&logo=github" alt="GitHub badge" style="border: none; display: block">
   </a>
-  &nbsp;
+  &#160
   <!-- Unity version -->
   <a href="https://unity3d.com/" style="text-decoration: none; display: inline-block">
     <img src="https://img.shields.io/badge/Unity-6000.0.38f1-6243c4?style=flat&logo=unity" alt="Unity badge" style="border: none; display: block">
   </a>
-  &nbsp;
+  &#160
   <!-- Itch.io profile -->
   <a href="https://itch.io/profile/ilovevladislav" style="text-decoration: none; display: inline-block">
     <img src="https://img.shields.io/static/v1?style=flat&label=Itch.io&message=ilovevladislav&color=6243c4&logo=Itch.io&logoColor=white" alt="Itch.io badge" style="border: none; display: block">
