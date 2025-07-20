@@ -1,1 +1,7 @@
-<h1 align="center">Flexible 2D Platformer Controller - Unity</h1>
+---
+title: Test page
+layout: template
+filename: POSSIBILITIES.md
+---
+
+<h1 align="center">TEST</h1>

@@ -159,9 +159,10 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 ## Configuration 
 
-![PlayerColliderExample](Assets/ForGithub\640_360_25frames/1_Walk.gif)
-
 Go to [about page](POSSIBILITIES.md)
+
+![PlayerColliderExample](Assets/ForGithub/640_360_25frames/1_Walk.gif)
+
 
 
 
