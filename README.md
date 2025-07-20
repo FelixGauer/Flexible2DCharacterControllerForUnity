@@ -9,23 +9,36 @@
 
 <p align="center">
   <!-- GitHub profile -->
-  <a href="https://github.com/Vladislav-EG">
+  <a href="https://github.com/Vladislav-EG"
+     style="text-decoration: none;">
     <img
       src="https://img.shields.io/static/v1?style=flat&label=GitHub&message=Vladislav-EG&color=6243c4&logo=github"
       alt="GitHub badge"
+      style="border: none;"
     />
   </a>
-&nbsp;
-<a href="https://unity3d.com/">
-  <img src="https://img.shields.io/badge/Unity-6000.0.38f1-6243c4?style=flat&logo=unity" alt="Unity badge"/>
-</a>
-&nbsp;
-  <a href="https://itch.io/profile/ilovevladislav">
+  &nbsp;
+  <!-- Unity version -->
+  <a href="https://unity3d.com/"
+     style="text-decoration: none;">
+    <img
+      src="https://img.shields.io/badge/Unity-6000.0.38f1-6243c4?style=flat&logo=unity"
+      alt="Unity badge"
+      style="border: none;"
+    />
+  </a>
+  &nbsp;
+  <!-- Itch.io profile -->
+  <a href="https://itch.io/profile/ilovevladislav"
+     style="text-decoration: none;">
     <img
       src="https://img.shields.io/static/v1?style=flat&label=Itch.io&message=ilovevladislav&color=6243c4&logo=Itch.io&logoColor=white"
-      alt="GitHub badge"
+      alt="Itch.io badge"
+      style="border: none;"
     />
   </a>
+</p>
+
 
 
 # About
@@ -33,6 +46,9 @@
 Данный проект является удобным, настраиваемым контроллером для вашей 2D платформерной игры. 
 Была реализованна легко модифицируещаеся система для передвижения вашего героя. 
 Вы можете использовать ее как отдельную систему, дополняя другими необходимыми системами для игры. 
+
+[!TIP]
+> Вы можете попробовать контроллер в браузере на сайте [Itch.io](https://ilovevladislav.itch.io/platformer-controller-2d)
 
 # Installation
 > [!IMPORTANT]<br/>
@@ -54,8 +70,10 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git
 
 Есть два варианта установки пакет, через URL или с диска
 
+> [!IMPORTANT]<br/>
 > При установке с диска вы сможете редактировать файлы, установка через URL не дает такой возможности`.
 
+[!TIP]
 > Тестовые сцены можно установить в `Package manager` **-** _`PlatformerController2D` **–** `Samples` **–** `Import`
 
 ### Установка с диска
@@ -80,9 +98,49 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git
 git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/PlatformerController2D
 ```
 
+# Usage
 
+При скачивании проекта в папке Scene вы можете запустить любую сцену и попробовать контроллер. 
 
+[!TIP]
+> В `иерархии сцены` или в папке `prefabs` можно найти персонажа и посмотреть его организацию.
 
+## Создание и настройка собственного персонажа
+
+1. Создайте следующую иерархию объектов c их компонентами в Unity
+
+- Player - (Rigidbody2D, PlayerController, CollisionChecker, Physic Handler 2D, Collider Sprite Resizer, InputReader)
+  - PlayerSprite (Sprite Renderer)
+  - Colliders (CreateEmpty)
+    - Body (Capsule Collider 2D \ Box Collider 2D)
+    - Feet (Box Collider 2D)
+
+Пример иерархии объектов:  
+![Логотип проекта](Assets/ForGithub/ObjectHierarchy.png)
+
+2. Создайте пресет настроек для персонажа
+
+В Unity `ProjectWindow` - `нажмите правой кнопкой мыши` - `Create` - `PlayerControllerStats`,
+Настройте созданный скриптовый объект по вашему желанию.
+
+> [!IMPORTANT]<br/>
+>Снизу есть настройка GroundLayer, создайте слой земли и добавьте его туда, всем блокам земли тоже добавьте этот слой.
+
+Пример части настроек для персонажа объекта Player:  
+![Логотип проекта](Assets/ForGithub/BasePreset.png)
+
+3. Настройте все компоненты используя примеры ниже 
+
+Пример компонентов объекта Player:  
+![Логотип проекта](Assets/ForGithub/PlayerComponents.png)
+
+Пример физического материала объекта Player:  
+![Логотип проекта](Assets/ForGithub/PhysicalMaterial.png)
+
+Пример коллайдеров Player:  
+![Логотип проекта](Assets/ForGithub/PlayerColliderExample.png)
+
+## Создание уровня 
 
 
 
