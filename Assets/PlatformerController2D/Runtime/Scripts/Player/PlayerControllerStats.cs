@@ -122,7 +122,7 @@ public class PlayerControllerStats : ScriptableObject
 	
 	
 	
-		
+	
 	public float AdjustedJumpHeight => MaxJumpHeight * JumpHeightCompensationFactor;  
 	public float Gravity => 2f * AdjustedJumpHeight / MathF.Pow(TimeTillJumpApex, 2f);  
 	public float MaxJumpVelocity => Gravity * TimeTillJumpApex;  

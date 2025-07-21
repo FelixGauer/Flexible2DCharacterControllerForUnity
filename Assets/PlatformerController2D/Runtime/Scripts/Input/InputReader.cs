@@ -15,7 +15,6 @@ public class InputReader : MonoBehaviour, IPlayerActions
     private readonly ButtonInputHandler _runHandler = new ButtonInputHandler();
     private readonly ButtonInputHandler _crouchHandler = new ButtonInputHandler();
 
-    // События для уведомления о изменениях ввода
     public event Action<Vector2> OnMoveChanged;
     public event Action<InputButtonState> OnDashChanged;
     public event Action<InputButtonState> OnJumpChanged;

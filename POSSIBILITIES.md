@@ -1,14 +1,35 @@
-# Действия персонажа и их параметры
+# Character Actions and Preset Configuration Setup
+
+В этом разделе представленны все на данный момент реализованные возможности передвижения персонажа.
+В таблицах названия и описание параметров, которые присутствуют в `PlayerControllerStats`, 
+
+## General
+
+##
+
+| Parameter name                  | Description                                        |
+|---------------------------------|----------------------------------------------------|
+| ResetNumberJumpOnWall           | Reset jump count when touching wall               |
+| ResetNumberDashOnWall           | Reset dash count when touching wall               |
+| CanJumpInTheAirTowardsTheWall   | Allow jumping in air towards wall direction       |
+
+### Detection Parameters
+
+| Parameter name                      | Description                                           |
+|-------------------------------------|-------------------------------------------------------|
+| GroundDetectionRayLength            | Length of raycast for ground detection               |
+| HeadDetectionRayLength              | Length of raycast for head collision detection       |
+| HeadWidth                           | Width parameter for head collision detection         |
+| WallDetectionRayLength              | Length of raycast for wall detection                 |
+| WallDetectionRayHeightMultiplayer   | Height multiplier for wall detection raycast         |
+| GroundLayer                         | Layer mask for ground detection                      |
+
 
 ## Walk
-
-[//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/640_360_25frames/1_Walk.gif&#41;)
-[//]: # (<img src="Assets/ForGithub/640_360_25frames/1_Walk.gif" alt="Walk">)
 
 ![PlayerColliderExample](Assets/ForGithub/640_360_25frames/1_Walk.gif)
 
 ### Walk Parameters
-
 
 | Parameter name      	| Description                                           	|
 |---------------------	|-------------------------------------------------------	|
@@ -150,6 +171,7 @@
 | WallFallSpeed               | Speed during fall after wall jump                         |
 | WallFallAirAcceleration     | Acceleration during fall after wall jump                  |
 | WallFallAirDeceleration     | Deceleration during fall after wall jump                  |
+
 
 
 

@@ -30,14 +30,11 @@
       style="border: none;"/></a>
 </p>
 
-
-
-
-
 # About
 
-Данный проект является удобным, настраиваемым контроллером для вашей 2D платформерной игры. 
-Была реализованна легко модифицируещаеся система для передвижения вашего героя. 
+Данный проект является удобным, настраиваемым контроллером для вашей 2D платформенной игры. 
+Это легко модифицируемая система для передвижения вашего героя. 
+Она обладает обширным количеством быстро и легко настраиваемых действий.
 Вы можете использовать ее как отдельную систему, дополняя другими необходимыми системами для игры. 
 
 > [!TIP]
@@ -113,7 +110,6 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 [//]: # (![ObjectHierarchy]&#40;Assets/ForGithub/ObjectHierarchy.png&#41;)
 <img src="Assets/ForGithub/ObjectHierarchy.png" alt="Grid" height="300">
 
-
 2. Создайте пресет настроек для персонажа
 
 В Unity `ProjectWindow` - `нажмите правой кнопкой мыши` - `Create` - `PlayerControllerStats`,  
@@ -126,7 +122,6 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 [//]: # (![BasePreset]&#40;Assets/ForGithub/BasePreset.PNG&#41;)
 <img src="Assets/ForGithub/BasePreset.PNG" alt="Grid" height="300">
-
 
 3. Настройте все компоненты используя примеры ниже 
 
@@ -157,13 +152,42 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 <img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="500">
 
-## Configuration 
+## Controls
 
-Go to [about page](POSSIBILITIES.md)
+![PlayerColliderExample](Assets/ForGithub/Save.png)
 
+### Изменение раскладки
 
+Перейдите в папку `Assets\PlatformerController2D\Runtime\Actions` - откройте Action файл `PlayerInputActions` - 
+в открывшимся окне `измените привязки клавиш` - нажмите справа `Save Assets`
 
-![Walk](Assets/ForGithub/640_360_25frames/1_Walk.gif)
+![PlayerColliderExample](Assets/ForGithub/PlayerInputActions.PNG)
+
+# Действия персонажа и их параметры 
+
+Все возможности персонажа и параметры настройки пресета можно посмотреть тут - [Character Actions and Preset Configuration Setup](POSSIBILITIES.md)
+
+# Будущие обновления
+
+В будущем планируется добавить 
+
+# Feedback and Contributions
+
+Было приложено огромное усилие для разработки данного проекта, я понимаю, что архитектура, логика, организация
+в некоторых моментах проседает и требует доработки. Однако процесс разработки еще не закончен и ваша помощь важна
+для проекта.
+
+> [!IMPORTANT]<br/>
+> Если у вас есть отзывы, предложения по улучшению или вы нашли баги, пожалуйста напишите об этом.
+> Так же хочется обратиться к опытным разработчикам, будет очень приятно услышать ваш фидбек насчет архитектуры проекта 
+> его организации и кода. Это мне поможет стать лучше и разобраться во многих концепция, я ценю это!
+
+# License
+
+MIT License. Refer to the [LICENSE.md](LICENSE) file.
+
+Copyright (c) 2025 Vladislav-EG [Vladislav-EG](https://github.com/Vladislav-EG)
+
 
 
 
