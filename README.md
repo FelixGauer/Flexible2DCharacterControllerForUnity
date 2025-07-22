@@ -1,11 +1,8 @@
 <h1 align="center">Flexible 2D Platformer Controller - Unity</h1>
 
-
-
 <p align="center">
     <img src="Assets/ForGithub/logo.gif" alt="logo" />
 </p>
-
 
 <p align="center">
   <!-- GitHub profile -->
@@ -35,21 +32,25 @@
 Данный проект является удобным, настраиваемым контроллером для вашей 2D платформенной игры. 
 Это легко модифицируемая система для передвижения вашего героя. 
 Она обладает обширным количеством быстро и легко настраиваемых действий.
-Вы можете использовать ее как отдельную систему, дополняя другими необходимыми системами для игры. 
+Вы можете использовать ее как отдельную систему, дополняя другими необходимыми системами для игры.
 
 > [!TIP]
-> Вы можете попробовать контроллер в браузере на сайте [Itch.io](https://ilovevladislav.itch.io/platformer-controller-2d)
+> Опробовать контроллер можно в браузере - [Itch.io](https://ilovevladislav.itch.io/platformer-controller-2d)
+
+![GamePlay](Assets/ForGithub/gameplay.gif)
+
+
 
 # Installation
 > [!IMPORTANT]<br/>
 > Контроллер создавался на Unity версии `6000.0.38f1 / 11 feb 2025`.
 
-Вы можете скачать сам и установить его в Unity, либо пользоваться контроллером как UPM пакетом для Unity
+Вы можете скачать проект и установить через UnityHub, либо пользоваться контроллером как UPM пакетом для Unity
 
 ## Установка как проект для Unity
 
 1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git clone`
-
+  
 ```console
 git clone https://github.com/Vladislav-EG/Platformer2D.git
 ```
@@ -60,11 +61,11 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git
 
 Есть два варианта установки пакет, через URL или с диска
 
-> [!IMPORTANT]<br/>
-> При установке с диска вы сможете редактировать файлы, установка через URL не дает такой возможности`.
+> [!NOTE]<br/>
+> При установке с диска вы сможете редактировать файлы, установка через URL не дает такой возможности.
 
 > [!TIP]
-> Тестовые сцены можно установить в `Package manager` **-** _`PlatformerController2D` **–** `Samples` **–** `Import`
+> Тестовые сцены можно установить в `Package manager` **-** `_PlatformerController2D` **–** `Samples` **–** `Import`
 
 ### Установка с диска
 
@@ -85,15 +86,19 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git
 1. In Unity – `Windows` – `Package manager` - `+` - `install package from git URL...`
 
 ```console
-git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/PlatformerController2D
+https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/PlatformerController2D
 ```
 
 # Usage
 
-При скачивании проекта в папке Scene вы можете запустить любую сцену и попробовать контроллер. 
+При скачивании проекта в папке `Scene` или отдельном импортировании сцен из `Samples`, вы можете запустить любую сцену и попробовать контроллер. 
 
 > [!TIP]
 > В `иерархии сцены` или в папке `prefabs` можно найти персонажа и посмотреть его организацию.
+
+## Controls
+
+![PlayerColliderExample](Assets/ForGithub/Save.png)
 
 ## Создание и настройка собственного персонажа
 
@@ -123,6 +128,13 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 [//]: # (![BasePreset]&#40;Assets/ForGithub/BasePreset.PNG&#41;)
 <img src="Assets/ForGithub/BasePreset.PNG" alt="Grid" height="300">
 
+> [!TIPS]<br/>
+>В сцене присутствует возможность настройки пресета с помощью UI, при изменении значений
+> в ui они будут меняться и в SO, при отключении `PlayMode` настройки сохранятся.
+
+<img src="Assets/ForGithub/UiPreset.PNG" alt="Grid" height="300">
+
+
 3. Настройте все компоненты используя примеры ниже 
 
 Пример компонентов объекта Player:  
@@ -130,12 +142,10 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 [//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
 <img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="500">
 
-
 Пример физического материала объекта Player:  
 
 [//]: # (![PhysicalMaterial]&#40;Assets/ForGithub/PhysicalMaterial.PNG&#41;)
 <img src="Assets/ForGithub/PhysicalMaterial.PNG" alt="Grid" height="150">
-
 
 Пример коллайдеров Player:  
 
@@ -152,11 +162,8 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 <img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="500">
 
-## Controls
 
-![PlayerColliderExample](Assets/ForGithub/Save.png)
-
-### Изменение раскладки
+## Изменение раскладки
 
 Перейдите в папку `Assets\PlatformerController2D\Runtime\Actions` - откройте Action файл `PlayerInputActions` - 
 в открывшимся окне `измените привязки клавиш` - нажмите справа `Save Assets`
@@ -165,7 +172,7 @@ git clone https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/Platform
 
 # Действия персонажа и их параметры 
 
-Все возможности персонажа и параметры настройки пресета можно посмотреть тут - [Character Actions and Preset Configuration Setup](POSSIBILITIES.md)
+Все возможности персонажа и параметры настройки пресета можно посмотреть тут - [Character Actions and Preset Configuration Setup](ActionsAndPresetConfiguration.md)
 
 # Будущие обновления
 
