@@ -31,7 +31,7 @@ public class MovementSettings
 {
     [Header("Movement Mode")]
     [Tooltip("Walk: ходьба по умолчанию, зажать клавишу для бега\nRun: бег по умолчанию, зажать клавишу для ходьбы")]
-    public MovementMode defaultMovementMode = MovementMode.Walk;
+    public MovementMode defaultMovementMode = MovementMode.Run;
 }
 
 public enum MovementMode

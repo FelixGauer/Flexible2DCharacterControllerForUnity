@@ -12,9 +12,9 @@ public class PlayerControllerStats : ScriptableObject
 	[Header("Movement Settings")]
 	public MovementSettings movementSettings = new MovementSettings();
 
-	public bool ResetNumberJumpOnWall;
-	public bool ResetNumberDashOnWall;
-	public bool CanJumpInTheAirTowardsTheWall;
+	public bool ResetNumberJumpOnWall = true;
+	public bool ResetNumberDashOnWall = true;
+	public bool CanJumpInTheAirTowardsTheWall = true;
 
 	[Header("Movement")]
 	[Range(0f, 200f)] public float WalkSpeed = 3f;

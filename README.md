@@ -29,80 +29,80 @@
 
 # About
 
-Данный проект является удобным, настраиваемым контроллером для вашей 2D платформенной игры. 
-Это легко модифицируемая система для передвижения вашего героя. 
-Она обладает обширным количеством быстро и легко настраиваемых действий.
-Вы можете использовать ее как отдельную систему, дополняя другими необходимыми системами для игры.
+This project is a convenient, customizable controller for your 2D platform game.
+It's an easily modifiable system for moving your hero.
+It features an extensive amount of quickly and easily configurable actions.
+You can use it as a standalone system, supplementing it with other necessary game systems.
 
 > [!TIP]
-> Опробовать контроллер можно в браузере - [Itch.io](https://ilovevladislav.itch.io/platformer-controller-2d)
+> You can try the controller in your browser - [Itch.io](https://ilovevladislav.itch.io/platformer-controller-2d)
 
 ![GamePlay](Assets/ForGithub/gameplay.gif)
 
 
-
 # Installation
 > [!IMPORTANT]<br/>
-> Контроллер создавался на Unity версии `6000.0.38f1 / 11 feb 2025`.
+> The controller was created on Unity version `6000.0.38f1 / 11 feb 2025`.
 
-Вы можете скачать проект и установить через UnityHub, либо пользоваться контроллером как UPM пакетом для Unity
+You can download the project and install it through UnityHub, or use the controller as a UPM package for Unity
 
-## Установка как проект для Unity
+## Installation as a Unity project
 
-1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git clone`
+1. Download the Unity project archive to your computer using `Download .zip` or `git clone`
   
 ```console
-git clone https://github.com/Vladislav-EG/Platformer2D.git
+git clone https://github.com/Vladislav-EG/Flexible2DCharacterControllerForUnity.git
 ```
 
-2. Открыть проект с помощью Unity Hub
+2. Open the project using `Unity Hub`
 
 ## Install as a package
 
-Есть два варианта установки пакет, через URL или с диска
+There are two ways to install the package, via URL or from disk
 
 > [!NOTE]<br/>
-> При установке с диска вы сможете редактировать файлы, установка через URL не дает такой возможности.
+> When installing `from disk` you will be able to `edit files`, `URL` installation `does not provide this capability`.
 
 > [!TIP]
-> Тестовые сцены можно установить в `Package manager` **-** `_PlatformerController2D` **–** `Samples` **–** `Import`
+> Test scenes can be installed in `Package manager` **-** `_PlatformerController2D` **–** `Samples` **–** `Import`
 
-### Установка с диска
+### Installation from disk
 
-1. Скачать архив с проектом Unity на свой компьютер с помощью `Download .zip` или `git clone`
+1. Download the Unity project archive to your computer using `Download .zip` or `git clone`
 
 ```console
-git clone https://github.com/Vladislav-EG/Platformer2D.git
+git clone https://github.com/Vladislav-EG/Flexible2DCharacterControllerForUnity.git
 ```
 
-2. В Unity `Windows` – `Package manager` - `+` - `install package from disk` – `pathForDownloadProject\Assets\PlatformerController2D\package.json`
+2. In Unity `Windows` – `Package manager` - `+` - `install package from disk` – `pathForDownloadProject\Assets\PlatformerController2D\package.json`
 
 
-### Установка через URL
+### Installation from git URL
 
 > [!IMPORTANT]<br/>
-> Нужно скачивать не по классической ссылке которую можно скопировать в Git, а по ссылке с путем до package.json.
+> You need to download not by the classic link that can be copied in Git, but by the `link with the path to package.json.`
 
 1. In Unity – `Windows` – `Package manager` - `+` - `install package from git URL...`
 
 ```console
-https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/PlatformerController2D
+https://github.com/Vladislav-EG/Flexible2DCharacterControllerForUnity.git?path=/Assets/PlatformerController2D
 ```
 
 # Usage
 
-При скачивании проекта в папке `Scene` или отдельном импортировании сцен из `Samples`, вы можете запустить любую сцену и попробовать контроллер. 
+When downloading the project in the `Scene` folder or separately importing scenes from `Samples`,
+you can run any scene and try the controller.
 
 > [!TIP]
-> В `иерархии сцены` или в папке `prefabs` можно найти персонажа и посмотреть его организацию.
+> In the `scene hierarchy` or in the `prefabs` folder you can find the character and see its organization.
 
 ## Controls
 
 ![PlayerColliderExample](Assets/ForGithub/Save.png)
 
-## Создание и настройка собственного персонажа
+## Creating and configuring your own character
 
-1. Создайте следующую иерархию объектов c их компонентами в Unity
+1.  Create the following object hierarchy with their components in Unity
 
 - Player - (Rigidbody2D, PlayerController, CollisionChecker, Physic Handler 2D, Collider Sprite Resizer, InputReader)
   - PlayerSprite (Sprite Renderer)
@@ -110,84 +110,84 @@ https://github.com/Vladislav-EG/Platformer2D.git?path=/Assets/PlatformerControll
     - Body (Capsule Collider 2D \ Box Collider 2D)
     - Feet (Box Collider 2D)
 
-Пример иерархии объектов:  
+Example object hierarchy:
 
 [//]: # (![ObjectHierarchy]&#40;Assets/ForGithub/ObjectHierarchy.png&#41;)
 <img src="Assets/ForGithub/ObjectHierarchy.png" alt="Grid" height="300">
 
-2. Создайте пресет настроек для персонажа
+2. Create a settings preset for the character
 
-В Unity `ProjectWindow` - `нажмите правой кнопкой мыши` - `Create` - `PlayerControllerStats`,  
-Настройте созданный скриптовый объект по вашему желанию.
+In Unity `ProjectWindow` - `right-click` - `Create` - `PlayerControllerStats`,  
+Configure the created scriptable object as you wish.
 
 > [!IMPORTANT]<br/>
->Снизу есть настройка GroundLayer, создайте слой земли и добавьте его туда, всем блокам земли тоже добавьте этот слой.
+>At the bottom there is a `GroundLayer` setting, `create a ground layer` and add it there, also `add this layer to all ground` blocks.
 
-Пример части настроек для персонажа объекта Player:  
+Example of part of the settings for the Player object:  
 
 [//]: # (![BasePreset]&#40;Assets/ForGithub/BasePreset.PNG&#41;)
 <img src="Assets/ForGithub/BasePreset.PNG" alt="Grid" height="300">
 
-> [!TIPS]<br/>
->В сцене присутствует возможность настройки пресета с помощью UI, при изменении значений
-> в ui они будут меняться и в SO, при отключении `PlayMode` настройки сохранятся.
+> [!TIP]<br/>
+>The scene has the ability to configure the preset using UI, when changing values
+>in the UI they will also change in the SO, when disabling `PlayMode` the settings will be saved.
+
 
 <img src="Assets/ForGithub/UiPreset.PNG" alt="Grid" height="300">
 
+3. Create a physics material
 
-3. Настройте все компоненты используя примеры ниже 
+`In Unity ProjectWindow` - `right-click` - `Create` - `PhysicsMaterial`,  
 
-Пример компонентов объекта Player:  
-
-[//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
-<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="500">
-
-Пример физического материала объекта Player:  
+Example physics material for Player object:
 
 [//]: # (![PhysicalMaterial]&#40;Assets/ForGithub/PhysicalMaterial.PNG&#41;)
 <img src="Assets/ForGithub/PhysicalMaterial.PNG" alt="Grid" height="150">
 
-Пример коллайдеров Player:  
+4. Configure all components using the examples below 
+
+Example Player object components:  
+
+[//]: # (![PlayerComponents]&#40;Assets/ForGithub/PlayerComponents.PNG&#41;)
+<img src="Assets/ForGithub/PlayerComponents.PNG" alt="Grid" height="500">
+
+Example Player colliders: 
 
 [//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/PlayerColliderExample.PNG&#41;)
 <img src="Assets/ForGithub/PlayerColliderExample.PNG" alt="Grid" height="300">
 
 
-## Создание уровня 
+## Creating a level
 
-Для создания уровня перетащите из папки `Prefabs` на сцену `GridForScene`, выберите этот объект и в окне `Scene` нажмите `Open Tile Palette`,
-выделите нужно палитру и создавайте уровень в окне `Scene`.
+To create a level, drag `GridForScene` from the `Prefabs` folder to the scene, select this object and in the `Scene` window click `Open Tile Palette`,
+`select the needed palette` and create the level in the `Scene` window.
 
 [//]: # (![PlayerColliderExample]&#40;Assets/ForGithub/Grid.PNG&#41;)
 
 <img src="Assets/ForGithub/Grid.PNG" alt="Grid" height="500">
 
+## Changing key bindings
 
-## Изменение раскладки
-
-Перейдите в папку `Assets\PlatformerController2D\Runtime\Actions` - откройте Action файл `PlayerInputActions` - 
-в открывшимся окне `измените привязки клавиш` - нажмите справа `Save Assets`
+Go to the folder `Assets\PlatformerController2D\Runtime\Actions` - open the Action file `PlayerInputActions` -
+in the opened window `change key bindings` - click `Save Assets` on the right.
 
 ![PlayerColliderExample](Assets/ForGithub/PlayerInputActions.PNG)
 
-# Действия персонажа и их параметры 
+# Character actions and their parameters
 
-Все возможности персонажа и параметры настройки пресета можно посмотреть тут - [Character Actions and Preset Configuration Setup](ActionsAndPresetConfiguration.md)
-
-# Будущие обновления
-
-В будущем планируется добавить 
+All character capabilities and preset configuration parameters can be viewed here - [Character Actions and Preset Configuration Setup](ActionsAndPresetConfiguration.md)
 
 # Feedback and Contributions
 
-Было приложено огромное усилие для разработки данного проекта, я понимаю, что архитектура, логика, организация
-в некоторых моментах проседает и требует доработки. Однако процесс разработки еще не закончен и ваша помощь важна
-для проекта.
+Enormous effort was put into developing this project, I understand that the architecture, logic, organization
+in some moments falls short and requires improvement. However, the development process is not yet finished and your help is important
+for the project.
 
 > [!IMPORTANT]<br/>
-> Если у вас есть отзывы, предложения по улучшению или вы нашли баги, пожалуйста напишите об этом.
-> Так же хочется обратиться к опытным разработчикам, будет очень приятно услышать ваш фидбек насчет архитектуры проекта 
-> его организации и кода. Это мне поможет стать лучше и разобраться во многих концепция, я ценю это!
+> If you have feedback, suggestions for improvement, or you found bugs, please write about it.
+> I would also like to address experienced developers, it would be very nice to hear your feedback about the project architecture,
+> its organization and code. This will help me become better and understand many concepts, I appreciate it!
+
 
 # License
 

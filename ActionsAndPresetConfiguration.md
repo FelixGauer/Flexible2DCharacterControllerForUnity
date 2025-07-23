@@ -175,19 +175,3 @@
 | WallFallAirAcceleration     | Acceleration during fall after wall jump                  |
 | WallFallAirDeceleration     | Deceleration during fall after wall jump                  |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
