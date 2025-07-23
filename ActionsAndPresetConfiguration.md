@@ -1,10 +1,10 @@
 # Character Actions and Preset Configuration Setup
 
 > [!IMPORTANT]<br/>
-> Для каждого действия есть `.gif`, подождите если они у вас не прогрузились.
+> There is a `.gif` for each action, please wait if they have not loaded.
 
-В этом разделе представленны все на данный момент реализованные возможности передвижения персонажа.
-В таблицах названия и описание параметров, которые присутствуют в `PlayerControllerStats`, 
+This section presents all currently implemented character movement capabilities.
+The tables contain the names and descriptions of parameters present in `PlayerControllerStats`.
 
 ## General
 
