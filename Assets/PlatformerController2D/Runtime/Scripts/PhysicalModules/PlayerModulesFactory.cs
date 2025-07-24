@@ -10,7 +10,7 @@ public class PlayerModulesFactory
         return new PlayerModules(
             new MovementModule(),
             new JumpModule(collisionsChecker, playerControllerStats, playerTimerRegistry.jumpBufferTimer, playerTimerRegistry.jumpCoyoteTimer),
-            new FallModule(playerControllerStats, playerTimerRegistry.jumpBufferTimer),
+            new FallModule(playerControllerStats, playerTimerRegistry.jumpBufferTimer, collisionsChecker),
             new DashModule(playerControllerStats, turnChecker, playerTimerRegistry.dashTimer, collisionsChecker),
             new WallSlideModule(playerControllerStats, turnChecker, playerTimerRegistry.wallFallTimer),
             new WallJumpModule(playerControllerStats, playerTimerRegistry.wallJumpTimer),

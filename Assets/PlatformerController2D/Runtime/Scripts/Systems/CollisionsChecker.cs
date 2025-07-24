@@ -10,12 +10,12 @@ public class CollisionsChecker : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool BumpedHead { get; private set; }
     public bool IsTouchingWall { get; private set; }
-    public bool IsInWallZone { get; private set; } // Новое свойство для проверки зоны стены
+    public bool IsInWallZone { get; private set; } 
 
     private RaycastHit2D _headHit;
     private RaycastHit2D _wallHit;
     private RaycastHit2D _lastWallHit;
-    private bool _lastWallFacingRight; // Направление, когда касались стены
+    private bool _lastWallFacingRight; 
     
     private bool _wasGrounded;
     private bool _wasBumpingHead;
@@ -151,7 +151,6 @@ public class CollisionsChecker : MonoBehaviour
        #endregion
     }
 
-    // Новый метод для проверки зоны стены
     private void CheckWallZone()
     {
         if (_lastWallHit.collider == null || IsFacingRight() != _lastWallFacingRight)

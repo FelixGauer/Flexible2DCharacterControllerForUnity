@@ -4,6 +4,8 @@ public class RunFallState : BaseState
 {
     private readonly FallModule _fallModule;
     private readonly MovementModule _movementModule;
+    
+    private Vector2 _moveVelocity;
 
     public RunFallState(PlayerStateContext context, FallModule fallModule, MovementModule movementModule) :
         base(context)
@@ -25,14 +27,17 @@ public class RunFallState : BaseState
          
         turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
-    
-    private Vector2 _moveVelocity;
-
 
     public override void FixedUpdate()
     {
         _moveVelocity.y = _fallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
+        
+        _moveVelocity.y = _fallModule.HandleFalling(Vector2.zero).y;
+
         _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAirAcceleration, playerControllerStats.RunAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
+        
+        
+        
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 	

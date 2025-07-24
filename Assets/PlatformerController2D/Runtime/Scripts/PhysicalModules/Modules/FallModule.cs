@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class FallModule 
 {
-    public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
+    private readonly PlayerControllerStats _playerControllerStats;
+    private readonly CountdownTimer _jumpBufferTimer;
+    private readonly CollisionsChecker _collisionsChecker;
+
+    private bool _isHeld;
+
+    public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CollisionsChecker collisionsChecker)
     {
         _playerControllerStats = playerControllerStats;
         _jumpBufferTimer = jumpBufferTimer;
+        _collisionsChecker = collisionsChecker;
     }
-    
-    private readonly PlayerControllerStats _playerControllerStats;
-    private readonly CountdownTimer _jumpBufferTimer;
-
-    private bool _isHeld;
 
     public void BufferJump(InputButtonState jumpState)
     {
@@ -19,15 +21,15 @@ public class FallModule
     }
     
     public void SetHoldState(bool isHeld) => _isHeld = isHeld;
-    
+
     public Vector2 HandleFalling(Vector2 currentVelocity)
     {
+        // if (_collisionsChecker.BumpedHead) currentVelocity = Vector2.zero; // FIXME
+        
         float gravityMultiplier = GetGravityMultiplier(currentVelocity.y);
         
-        // Применяем гравитацию
         Vector2 newVelocity = ApplyGravity(currentVelocity, _playerControllerStats.Gravity, gravityMultiplier);
         
-        // Ограничиваем максимальную скорость падения
         newVelocity.y = ClampFallSpeed(newVelocity.y);
 
         return newVelocity;
@@ -35,24 +37,24 @@ public class FallModule
 
     private Vector2 ApplyGravity(Vector2 moveVelocity, float gravity, float gravityMultiplayer)
     {
-        // Применение гравитации
         moveVelocity.y -= gravity * gravityMultiplayer * Time.fixedDeltaTime;
         return moveVelocity;
     }
     
     private float GetGravityMultiplier(float verticalVelocity)
     {
-        // Если «висим» на верхней точке прыжка (ниже порога hang-time)
+        // if (_collisionsChecker.BumpedHead) // FIXME
+        // {
+        //     return _playerControllerStats.FallGravityMultiplayer;
+        // }
         if (Mathf.Abs(verticalVelocity) < _playerControllerStats.JumpHangTimeThreshold)
         {
             return _playerControllerStats.JumpHangGravityMultiplier;
         }
-        // Если ещё держат кнопку прыжка — уменьшаем силу гравитации
         else if (_isHeld)
         {
             return _playerControllerStats.JumpGravityMultiplayer;
         }
-        // Свободное падение или отпустили кнопку
         else
         {
             return _playerControllerStats.FallGravityMultiplayer;

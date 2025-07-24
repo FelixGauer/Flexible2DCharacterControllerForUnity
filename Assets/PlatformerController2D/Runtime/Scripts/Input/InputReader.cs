@@ -100,11 +100,6 @@ public class InputReader : MonoBehaviour, IPlayerActions
         _runHandler.State.ResetFrameState();
         _crouchHandler.State.ResetFrameState();
     }
-    
-    public void JumpResetFrameStates() // FIXME 
-    {
-        // _jumpHandler.State.ResetFrameState();
-    }
 }
 
 public interface IInputHandler

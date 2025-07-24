@@ -64,21 +64,21 @@ public class PlayerController : MonoBehaviour
 	private void Update() 
 	{
 		_stateMachine.Update();
-		
+
 		HandleTimers();
-		// Debbuging();
 	}
 
 	private void FixedUpdate()
 	{
 		_stateMachine.FixedUpdate();
 		
-		inputReader.JumpResetFrameStates();
+		// Debug.Log(physicsHandler2D.GetVelocity().x);
 	}
 
 	private void LateUpdate()
 	{
 		inputReader.ResetFrameStates();
+		
 	}
 
 	private void HandleTimers() 

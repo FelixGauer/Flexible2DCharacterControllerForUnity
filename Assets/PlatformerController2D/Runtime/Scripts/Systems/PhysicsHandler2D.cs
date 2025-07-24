@@ -17,10 +17,13 @@ public class PhysicsHandler2D : MonoBehaviour, IPhysicsHandler
     public void AddVelocity(Vector2 vel) => _accumulatedVelocity += vel;
 
     public Vector2 GetVelocity() => _rb.linearVelocity;
-    public Vector2 GetLastAppliedVelocity() => _lastAppliedVelocity; // Новый метод
+
+    public Vector2 GetLastAppliedVelocity() => _lastAppliedVelocity;
 
     void FixedUpdate()
     {
+        // Debug.Log(_rb.linearVelocity.x);
+
         _rb.linearVelocity = _accumulatedVelocity;
         _lastAppliedVelocity = _accumulatedVelocity;
         _accumulatedVelocity = Vector2.zero;

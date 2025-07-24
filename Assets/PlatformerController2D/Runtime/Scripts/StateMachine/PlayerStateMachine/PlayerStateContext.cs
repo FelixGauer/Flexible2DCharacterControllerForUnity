@@ -5,7 +5,7 @@ public class PlayerStateContext
     public PhysicsHandler2D PhysicsHandler2D { get; }
     public TurnChecker TurnChecker { get; }
     public AnimationController AnimationController { get; }
-
+    
     public PlayerStateContext(
         InputReader inputReader,
         PlayerControllerStats playerControllerStats,

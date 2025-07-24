@@ -20,6 +20,7 @@ public class IdleState : BaseState
 
 	public override void FixedUpdate()
 	{
-
+		var moveVelocity = new Vector2(0f, playerControllerStats.GroundGravity);
+		physicsHandler2D.AddVelocity(moveVelocity);
 	}	
 }

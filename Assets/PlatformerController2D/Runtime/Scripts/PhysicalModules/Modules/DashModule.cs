@@ -80,7 +80,6 @@ public class DashModule
         _dashDirection = GetClosestDirection(moveDirection);
     }
 	
-    // Метод для поиска ближайшего направления рывка
     private Vector2 GetClosestDirection(Vector2 targetDirection)
     {
         Vector2 closestDirection = Vector2.zero;
@@ -90,10 +89,9 @@ public class DashModule
         {
             float distance = Vector2.Distance(targetDirection, dashDirection);
         
-            // ИСПРАВЛЕНО: Приоритет диагональным направлениям
             if (IsDiagonal(dashDirection) && IsDiagonal(targetDirection))
             {
-                distance *= 0.5f; // Делаем диагональные направления более приоритетными
+                distance *= 0.5f; 
             }
         
             if (distance < minDistance)

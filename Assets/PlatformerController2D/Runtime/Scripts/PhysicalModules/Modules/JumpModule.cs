@@ -75,7 +75,6 @@ public class JumpModule
 
     public Vector2 JumpPhysicsProcessing(Vector2 currentVelocity)
     {
-        
         var moveVelocity = currentVelocity;
         
         if (moveVelocity.y > 0f)
@@ -124,7 +123,7 @@ public class JumpModule
     {
         _positiveMoveVelocity = false;
     }
-    
+
     public bool CanFall(Vector2 currentVelocity)
     {
         return (currentVelocity.y < 0f && _positiveMoveVelocity && !_jumpInputPressed);
