@@ -23,8 +23,6 @@ public class RunJumpState : BaseState
 
         animationController.PlayAnimation("Jump");
         _jumpModule.OnMultiJump += () => animationController.PlayAnimation("MultiJump");
-
-        _jumpModule.TestStartJump(); 
     }
     
     public override void Update()

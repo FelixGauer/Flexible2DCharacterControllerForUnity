@@ -31,7 +31,6 @@ public class RunState : BaseState
 		var moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAcceleration, playerControllerStats.RunDeceleration); // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
 		moveVelocity.y = playerControllerStats.GroundGravity;
 
-		Debug.Log(moveVelocity.x);
 		physicsHandler2D.AddVelocity(moveVelocity);
 	}
 	

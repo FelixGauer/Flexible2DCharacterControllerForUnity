@@ -4,15 +4,13 @@ public class FallModule
 {
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _jumpBufferTimer;
-    private readonly CollisionsChecker _collisionsChecker;
 
     private bool _isHeld;
 
-    public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer, CollisionsChecker collisionsChecker)
+    public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
     {
         _playerControllerStats = playerControllerStats;
         _jumpBufferTimer = jumpBufferTimer;
-        _collisionsChecker = collisionsChecker;
     }
 
     public void BufferJump(InputButtonState jumpState)
@@ -24,14 +22,18 @@ public class FallModule
 
     public Vector2 HandleFalling(Vector2 currentVelocity)
     {
-        // if (_collisionsChecker.BumpedHead) currentVelocity = Vector2.zero; // FIXME
-        
         float gravityMultiplier = GetGravityMultiplier(currentVelocity.y);
         
         Vector2 newVelocity = ApplyGravity(currentVelocity, _playerControllerStats.Gravity, gravityMultiplier);
         
         newVelocity.y = ClampFallSpeed(newVelocity.y);
 
+        return newVelocity;
+    }
+    
+    public Vector2 HandleAfterBumped()
+    {
+        Vector2 newVelocity = ApplyGravity(Vector2.zero, _playerControllerStats.Gravity, _playerControllerStats.FallGravityMultiplayer);
         return newVelocity;
     }
 
@@ -43,10 +45,6 @@ public class FallModule
     
     private float GetGravityMultiplier(float verticalVelocity)
     {
-        // if (_collisionsChecker.BumpedHead) // FIXME
-        // {
-        //     return _playerControllerStats.FallGravityMultiplayer;
-        // }
         if (Mathf.Abs(verticalVelocity) < _playerControllerStats.JumpHangTimeThreshold)
         {
             return _playerControllerStats.JumpHangGravityMultiplier;

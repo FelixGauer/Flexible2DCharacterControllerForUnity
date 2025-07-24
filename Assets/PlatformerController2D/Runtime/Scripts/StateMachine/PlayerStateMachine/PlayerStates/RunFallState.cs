@@ -32,11 +32,9 @@ public class RunFallState : BaseState
     {
         _moveVelocity.y = _fallModule.HandleFalling(physicsHandler2D.GetVelocity()).y;
         
-        _moveVelocity.y = _fallModule.HandleFalling(Vector2.zero).y;
+        if (collisionsChecker.BumpedHead) _moveVelocity.y = _fallModule.HandleAfterBumped().y;
 
         _moveVelocity.x = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.RunSpeed, playerControllerStats.RunAirAcceleration, playerControllerStats.RunAirDeceleration).x; // player.GetMoveDirection заменить на InputHandler.GetMoveDirection
-        
-        
         
         physicsHandler2D.AddVelocity(_moveVelocity);
     }

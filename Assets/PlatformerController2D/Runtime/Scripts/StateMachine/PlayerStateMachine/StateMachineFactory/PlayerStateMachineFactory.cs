@@ -42,7 +42,8 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
             _playerControllerStats,
             _physicsHandler2D, 
             _turnChecker, 
-            _animationController);
+            _animationController,
+            _collisionsChecker);
         
         return new PlayerStates
         {
@@ -181,10 +182,15 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     private void SetupJumpTransitions(PlayerStates states)
     {
         At(states.JumpState, states.FallState,
-            new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerModules.JumpModule.CanFall(_physicsHandler2D.GetVelocity()) || _collisionsChecker.BumpedHead)));
+            new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerModules.JumpModule.CanFall(_physicsHandler2D.GetVelocity()) || _collisionsChecker.BumpedHead) && !_inputReader.GetJumpState().WasPressedThisFrame));
+        
+        At(states.JumpState, states.LocomotionState,
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerModules.JumpModule.InFlight()));
+        
         At(states.JumpState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerModules.DashModule.CanDash())); // FIXME
     }
+
 
     private void SetupFallTransitions(PlayerStates states)
     {
@@ -330,6 +336,10 @@ public class PlayerStateMachineFactory : StateMachineFactory<PlayerStates>
     {
         At(states.RunJumpState, states.RunFallState,
             new FuncPredicate(() => !_collisionsChecker.IsGrounded && (_playerModules.JumpModule.CanFall(_physicsHandler2D.GetVelocity()) || _collisionsChecker.BumpedHead) && !_inputReader.GetJumpState().WasPressedThisFrame));
+        
+        At(states.RunJumpState, states.RunState,
+            new FuncPredicate(() => _collisionsChecker.IsGrounded && _playerModules.JumpModule.InFlight()));
+        
         
         At(states.RunJumpState, states.DashState,
             new FuncPredicate(() => _inputReader.GetDashState().WasPressedThisFrame && _playerModules.DashModule.CanDash()));

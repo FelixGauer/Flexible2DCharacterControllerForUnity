@@ -16,6 +16,8 @@ public abstract class BaseState : IState
     protected PhysicsHandler2D physicsHandler2D => context.PhysicsHandler2D;
     protected TurnChecker turnChecker => context.TurnChecker;
     protected AnimationController animationController => context.AnimationController;
+    protected CollisionsChecker collisionsChecker => context.CollisionsChecker;
+
 
 	public virtual void FixedUpdate()
 	{
