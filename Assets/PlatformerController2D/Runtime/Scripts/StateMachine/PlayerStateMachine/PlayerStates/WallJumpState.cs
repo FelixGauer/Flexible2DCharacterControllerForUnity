@@ -18,13 +18,7 @@ public class WallJumpState : BaseState
     {
         Debug.Log("WallJumpState");
         
-        // animationController.PlayAnimation("Jump");
-        
         _wallJumpModule.StartWallJump();
-
-        // var wallDirectionX = _wallSlideModule.CurrentWallDirection;
-        // _moveVelocity = _wallJumpModule.HandleWallJump(physicsHandler2D.GetVelocity(), inputReader.GetMoveDirection(), wallDirectionX);
-        // physicsHandler2D.AddVelocity(_moveVelocity);
     }
 
     public override void FixedUpdate()
@@ -34,8 +28,6 @@ public class WallJumpState : BaseState
         physicsHandler2D.AddVelocity(_moveVelocity);
     }
 
-    
-    
     public override void OnExit()
     {
         animationController.PlayAnimation("Jump");

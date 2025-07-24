@@ -105,14 +105,14 @@ public class AutoStatsSliderController : MonoBehaviour
 
         if (uiDocument == null)
         {
-            Debug.LogError($"[{gameObject.name}] UIDocument не найден!");
+            // Debug.LogError($"[{gameObject.name}] UIDocument не найден!");
             enabled = false;
             return;
         }
 
         if (playerStats == null)
         {
-            Debug.LogError($"[{gameObject.name}] PlayerControllerStats не назначен!");
+            // Debug.LogError($"[{gameObject.name}] PlayerControllerStats не назначен!");
             enabled = false;
             return;
         }
@@ -124,7 +124,7 @@ public class AutoStatsSliderController : MonoBehaviour
         
         if (_root == null)
         {
-            Debug.LogError($"[{gameObject.name}] Не удалось получить корневой элемент UI.");
+            // Debug.LogError($"[{gameObject.name}] Не удалось получить корневой элемент UI.");
             enabled = false;
             return;
         }
@@ -133,7 +133,7 @@ public class AutoStatsSliderController : MonoBehaviour
         _scrollView = _root.Q<ScrollView>(scrollViewName);
         if (_scrollView == null)
         {
-            Debug.LogWarning($"ScrollView '{scrollViewName}' не найден. Создаю новый.");
+            // Debug.LogWarning($"ScrollView '{scrollViewName}' не найден. Создаю новый.");
             CreateScrollView();
         }
     }
@@ -163,7 +163,7 @@ public class AutoStatsSliderController : MonoBehaviour
             
         SynchronizeSlidersFromStats();
         
-        Debug.Log($"[AutoStatsSliderController] Сгенерировано {_sliderFieldMap.Count} слайдеров и {_vector2SliderGroups.Count} Vector2 групп.");
+        // Debug.Log($"[AutoStatsSliderController] Сгенерировано {_sliderFieldMap.Count} слайдеров и {_vector2SliderGroups.Count} Vector2 групп.");
     }
 
     private void AnalyzeFields()
@@ -582,7 +582,7 @@ public class AutoStatsSliderController : MonoBehaviour
         }
 
         _isInitializing = false;
-        Debug.Log("[AutoStatsSliderController] Синхронизация завершена.");
+        // Debug.Log("[AutoStatsSliderController] Синхронизация завершена.");
     }
 
     private void ClearSliders()

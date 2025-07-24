@@ -22,8 +22,6 @@ public class IdleCrouchState : BaseState
 
     public override void Update()
     {
-        // Debug.Log(turnChecker.IsFacingRight);
-
         turnChecker.TurnCheck(inputReader.GetMoveDirection());
     }
 
@@ -32,9 +30,5 @@ public class IdleCrouchState : BaseState
         if (inputReader.GetDashState().WasPressedThisFrame) return;
 
         _crouchModule.SetCrouchState(false);
-        
-        // player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
     }
-    
-
 }

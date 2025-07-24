@@ -68,7 +68,6 @@ public class InputReader : MonoBehaviour, IPlayerActions
 
     public void OnCrouchRoll(InputAction.CallbackContext context) => OnDash(context);
 
-    // Методы доступа с проверками на null
     public Vector2 GetMoveDirection() => _moveHandler != null ? _moveHandler.Value : Vector2.zero;
     
     public Vector2 GetNormalizedHorizontalDirection() 
@@ -102,7 +101,7 @@ public class InputReader : MonoBehaviour, IPlayerActions
         _crouchHandler.State.ResetFrameState();
     }
     
-    public void JumpResetFrameStates()
+    public void JumpResetFrameStates() // FIXME 
     {
         // _jumpHandler.State.ResetFrameState();
     }

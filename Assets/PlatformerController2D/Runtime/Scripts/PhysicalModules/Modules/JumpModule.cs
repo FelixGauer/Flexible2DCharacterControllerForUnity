@@ -12,28 +12,12 @@ public class JumpModule
 
         _numberAvailableJumps = playerControllerStats.MaxNumberJumps;
         
-        
-        // _collisionsChecker.OnWallLeft += ResetNumberAvailableJumps;
-        // _collisionsChecker.OnWallLeft += ResetNumberAvailableJumpsOnWall;
         _collisionsChecker.OnWallLeft += () => ResetNumberAvailableJump(isWall: true);
         _collisionsChecker.OnWallLeft += ResetJumpCoyoteTimer;
         
-        // _collisionsChecker.OnGroundTouched += ResetNumberAvailableJumps;
         _collisionsChecker.OnGroundTouched += () => ResetNumberAvailableJump(isWall: false);
 
         _collisionsChecker.OnGroundTouched += ResetJumpCoyoteTimer;
-        
-        
-        // _collisionsChecker.OnWallTouched += () => {
-        //     if (CanFall(_moveVelocity)) ResetNumberAvailableJumps();
-        // };
-        // _collisionsChecker.OnWallTouched += () => {
-        //     if (CanFall(_moveVelocity)) ResetJumpCoyoteTimer();
-        // };
-        //
-        // _collisionsChecker.OnGroundLeft += StartCoyoteTime;
-
-        // _jumpCoyoteTimer.OnTimerFinished += CoyoteJumpDeleteJump;
         
         _collisionsChecker.OnGroundLeft += () => {
             if (fullSetOfJumps) _jumpCoyoteTimer.Start();
@@ -87,8 +71,6 @@ public class JumpModule
             
             _jumpInputPressed = false;
         } 
-        
-        // TrackJumpHeight();
     }
 
     public Vector2 JumpPhysicsProcessing(Vector2 currentVelocity)
@@ -98,9 +80,6 @@ public class JumpModule
         
         if (moveVelocity.y > 0f)
             _positiveMoveVelocity = true;
-        
-        // if (_jumpCoyoteTimer.IsFinished)
-        //     _numberAvailableJumps -= 1f;
         
         bool jump = _jumpInputPressed && _numberAvailableJumps > 0f;
         bool multiJump = jump && !fullSetOfJumps;
@@ -143,13 +122,17 @@ public class JumpModule
 
     public void OnExitJump()
     {
-        // FinishJumpHeightTracking();
         _positiveMoveVelocity = false;
     }
     
     public bool CanFall(Vector2 currentVelocity)
     {
         return (currentVelocity.y < 0f && _positiveMoveVelocity && !_jumpInputPressed);
+    }
+    
+    public bool CanFall2(Vector2 currentVelocity)
+    {
+        return (_positiveMoveVelocity && !_jumpInputPressed);
     }
 
     public bool CanMultiJump()
@@ -159,8 +142,6 @@ public class JumpModule
 
     private Vector2 PerformJump(Vector2 currentVelocity)
     {
-        // StartJumpHeightTracking(); // Начинаем отслеживание высоты
-
         currentVelocity.y = _playerControllerStats.MaxJumpVelocity;
         return currentVelocity;
     }
@@ -182,19 +163,6 @@ public class JumpModule
         _jumpCoyoteTimer.Stop();
         _jumpCoyoteTimer.Reset();
     }
-    
-    // private void ResetNumberAvailableJumps()
-    // {
-    //     _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
-    // }
-    //
-    // private void ResetNumberAvailableJumpsOnWall()
-    // {
-    //     if (_playerControllerStats.WallJumpRecovery)
-    //         _numberAvailableJumps = _playerControllerStats.MaxNumberJumps;
-    //     else
-    //         _numberAvailableJumps = 0f;
-    // }
     
     private void ResetNumberAvailableJump(bool isWall)
     {

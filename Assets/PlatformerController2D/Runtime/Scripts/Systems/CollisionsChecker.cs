@@ -17,16 +17,13 @@ public class CollisionsChecker : MonoBehaviour
     private RaycastHit2D _lastWallHit;
     private bool _lastWallFacingRight; // Направление, когда касались стены
     
-    // Предыдущие состояния для отслеживания изменений
     private bool _wasGrounded;
     private bool _wasBumpingHead;
     private bool _wasTouchingWall;
     
-    // Делегаты для получения состояния персонажа
     public System.Func<bool> IsSitting;
     public System.Func<bool> IsFacingRight;    
 
-    // События для изменений состояния коллизий
     public event System.Action OnGroundTouched;    // Коснулся земли (не был на земле -> стал на земле)
     public event System.Action OnGroundLeft;       // Покинул землю (был на земле -> не на земле)
     public event System.Action OnHeadBumped;       // Ударился головой (не бился -> ударился)
@@ -36,7 +33,6 @@ public class CollisionsChecker : MonoBehaviour
 
     void Start()
     {
-        // Инициализируем предыдущие состояния
         _wasGrounded = IsGrounded;
         _wasBumpingHead = BumpedHead;
         _wasTouchingWall = IsTouchingWall;
@@ -53,13 +49,11 @@ public class CollisionsChecker : MonoBehaviour
        else
            IsInWallZone = false;
        
-       // Проверяем изменения и вызываем соответствующие события
        CheckStateTransitions();
     }
 
     private void CheckStateTransitions()
     {
-        // Проверка изменений касания земли
         if (!_wasGrounded && IsGrounded)
         {
             OnGroundTouched?.Invoke();
@@ -67,9 +61,7 @@ public class CollisionsChecker : MonoBehaviour
         else if (_wasGrounded && !IsGrounded)
         {
             OnGroundLeft?.Invoke();
-            // Debug.Log("YES");
         }
-        // Проверка изменений удара головой
         if (!_wasBumpingHead && BumpedHead)
         {
             OnHeadBumped?.Invoke();
@@ -79,7 +71,6 @@ public class CollisionsChecker : MonoBehaviour
             OnHeadFreed?.Invoke();
         }
 
-        // Проверка изменений касания стены
         if (!_wasTouchingWall && IsTouchingWall)
         {
             OnWallTouched?.Invoke();
@@ -89,7 +80,6 @@ public class CollisionsChecker : MonoBehaviour
             OnWallLeft?.Invoke();
         }
 
-        // Обновляем предыдущие состояния
         _wasGrounded = IsGrounded;
         _wasBumpingHead = BumpedHead;
         _wasTouchingWall = IsTouchingWall;
@@ -135,7 +125,7 @@ public class CollisionsChecker : MonoBehaviour
        if (_wallHit.collider != null)
        {
           _lastWallHit = _wallHit;
-          _lastWallFacingRight = IsFacingRight(); // Запоминаем направление при касании стены
+          _lastWallFacingRight = IsFacingRight(); 
           IsTouchingWall = true;
        }
        else
@@ -164,7 +154,6 @@ public class CollisionsChecker : MonoBehaviour
     // Новый метод для проверки зоны стены
     private void CheckWallZone()
     {
-        // Проверяем только если у нас есть информация о последней стене и игрок смотрит в ту же сторону
         if (_lastWallHit.collider == null || IsFacingRight() != _lastWallFacingRight)
         {
             IsInWallZone = false;
@@ -172,24 +161,17 @@ public class CollisionsChecker : MonoBehaviour
             return;
         }
 
-        // Получаем позицию игрока (центр)
         Vector2 playerCenter = BodyCollider.bounds.center;
         
-        // Получаем позицию последней стены
         Vector2 wallPosition = _lastWallHit.point;
         
-        // Направление от игрока к стене
         Vector2 directionToWall = (wallPosition - playerCenter).normalized;
         Vector2 rayDirection = IsFacingRight() ? Vector2.right : Vector2.left;
 
-        
-        // Расстояние до стены
         float distanceToWall = Vector2.Distance(playerCenter, wallPosition);
         
-        // Кастим луч от центра игрока к стене
         RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, distanceToWall * 10f, stats.GroundLayer);
         
-        // Игрок в зоне стены, если луч попадает в ту же стену
         IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;
 
         if (_lastWallHit && !wallZoneHit)
@@ -217,10 +199,8 @@ public class CollisionsChecker : MonoBehaviour
     }
     
     
-    // Новый метод для проверки зоны стены
     private void CheckWallZone2()
     {
-        // Проверяем только если у нас есть информация о последней стене и игрок смотрит в ту же сторону
         if (_lastWallHit.collider == null || IsFacingRight() != _lastWallFacingRight)
         {
             IsInWallZone = false;
@@ -228,19 +208,14 @@ public class CollisionsChecker : MonoBehaviour
             return;
         }
 
-        // Получаем позицию игрока (центр)
         Vector2 playerCenter = BodyCollider.bounds.center;
     
-        // Направление луча (вправо или влево в зависимости от того, куда смотрит игрок)
         Vector2 rayDirection = IsFacingRight() ? Vector2.right : Vector2.left;
     
-        // Расстояние для проверки (можете настроить это значение)
         float checkDistance =  100f; // или любое другое значение
     
-        // Кастим луч от центра игрока в сторону, куда он смотрит
         RaycastHit2D wallZoneHit = Physics2D.Raycast(playerCenter, rayDirection, checkDistance, stats.GroundLayer);
     
-        // Игрок в зоне стены, если луч попадает в ту же стену, что и раньше
         IsInWallZone = wallZoneHit.collider != null && wallZoneHit.collider == _lastWallHit.collider;
 
         #region Debug Wall Zone
@@ -262,16 +237,12 @@ public class CollisionsChecker : MonoBehaviour
         #endregion
     }
 
-    // Дополнительные методы для получения информации о последних коллизиях
     public RaycastHit2D GetLastWallHit() => _lastWallHit;
     public RaycastHit2D GetCurrentHeadHit() => _headHit;
     public RaycastHit2D GetCurrentWallHit() => _wallHit;
     
-    // Метод для проверки, можно ли прыгать по стене
     public bool CanWallJump()
     {
-        // Игрок может прыгать по стене только если он касается её, но не находится в её зоне
-        // Или добавьте свою логику здесь
         return IsTouchingWall && !IsInWallZone;
     }
 }

@@ -19,7 +19,6 @@ public class DashState : BaseState
 	{		
 		Debug.Log("DashState");
 
-		// animationController.PlayAnimation("Dash");
 		animationController.PlayAnimationWithDuration("Dash", playerControllerStats.DashTime, "DashMultiplier");
 		
 		_dashModule.StartDash(inputReader.GetMoveDirection());
@@ -35,19 +34,12 @@ public class DashState : BaseState
 	public override void FixedUpdate()
 	{
 		var moveVelocity = _dashModule.HandleDash();
-		// var gravityVelocity = _fallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
-		// var gravityVelocity.y = _fallModule.ApplyGravity(Vector2.zero, playerControllerStats.Gravity, playerControllerStats.DashGravityMultiplayer).y;
-		// moveVelocity.y = _fallModule.HandleFalling(moveVelocity).y;
-
 		
 		physicsHandler2D.AddVelocity(moveVelocity);
-		// physicsHandler2D.AddVelocity(new Vector2(0f, gravityVelocity));
 	}
 	
 	public override void OnExit()
 	{
-		// Сбрасываем горизонтальную скорость
-		
 		_dashModule.StopDash();
 	}
 }

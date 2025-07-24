@@ -4,14 +4,6 @@ using UnityEngine;
 
 public abstract class BaseState : IState
 {
-	// protected readonly Animator animator;
-	// protected readonly PlayerControllerStats playerControllerStats;
-	// protected readonly InputReader inputReader;
-	// protected readonly PhysicsHandler2D physicsHandler2D;
-	// protected readonly TurnChecker turnChecker;
-	// protected readonly AnimationController animationController;
-	// protected readonly PlayerPhysicsController playerPhysicsController;
-
 	protected readonly PlayerStateContext context;
 	
 	protected BaseState(PlayerStateContext context)

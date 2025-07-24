@@ -34,9 +34,6 @@ public class CrouchState : BaseState
 
 	public override void FixedUpdate()
 	{
-		// Vector2 rawInput = inputReader.GetMoveDirection();
-		// Vector2 horizontalInput = new Vector2(rawInput.x, 0f);
-		
 		_moveVelocity = _movementModule.HandleMovement(physicsHandler2D.GetVelocity(), inputReader.GetNormalizedHorizontalDirection(), playerControllerStats.CrouchMoveSpeed, playerControllerStats.CrouchAcceleration, playerControllerStats.CrouchDeceleration);
 		physicsHandler2D.AddVelocity(_moveVelocity);
 	}
@@ -47,7 +44,5 @@ public class CrouchState : BaseState
 		
 		_crouchModule.SetCrouchState(false);
 
-		// player.OnExitCrouch();
-		// player.playerPhysicsController.CrouchModule.OnExitCrouch(player.input.DashInputButtonState);
 	}
 }

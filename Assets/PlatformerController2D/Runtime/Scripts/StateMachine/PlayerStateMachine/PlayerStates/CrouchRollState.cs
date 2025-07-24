@@ -30,7 +30,6 @@ public class CrouchRollState : BaseState
 	
 	public override void Update()
 	{
-		// turnChecker.TurnCheck(inputReader.GetMoveDirection());
 	}
 
 

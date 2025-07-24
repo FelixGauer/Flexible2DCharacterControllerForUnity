@@ -304,9 +304,6 @@ public class AnimationController
         return 0f;
     }
     
-    /// <summary>
-    /// Проверяет, есть ли анимационный клип с заданным именем
-    /// </summary>
     public bool HasClip(string animationName)
     {
         if (!IsValid) return false;
@@ -316,9 +313,6 @@ public class AnimationController
         return _clipCache.ContainsKey(animationName);
     }
     
-    /// <summary>
-    /// Получает список всех доступных анимационных клипов
-    /// </summary>
     public IReadOnlyCollection<string> GetAvailableClips()
     {
         return _clipCache.Keys;

@@ -39,11 +39,9 @@ public class ColliderSpriteResizer : MonoBehaviour
         switch (actualTarget)
         {
             case ResizeTarget.Both:
-                // Коллайдер - абсолютные размеры
                 SetColliderSize(new Vector2(_normalColliderSize.x, height));
                 SetColliderOffset(new Vector2(_normalColliderOffset.x, offset));
                 
-                // Спрайт - относительное масштабирование
                 float scaleMultiplier = height / _normalColliderSize.y;
                 spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y * scaleMultiplier);
                 spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
@@ -55,7 +53,6 @@ public class ColliderSpriteResizer : MonoBehaviour
                 break;
             
             case ResizeTarget.SpriteOnly:
-                // Спрайт - относительное масштабирование
                 float spriteScaleMultiplier = height / _normalColliderSize.y;
                 spriteTransform.localScale = new Vector2(currentScaleX, _normalSpriteScale.y * spriteScaleMultiplier);
                 spriteTransform.localPosition = new Vector2(_normalSpritePosition.x, _normalSpritePosition.y + offset);
@@ -73,11 +70,8 @@ public class ColliderSpriteResizer : MonoBehaviour
         spriteTransform.localPosition = _normalSpritePosition;
     }
 
-    // Методы для плавного изменения размеров
     public void SetSizeSmooth(float height, float offset, float duration)
     {
-        // Можно добавить корутину для плавного изменения
-        // Пока что просто вызываем SetSize
         SetSize(height, offset);
     }
     
@@ -98,7 +92,6 @@ public class ColliderSpriteResizer : MonoBehaviour
         return spriteTransform.localScale.x >= 0 ? 1f : -1f;
     }
     
-    // Универсальные методы для работы с разными типами коллайдеров
     private Vector2 GetColliderSize()
     {
         return targetCollider switch

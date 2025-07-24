@@ -7,8 +7,6 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "PlayerControllerStats", menuName = "PlayerControllerStats")]
 public class PlayerControllerStats : ScriptableObject
 {
-	// [Tooltip("Set this to the layer your player is on")]
-	
 	[Header("Movement Settings")]
 	public MovementSettings movementSettings = new MovementSettings();
 
@@ -119,8 +117,6 @@ public class PlayerControllerStats : ScriptableObject
 	public float WallDetectionRayLength	 = 0.015f;
 	[Range(0.01f, 3f)]public float WallDetectionRayHeightMultiplayer = 0.9f;
 	public LayerMask GroundLayer;
-	
-	
 	
 	
 	public float AdjustedJumpHeight => MaxJumpHeight * JumpHeightCompensationFactor;  
