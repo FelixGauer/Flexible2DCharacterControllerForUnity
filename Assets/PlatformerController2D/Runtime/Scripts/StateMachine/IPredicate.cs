@@ -1,4 +1,7 @@
-public interface IPredicate
+namespace PlatformerController2D.Runtime.Scripts.StateMachine
 {
-	bool Evaluate();
+	public interface IPredicate
+	{
+		bool Evaluate();
+	}
 }

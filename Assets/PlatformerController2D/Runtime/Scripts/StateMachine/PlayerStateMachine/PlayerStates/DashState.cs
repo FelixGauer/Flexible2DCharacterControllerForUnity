@@ -1,45 +1,48 @@
+using PlatformerController2D.Runtime.Scripts.PhysicalModules.Modules;
 using UnityEngine;
 
-
-public class DashState : BaseState
+namespace PlatformerController2D.Runtime.Scripts.StateMachine.PlayerStateMachine.PlayerState
 {
-	private readonly DashModule _dashModule;
-	private readonly FallModule _fallModule;
+	public class DashState : BaseState
+	{
+		private readonly DashModule _dashModule;
+		private readonly FallModule _fallModule;
 	
-	// private Vector2 _moveVelocity;
+		// private Vector2 _moveVelocity;
 
-	public DashState(PlayerStateContext context, DashModule dashModule,  FallModule fallModule) :
-		base(context)
-	{
-		_dashModule = dashModule;
-		_fallModule = fallModule;
-	}
+		public DashState(PlayerStateContext context, DashModule dashModule,  FallModule fallModule) :
+			base(context)
+		{
+			_dashModule = dashModule;
+			_fallModule = fallModule;
+		}
 
-	public override void OnEnter()
-	{		
-		Debug.Log("DashState");
+		public override void OnEnter()
+		{		
+			Debug.Log("DashState");
 
-		animationController.PlayAnimationWithDuration("Dash", playerControllerStats.DashTime, "DashMultiplier");
+			animationController.PlayAnimationWithDuration("Dash", playerControllerStats.DashTime, "DashMultiplier");
 		
-		_dashModule.StartDash(inputReader.GetMoveDirection());
-	}
+			_dashModule.StartDash(inputReader.GetMoveDirection());
+		}
 
-	public override void Update()
-	{
-		_dashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
+		public override void Update()
+		{
+			_dashModule.CheckForDirectionChange(inputReader.GetMoveDirection());
 		
-		turnChecker.TurnCheck(inputReader.GetMoveDirection());
-	}
+			turnChecker.TurnCheck(inputReader.GetMoveDirection());
+		}
 
-	public override void FixedUpdate()
-	{
-		var moveVelocity = _dashModule.HandleDash();
+		public override void FixedUpdate()
+		{
+			var moveVelocity = _dashModule.HandleDash();
 		
-		physicsHandler2D.AddVelocity(moveVelocity);
-	}
+			physicsHandler2D.AddVelocity(moveVelocity);
+		}
 	
-	public override void OnExit()
-	{
-		_dashModule.StopDash();
+		public override void OnExit()
+		{
+			_dashModule.StopDash();
+		}
 	}
 }

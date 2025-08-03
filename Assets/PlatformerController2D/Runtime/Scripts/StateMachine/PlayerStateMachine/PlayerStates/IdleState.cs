@@ -1,26 +1,28 @@
 using UnityEngine;
 
-
-public class IdleState : BaseState
+namespace PlatformerController2D.Runtime.Scripts.StateMachine.PlayerStateMachine.PlayerState
 {
-	public IdleState(PlayerStateContext context) :
-		base(context) { }
-
-	public override void OnEnter()
+	public class IdleState : BaseState
 	{
-		Debug.Log("IdleState");
+		public IdleState(PlayerStateContext context) :
+			base(context) { }
 
-		animationController.PlayAnimation("Idle");
+		public override void OnEnter()
+		{
+			Debug.Log("IdleState");
+
+			animationController.PlayAnimation("Idle");
+		}
+
+		public override void Update()
+		{
+			turnChecker.TurnCheck(inputReader.GetMoveDirection());
+		}
+
+		public override void FixedUpdate()
+		{
+			var moveVelocity = new Vector2(0f, playerControllerStats.GroundGravity);
+			physicsHandler2D.AddVelocity(moveVelocity);
+		}	
 	}
-
-	public override void Update()
-	{
-		turnChecker.TurnCheck(inputReader.GetMoveDirection());
-	}
-
-	public override void FixedUpdate()
-	{
-		var moveVelocity = new Vector2(0f, playerControllerStats.GroundGravity);
-		physicsHandler2D.AddVelocity(moveVelocity);
-	}	
 }

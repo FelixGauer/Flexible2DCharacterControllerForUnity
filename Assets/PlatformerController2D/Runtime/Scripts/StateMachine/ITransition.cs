@@ -1,7 +1,8 @@
-using System;
-
-public interface ITransition
+namespace PlatformerController2D.Runtime.Scripts.StateMachine
 {
-	IState To { get; } // Куда
-	IPredicate Condition { get; } // Условие
+	public interface ITransition
+	{
+		IState To { get; } // Куда
+		IPredicate Condition { get; } // Условие
+	}
 }

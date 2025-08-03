@@ -1,34 +1,38 @@
+using PlatformerController2D.Runtime.Scripts.PhysicalModules.Modules;
 using UnityEngine;
 
-public class IdleCrouchState : BaseState
+namespace PlatformerController2D.Runtime.Scripts.StateMachine.PlayerStateMachine.PlayerState
 {
-    private readonly CrouchModule _crouchModule;
-
-    public IdleCrouchState(PlayerStateContext context, CrouchModule crouchModule) :
-        base(context)
+    public class IdleCrouchState : BaseState
     {
-        _crouchModule = crouchModule;
-    }
+        private readonly CrouchModule _crouchModule;
 
-    public override void OnEnter()
-    {		
-        Debug.Log("IdleCrouchState");
+        public IdleCrouchState(PlayerStateContext context, CrouchModule crouchModule) :
+            base(context)
+        {
+            _crouchModule = crouchModule;
+        }
+
+        public override void OnEnter()
+        {		
+            Debug.Log("IdleCrouchState");
         
-        animationController.PlayAnimation("CrouchIdle");
+            animationController.PlayAnimation("CrouchIdle");
         
-        _crouchModule.SetCrouchState(true);
+            _crouchModule.SetCrouchState(true);
 
-    }
+        }
 
-    public override void Update()
-    {
-        turnChecker.TurnCheck(inputReader.GetMoveDirection());
-    }
+        public override void Update()
+        {
+            turnChecker.TurnCheck(inputReader.GetMoveDirection());
+        }
 
-    public override void OnExit()
-    {
-        if (inputReader.GetDashState().WasPressedThisFrame) return;
+        public override void OnExit()
+        {
+            if (inputReader.GetDashState().WasPressedThisFrame) return;
 
-        _crouchModule.SetCrouchState(false);
+            _crouchModule.SetCrouchState(false);
+        }
     }
 }

@@ -1,41 +1,44 @@
 using UnityEngine;
 
-public class ResetZone : MonoBehaviour
+namespace PlatformerController2D.Runtime.Scripts.Utilites
 {
-    public Transform playerStartPosition; // Стартовая позиция игрока
-    public string playerTag = "Player"; // Тег игрока
-    public Transform playerTarget;
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    public class ResetZone : MonoBehaviour
     {
-        // Проверяем, что это игрок
-        if (other.CompareTag(playerTag))
-        {
-            ResetPlayer(other.gameObject);
-        }
-    }
+        public Transform playerStartPosition; // Стартовая позиция игрока
+        public string playerTag = "Player"; // Тег игрока
+        public Transform playerTarget;
     
-    private void ResetPlayer(GameObject player)
-    {
-        
-        // Возвращаем игрока в стартовую позицию
-        if (playerStartPosition != null)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            playerTarget.position = playerStartPosition.position;
+            // Проверяем, что это игрок
+            if (other.CompareTag(playerTag))
+            {
+                ResetPlayer(other.gameObject);
+            }
         }
-        else
+    
+        private void ResetPlayer(GameObject player)
         {
-            // Если стартовая позиция не задана, используем Vector3.zero
-            player.transform.position = Vector3.zero;
-        }
         
-        // Останавливаем движение игрока (если у него есть Rigidbody2D)
-        Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-        if (playerRb != null)
-        {
-            playerRb.linearVelocity = Vector2.zero;
-            playerRb.angularVelocity = 0f;
-        }
+            // Возвращаем игрока в стартовую позицию
+            if (playerStartPosition != null)
+            {
+                playerTarget.position = playerStartPosition.position;
+            }
+            else
+            {
+                // Если стартовая позиция не задана, используем Vector3.zero
+                player.transform.position = Vector3.zero;
+            }
         
+            // Останавливаем движение игрока (если у него есть Rigidbody2D)
+            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+            if (playerRb != null)
+            {
+                playerRb.linearVelocity = Vector2.zero;
+                playerRb.angularVelocity = 0f;
+            }
+        
+        }
     }
 }

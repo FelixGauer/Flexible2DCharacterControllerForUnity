@@ -1,39 +1,42 @@
+using PlatformerController2D.Runtime.Scripts.PhysicalModules.Modules;
 using UnityEngine;
 
-
-public class WallSlideState : BaseState
+namespace PlatformerController2D.Runtime.Scripts.StateMachine.PlayerStateMachine.PlayerState
 {
-	private readonly WallSlideModule _wallSlideModule;
-
-	public WallSlideState(PlayerStateContext context, WallSlideModule wallSlideModule) : base(context)
+	public class WallSlideState : BaseState
 	{
-		_wallSlideModule = wallSlideModule;
-	}
+		private readonly WallSlideModule _wallSlideModule;
 
-	public override void OnEnter()
-	{
-		Debug.Log("WallSlideState");
+		public WallSlideState(PlayerStateContext context, WallSlideModule wallSlideModule) : base(context)
+		{
+			_wallSlideModule = wallSlideModule;
+		}
+
+		public override void OnEnter()
+		{
+			Debug.Log("WallSlideState");
 		
-		animationController.PlayAnimation("WallSlide");
+			animationController.PlayAnimation("WallSlide");
 
-		_wallSlideModule.OnEnterWallSlide();
+			_wallSlideModule.OnEnterWallSlide();
+		}
+
+		private Vector2 _moveVelocity;
+
+		public override void Update()
+		{
+			_wallSlideModule.HandleWallDetachmentTimer(inputReader.GetMoveDirection());
+		}
+
+		public override void FixedUpdate()
+		{
+			_moveVelocity = _wallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());
+			physicsHandler2D.AddVelocity(_moveVelocity);
+		}
+
+		public override void OnExit()
+		{
+			_wallSlideModule.OnExitWallSlide();
+		}
 	}
-
-	private Vector2 _moveVelocity;
-
-	public override void Update()
-	{
-		_wallSlideModule.HandleWallDetachmentTimer(inputReader.GetMoveDirection());
-	}
-
-	public override void FixedUpdate()
-	{
-		_moveVelocity = _wallSlideModule.ProcessWallSlide(inputReader.GetMoveDirection());
-		physicsHandler2D.AddVelocity(_moveVelocity);
-	}
-
-    public override void OnExit()
-    {
-	    _wallSlideModule.OnExitWallSlide();
-    }
 }

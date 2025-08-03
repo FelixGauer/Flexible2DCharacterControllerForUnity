@@ -1,45 +1,47 @@
-using System;
 using UnityEngine.InputSystem;
 
-public class InputButtonState
+namespace PlatformerController2D.Runtime.Scripts.Input
 {
-    public bool IsHeld { get; private set; }
-    public bool WasPressedThisFrame { get; private set; }
-    public bool WasReleasedThisFrame { get; private set; }
-
-    private void Press()
+    public class InputButtonState
     {
-        if (!IsHeld)
+        public bool IsHeld { get; private set; }
+        public bool WasPressedThisFrame { get; private set; }
+        public bool WasReleasedThisFrame { get; private set; }
+
+        private void Press()
         {
-            IsHeld = true;
-            WasPressedThisFrame = true;
+            if (!IsHeld)
+            {
+                IsHeld = true;
+                WasPressedThisFrame = true;
+            }
         }
-    }
     
-    public void Update(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started)
+        public void Update(InputAction.CallbackContext context)
         {
-            Press();
+            if (context.phase == InputActionPhase.Started)
+            {
+                Press();
+            }
+            else if (context.phase == InputActionPhase.Canceled)
+            {
+                Release();
+            }
         }
-        else if (context.phase == InputActionPhase.Canceled)
+
+        public void ResetFrameState()
         {
-            Release();
+            WasPressedThisFrame = false;
+            WasReleasedThisFrame = false;
         }
-    }
 
-    public void ResetFrameState()
-    {
-        WasPressedThisFrame = false;
-        WasReleasedThisFrame = false;
-    }
-
-    private void Release()
-    {
-        if (IsHeld)
+        private void Release()
         {
-            IsHeld = false;
-            WasReleasedThisFrame = true;
+            if (IsHeld)
+            {
+                IsHeld = false;
+                WasReleasedThisFrame = true;
+            }
         }
     }
 }

@@ -1,27 +1,33 @@
-public class CrouchModule
-{
-    private readonly PlayerControllerStats _playerControllerStats;
-    private readonly CollisionsChecker _collisionsChecker;
-    private readonly ColliderSpriteResizer _colliderSpriteResizer;
+using PlatformerController2D.Runtime.Scripts.Player;
+using PlatformerController2D.Runtime.Scripts.Systems;
 
-    public CrouchModule(PlayerControllerStats playerControllerStats, CollisionsChecker collisionsChecker, ColliderSpriteResizer colliderSpriteResizer) 
+namespace PlatformerController2D.Runtime.Scripts.PhysicalModules.Modules
+{
+    public class CrouchModule
     {
-        _playerControllerStats = playerControllerStats;
-        _collisionsChecker = collisionsChecker;
-        _colliderSpriteResizer = colliderSpriteResizer;
-    }
-    
-    public void SetCrouchState(bool isCrouching)
-    {
-        _collisionsChecker.IsSitting = () => isCrouching;
-        
-        if (isCrouching)
+        private readonly PlayerControllerStats _playerControllerStats;
+        private readonly CollisionsChecker _collisionsChecker;
+        private readonly ColliderSpriteResizer _colliderSpriteResizer;
+
+        public CrouchModule(PlayerControllerStats playerControllerStats, CollisionsChecker collisionsChecker, ColliderSpriteResizer colliderSpriteResizer) 
         {
-            _colliderSpriteResizer.SetSize(_playerControllerStats.CrouchHeight, -_playerControllerStats.CrouchOffset); // ResizeTarget.ColliderOnly
+            _playerControllerStats = playerControllerStats;
+            _collisionsChecker = collisionsChecker;
+            _colliderSpriteResizer = colliderSpriteResizer;
         }
-        else
+    
+        public void SetCrouchState(bool isCrouching)
         {
-            _colliderSpriteResizer.ResetToNormal();
+            _collisionsChecker.IsSitting = () => isCrouching;
+        
+            if (isCrouching)
+            {
+                _colliderSpriteResizer.SetSize(_playerControllerStats.CrouchHeight, -_playerControllerStats.CrouchOffset); // ResizeTarget.ColliderOnly
+            }
+            else
+            {
+                _colliderSpriteResizer.ResetToNormal();
+            }
         }
     }
 }

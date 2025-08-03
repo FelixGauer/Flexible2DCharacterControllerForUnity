@@ -1,52 +1,54 @@
-using System.Linq;
+using PlatformerController2D.Runtime.Scripts.PhysicalModules.Modules;
 using UnityEngine;
 
-
-public class CrouchRollState : BaseState
+namespace PlatformerController2D.Runtime.Scripts.StateMachine.PlayerStateMachine.PlayerState
 {
-	private Vector2 _moveVelocity;
+	public class CrouchRollState : BaseState
+	{
+		private Vector2 _moveVelocity;
 	
-	private CrouchRollModule _crouchRollModule;
-	private CrouchModule _crouchModule;
+		private CrouchRollModule _crouchRollModule;
+		private CrouchModule _crouchModule;
 
-	public CrouchRollState(PlayerStateContext context, CrouchRollModule crouchRollModule, CrouchModule crouchModule) : base(context)
-	{
-		_crouchRollModule = crouchRollModule;
-		_crouchModule = crouchModule;
-	}
+		public CrouchRollState(PlayerStateContext context, CrouchRollModule crouchRollModule, CrouchModule crouchModule) : base(context)
+		{
+			_crouchRollModule = crouchRollModule;
+			_crouchModule = crouchModule;
+		}
 	
-	public override void OnEnter()
-	{		
-		Debug.Log("CrouchRollState");
+		public override void OnEnter()
+		{		
+			Debug.Log("CrouchRollState");
 		
-		animationController.PlayAnimationWithDuration(
-			"CrouchRoll", 
-			playerControllerStats.CrouchRollTime,
-			"CrouchRollSpeedMultiplier"
-		);
+			animationController.PlayAnimationWithDuration(
+				"CrouchRoll", 
+				playerControllerStats.CrouchRollTime,
+				"CrouchRollSpeedMultiplier"
+			);
 		
-		_crouchRollModule.StartCrouchRoll();
-	}
+			_crouchRollModule.StartCrouchRoll();
+		}
 	
-	public override void Update()
-	{
-	}
+		public override void Update()
+		{
+		}
 
 
-	public override void FixedUpdate()
-	{
-		_moveVelocity.x = _crouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
+		public override void FixedUpdate()
+		{
+			_moveVelocity.x = _crouchRollModule.CrouchRoll(physicsHandler2D.GetVelocity()).x;
 
-		physicsHandler2D.AddVelocity(_moveVelocity);
-	}
+			physicsHandler2D.AddVelocity(_moveVelocity);
+		}
 
-	public override void OnExit()
-	{
-		animationController.ResetSpeedParameter("CrouchRollSpeedMultiplier");
+		public override void OnExit()
+		{
+			animationController.ResetSpeedParameter("CrouchRollSpeedMultiplier");
 		
-		_crouchModule.SetCrouchState(false);
+			_crouchModule.SetCrouchState(false);
 
-		_crouchRollModule.StopCrouchRoll();
+			_crouchRollModule.StopCrouchRoll();
+		}
+
 	}
-
 }

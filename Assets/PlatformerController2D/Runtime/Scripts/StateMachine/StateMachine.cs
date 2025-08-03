@@ -1,104 +1,107 @@
 using System;
 using System.Collections.Generic;
 
-public class StateMachine
+namespace PlatformerController2D.Runtime.Scripts.StateMachine
 {
-	StateNode current;
-	Dictionary<Type, StateNode> nodes = new();
-	HashSet<ITransition> anyTransition = new();
-	
-	public void Update()
+	public class StateMachine
 	{
-		var transition = GetTransition();
-		if (transition != null)
+		StateNode current;
+		Dictionary<Type, StateNode> nodes = new();
+		HashSet<ITransition> anyTransition = new();
+	
+		public void Update()
 		{
-			ChangeState(transition.To);			
+			var transition = GetTransition();
+			if (transition != null)
+			{
+				ChangeState(transition.To);			
+			}
+		
+			current.State?.Update();
 		}
-		
-		current.State?.Update();
-	}
 	
-	public void FixedUpdate()
-	{
-		current.State?.FixedUpdate();
-	}
+		public void FixedUpdate()
+		{
+			current.State?.FixedUpdate();
+		}
 	
-	public void SetState(IState state)
-	{
-		current = nodes[state.GetType()];
-		current.State?.OnEnter();
-	}
+		public void SetState(IState state)
+		{
+			current = nodes[state.GetType()];
+			current.State?.OnEnter();
+		}
 	
-	private void ChangeState(IState state)
-	{
-		if (state == current.State) return;
+		private void ChangeState(IState state)
+		{
+			if (state == current.State) return;
 		
-		var previousState = current.State;
-		var nextState = nodes[state.GetType()].State;
+			var previousState = current.State;
+			var nextState = nodes[state.GetType()].State;
 		
-		previousState?.OnExit();
-		nextState?.OnEnter();
-		current = nodes[state.GetType()];
-	}
+			previousState?.OnExit();
+			nextState?.OnEnter();
+			current = nodes[state.GetType()];
+		}
 
-	ITransition GetTransition()
-	{
-		foreach (var transition in anyTransition)
+		ITransition GetTransition()
 		{
-			if (transition.Condition.Evaluate())
+			foreach (var transition in anyTransition)
 			{
-				return transition;
+				if (transition.Condition.Evaluate())
+				{
+					return transition;
+				}
 			}
-		}
 		
-		foreach (var transition in current.Transitions)
-		{
-			if (transition.Condition.Evaluate())
+			foreach (var transition in current.Transitions)
 			{
-				return transition;
+				if (transition.Condition.Evaluate())
+				{
+					return transition;
+				}
 			}
+		
+			return null;
 		}
-		
-		return null;
-	}
 	
-	public void AddTransition(IState from, IState to, IPredicate condition)
-	{
-		GetOrAddNode(from).AddTransition(GetOrAddNode(to).State, condition);
-	}
-	
-	public void AddAnyTransition(IState to, IPredicate condition)
-	{
-		anyTransition.Add(new Transition(GetOrAddNode(to).State, condition));
-	}
-	
-	StateNode GetOrAddNode(IState state)
-	{
-		var node = nodes.GetValueOrDefault(state.GetType());
-		
-		if (node == null)
+		public void AddTransition(IState from, IState to, IPredicate condition)
 		{
-			node = new StateNode(state);
-			nodes.Add(state.GetType(), node);
+			GetOrAddNode(from).AddTransition(GetOrAddNode(to).State, condition);
 		}
-		
-		return node; 
-	}
 	
-	private class StateNode
-	{
-		public IState State { get; }
-		public HashSet<ITransition> Transitions { get; }
-		
-		public StateNode(IState state)
+		public void AddAnyTransition(IState to, IPredicate condition)
 		{
-			State = state;
-			Transitions = new HashSet<ITransition>();
+			anyTransition.Add(new Transition(GetOrAddNode(to).State, condition));
 		}
-		
-		public void AddTransition(IState to, IPredicate condition)
+	
+		StateNode GetOrAddNode(IState state)
 		{
-			Transitions.Add(new Transition(to, condition));
+			var node = nodes.GetValueOrDefault(state.GetType());
+		
+			if (node == null)
+			{
+				node = new StateNode(state);
+				nodes.Add(state.GetType(), node);
+			}
+		
+			return node; 
+		}
+	
+		private class StateNode
+		{
+			public IState State { get; }
+			public HashSet<ITransition> Transitions { get; }
+		
+			public StateNode(IState state)
+			{
+				State = state;
+				Transitions = new HashSet<ITransition>();
+			}
+		
+			public void AddTransition(IState to, IPredicate condition)
+			{
+				Transitions.Add(new Transition(to, condition));
+			}
 		}
 	}
 }

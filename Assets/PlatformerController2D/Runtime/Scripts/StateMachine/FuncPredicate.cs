@@ -1,16 +1,19 @@
 using System;
 
-public class FuncPredicate : IPredicate
+namespace PlatformerController2D.Runtime.Scripts.StateMachine
 {
-	readonly Func<bool> func;
-
-	public FuncPredicate(Func<bool> func)
+	public class FuncPredicate : IPredicate
 	{
-		this.func = func;
-	}
+		readonly Func<bool> func;
 
-	public bool Evaluate()
-	{
-		return func.Invoke();
+		public FuncPredicate(Func<bool> func)
+		{
+			this.func = func;
+		}
+
+		public bool Evaluate()
+		{
+			return func.Invoke();
+		}
 	}
 }
