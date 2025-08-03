@@ -4,7 +4,7 @@ public class FallModule
 {
     private readonly PlayerControllerStats _playerControllerStats;
     private readonly CountdownTimer _jumpBufferTimer;
-
+    
     private bool _isHeld;
 
     public FallModule(PlayerControllerStats playerControllerStats, CountdownTimer jumpBufferTimer)
