@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Platformer2D.sln"
+    "dotnet.defaultSolution": "Flexible2DCharacterControllerForUnity.sln"
 }
