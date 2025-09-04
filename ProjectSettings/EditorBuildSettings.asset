@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/GrayScene.unity
+    path: Assets/ilovevladislav/Scenes/GrayScene.unity
     guid: 3090c23c672afb64f819422b49117280
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/ilovevladislav/Scenes/MainScene.unity
     guid: 85b4d46911832a14bbe50193c6805789
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
