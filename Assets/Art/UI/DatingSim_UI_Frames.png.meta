@@ -1,0 +1,4268 @@
+fileFormatVersion: 2
+guid: 2d0119eae4692264d9fd86b6f9d41d5f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8338833840485593126
+    second: DatingSim_UI_Frames_0
+  - first:
+      213: 5090181113252877658
+    second: DatingSim_UI_Frames_1
+  - first:
+      213: -5326205707532032789
+    second: DatingSim_UI_Frames_2
+  - first:
+      213: -3943593569736945165
+    second: DatingSim_UI_Frames_3
+  - first:
+      213: 6063934701376713117
+    second: DatingSim_UI_Frames_4
+  - first:
+      213: 112643671985802547
+    second: DatingSim_UI_Frames_5
+  - first:
+      213: -1280917527061721195
+    second: DatingSim_UI_Frames_6
+  - first:
+      213: -183533903478368658
+    second: DatingSim_UI_Frames_7
+  - first:
+      213: 860495422940302811
+    second: DatingSim_UI_Frames_8
+  - first:
+      213: 7289710887679046121
+    second: DatingSim_UI_Frames_9
+  - first:
+      213: 3815242561359472874
+    second: DatingSim_UI_Frames_10
+  - first:
+      213: -1946151283818612142
+    second: DatingSim_UI_Frames_11
+  - first:
+      213: 7343729116881841866
+    second: DatingSim_UI_Frames_12
+  - first:
+      213: -8528797400878294511
+    second: DatingSim_UI_Frames_13
+  - first:
+      213: 5615030525429609453
+    second: DatingSim_UI_Frames_14
+  - first:
+      213: 615862104729169351
+    second: DatingSim_UI_Frames_15
+  - first:
+      213: 989900144084616192
+    second: DatingSim_UI_Frames_16
+  - first:
+      213: 5909009233940951147
+    second: DatingSim_UI_Frames_17
+  - first:
+      213: -8499200760052313174
+    second: DatingSim_UI_Frames_18
+  - first:
+      213: 2578641663353548082
+    second: DatingSim_UI_Frames_19
+  - first:
+      213: -2259712666281326895
+    second: DatingSim_UI_Frames_20
+  - first:
+      213: -1508825111930523940
+    second: DatingSim_UI_Frames_21
+  - first:
+      213: 781339020357189978
+    second: DatingSim_UI_Frames_22
+  - first:
+      213: -3121432549854049201
+    second: DatingSim_UI_Frames_23
+  - first:
+      213: -3620921311230366795
+    second: DatingSim_UI_Frames_24
+  - first:
+      213: -6928745724711349347
+    second: DatingSim_UI_Frames_25
+  - first:
+      213: -3483321520513626406
+    second: DatingSim_UI_Frames_26
+  - first:
+      213: -1086115943532450588
+    second: DatingSim_UI_Frames_27
+  - first:
+      213: -2031540990746863790
+    second: DatingSim_UI_Frames_28
+  - first:
+      213: -2376237739408138942
+    second: DatingSim_UI_Frames_29
+  - first:
+      213: 5471432638776176487
+    second: DatingSim_UI_Frames_30
+  - first:
+      213: -588305180108939201
+    second: DatingSim_UI_Frames_31
+  - first:
+      213: 1448990304325223435
+    second: DatingSim_UI_Frames_32
+  - first:
+      213: 1185766759036897525
+    second: DatingSim_UI_Frames_33
+  - first:
+      213: -7049541772359925144
+    second: DatingSim_UI_Frames_34
+  - first:
+      213: -6299213834450960342
+    second: DatingSim_UI_Frames_35
+  - first:
+      213: -5522063478242910836
+    second: DatingSim_UI_Frames_36
+  - first:
+      213: 9006779148467174932
+    second: DatingSim_UI_Frames_37
+  - first:
+      213: -1505038405684962429
+    second: DatingSim_UI_Frames_38
+  - first:
+      213: -2036339692257383636
+    second: DatingSim_UI_Frames_39
+  - first:
+      213: 5953329244828324368
+    second: DatingSim_UI_Frames_40
+  - first:
+      213: -8102078120851306474
+    second: DatingSim_UI_Frames_41
+  - first:
+      213: 453996320129172829
+    second: DatingSim_UI_Frames_42
+  - first:
+      213: 8856962688674776205
+    second: DatingSim_UI_Frames_43
+  - first:
+      213: -5692343701274669824
+    second: DatingSim_UI_Frames_44
+  - first:
+      213: 7682330400827677755
+    second: DatingSim_UI_Frames_45
+  - first:
+      213: 6100886552979424112
+    second: DatingSim_UI_Frames_46
+  - first:
+      213: -9124204286598132357
+    second: DatingSim_UI_Frames_47
+  - first:
+      213: 2535316295394404427
+    second: DatingSim_UI_Frames_48
+  - first:
+      213: -7859832950685026662
+    second: DatingSim_UI_Frames_49
+  - first:
+      213: 8704002950948104291
+    second: DatingSim_UI_Frames_50
+  - first:
+      213: -1391222992515357107
+    second: DatingSim_UI_Frames_51
+  - first:
+      213: -6075920118307211689
+    second: DatingSim_UI_Frames_52
+  - first:
+      213: 1790468095851325560
+    second: DatingSim_UI_Frames_53
+  - first:
+      213: -2146695351722322124
+    second: DatingSim_UI_Frames_54
+  - first:
+      213: 6924436434236745672
+    second: DatingSim_UI_Frames_55
+  - first:
+      213: -2468515560758382422
+    second: DatingSim_UI_Frames_56
+  - first:
+      213: -5893678346332749269
+    second: DatingSim_UI_Frames_57
+  - first:
+      213: 2106654622834246546
+    second: DatingSim_UI_Frames_58
+  - first:
+      213: -9130325483777561432
+    second: DatingSim_UI_Frames_59
+  - first:
+      213: 2597607336922223981
+    second: DatingSim_UI_Frames_60
+  - first:
+      213: -1735195886197137803
+    second: DatingSim_UI_Frames_61
+  - first:
+      213: -6745852473109575835
+    second: DatingSim_UI_Frames_62
+  - first:
+      213: -6025741422081008157
+    second: DatingSim_UI_Frames_63
+  - first:
+      213: 2494630688821764911
+    second: DatingSim_UI_Frames_64
+  - first:
+      213: 440762706698374470
+    second: DatingSim_UI_Frames_65
+  - first:
+      213: -2600210760714895950
+    second: DatingSim_UI_Frames_66
+  - first:
+      213: -6223922325355909231
+    second: DatingSim_UI_Frames_67
+  - first:
+      213: -1236582433300486513
+    second: DatingSim_UI_Frames_68
+  - first:
+      213: 1128440110210231756
+    second: DatingSim_UI_Frames_69
+  - first:
+      213: 7270016823737897267
+    second: DatingSim_UI_Frames_70
+  - first:
+      213: 6542205934142563368
+    second: DatingSim_UI_Frames_71
+  - first:
+      213: -5877282151146400075
+    second: DatingSim_UI_Frames_72
+  - first:
+      213: 6948628054770438511
+    second: DatingSim_UI_Frames_73
+  - first:
+      213: 2053741685758515701
+    second: DatingSim_UI_Frames_74
+  - first:
+      213: 3313470571354752340
+    second: DatingSim_UI_Frames_75
+  - first:
+      213: 3443617986052949268
+    second: DatingSim_UI_Frames_76
+  - first:
+      213: -3973443956718269908
+    second: DatingSim_UI_Frames_77
+  - first:
+      213: 1074841274646674562
+    second: DatingSim_UI_Frames_78
+  - first:
+      213: -4624394406149199960
+    second: DatingSim_UI_Frames_79
+  - first:
+      213: 7833356018738703786
+    second: DatingSim_UI_Frames_80
+  - first:
+      213: 2319206329249446057
+    second: DatingSim_UI_Frames_81
+  - first:
+      213: 7347825300104613428
+    second: DatingSim_UI_Frames_82
+  - first:
+      213: -828541942837303898
+    second: DatingSim_UI_Frames_83
+  - first:
+      213: 7178044819557532871
+    second: DatingSim_UI_Frames_84
+  - first:
+      213: -2726785469593331813
+    second: DatingSim_UI_Frames_85
+  - first:
+      213: 7355166776089180768
+    second: DatingSim_UI_Frames_86
+  - first:
+      213: -5848758870325138666
+    second: DatingSim_UI_Frames_87
+  - first:
+      213: 2310640639109122759
+    second: DatingSim_UI_Frames_88
+  - first:
+      213: 6825697885676453078
+    second: DatingSim_UI_Frames_89
+  - first:
+      213: 2962397661700446259
+    second: DatingSim_UI_Frames_90
+  - first:
+      213: 7714502838609540334
+    second: DatingSim_UI_Frames_91
+  - first:
+      213: 3820641060105583249
+    second: DatingSim_UI_Frames_92
+  - first:
+      213: -8477244110026295280
+    second: DatingSim_UI_Frames_93
+  - first:
+      213: 8601843170348974312
+    second: DatingSim_UI_Frames_94
+  - first:
+      213: -7949060484232550413
+    second: DatingSim_UI_Frames_95
+  - first:
+      213: 6025263186755335493
+    second: DatingSim_UI_Frames_96
+  - first:
+      213: -5969449263746821985
+    second: DatingSim_UI_Frames_97
+  - first:
+      213: 5998155516639524198
+    second: DatingSim_UI_Frames_98
+  - first:
+      213: 3312440241950392114
+    second: DatingSim_UI_Frames_99
+  - first:
+      213: -8389004149464910277
+    second: DatingSim_UI_Frames_100
+  - first:
+      213: -1876489013028748542
+    second: DatingSim_UI_Frames_101
+  - first:
+      213: 2407878332004972482
+    second: DatingSim_UI_Frames_102
+  - first:
+      213: 8601438673924641776
+    second: DatingSim_UI_Frames_103
+  - first:
+      213: 3503368819419657733
+    second: DatingSim_UI_Frames_104
+  - first:
+      213: 94451572289194659
+    second: DatingSim_UI_Frames_105
+  - first:
+      213: -4525173789617201575
+    second: DatingSim_UI_Frames_106
+  - first:
+      213: 8872516852532687977
+    second: DatingSim_UI_Frames_107
+  - first:
+      213: -3553642978793684870
+    second: DatingSim_UI_Frames_108
+  - first:
+      213: 7186758321355633220
+    second: DatingSim_UI_Frames_109
+  - first:
+      213: -1086038388356128000
+    second: DatingSim_UI_Frames_110
+  - first:
+      213: -4438728398429062720
+    second: DatingSim_UI_Frames_111
+  - first:
+      213: -7715479078584415863
+    second: DatingSim_UI_Frames_112
+  - first:
+      213: -2654778428156990095
+    second: DatingSim_UI_Frames_113
+  - first:
+      213: 1437587919281876311
+    second: DatingSim_UI_Frames_114
+  - first:
+      213: -5326131507234244910
+    second: DatingSim_UI_Frames_115
+  - first:
+      213: 1047447815974144310
+    second: DatingSim_UI_Frames_116
+  - first:
+      213: -8713651551324163088
+    second: DatingSim_UI_Frames_117
+  - first:
+      213: -1526623004930856946
+    second: DatingSim_UI_Frames_118
+  - first:
+      213: -2254731395598170546
+    second: DatingSim_UI_Frames_119
+  - first:
+      213: 3888586392667113331
+    second: DatingSim_UI_Frames_120
+  - first:
+      213: 9197588129714173724
+    second: DatingSim_UI_Frames_121
+  - first:
+      213: -6695356171091742069
+    second: DatingSim_UI_Frames_122
+  - first:
+      213: -8628978009957039603
+    second: DatingSim_UI_Frames_123
+  - first:
+      213: -6682541313494134109
+    second: DatingSim_UI_Frames_124
+  - first:
+      213: 2079666428487042171
+    second: DatingSim_UI_Frames_125
+  - first:
+      213: -2414803817886759488
+    second: DatingSim_UI_Frames_126
+  - first:
+      213: 4677329355547218268
+    second: DatingSim_UI_Frames_127
+  - first:
+      213: 6144435597891577108
+    second: DatingSim_UI_Frames_128
+  - first:
+      213: 1492965772625965696
+    second: DatingSim_UI_Frames_129
+  - first:
+      213: 3391862351291639192
+    second: DatingSim_UI_Frames_130
+  - first:
+      213: 3586543852863408900
+    second: DatingSim_UI_Frames_131
+  - first:
+      213: -2054413888024032448
+    second: DatingSim_UI_Frames_132
+  - first:
+      213: 454127923522079129
+    second: DatingSim_UI_Frames_133
+  - first:
+      213: 2609561522983299134
+    second: DatingSim_UI_Frames_134
+  - first:
+      213: -8064038700212446689
+    second: DatingSim_UI_Frames_135
+  - first:
+      213: 1850175091909740699
+    second: DatingSim_UI_Frames_136
+  - first:
+      213: 9024125076163281562
+    second: DatingSim_UI_Frames_137
+  - first:
+      213: -696315444561269657
+    second: DatingSim_UI_Frames_138
+  - first:
+      213: 5251245148959329254
+    second: DatingSim_UI_Frames_139
+  - first:
+      213: -2690650897826385434
+    second: DatingSim_UI_Frames_140
+  - first:
+      213: 7581107269679777117
+    second: DatingSim_UI_Frames_141
+  - first:
+      213: 4550292574120683413
+    second: DatingSim_UI_Frames_142
+  - first:
+      213: -2324218904705378243
+    second: DatingSim_UI_Frames_143
+  - first:
+      213: 70796426364372315
+    second: DatingSim_UI_Frames_144
+  - first:
+      213: 2891573826547386196
+    second: DatingSim_UI_Frames_145
+  - first:
+      213: 5312349197892789275
+    second: DatingSim_UI_Frames_146
+  - first:
+      213: 6963731760162601353
+    second: DatingSim_UI_Frames_147
+  - first:
+      213: 7106414289483705078
+    second: DatingSim_UI_Frames_148
+  - first:
+      213: 491777159127835775
+    second: DatingSim_UI_Frames_149
+  - first:
+      213: -7289237344906105083
+    second: DatingSim_UI_Frames_150
+  - first:
+      213: 339632168679791979
+    second: DatingSim_UI_Frames_151
+  - first:
+      213: 6854285203759858453
+    second: DatingSim_UI_Frames_152
+  - first:
+      213: 539825729641795158
+    second: DatingSim_UI_Frames_153
+  - first:
+      213: -7916168990203071782
+    second: DatingSim_UI_Frames_154
+  - first:
+      213: 5688747403151060383
+    second: DatingSim_UI_Frames_155
+  - first:
+      213: -4087794739402997546
+    second: DatingSim_UI_Frames_156
+  - first:
+      213: 5044524639260205386
+    second: DatingSim_UI_Frames_157
+  - first:
+      213: 6011917754252474193
+    second: DatingSim_UI_Frames_158
+  - first:
+      213: -8830783238043587457
+    second: DatingSim_UI_Frames_159
+  - first:
+      213: 5421028691752930066
+    second: DatingSim_UI_Frames_160
+  - first:
+      213: 3577247319643749068
+    second: DatingSim_UI_Frames_161
+  - first:
+      213: -7978453721477332485
+    second: DatingSim_UI_Frames_162
+  - first:
+      213: 7572363768178600579
+    second: DatingSim_UI_Frames_163
+  - first:
+      213: -5012557289636361046
+    second: DatingSim_UI_Frames_164
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_0
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1943
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf89d89dc2864c80800000000000000
+      internalID: -8338833840485593126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_1
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1943
+        width: 130
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5517d9e0c4f3a640800000000000000
+      internalID: 5090181113252877658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_2
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1943
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be425e1e0248516b0800000000000000
+      internalID: -5326205707532032789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_3
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f19059da8a8549c0800000000000000
+      internalID: -3943593569736945165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_4
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9139b89b7c672450800000000000000
+      internalID: 6063934701376713117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_5
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33dc8e6a2d0309100800000000000000
+      internalID: 112643671985802547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_6
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 1919
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59f0ae4bb44493ee0800000000000000
+      internalID: -1280917527061721195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_7
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 1919
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e665eee13e4f37df0800000000000000
+      internalID: -183533903478368658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_8
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bddc43f270811fb00800000000000000
+      internalID: 860495422940302811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_9
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e138670e614a2560800000000000000
+      internalID: 7289710887679046121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_10
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae868c145e672f430800000000000000
+      internalID: 3815242561359472874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_11
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25a32d0f7b1edf4e0800000000000000
+      internalID: -1946151283818612142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_12
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1919
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace6f6a19ba2ae560800000000000000
+      internalID: 7343729116881841866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_13
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 1919
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11adf5f83ff93a980800000000000000
+      internalID: -8528797400878294511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_14
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de3f43f53889ced40800000000000000
+      internalID: 5615030525429609453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_15
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cda10f325bfb8800800000000000000
+      internalID: 615862104729169351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_16
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 1919
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0048543bfe4dcbd00800000000000000
+      internalID: 989900144084616192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_17
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1815
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b60bd8b4794010250800000000000000
+      internalID: 5909009233940951147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_18
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1811
+        width: 130
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa31a5e70f5cc0a80800000000000000
+      internalID: -8499200760052313174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_19
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1815
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23de53b3eec29c320800000000000000
+      internalID: 2578641663353548082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_20
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6c9df6d43e3a0e0800000000000000
+      internalID: -2259712666281326895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_21
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cde21370e839f0be0800000000000000
+      internalID: -1508825111930523940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_22
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a51ca8503bfd7da00800000000000000
+      internalID: 781339020357189978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_23
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 1791
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c8b9b42a17ea4d0800000000000000
+      internalID: -3121432549854049201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_24
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 1791
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bbe87c7047efbdc0800000000000000
+      internalID: -3620921311230366795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_25
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d93d293397628df90800000000000000
+      internalID: -6928745724711349347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_26
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adecf435881c8afc0800000000000000
+      internalID: -3483321520513626406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_27
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ec2cd8cd475de0f0800000000000000
+      internalID: -1086115943532450588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_28
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25753e38b348ec3e0800000000000000
+      internalID: -2031540990746863790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_29
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1791
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24d53b8ad58e50fd0800000000000000
+      internalID: -2376237739408138942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_30
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 1791
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76f6bbefefe6eeb40800000000000000
+      internalID: 5471432638776176487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_31
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f30a5104e8be5d7f0800000000000000
+      internalID: -588305180108939201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_32
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b044a443109db1410800000000000000
+      internalID: 1448990304325223435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_33
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 1791
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f84cdab590b47010800000000000000
+      internalID: 1185766759036897525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_34
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1687
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 862853dab1ffa2e90800000000000000
+      internalID: -7049541772359925144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_35
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1687
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2003596462b498a0800000000000000
+      internalID: -6299213834450960342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_36
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1687
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8d5c201680bd53b0800000000000000
+      internalID: -5522063478242910836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_37
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 1535
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41ef7c26ae18efc70800000000000000
+      internalID: 9006779148467174932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_38
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 1535
+        width: 86
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38bd3d74b870d1be0800000000000000
+      internalID: -1505038405684962429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_39
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 1535
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2b68f0c6d77db3e0800000000000000
+      internalID: -2036339692257383636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_40
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 012dfe4f7697e9250800000000000000
+      internalID: 5953329244828324368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_41
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 618813030e2af8f80800000000000000
+      internalID: -8102078120851306474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_42
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5542ae6f3bec4600800000000000000
+      internalID: 453996320129172829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_43
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d84495f93a04aea70800000000000000
+      internalID: 8856962688674776205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_44
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d4712209bb001b0800000000000000
+      internalID: -5692343701274669824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_45
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c948cfbce1d9a60800000000000000
+      internalID: 7682330400827677755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_46
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 073cb4dfef3baa450800000000000000
+      internalID: 6100886552979424112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_47
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 1663
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7dc83f1b80506180800000000000000
+      internalID: -9124204286598132357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_48
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 1535
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b482e3cecb04f2320800000000000000
+      internalID: 2535316295394404427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_49
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 1535
+        width: 86
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96328413934ce290800000000000000
+      internalID: -7859832950685026662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_50
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 1535
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 368a63f6194dac870800000000000000
+      internalID: 8704002950948104291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_51
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1547
+        width: 178
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4624cf2f0261bce0800000000000000
+      internalID: -1391222992515357107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_52
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1559
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75636a018defdaba0800000000000000
+      internalID: -6075920118307211689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_53
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 1547
+        width: 178
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87863e23f3509d810800000000000000
+      internalID: 1790468095851325560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_54
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 1535
+        width: 190
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 437db9783f76532e0800000000000000
+      internalID: -2146695351722322124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_55
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1535
+        width: 190
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c7247cef3a881060800000000000000
+      internalID: 6924436434236745672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_56
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1535
+        width: 190
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0f87e1d221ebdd0800000000000000
+      internalID: -2468515560758382422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_57
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1535
+        width: 190
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b22cc6225c2753ea0800000000000000
+      internalID: -5893678346332749269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_58
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 1419
+        width: 178
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 293487ac7375c3d10800000000000000
+      internalID: 2106654622834246546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_59
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1431
+        width: 130
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8acedb7d8519a4180800000000000000
+      internalID: -9130325483777561432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_60
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 1419
+        width: 178
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6592373c1e8c0420800000000000000
+      internalID: 2597607336922223981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_61
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57e1083f8885be7e0800000000000000
+      internalID: -1735195886197137803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_62
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5670d11baeae162a0800000000000000
+      internalID: -6745852473109575835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_63
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ed11843a14406ca0800000000000000
+      internalID: -6025741422081008157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_64
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 1407
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f236205f465be9220800000000000000
+      internalID: 2494630688821764911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_65
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 1407
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d0ff2b857ed1600800000000000000
+      internalID: 440762706698374470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_66
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1407
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bdb072f6123aebd0800000000000000
+      internalID: -2600210760714895950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_67
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1407
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19fa98fee9f20a9a0800000000000000
+      internalID: -6223922325355909231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_68
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f86e2af14d6c6dee0800000000000000
+      internalID: -1236582433300486513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_69
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccd226f2d4609af00800000000000000
+      internalID: 1128440110210231756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_70
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 1279
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 331d20278c944e460800000000000000
+      internalID: 7270016823737897267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_71
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1303
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 824250092a59aca50800000000000000
+      internalID: 6542205934142563368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_72
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1279
+        width: 130
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b6dc20d503bf6ea0800000000000000
+      internalID: -5877282151146400075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_73
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1303
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f61d7e0866c7e6060800000000000000
+      internalID: 6948628054770438511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_74
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 1279
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f95c089e2b508c10800000000000000
+      internalID: 2053741685758515701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_75
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 1279
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4558f4bddefcbfd20800000000000000
+      internalID: 3313470571354752340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_76
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1279
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41505d030503acf20800000000000000
+      internalID: 3443617986052949268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_77
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1279
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2a82e806cd7bd8c0800000000000000
+      internalID: -3973443956718269908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_78
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1175
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28c3e3dc17a9aee00800000000000000
+      internalID: 1074841274646674562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_79
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1175
+        width: 130
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a76c28e9c9d2dfb0800000000000000
+      internalID: -4624394406149199960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_80
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1175
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aada610dbcba5bc60800000000000000
+      internalID: 7833356018738703786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_81
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1047
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a830c76ed97f2020800000000000000
+      internalID: 2319206329249446057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_82
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1043
+        width: 130
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43e0d541e28b8f560800000000000000
+      internalID: 7347825300104613428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_83
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 1047
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a5aba72e7d6084f0800000000000000
+      internalID: -828541942837303898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_84
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c44f838bb98d9360800000000000000
+      internalID: 7178044819557532871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_85
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9751320013882ad0800000000000000
+      internalID: -2726785469593331813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_86
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06afc88a63dc21660800000000000000
+      internalID: 7355166776089180768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_87
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 1087
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61bea55abc805dea0800000000000000
+      internalID: -5848758870325138666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_88
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 1087
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ca4ea14b6b011020800000000000000
+      internalID: 2310640639109122759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_89
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1087
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dc31eb1010c9be50800000000000000
+      internalID: 6825697885676453078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_90
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 1087
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3385a155afc8c1920800000000000000
+      internalID: 2962397661700446259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_91
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee47012657b6f0b60800000000000000
+      internalID: 7714502838609540334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_92
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19a7dd13dc4a50530800000000000000
+      internalID: 3820641060105583249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_93
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 959
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0183c937567ca5a80800000000000000
+      internalID: -8477244110026295280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_94
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 919
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e04546f9c2ef5770800000000000000
+      internalID: 8601843170348974312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_95
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 919
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f769330b934fa190800000000000000
+      internalID: -7949060484232550413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_96
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 919
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5453ac4f1f80e9350800000000000000
+      internalID: 6025263186755335493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_97
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 959
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9057a9a581482da0800000000000000
+      internalID: -5969449263746821985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_98
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 959
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66539dca9aabd3350800000000000000
+      internalID: 5998155516639524198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_99
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 959
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23f792999d628fd20800000000000000
+      internalID: 3312440241950392114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_100
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 959
+        width: 194
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b36bdd34c25449b80800000000000000
+      internalID: -8389004149464910277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_101
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 791
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2038f794f2f55f5e0800000000000000
+      internalID: -1876489013028748542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_102
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 791
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c73481e5908a6120800000000000000
+      internalID: 2407878332004972482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_103
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 791
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3d59cc6e27e5770800000000000000
+      internalID: 8601438673924641776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_104
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 703
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50630be21677e9030800000000000000
+      internalID: 3503368819419657733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_105
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 703
+        width: 86
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aa46ce543f8f4100800000000000000
+      internalID: 94451572289194659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_106
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 703
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95e55fae96a5331c0800000000000000
+      internalID: -4525173789617201575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_107
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 815
+        width: 190
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 964b0ea9113812b70800000000000000
+      internalID: 8872516852532687977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_108
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 835
+        width: 190
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a70017ee98ceeaec0800000000000000
+      internalID: -3553642978793684870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_109
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 835
+        width: 190
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4423cfebd9e7cb360800000000000000
+      internalID: 7186758321355633220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_110
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 815
+        width: 190
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 003689107dd9de0f0800000000000000
+      internalID: -1086038388356128000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_111
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 703
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c9723df9087662c0800000000000000
+      internalID: -4438728398429062720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_112
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 703
+        width: 86
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 989840908ac1de490800000000000000
+      internalID: -7715479078584415863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_113
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 703
+        width: 66
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d2550d515582bd0800000000000000
+      internalID: -2654778428156990095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_114
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 663
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d603e889653f310800000000000000
+      internalID: 1437587919281876311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_115
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 663
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d6794cfc97c516b0800000000000000
+      internalID: -5326131507234244910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_116
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 663
+        width: 154
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639c5ef2d38498e00800000000000000
+      internalID: 1047447815974144310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_117
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3bacab414e21780800000000000000
+      internalID: -8713651551324163088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_118
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e082825277850dae0800000000000000
+      internalID: -1526623004930856946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_119
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e464375edb595b0e0800000000000000
+      internalID: -2254731395598170546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_120
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3774755b8b807f530800000000000000
+      internalID: 3888586392667113331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_121
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1776fd4ca564af70800000000000000
+      internalID: 9197588129714173724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_122
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b827b5139015513a0800000000000000
+      internalID: -6695356171091742069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_123
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d028addd736bf3880800000000000000
+      internalID: -8628978009957039603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_124
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 707
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a25f4cb418d243a0800000000000000
+      internalID: -6682541313494134109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_125
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 427
+        width: 130
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b74864129957cdc10800000000000000
+      internalID: 2079666428487042171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_126
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c54a98c8b4ec7ed0800000000000000
+      internalID: -2414803817886759488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_127
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5116ee644639e040800000000000000
+      internalID: 4677329355547218268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_128
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 415a7952f9b654550800000000000000
+      internalID: 6144435597891577108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_129
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 567
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082ff2bc57418b410800000000000000
+      internalID: 1492965772625965696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_130
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 567
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89562cf66d0521f20800000000000000
+      internalID: 3391862351291639192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_131
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40bc841c1a6f5c130800000000000000
+      internalID: 3586543852863408900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_132
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04bc2be14714d73e0800000000000000
+      internalID: -2054413888024032448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_133
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9998e1cb0f26d4600800000000000000
+      internalID: 454127923522079129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_134
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3862fc0166073420800000000000000
+      internalID: 2609561522983299134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_135
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 567
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1a95daf687c61090800000000000000
+      internalID: -8064038700212446689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_136
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 567
+        width: 74
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b984e8581742da910800000000000000
+      internalID: 1850175091909740699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_137
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a924865e1f12c3d70800000000000000
+      internalID: 9024125076163281562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_138
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76cae4bdac03656f0800000000000000
+      internalID: -696315444561269657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_139
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 579
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ebc63404ab20e840800000000000000
+      internalID: 5251245148959329254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_140
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 447
+        width: 130
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e1f87c9343e8aad0800000000000000
+      internalID: -2690650897826385434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_141
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 427
+        width: 130
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d55056535e0853960800000000000000
+      internalID: 7581107269679777117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_142
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 597af88dcf2e52f30800000000000000
+      internalID: 4550292574120683413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_143
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d38d9cc6837bebfd0800000000000000
+      internalID: -2324218904705378243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_144
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b55c0d489f48bf000800000000000000
+      internalID: 70796426364372315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_145
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 435
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4578c25331fe02820800000000000000
+      internalID: 2891573826547386196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_146
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 435
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b142b3f037149b940800000000000000
+      internalID: 5312349197892789275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_147
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 989f893f32524a060800000000000000
+      internalID: 6963731760162601353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_148
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6faaf67152e0f9260800000000000000
+      internalID: 7106414289483705078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_149
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74277e78b423d600800000000000000
+      internalID: 491777159127835775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_150
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50f2c5d314d67da90800000000000000
+      internalID: -7289237344906105083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_151
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 435
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6d547078ad96b400800000000000000
+      internalID: 339632168679791979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_152
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 435
+        width: 78
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5138257c3105f1f50800000000000000
+      internalID: 6854285203759858453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_153
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65e4ae714a8dd7700800000000000000
+      internalID: 539825729641795158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_154
+      rect:
+        serializedVersion: 2
+        x: 2431
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad2bbfcbe3e142290800000000000000
+      internalID: -7916168990203071782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_155
+      rect:
+        serializedVersion: 2
+        x: 2559
+        y: 451
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9daeb57f9d72fe40800000000000000
+      internalID: 5688747403151060383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_156
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 191
+        width: 130
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d08c23b75c3547c0800000000000000
+      internalID: -4087794739402997546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_157
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 195
+        width: 130
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a416fcfae60c10640800000000000000
+      internalID: 5044524639260205386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_158
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 195
+        width: 130
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1573511585f9e6350800000000000000
+      internalID: 6011917754252474193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_159
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 127
+        width: 122
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c20f7be61c27580800000000000000
+      internalID: -8830783238043587457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_160
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 127
+        width: 122
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21b42219fdc5b3b40800000000000000
+      internalID: 5421028691752930066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_161
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 127
+        width: 130
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cca7511fb7fe4a130800000000000000
+      internalID: 3577247319643749068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_162
+      rect:
+        serializedVersion: 2
+        x: 1707
+        y: 127
+        width: 170
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf1437aac96d64190800000000000000
+      internalID: -7978453721477332485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_163
+      rect:
+        serializedVersion: 2
+        x: 1987
+        y: 127
+        width: 122
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ae2502ab0761960800000000000000
+      internalID: 7572363768178600579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DatingSim_UI_Frames_164
+      rect:
+        serializedVersion: 2
+        x: 2239
+        y: 127
+        width: 130
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac0ee6e3b1df6ab0800000000000000
+      internalID: -5012557289636361046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
