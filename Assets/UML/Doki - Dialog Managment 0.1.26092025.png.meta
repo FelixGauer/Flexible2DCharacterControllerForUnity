@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: ea370b2d7d8e36a49999c67575f51d81
+guid: 082e2ca5ccfe54041ba1fac7fa6199f2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5137406808823077307
-    second: Doki - Dialog Managment_0
+      213: 1922966154172072020
+    second: Doki - Dialog Managment 0.1.26092025_0
   - first:
-      213: -8234504494214514725
-    second: Doki - Dialog Managment_1
+      213: -7805238176288697586
+    second: Doki - Dialog Managment 0.1.26092025_1
   - first:
-      213: 8541823102177758517
-    second: Doki - Dialog Managment_2
-  - first:
-      213: 7001655163870808336
-    second: Doki - Dialog Managment_3
+      213: -2376376920093756139
+    second: Doki - Dialog Managment 0.1.26092025_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -135,7 +132,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Doki - Dialog Managment_0
+      name: Doki - Dialog Managment 0.1.26092025_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bb99292064cbb4740800000000000000
-      internalID: 5137406808823077307
+      spriteID: 4508686678fbfaa10800000000000000
+      internalID: 1922966154172072020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Doki - Dialog Managment_1
+      name: Doki - Dialog Managment 0.1.26092025_1
       rect:
         serializedVersion: 2
         x: 139
-        y: 369
+        y: 0
         width: 1452
-        height: 572
+        height: 941
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,14 +169,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd77cf07ac929bd80800000000000000
-      internalID: -8234504494214514725
+      spriteID: e039efa8b393ea390800000000000000
+      internalID: -7805238176288697586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Doki - Dialog Managment_2
+      name: Doki - Dialog Managment 0.1.26092025_2
       rect:
         serializedVersion: 2
         x: 0
@@ -194,30 +191,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53dc78bdad6aa8670800000000000000
-      internalID: 8541823102177758517
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Doki - Dialog Managment_3
-      rect:
-        serializedVersion: 2
-        x: 139
-        y: 0
-        width: 823
-        height: 352
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0198c427640ea2160800000000000000
-      internalID: 7001655163870808336
+      spriteID: 515ff5128c9650fd0800000000000000
+      internalID: -2376376920093756139
       vertices: []
       indices: 
       edges: []
