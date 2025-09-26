@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSettings:
     defaultMovementMode: 1
-  ResetNumberJumpOnWall: 1
-  ResetNumberDashOnWall: 1
-  CanJumpInTheAirTowardsTheWall: 1
+  ResetNumberJumpOnWall: 0
+  ResetNumberDashOnWall: 0
+  CanJumpInTheAirTowardsTheWall: 0
   WalkSpeed: 3
   WalkAcceleration: 150
   WalkDeceleration: 150
@@ -31,7 +31,7 @@ MonoBehaviour:
   FallGravityMultiplayer: 1.2
   JumpHangTimeThreshold: 1
   JumpHangGravityMultiplier: 0.5
-  MaxNumberJumps: 2
+  MaxNumberJumps: 1
   AirAcceleration: 100
   AirDeceleration: 5
   RunAirAcceleration: 150
@@ -45,11 +45,11 @@ MonoBehaviour:
   StartVelocityWallSlide: 2.5
   WallSlideSpeedMax: 3.5
   WallSlideDeceleration: 5
-  WallJumpClimb: {x: 20, y: 25}
+  WallJumpClimb: {x: 0, y: 0}
   WallJumpOff: {x: 5, y: 8}
   WallLeap: {x: 40, y: 15}
   DashVelocity: 30
-  MaxNumberDash: 2
+  MaxNumberDash: 0
   CrouchMoveSpeed: 5
   CrouchHeight: 0.6
   CrouchOffset: 0.2
