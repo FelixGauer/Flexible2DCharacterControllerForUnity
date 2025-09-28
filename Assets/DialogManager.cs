@@ -32,13 +32,12 @@ public class DialogManager : MonoBehaviour
     void ContinueDialoge()
     {
 
-        var port = currentNode.GetOutputPort("nextNodes");
-        if (port.ConnectionCount == 0)
+        NodePort port = currentNode.GetOutputPort("nextNodes 0");
+        if (port == null || port.ConnectionCount == 0)
             return;
 
         currentNode = port.GetConnection(0).node as DialogNode;
         ShowCurrentline();
-
     }
 
         void Update()
