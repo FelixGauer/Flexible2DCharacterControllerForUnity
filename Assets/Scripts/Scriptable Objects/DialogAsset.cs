@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 
+
+//Deprecated
 [CreateAssetMenu(fileName = "DialogAsset", menuName = "Scriptable Objects/DialogAsset")]
 public class DialogAsset : ScriptableObject
 {

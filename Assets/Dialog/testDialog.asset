@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cd3c88a583d30e4586cc60bbb1d3366, type: 3}
-  m_Name: DialogAsset
+  m_Name: testDialog
   m_EditorClassIdentifier: 
-  dialogText: {fileID: 0}
   text_string:
   - Jo
-  - This is Grill
-  - Chill
+  lastAsset: {fileID: 0}
   nextAsset: {fileID: 11400000, guid: ce768036c8a35a941aae8773b77c3c71, type: 2}

@@ -103937,7 +103937,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1618149815}
   - component: {fileID: 1618149814}
-  - component: {fileID: 1618149813}
   m_Layer: 0
   m_Name: DialogTree
   m_TagString: Untagged
@@ -103945,21 +103944,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1618149813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618149812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"DialogTree","summary":null,"pan":{"x":-798.6141,"y":127.8501},"zoom":1.0,"elements":[],"$version":"A"}}}'
-    _objectReferences: []
 --- !u!114 &1618149814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103973,10 +103957,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"currentDialog","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"DialogAsset,
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"Dialog","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"DialogAsset,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences:
-    - {fileID: 11400000, guid: 0c55a1a78e2f6784283675e815ce305c, type: 2}
+    - {fileID: 11400000, guid: 5e956306408324042aafedf428caca36, type: 2}
 --- !u!4 &1618149815
 Transform:
   m_ObjectHideFlags: 0
@@ -104812,9 +104796,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9c18bee87e350458cadf5c6f387054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDialog: {fileID: 11400000, guid: 0c55a1a78e2f6784283675e815ce305c, type: 2}
+  currentDialog: {fileID: 0}
   dialogText: {fileID: 341846728}
   text_string: []
+  dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
+  currentNode: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

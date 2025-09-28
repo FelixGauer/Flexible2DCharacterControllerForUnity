@@ -1,67 +1,54 @@
 using TMPro;
 using UnityEngine;
+using XNode;
 
 public class DialogManager : MonoBehaviour
 
 {
     // DialogAsset does not handle GameObject textbox, background or charImg, just contains the data to call it.
 
-    public DialogAsset currentDialog;
     public TMP_Text dialogText;
-    public string[] text_string;
-
-    public string GetDialogLine(int index)
-    {
-        if (index >= 0 && index < text_string.Length)
-            return text_string[index];
-        return "";
-    }
+    public NodeGraph dialogGraph;
+    public DialogNode currentNode;
 
     int currentDialogIndex = 0;
-
 
     void Start()
     {
         // set active UI elements (). This function would be called from the JnR level again.
+        currentNode = dialogGraph.nodes[0] as DialogNode;
         ShowCurrentline();
 
     }
 
     void ShowCurrentline()
     {
-        dialogText.text = currentDialog.text_string[currentDialogIndex];
+        if (currentNode != null)
+            dialogText.text = currentNode.dialogText;
     }
 
 
 
     void ContinueDialoge()
     {
-        currentDialogIndex++;
-        if (currentDialogIndex < currentDialog.text_string.Length)
-        {
-            ShowCurrentline();
-        }
-        else if (currentDialog.nextAsset != null)
-        {
-            currentDialog = currentDialog.nextAsset;
-            currentDialogIndex = 0;
-            ShowCurrentline();
-        }
-        else
-        {
-            // Dialog ended
-        }
 
-}
-    void Update()
-    {
+        var port = currentNode.GetOutputPort("nextNodes");
+        if (port.ConnectionCount == 0)
+            return;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            ContinueDialoge();
-
-        }
+        currentNode = port.GetConnection(0).node as DialogNode;
+        ShowCurrentline();
 
     }
-}
+
+        void Update()
+        {
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                ContinueDialoge();
+            }
+
+        }
+    }
+
