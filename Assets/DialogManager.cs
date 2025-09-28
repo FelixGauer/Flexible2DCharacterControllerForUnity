@@ -10,6 +10,13 @@ public class DialogManager : MonoBehaviour
     public TMP_Text dialogText;
     public string[] text_string;
 
+    public string GetDialogLine(int index)
+    {
+        if (index >= 0 && index < text_string.Length)
+            return text_string[index];
+        return "";
+    }
+
     int currentDialogIndex = 0;
 
 
