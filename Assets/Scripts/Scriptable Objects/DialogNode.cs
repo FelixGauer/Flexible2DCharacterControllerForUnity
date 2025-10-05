@@ -8,6 +8,8 @@ using XNode;
 public class DialogNode : Node {
 
     public string dialogText;
+    // insted
+    // public string []
 
     [Input(backingValue = ShowBackingValue.Never)]
     public DialogNode inputNode;

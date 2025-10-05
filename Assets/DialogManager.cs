@@ -30,6 +30,9 @@ public class DialogManager : MonoBehaviour
     void ContinueDialoge()
     {
 
+        // change so:
+        // Instead of 1 String, go through all Strings in the array, THEN go to the next node
+
         NodePort port = currentNode.GetOutputPort("nextNodes 0");
         if (port == null || port.ConnectionCount == 0)
             return;
