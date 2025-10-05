@@ -51,22 +51,13 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   dialogText:
-  - vdyasv
-  - sdfgasfasf
-  - asfasf
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Elemen 0
+  - Elemen 1
+  - Elemen 2
+  - Elemen 3
   character_img: {fileID: 0}
   background_img: {fileID: 0}
+  nodeQuestion: 0
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
@@ -85,7 +76,7 @@ MonoBehaviour:
   m_Name: New Dialog Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -8, y: -88}
+  position: {x: -56, y: -168}
   ports:
     keys:
     - nextNodes
@@ -126,10 +117,10 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   dialogText:
-  - 
-  - asfasfsaf
-  - 
-  - 
+  - A.A
+  - A.B
+  - A.C
+  - A.D
   - 
   - 
   - 
@@ -141,6 +132,7 @@ MonoBehaviour:
   - 
   character_img: {fileID: 0}
   background_img: {fileID: 0}
+  nodeQuestion: 0
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
@@ -210,6 +202,7 @@ MonoBehaviour:
   - 
   character_img: {fileID: 0}
   background_img: {fileID: 0}
+  nodeQuestion: 0
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
