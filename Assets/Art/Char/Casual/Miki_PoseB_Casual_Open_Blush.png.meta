@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Miki_PoseB_Casual_Open_Blush_0: -6178769189467135225
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

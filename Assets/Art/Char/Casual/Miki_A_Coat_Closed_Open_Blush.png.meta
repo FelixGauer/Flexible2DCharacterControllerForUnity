@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Miki_A_Coat_Closed_Open_Blush_0: -4713654236003674990
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

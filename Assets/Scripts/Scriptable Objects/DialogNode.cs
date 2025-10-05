@@ -7,9 +7,14 @@ using XNode;
 [CreateAssetMenu(menuName = "VN/DialogNode")]
 public class DialogNode : Node {
 
-    public string dialogText;
-    // insted
-    // public string []
+    public string[] dialogText;
+    
+    public Sprite character_img;
+    public Sprite background_img;
+    
+    public bool nodeQuestion; //Once we impliement further, I will connect bool with other variables
+    public List<string> questionTexts;
+    public List<GameObject> questionObjects;
 
     [Input(backingValue = ShowBackingValue.Never)]
     public DialogNode inputNode;

@@ -210,7 +210,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Doki - Dialog Managment 0.1.26092025_0: 1922966154172072020
+      Doki - Dialog Managment 0.1.26092025_1: -7805238176288697586
+      Doki - Dialog Managment 0.1.26092025_2: -2376376920093756139
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

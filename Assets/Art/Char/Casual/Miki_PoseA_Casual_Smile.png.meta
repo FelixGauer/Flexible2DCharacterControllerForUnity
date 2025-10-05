@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Miki_PoseA_Casual_Smile_0: -5938151102570271691
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

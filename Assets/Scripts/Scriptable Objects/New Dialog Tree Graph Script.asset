@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Dialog Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -280, y: -88}
+  position: {x: -328, y: -168}
   ports:
     keys:
     - nextNodes
@@ -50,7 +50,25 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  dialogText: Hello Kinshuks
+  dialogText:
+  - vdyasv
+  - sdfgasfasf
+  - asfasf
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  questionTexts: []
+  questionObjects: []
   inputNode: {fileID: 0}
   nextNodes:
   - {fileID: 0}
@@ -107,7 +125,24 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  dialogText: This is Felix
+  dialogText:
+  - 
+  - asfasfsaf
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  questionTexts: []
+  questionObjects: []
   inputNode: {fileID: 0}
   nextNodes:
   - {fileID: 0}
@@ -167,6 +202,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  dialogText: Third
+  dialogText:
+  - 
+  - 
+  - 
+  - 
+  - 
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  questionTexts: []
+  questionObjects: []
   inputNode: {fileID: 0}
   nextNodes: []

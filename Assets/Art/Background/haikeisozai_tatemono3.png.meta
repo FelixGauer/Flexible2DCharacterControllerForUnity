@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      haikeisozai_tatemono3_0: -4886961808521125446
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

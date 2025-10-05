@@ -185,7 +185,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Miki_Full_Smile_Blush_0: -3060468827377987090
+      Miki_Full_Smile_Blush_1: 6102629864858172352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

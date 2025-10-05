@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      haikeisozai_humikiri2_0: -3500651174611336450
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -28,7 +28,7 @@ public class DialogManager : MonoBehaviour
     void ShowCurrentline()
     {
         if (currentNode != null)
-            dialogText.text = currentNode.dialogText;
+            dialogText.text = currentNode.dialogText[0];
     }
 
     void ContinueDialoge()
