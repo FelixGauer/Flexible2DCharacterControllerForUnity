@@ -5,11 +5,13 @@ using XNode;
 
 
 [CreateAssetMenu(menuName = "VN/DialogNode")]
-public class DialogNode : Node {
+public class DialogNode : Node
+{
 
-    public string dialogText;
-    // insted
-    // public string []
+    // stringID is for calling the correct dialognode from within the DS but also the JnR level
+    public string stringID;
+
+    // public string [] dialogString contains the actual dialog, this is not implemented
 
     [Input(backingValue = ShowBackingValue.Never)]
     public DialogNode inputNode;
@@ -18,14 +20,15 @@ public class DialogNode : Node {
     public DialogNode[] nextNodes;
 
 
-    // Return the correct value of an output port when requested
     public override object GetValue(NodePort port)
     {
         if (port.fieldName == "nextNodes")
         {
             if (port.ConnectionCount > 0)
             {
-                return port.GetConnection(0).node;
+                DialogNode nextNode = port.GetConnection(0).node as DialogNode;
+                if (nextNode != null)
+                    return nextNode.stringID;  // Return stringID instead of node object
             }
             return null;
         }
