@@ -27,8 +27,6 @@ public class DialogManager : MonoBehaviour
             dialogText.text = currentNode.dialogText;
     }
 
-
-
     void ContinueDialoge()
     {
 
