@@ -104039,10 +104039,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7316487063455168867, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7316487063455168867, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1301960139076022574, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044674861}
   m_SourcePrefab: {fileID: 100100000, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
 --- !u!1 &1708696119
 GameObject:
@@ -104666,6 +104674,27 @@ Transform:
   - {fileID: 871545865}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2044674853 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1301960139076022574, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
+  m_PrefabInstance: {fileID: 1633575879}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2044674861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044674853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9c18bee87e350458cadf5c6f387054, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dsUI: {fileID: 2053854841}
+  dialogText: {fileID: 341846728}
+  dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
+  currentNode: {fileID: 0}
 --- !u!1 &2053854841
 GameObject:
   m_ObjectHideFlags: 0
@@ -104686,7 +104715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2053854842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104798,11 +104827,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053854841}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f9c18bee87e350458cadf5c6f387054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dsUI: {fileID: 2053854841}
   dialogText: {fileID: 341846728}
   dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
   currentNode: {fileID: 0}
