@@ -55,8 +55,8 @@ MonoBehaviour:
   - Elemen 1
   - Elemen 2
   - Elemen 3
-  character_img: {fileID: 0}
-  background_img: {fileID: 0}
+  character_img: {fileID: -1641849082363856478, guid: 923e61b1973c31349893dc102d4bf179, type: 3}
+  background_img: {fileID: 1465451602134588807, guid: 52721b44355bb524290774053e22c626, type: 3}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
@@ -108,10 +108,7 @@ MonoBehaviour:
       _node: {fileID: -4573892038431273225}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections:
-      - fieldName: inputNode
-        node: {fileID: 5754351969888010586}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -119,19 +116,8 @@ MonoBehaviour:
   dialogText:
   - A.A
   - A.B
-  - A.C
-  - A.D
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  character_img: {fileID: 0}
-  background_img: {fileID: 0}
+  character_img: {fileID: -4512600477718737628, guid: 5650c05c1148c8c4380327ac60647cce, type: 3}
+  background_img: {fileID: -7872397880951524896, guid: 65f163bf39d41b540a8990083bfec18f, type: 3}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
@@ -153,57 +139,3 @@ MonoBehaviour:
   nodes:
   - {fileID: -5865896509538095507}
   - {fileID: -4573892038431273225}
-  - {fileID: 5754351969888010586}
---- !u!114 &5754351969888010586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
-  m_Name: Dialog
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 312, y: -280}
-  ports:
-    keys:
-    - inputNode
-    - nextNodes
-    values:
-    - _fieldName: inputNode
-      _node: {fileID: 5754351969888010586}
-      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: nextNodes 0
-        node: {fileID: -4573892038431273225}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextNodes
-      _node: {fileID: 5754351969888010586}
-      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  dialogText:
-  - 
-  - 
-  - 
-  - 
-  - 
-  character_img: {fileID: 0}
-  background_img: {fileID: 0}
-  nodeQuestion: 0
-  questionTexts: []
-  questionObjects: []
-  inputNode: {fileID: 0}
-  nextNodes: []

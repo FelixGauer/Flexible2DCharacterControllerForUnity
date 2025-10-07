@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using XNode;
 
 public class DialogManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class DialogManager : MonoBehaviour
     // DialogAsset does not handle GameObject textbox, background or charImg, just contains the data to call it.
 
     public GameObject dsUI;
+
+    public GameObject charIMG;
+    public GameObject backgroundIMG;
 
     public TMP_Text dialogText;
     public NodeGraph dialogGraph;
@@ -20,10 +24,10 @@ public class DialogManager : MonoBehaviour
     {
         // set active UI elements (). This function would be called from the JnR level again.
         currentNode = dialogGraph.nodes[0] as DialogNode;
-        ShowCurrentline();
+        ShowCurrentlineAndArt();
     }
 
-    void ShowCurrentline()
+    void ShowCurrentlineAndArt()
     {
         if (currentNode != null && elementIndex < currentNode.dialogText.Length)
         {
@@ -32,28 +36,38 @@ public class DialogManager : MonoBehaviour
         }
         else
         {
-            ContinueDialoge();
+            GetNextNode();
             elementIndex = 0;
-            ShowCurrentline();
+            ShowCurrentlineAndArt();
         }
+
+        Image charImageComponent = charIMG.GetComponent<Image>();
+        Image backgroundImageComponent = backgroundIMG.GetComponent<Image>();
+
+        if (charImageComponent != null)
+            charImageComponent.sprite = currentNode.character_img;
+
+        if (backgroundImageComponent != null)
+            backgroundImageComponent.sprite = currentNode.background_img;
+
     }
 
-    void ContinueDialoge()
-    {
-        // change so:
-        // Instead of 1 String, go through all Strings in the array, THEN go to the next node
-        if (isDSactive)
+        void GetNextNode()
         {
-            Debug.Log(" Continue Dialoge ");
-            NodePort port = currentNode.GetOutputPort("nextNodes 0");
-            if (port == null || port.ConnectionCount == 0)
-                return;
+            // change so:
+            // Instead of 1 String, go through all Strings in the array, THEN go to the next node
+            if (isDSactive)
+            {
+                Debug.Log(" Continue Dialoge ");
+                NodePort port = currentNode.GetOutputPort("nextNodes 0");
+                if (port == null || port.ConnectionCount == 0)
+                    return;
 
-            currentNode = port.GetConnection(0).node as DialogNode;
-            ShowCurrentline();
-        }
+                currentNode = port.GetConnection(0).node as DialogNode;
+                ShowCurrentlineAndArt();
+            }
         
-    }
+        }
 
     void SwitchGame()
     {
@@ -66,7 +80,7 @@ public class DialogManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // ContinueDialoge();
-            ShowCurrentline();
+            ShowCurrentlineAndArt();
         }
 
         if (Input.GetKeyDown(KeyCode.K))

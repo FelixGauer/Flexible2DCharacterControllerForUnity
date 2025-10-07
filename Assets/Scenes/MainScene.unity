@@ -671,7 +671,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 11.25
+  orthographic size: 12.34375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -104692,6 +104692,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dsUI: {fileID: 2053854841}
+  charIMG: {fileID: 0}
+  backgroundIMG: {fileID: 0}
   dialogText: {fileID: 341846728}
   dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
   currentNode: {fileID: 0}
@@ -104746,11 +104748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -104834,6 +104836,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dsUI: {fileID: 2053854841}
+  charIMG: {fileID: 0}
+  backgroundIMG: {fileID: 0}
   dialogText: {fileID: 341846728}
   dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
   currentNode: {fileID: 0}
