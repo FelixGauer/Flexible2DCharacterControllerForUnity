@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class DialogManager : MonoBehaviour
     // DialogAsset does not handle GameObject textbox, background or charImg, just contains the data to call it.
 
     public GameObject dsUI;
+    public GameObject questionPanel;
+    // those will have multiples at some point. Right now I want them to show correctly
 
     public GameObject charIMG;
     public GameObject backgroundIMG;
@@ -29,6 +32,8 @@ public class DialogManager : MonoBehaviour
 
     void ShowCurrentlineAndArt()
     {
+        CheckHasQuestions();
+
         if (currentNode != null && elementIndex < currentNode.dialogText.Length)
         {
             dialogText.text = currentNode.dialogText[elementIndex];
@@ -38,7 +43,7 @@ public class DialogManager : MonoBehaviour
         {
             GetNextNode();
             elementIndex = 0;
-            ShowCurrentlineAndArt();
+  
         }
 
         Image charImageComponent = charIMG.GetComponent<Image>();
@@ -52,22 +57,65 @@ public class DialogManager : MonoBehaviour
 
     }
 
-        void GetNextNode()
-        {
-            // change so:
-            // Instead of 1 String, go through all Strings in the array, THEN go to the next node
-            if (isDSactive)
-            {
-                Debug.Log(" Continue Dialoge ");
-                NodePort port = currentNode.GetOutputPort("nextNodes 0");
-                if (port == null || port.ConnectionCount == 0)
-                    return;
+        void CheckHasQuestions()
+    {
+        if (currentNode == null)
+            return;
 
-                currentNode = port.GetConnection(0).node as DialogNode;
-                ShowCurrentlineAndArt();
-            }
-        
+        bool hasQuestions = currentNode.nodeQuestion && currentNode.questionTexts != null && currentNode.questionTexts.Count > 0;
+
+        // Assume you have a UI container GameObject that holds your question buttons, e.g. questionPanel
+        // Enable it if there are questions, disable if none.
+
+        questionPanel.SetActive(hasQuestions);
+
+        if (hasQuestions)
+        {
+            // Populate your buttons here based on questionTexts...
+            // For now, just a placeholder for clarity.
+            ShowQuestionButtons(currentNode.questionTexts);
         }
+        else
+        {
+            // If disabling, clear buttons or UI as needed
+            ClearQuestionButtons();
+        }
+    }
+
+    void ClearQuestionButtons()
+    {
+
+        //Disable Question UI elements
+
+    }
+
+    void ShowQuestionButtons(List<string> questions)
+    {
+
+        //Enable Question UI elements
+        // This is just activating the elements for now, not updating the text or moving to different nodes
+
+    }
+
+    void GetNextNode()
+    {
+        if (elementIndex < currentNode.dialogText.Length - 1)
+        {
+            elementIndex++;
+            ShowCurrentlineAndArt();
+            return;
+        }
+
+        // Reached end of current node dialogText - advance to next node
+        NodePort port = currentNode.GetOutputPort("nextNodes 0");
+        if (port == null || port.ConnectionCount == 0)
+            return; // End of dialog flow
+
+        currentNode = port.GetConnection(0).node as DialogNode;
+        elementIndex = 0;
+        ShowCurrentlineAndArt();
+
+    }
 
     void SwitchGame()
     {

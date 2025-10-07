@@ -108,7 +108,10 @@ MonoBehaviour:
       _node: {fileID: -4573892038431273225}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2737636084757301488}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -118,6 +121,72 @@ MonoBehaviour:
   - A.B
   character_img: {fileID: -4512600477718737628, guid: 5650c05c1148c8c4380327ac60647cce, type: 3}
   background_img: {fileID: -7872397880951524896, guid: 65f163bf39d41b540a8990083bfec18f, type: 3}
+  nodeQuestion: 1
+  questionTexts:
+  - 1
+  - 2
+  questionObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-2737636084757301488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 232, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -2737636084757301488}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -4573892038431273225}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -2737636084757301488}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2737636084757301488}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  dialogText:
+  - HiHo
+  - Hihey
+  - Ha
+  character_img: {fileID: -6434640475991607697, guid: c236c5f999028fb40bea5d36a9734870, type: 3}
+  background_img: {fileID: 5798675490017096328, guid: a9bf45edbe7333f4e88995fcbcf39759, type: 3}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
@@ -139,3 +208,4 @@ MonoBehaviour:
   nodes:
   - {fileID: -5865896509538095507}
   - {fileID: -4573892038431273225}
+  - {fileID: -2737636084757301488}
