@@ -15,6 +15,8 @@ public class DialogManager : MonoBehaviour
     public GameObject charIMG;
     public GameObject backgroundIMG;
 
+    public WritingAnimation writingAnimation;
+
     public TMP_Text dialogText;
     public NodeGraph dialogGraph;
     public DialogNode currentNode;
@@ -26,26 +28,33 @@ public class DialogManager : MonoBehaviour
     void Start()
     {
         // set active UI elements (). This function would be called from the JnR level again.
+        elementIndex = 0;
         currentNode = dialogGraph.nodes[0] as DialogNode;
         ShowCurrentlineAndArt();
     }
 
     void ShowCurrentlineAndArt()
     {
+
+        if (currentNode == null)
+            return;
         CheckHasQuestions();
 
-        if (currentNode != null && elementIndex < currentNode.dialogText.Length)
+        if (elementIndex < currentNode.dialogText.Length)
         {
-            dialogText.text = currentNode.dialogText[elementIndex];
-            elementIndex++;
+            string line = currentNode.dialogText[elementIndex];
+            writingAnimation.StartTyping(line);
+            UpdateImages();
         }
         else
         {
             GetNextNode();
-            elementIndex = 0;
-  
         }
 
+    }
+
+    void UpdateImages()
+    {
         Image charImageComponent = charIMG.GetComponent<Image>();
         Image backgroundImageComponent = backgroundIMG.GetComponent<Image>();
 
@@ -57,7 +66,7 @@ public class DialogManager : MonoBehaviour
 
     }
 
-        void CheckHasQuestions()
+    void CheckHasQuestions()
     {
         if (currentNode == null)
             return;
@@ -127,8 +136,15 @@ public class DialogManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // ContinueDialoge();
-            ShowCurrentlineAndArt();
+            if (writingAnimation.IsTyping())
+            {
+                writingAnimation.SkipTyping();
+            }
+            else
+            {
+                elementIndex++;
+                ShowCurrentlineAndArt();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.K))
