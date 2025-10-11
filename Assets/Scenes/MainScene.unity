@@ -720,7 +720,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.5
+  orthographic size: 11.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -104749,6 +104749,7 @@ MonoBehaviour:
   dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
   currentNode: {fileID: 0}
   elementIndex: 0
+  nodeId: 1
 --- !u!1 &2053854841
 GameObject:
   m_ObjectHideFlags: 0
@@ -104762,7 +104763,6 @@ GameObject:
   - component: {fileID: 2053854843}
   - component: {fileID: 2053854842}
   - component: {fileID: 2053854848}
-  - component: {fileID: 2053854849}
   m_Layer: 5
   m_Name: DatingSim
   m_TagString: Untagged
@@ -104872,27 +104872,6 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &2053854849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053854841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f9c18bee87e350458cadf5c6f387054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dsUI: {fileID: 2053854841}
-  questionPanel: {fileID: 0}
-  charIMG: {fileID: 0}
-  backgroundIMG: {fileID: 1886472022}
-  writingAnimation: {fileID: 0}
-  dialogText: {fileID: 341846728}
-  dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
-  currentNode: {fileID: 0}
-  elementIndex: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

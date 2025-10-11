@@ -5,8 +5,10 @@ using XNode;
 
 
 [CreateAssetMenu(menuName = "VN/DialogNode")]
-public class DialogNode : Node {
-
+public class DialogNode : Node
+{
+    public int nodeID;
+    
     public string[] dialogText;
     
     public Sprite character_img;

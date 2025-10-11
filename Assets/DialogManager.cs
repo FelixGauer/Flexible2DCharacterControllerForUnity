@@ -24,7 +24,8 @@ public class DialogManager : MonoBehaviour
     private bool isDSactive = true;
 
     int currentDialogIndex = 0;
-
+    public int nodeId = 1;
+    
     void Start()
     {
         // set active UI elements (). This function would be called from the JnR level again.
@@ -48,7 +49,8 @@ public class DialogManager : MonoBehaviour
         }
         else
         {
-            GetNextNode();
+            nodeId++;
+            GetNextNode(nodeId);
         }
 
     }
@@ -58,7 +60,7 @@ public class DialogManager : MonoBehaviour
         Image charImageComponent = charIMG.GetComponent<Image>();
         Image backgroundImageComponent = backgroundIMG.GetComponent<Image>();
 
-        if (charImageComponent != null)
+        if (charImageComponent != null && currentNode.character_img != null)
             charImageComponent.sprite = currentNode.character_img;
 
         if (backgroundImageComponent != null)
@@ -106,7 +108,7 @@ public class DialogManager : MonoBehaviour
 
     }
 
-    void GetNextNode()
+    void GetNextNode(int nodeID)
     {
         if (elementIndex < currentNode.dialogText.Length - 1)
         {
@@ -114,8 +116,24 @@ public class DialogManager : MonoBehaviour
             ShowCurrentlineAndArt();
             return;
         }
+        
+        if (nodeID != -1)
+        {
+            foreach (var node in dialogGraph.nodes)
+            {
+                if (node is DialogNode dialogNode && dialogNode.nodeID == nodeID)
+                {
+                    currentNode = dialogNode;
+                    elementIndex = 0;
+                    ShowCurrentlineAndArt();
+                    return;
+                }
+            }
 
-        // Reached end of current node dialogText - advance to next node
+            Debug.LogWarning($"Node with ID {nodeID} not found in the graph.");
+            return;
+        }
+
         NodePort port = currentNode.GetOutputPort("nextNodes 0");
         if (port == null || port.ConnectionCount == 0)
             return; // End of dialog flow
@@ -123,7 +141,6 @@ public class DialogManager : MonoBehaviour
         currentNode = port.GetConnection(0).node as DialogNode;
         elementIndex = 0;
         ShowCurrentlineAndArt();
-
     }
 
     void SwitchGame()
