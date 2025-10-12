@@ -108,8 +108,9 @@ public class DialogManager : MonoBehaviour
 
     }
 
-    void GetNextNode(int nodeID)
+    public void GetNextNode(int nodeID)
     {
+        Debug.Log("GetNextNode called with nodeID: " + nodeID);
         if (elementIndex < currentNode.dialogText.Length - 1)
         {
             elementIndex++;
@@ -117,6 +118,11 @@ public class DialogManager : MonoBehaviour
             return;
         }
         
+        SwitchNode(nodeID);
+    }
+    
+    public void SwitchNode(int nodeID)
+    {
         if (nodeID != -1)
         {
             foreach (var node in dialogGraph.nodes)
