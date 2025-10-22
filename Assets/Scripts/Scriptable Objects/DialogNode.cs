@@ -8,6 +8,8 @@ using XNode;
 public class DialogNode : Node
 {
     public int nodeID;
+
+    public GameObject teleportLocation;
     
     public string[] dialogText;
     

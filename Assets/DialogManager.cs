@@ -10,7 +10,10 @@ public class DialogManager : MonoBehaviour
 
     public GameObject dsUI;
     public GameObject questionPanel;
+
     // those will have multiples at some point. Right now I want them to show correctly
+
+    public GameObject playerForLocation;
 
     public GameObject charIMG;
     public GameObject backgroundIMG;
@@ -152,8 +155,25 @@ public class DialogManager : MonoBehaviour
     void SwitchGame()
     {
         isDSactive = !isDSactive;
-        dsUI.SetActive(isDSactive);
+
+
+        if (!isDSactive)  // Leaving dialog, entering JnR
+        {
+            dsUI.SetActive(isDSactive);
+            if (currentNode != null && currentNode.teleportLocation != null)
+            {
+                playerForLocation.transform.position = currentNode.teleportLocation.transform.position;
+                // Optionally, reset player velocity etc.
+            }
+        }
+        else
+        {
+
+            dsUI.SetActive(isDSactive);
+            // Switching back to dialog, enable UI etc.
+        }
     }
+
 
     void Update()
     {
