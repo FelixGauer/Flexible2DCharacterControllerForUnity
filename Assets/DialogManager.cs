@@ -22,6 +22,8 @@ public class DialogManager : MonoBehaviour
     public WritingAnimation writingAnimation;
 
     public TMP_Text dialogText;
+    public TMP_Text charactername;
+
     public NodeGraph dialogGraph;
     public DialogNode currentNode;
     public int elementIndex = 0;
@@ -48,11 +50,13 @@ public class DialogManager : MonoBehaviour
 
         if (currentNode == null)
             return;
+        UpdateSpeakerName();
         CheckHasQuestions();
 
         if (elementIndex < currentNode.dialogText.Length)
         {
             string line = currentNode.dialogText[elementIndex];
+            string name = currentNode.whostalking;
             writingAnimation.StartTyping(line);
             UpdateImages();
         }
@@ -63,6 +67,8 @@ public class DialogManager : MonoBehaviour
         }
 
     }
+
+
 
     void UpdateImages()
     {
@@ -76,8 +82,29 @@ public class DialogManager : MonoBehaviour
             backgroundImageComponent.sprite = currentNode.background_img;
 
     }
+    void UpdateSpeakerName()
+    {
+        if (charactername == null)
+        {
+            Debug.LogWarning("DialogManager: 'charactername' TMP_Text is not assigned in the Inspector.");
+            return;
+        }
 
-    void CheckHasQuestions()
+        // pull from the node and display (hide if empty)
+        var s = currentNode.whostalking;
+        if (string.IsNullOrWhiteSpace(s))
+        {
+            charactername.text = "";
+            // optionally: charactername.transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            charactername.text = s;
+            // optionally: charactername.transform.parent.gameObject.SetActive(true);
+        }
+    }
+
+        void CheckHasQuestions()
     {
         if (currentNode == null)
             return;

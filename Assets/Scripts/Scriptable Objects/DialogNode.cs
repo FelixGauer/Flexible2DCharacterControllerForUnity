@@ -11,6 +11,7 @@ public class DialogNode : Node
 
     public TeleportLocationAsset teleportLocation;
 
+    public string whostalking;
     public string[] dialogText;
     
     public Sprite character_img;

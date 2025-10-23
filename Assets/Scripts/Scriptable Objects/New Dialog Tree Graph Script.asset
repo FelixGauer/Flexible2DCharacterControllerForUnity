@@ -49,6 +49,7 @@ MonoBehaviour:
       _dynamic: 0
   nodeID: 1
   teleportLocation: {fileID: 11400000, guid: 8348283d867afb4489183a62c11caa0b, type: 2}
+  whostalking: MC
   dialogText:
   - Elemen 0
   - Elemen 1
@@ -111,6 +112,7 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 2
   teleportLocation: {fileID: 11400000, guid: d0857621a4a1e824583e8667053d8dee, type: 2}
+  whostalking: Haru
   dialogText:
   - A.A
   - A.B
@@ -175,6 +177,7 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 3
   teleportLocation: {fileID: 11400000, guid: 8a22652c3fb0cb645816758974db9f95, type: 2}
+  whostalking: MC
   dialogText:
   - HiHo
   - Hihey
