@@ -9,8 +9,8 @@ public class DialogNode : Node
 {
     public int nodeID;
 
-    public GameObject teleportLocation;
-    
+    public TeleportLocationAsset teleportLocation;
+
     public string[] dialogText;
     
     public Sprite character_img;

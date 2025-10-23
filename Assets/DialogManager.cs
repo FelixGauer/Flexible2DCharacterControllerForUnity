@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using XNode;
@@ -8,9 +9,9 @@ public class DialogManager : MonoBehaviour
 {
     // DialogAsset does not handle GameObject textbox, background or charImg, just contains the data to call it.
 
+    private CanvasGroup dsGroup;
     public GameObject dsUI;
     public GameObject questionPanel;
-
     // those will have multiples at some point. Right now I want them to show correctly
 
     public GameObject playerForLocation;
@@ -28,13 +29,18 @@ public class DialogManager : MonoBehaviour
 
     int currentDialogIndex = 0;
     public int nodeId = 1;
-    
+
     void Start()
     {
         // set active UI elements (). This function would be called from the JnR level again.
         elementIndex = 0;
         currentNode = dialogGraph.nodes[0] as DialogNode;
+
+        dsGroup = dsUI.GetComponent<CanvasGroup>();
+        if (!dsGroup) dsGroup = dsUI.AddComponent<CanvasGroup>();
+
         ShowCurrentlineAndArt();
+        teleportAnchor.DebugDumpRegistry();
     }
 
     void ShowCurrentlineAndArt()
@@ -120,10 +126,10 @@ public class DialogManager : MonoBehaviour
             ShowCurrentlineAndArt();
             return;
         }
-        
+
         SwitchNode(nodeID);
     }
-    
+
     public void SwitchNode(int nodeID)
     {
         if (nodeID != -1)
@@ -159,21 +165,47 @@ public class DialogManager : MonoBehaviour
 
         if (!isDSactive)  // Leaving dialog, entering JnR
         {
-            dsUI.SetActive(isDSactive);
+
+            ApplyDsUiVisibility(false);
+
             if (currentNode != null && currentNode.teleportLocation != null)
             {
-                playerForLocation.transform.position = currentNode.teleportLocation.transform.position;
-                // Optionally, reset player velocity etc.
+
+                Debug.Log($"[DialogManager] SwitchGame: current node '{currentNode?.name}', asset = '{currentNode?.teleportLocation?.name}'");
+                if (teleportAnchor.TryGet(currentNode.teleportLocation, out var anchor))
+                {
+
+                    var target = anchor.GetPosition();
+                    Debug.Log($"[DialogManager] Teleporting player '{playerForLocation.name}' to {target}");
+                    playerForLocation.transform.position = target;
+                    Debug.Log($"[DialogManager] Player now at {playerForLocation.transform.position}");
+
+                    playerForLocation.transform.position = anchor.GetPosition();
+
+                    // (optional) if you use Rigidbody2D, zero velocity:
+                    // var rb = playerForLocation.GetComponent<Rigidbody2D>();
+                    // if (rb) rb.velocity = Vector2.zero;
+                }
+                else
+                {
+                    Debug.LogWarning($"No TeleportAnchor found in scene for asset '{currentNode.teleportLocation.name}'.");
+                }
             }
         }
         else
         {
-
-            dsUI.SetActive(isDSactive);
-            // Switching back to dialog, enable UI etc.
+            ApplyDsUiVisibility(true);
         }
+   
     }
 
+    void ApplyDsUiVisibility(bool on)
+    {
+        if (!dsGroup) return;
+        dsGroup.alpha = on ? 1f : 0f;
+        dsGroup.interactable = on;
+        dsGroup.blocksRaycasts = on;
+    }
 
     void Update()
     {

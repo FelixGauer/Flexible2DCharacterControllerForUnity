@@ -1,16 +1,22 @@
 using UnityEngine;
 
-public class teleportLocation : MonoBehaviour
+[ExecuteAlways]
+public class TeleportLocation : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Optional exact landing spot")]
+    [SerializeField] private Transform spawnPoint;
+
+    [Tooltip("Just for editor visualization")]
+    [SerializeField] private float gizmoRadius = 0.25f;
+
+    /// <summary>World position the player should be teleported to.</summary>
+    public Vector3 GetPosition()
     {
-        
+        return spawnPoint != null ? spawnPoint.position : transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDrawGizmos()
     {
-        
+        Gizmos.DrawWireSphere(GetPosition(), gizmoRadius);
     }
 }
