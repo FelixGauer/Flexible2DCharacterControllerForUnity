@@ -68,19 +68,37 @@ public class DialogManager : MonoBehaviour
 
     }
 
-
-
     void UpdateImages()
     {
         Image charImageComponent = charIMG.GetComponent<Image>();
         Image backgroundImageComponent = backgroundIMG.GetComponent<Image>();
 
-        if (charImageComponent != null && currentNode.character_img != null)
-            charImageComponent.sprite = currentNode.character_img;
-
+        // --- Background: only update when a new sprite is assigned ---
         if (backgroundImageComponent != null)
-            backgroundImageComponent.sprite = currentNode.background_img;
+        {
+            Sprite newBackground = currentNode.background_img;
 
+            // Update only if node actually specifies a background AND it's different
+            if (newBackground != null && backgroundImageComponent.sprite != newBackground)
+            {
+                backgroundImageComponent.sprite = newBackground;
+            }
+        }
+
+        // --- Character: show only if the node has a sprite ---
+        if (charImageComponent != null)
+        {
+            if (currentNode.character_img != null)
+            {
+                if (!charIMG.activeSelf) charIMG.SetActive(true);
+                charImageComponent.sprite = currentNode.character_img;
+            }
+            else
+            {
+                charImageComponent.sprite = null;
+                if (charIMG.activeSelf) charIMG.SetActive(false);
+            }
+        }
     }
     void UpdateSpeakerName()
     {
