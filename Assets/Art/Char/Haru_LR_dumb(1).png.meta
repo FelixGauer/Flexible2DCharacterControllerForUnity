@@ -260,7 +260,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Haru_LR_dumb(1)_0: 5191031541360726387
+      Haru_LR_dumb(1)_1: 2573165309204284009
+      Haru_LR_dumb(1)_2: -3622186225304425565
+      Haru_LR_dumb(1)_3: 1869916707440795877
+      Haru_LR_dumb(1)_4: -8075839218168466682
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

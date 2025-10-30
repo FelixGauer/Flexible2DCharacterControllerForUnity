@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 21647cb7841f25b40ba65efbe0d0c5c1
+guid: 6f5b357a0225308419df29447a66e28f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8701355020322646338
-    second: AHaru_LR_joy_0
+      213: -9161298043115877563
+    second: AHaru_LR_joy(1)_0
+  - first:
+      213: 2767877883986038030
+    second: AHaru_LR_joy(1)_1
+  - first:
+      213: -1654586493633340086
+    second: AHaru_LR_joy(1)_2
+  - first:
+      213: -6375494372240945655
+    second: AHaru_LR_joy(1)_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHaru_LR_joy_0
+      name: AHaru_LR_joy(1)_0
       rect:
         serializedVersion: 2
-        x: 71
-        y: 4
-        width: 549
-        height: 587
+        x: 0
+        y: 0
+        width: 1248
+        height: 1248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +150,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 249a4ea0a4c61c870800000000000000
-      internalID: 8701355020322646338
+      spriteID: 54bc89ae7f78cd080800000000000000
+      internalID: -9161298043115877563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHaru_LR_joy(1)_1
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 1241
+        width: 254
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0dc5a8454a796620800000000000000
+      internalID: 2767877883986038030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHaru_LR_joy(1)_2
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 1243
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d53d4b95ab909e0800000000000000
+      internalID: -1654586493633340086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHaru_LR_joy(1)_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e8313b5a1b587a0800000000000000
+      internalID: -6375494372240945655
       vertices: []
       indices: 
       edges: []
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AHaru_LR_joy_0: 8701355020322646338
+      AHaru_LR_joy(1)_0: -9161298043115877563
+      AHaru_LR_joy(1)_1: 2767877883986038030
+      AHaru_LR_joy(1)_2: -1654586493633340086
+      AHaru_LR_joy(1)_3: -6375494372240945655
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

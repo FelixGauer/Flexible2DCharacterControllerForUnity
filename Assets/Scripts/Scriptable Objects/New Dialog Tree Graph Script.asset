@@ -273,6 +273,11 @@ MonoBehaviour:
   whostalking: Haru
   dialogText:
   - '"Oh, no worries."'
+  - 'The pause inbetween you extends. '
+  - Just act normal. She must have noticed that I'm watching her like a hawk.
+  - 'Her fingernails. '
+  - Her hair.
+  - Deffos not her chest.
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -396,6 +401,64 @@ MonoBehaviour:
   questionObjects: []
   inputNode: {fileID: 0}
   nextNodes: []
+--- !u!114 &-2189228488073057574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1752, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -2189228488073057574}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -2189228488073057574}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeID: 11
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"Sooo, what party did you go to?"'
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +482,7 @@ MonoBehaviour:
   - {fileID: -2317174056265460575}
   - {fileID: 8714751948679985119}
   - {fileID: -4446759627981272401}
+  - {fileID: -2189228488073057574}
 --- !u!114 &4136085984131287787
 MonoBehaviour:
   m_ObjectHideFlags: 0

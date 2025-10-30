@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b1d11eb5766d43b458dff4fdd8a6ff39
+guid: 820fc62dd43af184e9b394782791474e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8471805859495794995
-    second: AHaru_Neutral_0
+      213: -7466423765388559510
+    second: room_evening_light_on_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHaru_Neutral_0
+      name: room_evening_light_on_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 2
-        width: 601
-        height: 609
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dc62ea2d4791e6a80800000000000000
-      internalID: -8471805859495794995
+      spriteID: a6bfa79e42fe16890800000000000000
+      internalID: -7466423765388559510
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      AHaru_Neutral_0: -8471805859495794995
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

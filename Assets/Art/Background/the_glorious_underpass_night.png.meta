@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a8cc0e7e2d52d6d45bdf386f8c706ccf
+guid: 73a6b6b077815b04d96a7166697454da
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1181541070280239356
-    second: AHarau_LR_bright_0
+      213: -4311529811443689793
+    second: the_glorious_underpass_night_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHarau_LR_bright_0
+      name: the_glorious_underpass_night_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 2
-        width: 618
-        height: 606
+        x: 0
+        y: 0
+        width: 1276
+        height: 840
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 407596a18a25a9fe0800000000000000
-      internalID: -1181541070280239356
+      spriteID: fb6546eda7e5a24c0800000000000000
+      internalID: -4311529811443689793
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      AHarau_LR_bright_0: -1181541070280239356
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

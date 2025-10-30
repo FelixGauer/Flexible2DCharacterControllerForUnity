@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 1b7f47b0d55202a4799754785a9d5be3
+guid: 9fa93d02739518f4c9a0ba95e0865183
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3565577091264111433
-    second: AHaru_LR_murderous_0
+      213: -2929164478473793756
+    second: AHrau_LR_runningaway(1)_0
+  - first:
+      213: 7038070066698422089
+    second: AHrau_LR_runningaway(1)_1
+  - first:
+      213: -277273137275251342
+    second: AHrau_LR_runningaway(1)_2
+  - first:
+      213: -803983883872497641
+    second: AHrau_LR_runningaway(1)_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHaru_LR_murderous_0
+      name: AHrau_LR_runningaway(1)_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 550
-        height: 559
+        x: 0
+        y: 260
+        width: 817
+        height: 988
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +150,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7bc9ee7d686848ec0800000000000000
-      internalID: -3565577091264111433
+      spriteID: 42f80eb1d648957d0800000000000000
+      internalID: -2929164478473793756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHrau_LR_runningaway(1)_1
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 1242
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9478ed5bf6f3ca160800000000000000
+      internalID: 7038070066698422089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHrau_LR_runningaway(1)_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27553fafc8de62cf0800000000000000
+      internalID: -277273137275251342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHrau_LR_runningaway(1)_3
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 0
+        width: 54
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71014a4daeca7d4f0800000000000000
+      internalID: -803983883872497641
       vertices: []
       indices: 
       edges: []
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AHaru_LR_murderous_0: -3565577091264111433
+      AHrau_LR_runningaway(1)_0: -2929164478473793756
+      AHrau_LR_runningaway(1)_1: 7038070066698422089
+      AHrau_LR_runningaway(1)_2: -277273137275251342
+      AHrau_LR_runningaway(1)_3: -803983883872497641
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

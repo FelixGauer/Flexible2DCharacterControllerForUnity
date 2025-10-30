@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1395aff71f972084daa89ada63bde7ac
+guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4983400861758424851
-    second: AHaru_LR_horny_0
+      213: 1907135731579713948
+    second: AHaru_LR_honry2(1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHaru_LR_horny_0
+      name: AHaru_LR_honry2(1)_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 598
-        height: 604
+        x: 0
+        y: 0
+        width: 1248
+        height: 1248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de87385c15767dab0800000000000000
-      internalID: -4983400861758424851
+      spriteID: c99734be7d1877a10800000000000000
+      internalID: 1907135731579713948
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AHaru_LR_horny_0: -4983400861758424851
+      AHaru_LR_honry2(1)_0: 1907135731579713948
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

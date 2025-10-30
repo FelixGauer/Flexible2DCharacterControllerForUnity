@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 81a7e591a8c14c747958a5918e374ed6
+guid: 216ec158df500d2449fc49a3ffb9dd4f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8084963035218379790
-    second: AHrau_LR_runningaway_0
+      213: -4707300980396986800
+    second: AHarau_LR_bright(1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AHrau_LR_runningaway_0
+      name: AHarau_LR_bright(1)_0
       rect:
         serializedVersion: 2
-        x: 228
-        y: 131
-        width: 175
-        height: 429
+        x: 0
+        y: 0
+        width: 1248
+        height: 1248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2fbf4a794f07ccf80800000000000000
-      internalID: -8084963035218379790
+      spriteID: 05ee69cd2be4caeb0800000000000000
+      internalID: -4707300980396986800
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AHrau_LR_runningaway_0: -8084963035218379790
+      AHarau_LR_bright(1)_0: -4707300980396986800
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

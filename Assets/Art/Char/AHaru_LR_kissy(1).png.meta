@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: d3375a54dcc60a747b277dc2cf513d02
+guid: 85800ce6165eaed4885bf78ced4a7392
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 29433203012917960
-    second: Haru_LR_dumb_0
+      213: 2312347270234414944
+    second: AHaru_LR_kissy(1)_0
+  - first:
+      213: 1000471730578595725
+    second: AHaru_LR_kissy(1)_1
+  - first:
+      213: 5940329208001146105
+    second: AHaru_LR_kissy(1)_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Haru_LR_dumb_0
+      name: AHaru_LR_kissy(1)_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 554
-        height: 586
+        x: 0
+        y: 0
+        width: 1201
+        height: 1248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +147,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8cadf2a9751986000800000000000000
-      internalID: 29433203012917960
+      spriteID: 06f9aa7479b171020800000000000000
+      internalID: 2312347270234414944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHaru_LR_kissy(1)_1
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 1242
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8f15fcfcb362ed00800000000000000
+      internalID: 1000471730578595725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AHaru_LR_kissy(1)_2
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fc29c301f9407250800000000000000
+      internalID: 5940329208001146105
       vertices: []
       indices: 
       edges: []
@@ -161,7 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Haru_LR_dumb_0: 29433203012917960
+      AHaru_LR_kissy(1)_0: 2312347270234414944
+      AHaru_LR_kissy(1)_1: 1000471730578595725
+      AHaru_LR_kissy(1)_2: 5940329208001146105
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

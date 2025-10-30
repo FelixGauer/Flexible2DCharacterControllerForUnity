@@ -235,7 +235,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      AHaru_LR_murderous(1)_0: -5598422410452252716
+      AHaru_LR_murderous(1)_1: -1315037442303086534
+      AHaru_LR_murderous(1)_2: 5839097909796765154
+      AHaru_LR_murderous(1)_3: -9000571507633362212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
