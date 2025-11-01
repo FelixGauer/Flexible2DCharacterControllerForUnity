@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      the_glorious_underpass_day_0: -5884872386423956854
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

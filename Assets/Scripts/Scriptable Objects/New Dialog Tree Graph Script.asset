@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: Dialog4
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 280, y: -184}
+  position: {x: 232, y: -184}
   ports:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: -5896577760540878076}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2737636084757301488}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -37,6 +41,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -5896577760540878076}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 4136085984131287787}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 4
   teleportLocation: {fileID: 0}
   whostalking: Haru
@@ -48,7 +64,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-5865896509538095507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +79,7 @@ MonoBehaviour:
   m_Name: Dialog1
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -344, y: -184}
+  position: {x: -440, y: -184}
   ports:
     keys:
     - nextNodes
@@ -82,7 +99,10 @@ MonoBehaviour:
       _node: {fileID: -5865896509538095507}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -4573892038431273225}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -136,12 +156,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: -5860080597580895363}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 4136085984131287787}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -155,6 +179,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -5860080597580895363}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 6602901293791355777}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 6
   teleportLocation: {fileID: 0}
   whostalking: Haru
@@ -166,7 +202,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-4573892038431273225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +217,7 @@ MonoBehaviour:
   m_Name: Dialog2
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: -184}
+  position: {x: -200, y: -184}
   ports:
     keys:
     - nextNodes
@@ -200,7 +237,10 @@ MonoBehaviour:
       _node: {fileID: -4573892038431273225}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5865896509538095507}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -209,7 +249,10 @@ MonoBehaviour:
       _node: {fileID: -4573892038431273225}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2737636084757301488}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -249,12 +292,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: -4446759627981272401}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 8714751948679985119}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -268,6 +315,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -4446759627981272401}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2189228488073057574}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 10
   teleportLocation: {fileID: 0}
   whostalking: Haru
@@ -284,7 +343,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-2737636084757301488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +358,7 @@ MonoBehaviour:
   m_Name: Dialog3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: -184}
+  position: {x: 24, y: -184}
   ports:
     keys:
     - inputNode
@@ -309,7 +369,10 @@ MonoBehaviour:
       _node: {fileID: -2737636084757301488}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -4573892038431273225}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -327,7 +390,10 @@ MonoBehaviour:
       _node: {fileID: -2737636084757301488}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -5896577760540878076}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -368,12 +434,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: -2317174056265460575}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 6602901293791355777}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -387,6 +457,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2317174056265460575}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 8714751948679985119}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 8
   teleportLocation: {fileID: 0}
   whostalking: Haru
@@ -400,7 +482,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-2189228488073057574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,12 +502,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: -2189228488073057574}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -4446759627981272401}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -438,6 +525,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2189228488073057574}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 6717890851699219260}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 11
   teleportLocation: {fileID: 0}
   whostalking: MC
@@ -449,7 +548,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,12 +593,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: 4136085984131287787}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5896577760540878076}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -512,6 +616,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 4136085984131287787}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -5860080597580895363}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 5
   teleportLocation: {fileID: 0}
   whostalking: MC
@@ -532,7 +648,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &6602901293791355777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,12 +668,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: 6602901293791355777}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5860080597580895363}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -570,6 +691,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 6602901293791355777}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2317174056265460575}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 7
   teleportLocation: {fileID: 0}
   whostalking: MC
@@ -582,7 +715,8 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &6717890851699219260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +740,10 @@ MonoBehaviour:
       _node: {fileID: 6717890851699219260}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2189228488073057574}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -624,7 +761,7 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: Haru
   dialogText:
-  - '"'
+  - '"There is this joint..."'
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -650,12 +787,16 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: 8714751948679985119}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2317174056265460575}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -669,6 +810,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 8714751948679985119}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -4446759627981272401}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 9
   teleportLocation: {fileID: 0}
   whostalking: MC
@@ -687,4 +840,5 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}

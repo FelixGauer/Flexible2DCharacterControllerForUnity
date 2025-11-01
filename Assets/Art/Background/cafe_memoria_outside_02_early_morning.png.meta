@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cafe_memoria_outside_02_early_morning_0: 3218922175589578897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
