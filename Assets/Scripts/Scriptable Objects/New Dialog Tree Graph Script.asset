@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialog1
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -328, y: -168}
+  position: {x: -424, y: -184}
   ports:
     keys:
     - nextNodes
@@ -33,7 +33,10 @@ MonoBehaviour:
       _node: {fileID: -5865896509538095507}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2737636084757301488}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -62,7 +65,7 @@ MonoBehaviour:
   questionObjects: []
   inputNode: {fileID: 0}
   nextNodes:
-  - {fileID: 0}
+  - {fileID: -2737636084757301488}
 --- !u!114 &-4573892038431273225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +79,7 @@ MonoBehaviour:
   m_Name: Dialog2
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -56, y: -168}
+  position: {x: -168, y: -248}
   ports:
     keys:
     - nextNodes
@@ -152,7 +155,10 @@ MonoBehaviour:
       _node: {fileID: -2737636084757301488}
       _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5865896509538095507}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
