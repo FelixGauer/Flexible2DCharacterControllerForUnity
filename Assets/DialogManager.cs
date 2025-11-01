@@ -30,7 +30,6 @@ public class DialogManager : MonoBehaviour
     private bool isDSactive = true;
 
     int currentDialogIndex = 0;
-    public int nodeId = 1;
 
     void Start()
     {
@@ -62,43 +61,44 @@ public class DialogManager : MonoBehaviour
         }
         else
         {
-            nodeId++;
-            GetNextNode(nodeId);
+            NodePort port = currentNode.GetOutputPort("nextNodes 0");
+
+            if (port.ConnectionCount == 0)
+            {
+                Debug.Log("End of dialogue: no next nodes connected.");
+                return;
+            }
+            
+            foreach (NodePort output in currentNode.Ports)
+            {
+                if (output.fieldName.StartsWith("nextNodes") && output.ConnectionCount > 0)
+                {
+                    DialogNode nextNode = output.GetConnection(0).node as DialogNode;
+                    if (nextNode != null)
+                    {
+                        currentNode = nextNode;
+                        elementIndex = 0;
+                        ShowCurrentlineAndArt();
+                        return;
+                    }
+                }
+            }
         }
 
     }
+
 
     void UpdateImages()
     {
         Image charImageComponent = charIMG.GetComponent<Image>();
         Image backgroundImageComponent = backgroundIMG.GetComponent<Image>();
 
-        // --- Background: only update when a new sprite is assigned ---
+        if (charImageComponent != null && currentNode.character_img != null)
+            charImageComponent.sprite = currentNode.character_img;
+
         if (backgroundImageComponent != null)
-        {
-            Sprite newBackground = currentNode.background_img;
+            backgroundImageComponent.sprite = currentNode.background_img;
 
-            // Update only if node actually specifies a background AND it's different
-            if (newBackground != null && backgroundImageComponent.sprite != newBackground)
-            {
-                backgroundImageComponent.sprite = newBackground;
-            }
-        }
-
-        // --- Character: show only if the node has a sprite ---
-        if (charImageComponent != null)
-        {
-            if (currentNode.character_img != null)
-            {
-                if (!charIMG.activeSelf) charIMG.SetActive(true);
-                charImageComponent.sprite = currentNode.character_img;
-            }
-            else
-            {
-                charImageComponent.sprite = null;
-                if (charIMG.activeSelf) charIMG.SetActive(false);
-            }
-        }
     }
     void UpdateSpeakerName()
     {
