@@ -28,6 +28,9 @@ public class DialogNodeEditor_Custom : NodeEditor
 
         if (linesProp != null && linesProp.isArray)
         {
+            GUIStyle wrapStyle = new GUIStyle(EditorStyles.textArea);
+            wrapStyle.wordWrap = true;
+
             for (int i = 0; i < linesProp.arraySize; i++)
             {
                 var elem = linesProp.GetArrayElementAtIndex(i);
@@ -35,15 +38,18 @@ public class DialogNodeEditor_Custom : NodeEditor
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField($"Line {i + 1}", EditorStyles.miniBoldLabel);
 
-                // Large TextArea for each line
-                elem.stringValue = EditorGUILayout.TextArea(elem.stringValue, GUILayout.MinHeight(80));
+                elem.stringValue = EditorGUILayout.TextArea(
+                    elem.stringValue,
+                    wrapStyle,
+                    GUILayout.MinHeight(100)
+                );
 
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Insert Above"))
                 {
                     linesProp.InsertArrayElementAtIndex(i);
                     linesProp.GetArrayElementAtIndex(i).stringValue = "";
-                    break; // stop drawing this frame to avoid index issues
+                    break;
                 }
                 if (GUILayout.Button("Remove"))
                 {
