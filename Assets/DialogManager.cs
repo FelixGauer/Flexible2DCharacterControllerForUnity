@@ -201,18 +201,6 @@ public class DialogManager : MonoBehaviour
 
     }
 
-    public void GetNextNode(int nodeID)
-    {
-        Debug.Log("GetNextNode called with nodeID: " + nodeID);
-        if (elementIndex < currentNode.dialogText.Length - 1)
-        {
-            elementIndex++;
-            ShowCurrentlineAndArt();
-            return;
-        }
-
-        SwitchNode(nodeID);
-    }
 
     public void SwitchNode(int nodeID)
     {

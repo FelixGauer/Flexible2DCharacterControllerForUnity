@@ -1,5 +1,228 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9124834568354311569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2616, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -9124834568354311569}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -7957438105183712022}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -9124834568354311569}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -9124834568354311569}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -4318775019243944729}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 15
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'Your neck is tingling from the attention. You weirdly feel like you are on some
+    kind of test. '
+  - . "I... stay.", you say slowly. "I am very steady."
+  - '"So that friend of yours - what did you have planned for tonight for her?"'
+  - '"Please say she", you pray to yourself.'
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-8814504932367902303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3512, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -8814504932367902303}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 1524589138023429730}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -8814504932367902303}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -8814504932367902303}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 4656084338676720293}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 19
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'Your heart is stuck in your throat there for a second. '
+  - 'It''s the perfect fantasy. '
+  - Meet a cute girl that saves you from your boring job, you console her emotionally,
+    then she asks for your phone number in the most casual way ever.
+  - You pull out your phone (make sure she doesn't see your trembling fingers.)
+  - 'Your voice sounds a little rugged as you press out the words:'
+  - '"Sure. Do you want to take it in front of the deep fryer or the broken ice cream
+    machine?"'
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-7957438105183712022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2392, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -7957438105183712022}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 3576746729656034538}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -7957438105183712022}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -7957438105183712022}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -9124834568354311569}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 14
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - "\u201CNot usually. I\u2019m the one who bails, if we\u2019re doing full honesty.\u201D"
+  - You relax as she seems to get your werid ass humor.
+  - "She checks the phone\u2014still dead. Shrugs. No big deal."
+  - "She \u201CBut tonight I figured\u2026 try something different. Show up. Stay.
+    Be a responsible friend. Look how that worked out.\u201D She shrugs. \"No big
+    deal.\""
+  - "The phone\u2014still dead. She drums her fingers lightly on the counter next
+    to you\u2014nervous energy disguised as casual rhythm."
+  - "\u201CSo hey, since you asked...\" her tone shifts lighty. Although you're making
+    light, the situation seems to have taken some out of her."
+  - "If someone stands you up\u2014friend, date, whoever\u2014do you stick around?
+    Or do you bolt the second it gets uncomfortable?\u201D"
+  - "She says it like a joke, not realizing she\u2019s asking something personal.
+    But there\u2019s curiosity under it\u2014like she\u2019s gathering intel on you
+    for reasons she won\u2019t mention."
+  character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-5896577760540878076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,9 +278,11 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 4
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: ???
   dialogText:
-  - '"How big is a large fries? I''m craving some fatty starches."'
+  - "\u201CIn that case, make it something tragic and greasy. Fries. Onion rings.
+    How big is a big coke?\u201D  She leans on the counter, studying you\u2014not
+    flirting, just present."
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -129,7 +354,7 @@ MonoBehaviour:
     three. '
   - ... and every night you are haunted by the feeling that you're making a horrible
     mistake, but you can never tell what it is.
-  - ... until she enters.
+  - The bells above the door jingle
   character_img: {fileID: 0}
   background_img: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
   nodeQuestion: 0
@@ -193,10 +418,14 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 6
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: ???
   dialogText:
-  - '"Okay...Uhm...So a menu 2 and a large fries and a coke please."'
-  character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
+  - '"Okay, onion rings and fries and a large coke then."'
+  - "\u201CSo every Saturday is a crisis? That\u2019s\u2026 consistent, at least.\u201D "
+  - She taps the menu board with one finger.
+  - "\u201CActually\u2014can you make that to go? My friend bailed on me, and I\u2019d
+    rather not sit here looking like someone stood me up.\u201D"
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -259,18 +488,21 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 2
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: ???
   dialogText:
-  - '"Uuuuh... I''d like a menmu two with a cheese burger..."'
+  - A girl enters - short, grubby jacket, boots, eyeliner a little smudged, hair
+    done like she either left a party or ditched one halfway.
+  - She looks awake in the way only those few reckless, confident people do. That
+    air.
+  - She surveys the empty joint, then walks to the counter with her hands shoved
+    into her pockets.
+  - "\u201CHey. Sorry to break your zen, but are you still open? Or is this \u2018employees
+    only existential crisis hour\u2019?\u201D"
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
-  questionTexts:
-  - 1
-  - 2
-  questionObjects:
-  - {fileID: 0}
-  - {fileID: 0}
+  questionTexts: []
+  questionObjects: []
   inputNode: {fileID: 0}
   nextNodes:
   - {fileID: 0}
@@ -329,15 +561,94 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 10
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: MC
   dialogText:
-  - '"Oh, no worries."'
-  - 'The pause inbetween you extends. '
-  - Just act normal. She must have noticed that I'm watching her like a hawk.
-  - 'Her fingernails. '
-  - Her hair.
-  - Deffos not her chest.
+  - 'Yes --- '
+  - ... you think to yourself.
+  - Finally your prayers have been answered, and a cute girl is coming to your dead
+    end job to make contact with you.
+  - Play it cool...
+  - '"Sorry, ma''am. No civilians behind the counter. It''s a crime scene after all.
+    We have a dead body here behind the counter."'
+  - You wait a moment for her reaction, then you both break into an understanding
+    smile.
+  - You rummage for a charger and hand it to her. "There is a plug right there. But
+    if my boss comes and spots you behind the counter, you're robbing me, understood?"
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-4318775019243944729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2840, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -4318775019243944729}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -9124834568354311569}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -4318775019243944729}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -4318775019243944729}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 2867953971367787961}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 16
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - "\u201CSteady\u2019s rare. People ghost at the first sign of awkward.\u201D She
+    gives you a sideways look from the dead phone in her hands."
+  - "So she didn't show for this party. Nothing wild. Just a party couple blocks
+    over. Loud music, cheap drinks, too many strangers pretending they\u2019re having
+    the best night of their lives.\""
+  - '"Nothing much she missed out on. It still sucks being stood up."'
+  - A short grimce of sorrow washes over her face. She looks a little tired and older
+    in that moment.
+  - "Her smile thins, just a little\u2014like a crack in the armor."
+  character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -402,14 +713,88 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: MC
   dialogText:
-  - A jolt of electricty runs down your spine. It creates a spark between you and
-    the cash register as you type in the order.
-  - It runs into your cerebellum and wipes away every trace of the bored daydreaming
-    that you have indulged in the last hours.
-  - It dissipates but not entirely. Left is a burning cold tension that tingles in
-    the back of your neck.
-  character_img: {fileID: 0}
+  - You throw her a crooked glance and smile. "We'll I AM having an existential crisis
+    right now."
+  - '"But I have one every Saturday night I''m spending here, so I might as well
+    serve you some food. What''s your order?"'
+  - Zany sarcasm is how you get all the girls you have heard.
+  character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 5798675490017096328, guid: a9bf45edbe7333f4e88995fcbcf39759, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-2323159404098951097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4200, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -2323159404098951097}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -1301103709688107783}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -2323159404098951097}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2323159404098951097}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 1505142000723884929}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 22
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - "\u201COkay, gimme a look. If I blinked, we\u2019re taking a hundred more. Let
+    me see.\u201D"
+  - "She peers at your screen, leaning in close again. \u201COh wow. You look cooler
+    than you think.\u201D"
+  - "She hands the phone back to you\u2014screen unlocked, her photo open\u2014 \u201CCan
+    you send it to me? Here\u2014let me type my contact.\u201D She lightly taps your
+    phone, waiting for you to unlock it again."
+  - You unlock it wordlessly with trembling fingers.
+  - She types in a number, and adds her name.
+  - Haru
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
@@ -471,7 +856,7 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 8
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: ???
   dialogText:
   - '"Sure, here you go."'
   - She hands you two crumpled notes. You can't help but notice the flaking  purple
@@ -539,10 +924,15 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 11
   teleportLocation: {fileID: 0}
-  whostalking: MC
+  whostalking: ???
   dialogText:
-  - '"Sooo, what party did you go to?"'
-  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  - '"No worries, I''m kidding. Please come over, I''d love someone to talk to."'
+  - "\u201CGot it. If your boss shows up, I\u2019m stealing the register and holding
+    you hostage with a spatula.\u201D"
+  - "She steps behind the counter, careful not to bump into you, and plugs in her
+    dead phone near the soda machine. She leans her hip against a metal prep table\u2014
+    careful not to invading your space."
+  character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -550,6 +940,141 @@ MonoBehaviour:
   inputNode: {fileID: 0}
   nextNodes:
   - {fileID: 0}
+--- !u!114 &-1301103709688107783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3976, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -1301103709688107783}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 4656084338676720293}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -1301103709688107783}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -1301103709688107783}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2323159404098951097}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 21
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - You have your phone ready. She leans in, head tilted toward yours, and smiles.
+  - The distance between pockets and bodies narrows.
+  - "Her hair brushes your cheek; She turns her head just enough that her lips are
+    near your neck\u2014"
+  - 'You see her face only in the small rectangle of your phone screen. Her half-closed
+    eyes, her lips next to your neck. '
+  - You feel the warm tingle of her breath.
+  - She whispers:"...
+  - Felix here. I don't know what she whispers yet...
+  - 'The selfie camera clicks. '
+  character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-745185227094140810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4872, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -745185227094140810}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 6437062547341654340}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -745185227094140810}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeID: 25
+  teleportLocation: {fileID: 0}
+  whostalking: Haru
+  dialogText:
+  - "\u201CAlright. Food\u2019s gonna get soggy. Thanks for the charger. And the
+    selfie. And the\u2026 tragic ice cream machine backdrop.\u201D"
+  - "She pulls her jacket straight, eyes already drifting toward the door like she\u2019s
+    halfway gone.  No glowing smile. No dramatic goodbye. You clench a little there."
+  - "\u201CTake care of yourself, okay? Night shifts eat people alive.\u201D"
+  - She turns, steps out from behind the counter, pushing the door with her shoulder.
+    The bell jingles.
+  - 'No look back. Just one last, almost bored line tossed over her shoulder:'
+  - "\u201CDon\u2019t text me something cringe. I\u2019ll block you.\u201D"
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +1100,299 @@ MonoBehaviour:
   - {fileID: -4446759627981272401}
   - {fileID: -2189228488073057574}
   - {fileID: 6717890851699219260}
+  - {fileID: 3576746729656034538}
+  - {fileID: -7957438105183712022}
+  - {fileID: -9124834568354311569}
+  - {fileID: -4318775019243944729}
+  - {fileID: 2867953971367787961}
+  - {fileID: 1524589138023429730}
+  - {fileID: -8814504932367902303}
+  - {fileID: 4656084338676720293}
+  - {fileID: -1301103709688107783}
+  - {fileID: -2323159404098951097}
+  - {fileID: 1505142000723884929}
+  - {fileID: 6437062547341654340}
+  - {fileID: -745185227094140810}
+--- !u!114 &1505142000723884929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4424, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 1505142000723884929}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2323159404098951097}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 1505142000723884929}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 1505142000723884929}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 6437062547341654340}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 23
+  teleportLocation: {fileID: 0}
+  whostalking: Haru
+  dialogText:
+  - "\u201CYou know what\u2019s funny? You look at people like they\u2019re already
+    leaving\u2026 even while they\u2019re standing in front of you.\u201D"
+  - She finishes typing, taps the screen, and hands the phone back.
+  - "She steps back behind the counter again, gathering her food bag and the folded
+    flyer she set down earlier. She casually tucks the flyer into your chest pocket\u2014"
+  character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &1524589138023429730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3288, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 1524589138023429730}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 2867953971367787961}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 1524589138023429730}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 1524589138023429730}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -8814504932367902303}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 18
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - "\u201CSorry. That was dramatic. I blame the lack of fries.\u201D"
+  - She straightens, trying to pull herself back into the  cool punk persona.
+  - "\u201CHey, I know this is weird, but my phone\u2019s dead and I kind of want
+    proof I didn\u2019t spend the night alone like a loser. Can we take a selfie
+    on your phone? Just one. I\u2019ll send it to myself later.\u201D"
+  - "She lifts her eyebrows, joking tone returning. \u201CCome on. You\u2019ll make
+    me look like I have at least one friend in the universe.\u201D"
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &2867953971367787961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3064, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 2867953971367787961}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -4318775019243944729}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 2867953971367787961}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 2867953971367787961}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 1524589138023429730}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 17
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - "She keeps her eyes on the prep table, tracing a scuffed line in the metal with
+    her thumb. Voice lower, honest-sounding: \u201CIt\u2019s not even the party.
+    It\u2019s knowing you weren\u2019t worth the walk.\u201D"
+  - "She laughs once\u2014quiet, bitter, then shakes her head. "
+  character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &3576746729656034538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2168, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 3576746729656034538}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 6717890851699219260}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 3576746729656034538}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 3576746729656034538}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -7957438105183712022}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 13
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"Going for the hardcore questions right away, I see." - you say deflectingly
+    as you throw the food into the fryer.'
+  - '"So that friend of your that stood you up - does that happen more often?" You
+    throw her another crooked smile.'
+  character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &4136085984131287787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,7 +1406,7 @@ MonoBehaviour:
   m_Name: Dialog5
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 488, y: -184}
+  position: {x: 456, y: -184}
   ports:
     keys:
     - inputNode
@@ -632,16 +1450,148 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: MC
   dialogText:
-  - You telepathically start transferring all your energy to manifest one thought
-    in her brain.
-  - Look up.
-  - Smile.
-  - Ask me how I am.
-  - You smell the smell of cigarettes and beer on her - the ubiqutous deodorant of
-    those who party. It remebers you of you from not long ago - and you start missing
-    it.
-  - '"A large fries is plenty."'
-  - ...mylady.
+  - '"A big coke is plenty."'
+  character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &4656084338676720293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3736, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 4656084338676720293}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -8814504932367902303}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 4656084338676720293}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 4656084338676720293}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -1301103709688107783}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 20
+  teleportLocation: {fileID: 0}
+  whostalking: ???
+  dialogText:
+  - She laughs brighly.
+  - "\u201CObviously the broken ice cream machine. It\u2019 matches my energy.\u201D"
+  - "She steps closer, shoulder brushing yours\u2014not aggressive, just close enough
+    to fit in a selfie frame. She lifts her hand to fix her hair, then pauses."
+  - "\u201CActually\u2026 hold on.\u201D "
+  - "She reaches behind her to the prep table, grabs a small stack of fry boats,
+    and sets them on the counter.  \u201CYou\u2019re taller. Hold the phone. Better
+    angle. I\u2019ll pretend I work here and you pretend you don\u2019t hate your
+    life.\u201D"
+  character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &6437062547341654340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4648, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 6437062547341654340}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 1505142000723884929}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 6437062547341654340}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 6437062547341654340}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -745185227094140810}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 24
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'You hear yourself whisper:'
+  - '"Thank you."'
   character_img: {fileID: 0}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -709,7 +1659,9 @@ MonoBehaviour:
   dialogText:
   - '"That''ll be 12.56."'
   - ... you say dejectedly.
-  character_img: {fileID: 0}
+  - "She pulls a crumpled bill from her pocket, drops it on the counter\u2014 you
+    notice her flaking nail polish on her fingers. "
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -735,6 +1687,7 @@ MonoBehaviour:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: 6717890851699219260}
@@ -757,18 +1710,32 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 6717890851699219260}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 3576746729656034538}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 12
   teleportLocation: {fileID: 0}
-  whostalking: Haru
+  whostalking: ???
   dialogText:
-  - '"There is this joint..."'
-  character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
+  - "\u201CSo\u2026 you joke about crime scenes. That\u2019s a sign of either a great
+    personality or deep trauma.\u201D  She glances at you over her shoulder."
+  character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &8714751948679985119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,17 +1791,16 @@ MonoBehaviour:
       _dynamic: 1
   nodeID: 9
   teleportLocation: {fileID: 0}
-  whostalking: MC
+  whostalking: ???
   dialogText:
-  - '"Thank you for your order. It''ll be a couple of minutes."'
-  - You turn around on the spot and start shouting.
-  - '"BOB! YOU SLEEPY BASTARD! WAKE UP!'
-  - You throw her an apologetic smile. "Sorry, that's just the way we talk around
-    here."
-  - '"BOB! A MENU 2 WITH LARGE FRIES."'
-  - All you hear from Bob is an affirmative grunt from the hellish room that is the
-    kitchen. We don't go there, food comes from there.
-  character_img: {fileID: 0}
+  - "As you turn to start the order, she calls out: \u201CHey\u2014do you have a
+    phone charger back there? Mine died. I just need, like, thirty seconds of life
+    to send \u2018I\u2019m not dead\u2019 to someone.\u201D\u201CHey\u2014do you
+    have a phone charger back there? Mine died. I just need, like, thirty seconds
+    of life to send \u2018I\u2019m not dead\u2019 to someone.\""
+  - "She holds up a small, dead phone. \u201CI\u2019ll step around to plug it in
+    if that\u2019s okay. Promise not to touch the sacred fry machine.\u201D"
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
