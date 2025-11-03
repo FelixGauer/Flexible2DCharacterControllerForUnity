@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: Dialog1
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -440, y: -184}
+  position: {x: -600, y: -216}
   ports:
     keys:
     - nextNodes
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: Dialog2
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -200, y: -184}
+  position: {x: -248, y: -200}
   ports:
     keys:
     - nextNodes

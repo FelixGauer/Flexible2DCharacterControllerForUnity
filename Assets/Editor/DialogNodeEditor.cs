@@ -21,9 +21,6 @@ public class DialogNodeEditor_Custom : NodeEditor
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionTexts"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionObjects"));
 
-        // --- Input port ---
-        NodeEditorGUILayout.PortField(target.GetInputPort("inputNode"));
-
         // --- Custom drawing for dialogText[] as large text areas ---
         var linesProp = serializedObject.FindProperty("dialogText");
         EditorGUILayout.Space(6);
@@ -71,6 +68,10 @@ public class DialogNodeEditor_Custom : NodeEditor
                 linesProp.GetArrayElementAtIndex(idx).stringValue = "";
             }
         }
+
+
+        // --- Input port ---
+        NodeEditorGUILayout.PortField(target.GetInputPort("inputNode"));
 
         // --- Output ports (dynamic list) ---
         NodeEditorGUILayout.DynamicPortList(
