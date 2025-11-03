@@ -347,14 +347,14 @@ MonoBehaviour:
   dialogText:
   - You spend another saturday night working in that terrible fast food chain. The
     joint is empty apart from a hobo that is sleeping with his head on a table.
-  - 'It was supposed to be a moment of freedom. After school, you''d grab a convinient
-    job, you''d take it a little slow, you earn yourself a little breathing room. '
+  - It was supposed to be a moment of freedom. After school, you'd grab a convinient
+    job, you'd take it a little slow, you earn yourself a little breathing room.
   - A last hurrah of freedom before you get serious and get yourself a real job.
-  - 'Now that small time after school that was supposed to be a year has turned into
-    three. '
+  - Now that small time after school that was supposed to be a year has turned into
+    three.
   - ... and every night you are haunted by the feeling that you're making a horrible
     mistake, but you can never tell what it is.
-  - The bells above the door jingle
+  - The bells above the door jingle.
   character_img: {fileID: 0}
   background_img: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
   nodeQuestion: 0
@@ -565,8 +565,8 @@ MonoBehaviour:
   dialogText:
   - 'Yes --- '
   - ... you think to yourself.
-  - Finally your prayers have been answered, and a cute girl is coming to your dead
-    end job to make contact with you.
+  - Finally your prayers have been answered. A cute girl is coming to your dead end
+    job to make contact with you.
   - Play it cool...
   - '"Sorry, ma''am. No civilians behind the counter. It''s a crime scene after all.
     We have a dead body here behind the counter."'
@@ -1795,11 +1795,9 @@ MonoBehaviour:
   dialogText:
   - "As you turn to start the order, she calls out: \u201CHey\u2014do you have a
     phone charger back there? Mine died. I just need, like, thirty seconds of life
-    to send \u2018I\u2019m not dead\u2019 to someone.\u201D\u201CHey\u2014do you
-    have a phone charger back there? Mine died. I just need, like, thirty seconds
-    of life to send \u2018I\u2019m not dead\u2019 to someone.\""
+    to send \u2018I\u2019m not dead\u2019 to someone.\u201D"
   - "She holds up a small, dead phone. \u201CI\u2019ll step around to plug it in
-    if that\u2019s okay. Promise not to touch the sacred fry machine.\u201D"
+    if that\u2019s okay. Promise not to touch the sacred deep fryer.\u201D"
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
