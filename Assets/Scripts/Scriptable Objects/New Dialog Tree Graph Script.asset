@@ -59,7 +59,7 @@ MonoBehaviour:
   dialogText:
   - 'Your neck is tingling from the attention. You weirdly feel like you are on some
     kind of test. '
-  - . "I... stay.", you say slowly. "I am very steady."
+  - '"I... stay.", you say slowly. "I am very steady."'
   - '"So that friend of yours - what did you have planned for tonight for her?"'
   - '"Please say she", you pray to yourself.'
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
@@ -131,8 +131,9 @@ MonoBehaviour:
   - 'It''s the perfect fantasy. '
   - Meet a cute girl that saves you from your boring job, you console her emotionally,
     then she asks for your phone number in the most casual way ever.
+  - ...and she is a bit of a punk.
   - You pull out your phone (make sure she doesn't see your trembling fingers.)
-  - 'Your voice sounds a little rugged as you press out the words:'
+  - (Or notice the tremble in your voice.)
   - '"Sure. Do you want to take it in front of the deep fryer or the broken ice cream
     machine?"'
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
@@ -201,20 +202,20 @@ MonoBehaviour:
   whostalking: ???
   dialogText:
   - "\u201CNot usually. I\u2019m the one who bails, if we\u2019re doing full honesty.\u201D"
-  - You relax as she seems to get your werid ass humor.
-  - "She checks the phone\u2014still dead. Shrugs. No big deal."
-  - "She \u201CBut tonight I figured\u2026 try something different. Show up. Stay.
-    Be a responsible friend. Look how that worked out.\u201D She shrugs. \"No big
-    deal.\""
+  - "You relax a little as she seems to get your weird ass humor.\nShe checks the
+    phone\u2014still dead. Shrugs. No big deal."
+  - "\u201CBut tonight I figured\u2026 try something different. Show up. Stay. Be
+    the  responsible friend.\" "
+  - "She sighs a little sigh. \"Look how that worked out.\u201D She shrugs. \"No
+    big deal.\""
   - "The phone\u2014still dead. She drums her fingers lightly on the counter next
     to you\u2014nervous energy disguised as casual rhythm."
   - "\u201CSo hey, since you asked...\" her tone shifts lighty. Although you're making
     light, the situation seems to have taken some out of her."
-  - "If someone stands you up\u2014friend, date, whoever\u2014do you stick around?
+  - "\"If someone stands you up\u2014friend, date, whoever\u2014do you stick around?
     Or do you bolt the second it gets uncomfortable?\u201D"
   - "She says it like a joke, not realizing she\u2019s asking something personal.
-    But there\u2019s curiosity under it\u2014like she\u2019s gathering intel on you
-    for reasons she won\u2019t mention."
+    But there\u2019s curiosity under it\u2014"
   character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -281,8 +282,7 @@ MonoBehaviour:
   whostalking: ???
   dialogText:
   - "\u201CIn that case, make it something tragic and greasy. Fries. Onion rings.
-    How big is a big coke?\u201D  She leans on the counter, studying you\u2014not
-    flirting, just present."
+    How big is a big coke?\u201D  She leans on the counter, studying you."
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -433,6 +433,72 @@ MonoBehaviour:
   inputNode: {fileID: 0}
   nextNodes:
   - {fileID: 0}
+--- !u!114 &-4800769735206171571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4424, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -4800769735206171571}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2323159404098951097}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -4800769735206171571}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -4800769735206171571}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 1505142000723884929}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru
+  dialogText:
+  - Haru
+  character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-4573892038431273225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,10 +556,9 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: ???
   dialogText:
-  - A girl enters - short, grubby jacket, boots, eyeliner a little smudged, hair
+  - A girl enters - shorts, grubby jacket, boots, eyeliner a little smudged, hair
     done like she either left a party or ditched one halfway.
-  - She looks awake in the way only those few reckless, confident people do. That
-    air.
+  - She looks awake in the way only those few reckless, confident people do.
   - She surveys the empty joint, then walks to the counter with her hands shoved
     into her pockets.
   - "\u201CHey. Sorry to break your zen, but are you still open? Or is this \u2018employees
@@ -570,8 +635,8 @@ MonoBehaviour:
   - Play it cool...
   - '"Sorry, ma''am. No civilians behind the counter. It''s a crime scene after all.
     We have a dead body here behind the counter."'
-  - You wait a moment for her reaction, then you both break into an understanding
-    smile.
+  - A smirk of understanding you personally creeps into the corner of her mouth.
+    She raises an eyebrow.
   - You rummage for a charger and hand it to her. "There is a plug right there. But
     if my boss comes and spots you behind the counter, you're robbing me, understood?"
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
@@ -641,12 +706,10 @@ MonoBehaviour:
   dialogText:
   - "\u201CSteady\u2019s rare. People ghost at the first sign of awkward.\u201D She
     gives you a sideways look from the dead phone in her hands."
-  - "So she didn't show for this party. Nothing wild. Just a party couple blocks
+  - "\"So she didn't show for this party. Nothing wild. Just a party couple blocks
     over. Loud music, cheap drinks, too many strangers pretending they\u2019re having
     the best night of their lives.\""
   - '"Nothing much she missed out on. It still sucks being stood up."'
-  - A short grimce of sorrow washes over her face. She looks a little tired and older
-    in that moment.
   - "Her smile thins, just a little\u2014like a crack in the armor."
   character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
@@ -773,7 +836,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: inputNode
-        node: {fileID: 1505142000723884929}
+        node: {fileID: -4800769735206171571}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -783,8 +846,8 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: ???
   dialogText:
-  - "\u201COkay, gimme a look. If I blinked, we\u2019re taking a hundred more. Let
-    me see.\u201D"
+  - "\u201COkay, lemme have a look. If I blinked, we\u2019re taking a hundred more.
+    Let me see.\u201D"
   - "She peers at your screen, leaning in close again. \u201COh wow. You look cooler
     than you think.\u201D"
   - "She hands the phone back to you\u2014screen unlocked, her photo open\u2014 \u201CCan
@@ -792,7 +855,6 @@ MonoBehaviour:
     phone, waiting for you to unlock it again."
   - You unlock it wordlessly with trembling fingers.
   - She types in a number, and adds her name.
-  - Haru
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -926,12 +988,11 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: ???
   dialogText:
-  - '"No worries, I''m kidding. Please come over, I''d love someone to talk to."'
   - "\u201CGot it. If your boss shows up, I\u2019m stealing the register and holding
     you hostage with a spatula.\u201D"
   - "She steps behind the counter, careful not to bump into you, and plugs in her
     dead phone near the soda machine. She leans her hip against a metal prep table\u2014
-    careful not to invading your space."
+    careful not to invade your space."
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -997,13 +1058,13 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: MC
   dialogText:
-  - You have your phone ready. She leans in, head tilted toward yours, and smiles.
-  - The distance between pockets and bodies narrows.
-  - "Her hair brushes your cheek; She turns her head just enough that her lips are
-    near your neck\u2014"
-  - 'You see her face only in the small rectangle of your phone screen. Her half-closed
-    eyes, her lips next to your neck. '
-  - You feel the warm tingle of her breath.
+  - You have your phone ready. She leans in, fries in hand, head tilted toward yours,
+    and smiles.
+  - The distance between your bodies narrows.
+  - Her hair brushes your cheek.
+  - You feel the warm tingle of her breath on your neck.
+  - You see her face only in the small rectangle of your phone screen. Her eyes half-closed,
+    her lips next to your neck.
   - She whispers:"...
   - Felix here. I don't know what she whispers yet...
   - 'The selfie camera clicks. '
@@ -1028,7 +1089,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4872, y: -184}
+  position: {x: 5096, y: -184}
   ports:
     keys:
     - inputNode
@@ -1066,8 +1127,8 @@ MonoBehaviour:
   - "\u201CTake care of yourself, okay? Night shifts eat people alive.\u201D"
   - She turns, steps out from behind the counter, pushing the door with her shoulder.
     The bell jingles.
-  - 'No look back. Just one last, almost bored line tossed over her shoulder:'
-  - "\u201CDon\u2019t text me something cringe. I\u2019ll block you.\u201D"
+  - And like that she is gone. It takes several mintues until you get to feel yourself
+    again, and realize the weight of her phone in your pocket...
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1113,6 +1174,7 @@ MonoBehaviour:
   - {fileID: 1505142000723884929}
   - {fileID: 6437062547341654340}
   - {fileID: -745185227094140810}
+  - {fileID: -4800769735206171571}
 --- !u!114 &1505142000723884929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,7 +1188,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4424, y: -184}
+  position: {x: 4648, y: -184}
   ports:
     keys:
     - inputNode
@@ -1139,7 +1201,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: nextNodes 0
-        node: {fileID: -2323159404098951097}
+        node: {fileID: -4800769735206171571}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1170,8 +1232,10 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: Haru
   dialogText:
-  - "\u201CYou know what\u2019s funny? You look at people like they\u2019re already
-    leaving\u2026 even while they\u2019re standing in front of you.\u201D"
+  - There is a moment of hesitation, as if she is making up her mind about something
+    important. But then that moment is gone.
+  - "She says: \u201CYou know what\u2019s funny? You look at people like they\u2019re
+    already leaving\u2026 even while they\u2019re standing in front of you.\u201D"
   - She finishes typing, taps the screen, and hands the phone back.
   - "She steps back behind the counter again, gathering her food bag and the folded
     flyer she set down earlier. She casually tucks the flyer into your chest pocket\u2014"
@@ -1241,7 +1305,7 @@ MonoBehaviour:
   whostalking: ???
   dialogText:
   - "\u201CSorry. That was dramatic. I blame the lack of fries.\u201D"
-  - She straightens, trying to pull herself back into the  cool punk persona.
+  - She straightens, visibly pulls herself back into the  cool punk girl persona.
   - "\u201CHey, I know this is weird, but my phone\u2019s dead and I kind of want
     proof I didn\u2019t spend the night alone like a loser. Can we take a selfie
     on your phone? Just one. I\u2019ll send it to myself later.\u201D"
@@ -1313,7 +1377,7 @@ MonoBehaviour:
   whostalking: ???
   dialogText:
   - "She keeps her eyes on the prep table, tracing a scuffed line in the metal with
-    her thumb. Voice lower, honest-sounding: \u201CIt\u2019s not even the party.
+    her thumb. Voice lower and a little raspy: \u201CIt\u2019s not even the party.
     It\u2019s knowing you weren\u2019t worth the walk.\u201D"
   - "She laughs once\u2014quiet, bitter, then shakes her head. "
   character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
@@ -1519,8 +1583,8 @@ MonoBehaviour:
   - She laughs brighly.
   - "\u201CObviously the broken ice cream machine. It\u2019 matches my energy.\u201D"
   - "She steps closer, shoulder brushing yours\u2014not aggressive, just close enough
-    to fit in a selfie frame. She lifts her hand to fix her hair, then pauses."
-  - "\u201CActually\u2026 hold on.\u201D "
+    to fit in a selfie frame. "
+  - "She lifts her hand to fix her hair, then pauses. \u201CActually\u2026 hold on.\u201D "
   - "She reaches behind her to the prep table, grabs a small stack of fry boats,
     and sets them on the counter.  \u201CYou\u2019re taller. Hold the phone. Better
     angle. I\u2019ll pretend I work here and you pretend you don\u2019t hate your
@@ -1546,7 +1610,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4648, y: -184}
+  position: {x: 4872, y: -184}
   ports:
     keys:
     - inputNode
@@ -1592,7 +1656,7 @@ MonoBehaviour:
   dialogText:
   - 'You hear yourself whisper:'
   - '"Thank you."'
-  character_img: {fileID: 0}
+  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -1726,8 +1790,9 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: ???
   dialogText:
-  - "\u201CSo\u2026 you joke about crime scenes. That\u2019s a sign of either a great
-    personality or deep trauma.\u201D  She glances at you over her shoulder."
+  - "\u201CSo\u2026 you joke about crime scenes and dead bodies. That\u2019s a sign
+    of either a great personality or deep trauma.\u201D  She glances at you over
+    her shoulder."
   character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
