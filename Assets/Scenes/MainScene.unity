@@ -784,7 +784,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.5
+  orthographic size: 11.59375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -105357,13 +105357,14 @@ MonoBehaviour:
   playerForLocation: {fileID: 2044674853}
   charIMG: {fileID: 1503598999}
   backgroundIMG: {fileID: 1886472022}
+  defaultEmotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  charFrame: {fileID: 1936010549}
   writingAnimation: {fileID: 341846730}
   dialogText: {fileID: 341846728}
   charactername: {fileID: 1176219239}
   dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
   currentNode: {fileID: 0}
   elementIndex: 0
-  nodeId: 1
 --- !u!1 &2053854841
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class DialogNode : Node
 
     public string whostalking;
     public string[] dialogText;
+
+    public CharacterColor panelColor;
     
     public Sprite character_img;
     public Sprite background_img;

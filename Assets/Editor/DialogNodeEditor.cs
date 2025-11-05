@@ -17,6 +17,7 @@ public class DialogNodeEditor_Custom : NodeEditor
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("whostalking"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("character_img"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("background_img"));
+        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("panelColor"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("nodeQuestion"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionTexts"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionObjects"));

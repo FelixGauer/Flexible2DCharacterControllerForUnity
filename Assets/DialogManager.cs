@@ -18,6 +18,9 @@ public class DialogManager : MonoBehaviour
 
     public GameObject charIMG;
     public GameObject backgroundIMG;
+    public CharacterColor defaultEmotionColor;
+
+    public UnityEngine.UI.Image charFrame;
 
     public WritingAnimation writingAnimation;
 
@@ -58,6 +61,7 @@ public class DialogManager : MonoBehaviour
             string name = currentNode.whostalking;
             writingAnimation.StartTyping(line);
             UpdateImages();
+            UpdateFrameColor();
         }
         else
         {
@@ -121,8 +125,6 @@ public class DialogManager : MonoBehaviour
                 if (charIMG.activeSelf) charIMG.SetActive(false);
             }
         }
-    
-
 
         // --- Character: show only if the node has a sprite ---
         if (charImageComponent != null)
@@ -137,6 +139,28 @@ public class DialogManager : MonoBehaviour
                 charImageComponent.sprite = null;
                 if (charIMG.activeSelf) charIMG.SetActive(false);
             }
+        }
+    }
+
+    void UpdateFrameColor()
+    {
+        if (charFrame == null) return;
+
+        // choose node color or default
+        CharacterColor chosen = currentNode != null && currentNode.panelColor != null
+            ? currentNode.panelColor
+            : defaultEmotionColor;
+
+        if (chosen != null)
+        {
+            Color c = chosen.uiColor;
+            if (c.a <= 0f) c.a = 1f; // ensure visible
+            charFrame.color = c;
+        }
+        else
+        {
+            // last-resort fallback if even default isn't assigned
+            charFrame.color = Color.yellow;
         }
     }
     void UpdateSpeakerName()

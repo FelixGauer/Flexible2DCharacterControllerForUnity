@@ -62,6 +62,7 @@ MonoBehaviour:
   - '"I... stay.", you say slowly. "I am very steady."'
   - '"So that friend of yours - what did you have planned for tonight for her?"'
   - '"Please say she", you pray to yourself.'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3512, y: -184}
+  position: {x: 3496, y: -184}
   ports:
     keys:
     - inputNode
@@ -136,6 +137,7 @@ MonoBehaviour:
   - (Or notice the tremble in your voice.)
   - '"Sure. Do you want to take it in front of the deep fryer or the broken ice cream
     machine?"'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -216,6 +218,7 @@ MonoBehaviour:
     Or do you bolt the second it gets uncomfortable?\u201D"
   - "She says it like a joke, not realizing she\u2019s asking something personal.
     But there\u2019s curiosity under it\u2014"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -283,6 +286,7 @@ MonoBehaviour:
   dialogText:
   - "\u201CIn that case, make it something tragic and greasy. Fries. Onion rings.
     How big is a big coke?\u201D  She leans on the counter, studying you."
+  panelColor: {fileID: 0}
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -355,6 +359,7 @@ MonoBehaviour:
   - ... and every night you are haunted by the feeling that you're making a horrible
     mistake, but you can never tell what it is.
   - The bells above the door jingle.
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: 0}
   background_img: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
   nodeQuestion: 0
@@ -425,6 +430,7 @@ MonoBehaviour:
   - She taps the menu board with one finger.
   - "\u201CActually\u2014can you make that to go? My friend bailed on me, and I\u2019d
     rather not sit here looking like someone stood me up.\u201D"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -446,7 +452,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4424, y: -184}
+  position: {x: 4408, y: -184}
   ports:
     keys:
     - inputNode
@@ -491,6 +497,7 @@ MonoBehaviour:
   whostalking: Haru
   dialogText:
   - Haru
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -563,6 +570,7 @@ MonoBehaviour:
     into her pockets.
   - "\u201CHey. Sorry to break your zen, but are you still open? Or is this \u2018employees
     only existential crisis hour\u2019?\u201D"
+  panelColor: {fileID: 0}
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -639,6 +647,7 @@ MonoBehaviour:
     She raises an eyebrow.
   - You rummage for a charger and hand it to her. "There is a plug right there. But
     if my boss comes and spots you behind the counter, you're robbing me, understood?"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -660,7 +669,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2840, y: -184}
+  position: {x: 2824, y: -200}
   ports:
     keys:
     - inputNode
@@ -694,7 +703,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: inputNode
-        node: {fileID: 2867953971367787961}
+        node: {fileID: 1524589138023429730}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -711,6 +720,11 @@ MonoBehaviour:
     the best night of their lives.\""
   - '"Nothing much she missed out on. It still sucks being stood up."'
   - "Her smile thins, just a little\u2014like a crack in the armor."
+  - "She keeps her eyes on the prep table, tracing a scuffed line in the metal with
+    her thumb. Voice lower and a little raspy: \u201CIt\u2019s not even the party.
+    It\u2019s knowing you weren\u2019t worth the walk.\u201D"
+  - "She laughs once\u2014quiet, bitter, then shakes her head. "
+  panelColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
   character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -781,6 +795,7 @@ MonoBehaviour:
   - '"But I have one every Saturday night I''m spending here, so I might as well
     serve you some food. What''s your order?"'
   - Zany sarcasm is how you get all the girls you have heard.
+  panelColor: {fileID: 0}
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 5798675490017096328, guid: a9bf45edbe7333f4e88995fcbcf39759, type: 3}
   nodeQuestion: 0
@@ -802,7 +817,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4200, y: -184}
+  position: {x: 4184, y: -184}
   ports:
     keys:
     - inputNode
@@ -855,6 +870,7 @@ MonoBehaviour:
     phone, waiting for you to unlock it again."
   - You unlock it wordlessly with trembling fingers.
   - She types in a number, and adds her name.
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -923,6 +939,7 @@ MonoBehaviour:
   - '"Sure, here you go."'
   - She hands you two crumpled notes. You can't help but notice the flaking  purple
     nail polish on her thin fingers.
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -993,6 +1010,7 @@ MonoBehaviour:
   - "She steps behind the counter, careful not to bump into you, and plugs in her
     dead phone near the soda machine. She leans her hip against a metal prep table\u2014
     careful not to invade your space."
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1014,7 +1032,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3976, y: -184}
+  position: {x: 3960, y: -184}
   ports:
     keys:
     - inputNode
@@ -1068,6 +1086,7 @@ MonoBehaviour:
   - She whispers:"...
   - Felix here. I don't know what she whispers yet...
   - 'The selfie camera clicks. '
+  panelColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
   character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1089,7 +1108,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 5096, y: -184}
+  position: {x: 5080, y: -184}
   ports:
     keys:
     - inputNode
@@ -1129,6 +1148,7 @@ MonoBehaviour:
     The bell jingles.
   - And like that she is gone. It takes several mintues until you get to feel yourself
     again, and realize the weight of her phone in your pocket...
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1165,7 +1185,6 @@ MonoBehaviour:
   - {fileID: -7957438105183712022}
   - {fileID: -9124834568354311569}
   - {fileID: -4318775019243944729}
-  - {fileID: 2867953971367787961}
   - {fileID: 1524589138023429730}
   - {fileID: -8814504932367902303}
   - {fileID: 4656084338676720293}
@@ -1188,7 +1207,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4648, y: -184}
+  position: {x: 4632, y: -184}
   ports:
     keys:
     - inputNode
@@ -1239,6 +1258,7 @@ MonoBehaviour:
   - She finishes typing, taps the screen, and hands the phone back.
   - "She steps back behind the counter again, gathering her food bag and the folded
     flyer she set down earlier. She casually tucks the flyer into your chest pocket\u2014"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1260,7 +1280,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3288, y: -184}
+  position: {x: 3272, y: -184}
   ports:
     keys:
     - inputNode
@@ -1273,7 +1293,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: nextNodes 0
-        node: {fileID: 2867953971367787961}
+        node: {fileID: -4318775019243944729}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1311,76 +1331,8 @@ MonoBehaviour:
     on your phone? Just one. I\u2019ll send it to myself later.\u201D"
   - "She lifts her eyebrows, joking tone returning. \u201CCome on. You\u2019ll make
     me look like I have at least one friend in the universe.\u201D"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
-  background_img: {fileID: 0}
-  nodeQuestion: 0
-  questionTexts: []
-  questionObjects: []
-  inputNode: {fileID: 0}
-  nextNodes:
-  - {fileID: 0}
---- !u!114 &2867953971367787961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
-  m_Name: Dialog
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 3064, y: -184}
-  ports:
-    keys:
-    - inputNode
-    - nextNodes
-    - nextNodes 0
-    values:
-    - _fieldName: inputNode
-      _node: {fileID: 2867953971367787961}
-      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: nextNodes 0
-        node: {fileID: -4318775019243944729}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextNodes
-      _node: {fileID: 2867953971367787961}
-      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: nextNodes 0
-      _node: {fileID: 2867953971367787961}
-      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: inputNode
-        node: {fileID: 1524589138023429730}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  nodeID: 17
-  teleportLocation: {fileID: 0}
-  whostalking: ???
-  dialogText:
-  - "She keeps her eyes on the prep table, tracing a scuffed line in the metal with
-    her thumb. Voice lower and a little raspy: \u201CIt\u2019s not even the party.
-    It\u2019s knowing you weren\u2019t worth the walk.\u201D"
-  - "She laughs once\u2014quiet, bitter, then shakes her head. "
-  character_img: {fileID: 1907135731579713948, guid: 9ac2dd82b0c7f8f489ec7ffbec9cffb6, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
   questionTexts: []
@@ -1449,6 +1401,7 @@ MonoBehaviour:
     as you throw the food into the fryer.'
   - '"So that friend of your that stood you up - does that happen more often?" You
     throw her another crooked smile.'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1515,6 +1468,7 @@ MonoBehaviour:
   whostalking: MC
   dialogText:
   - '"A big coke is plenty."'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1536,7 +1490,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3736, y: -184}
+  position: {x: 3720, y: -184}
   ports:
     keys:
     - inputNode
@@ -1589,6 +1543,7 @@ MonoBehaviour:
     and sets them on the counter.  \u201CYou\u2019re taller. Hold the phone. Better
     angle. I\u2019ll pretend I work here and you pretend you don\u2019t hate your
     life.\u201D"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1610,7 +1565,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4872, y: -184}
+  position: {x: 4856, y: -184}
   ports:
     keys:
     - inputNode
@@ -1656,6 +1611,7 @@ MonoBehaviour:
   dialogText:
   - 'You hear yourself whisper:'
   - '"Thank you."'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1723,8 +1679,7 @@ MonoBehaviour:
   dialogText:
   - '"That''ll be 12.56."'
   - ... you say dejectedly.
-  - "She pulls a crumpled bill from her pocket, drops it on the counter\u2014 you
-    notice her flaking nail polish on her fingers. "
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1793,6 +1748,7 @@ MonoBehaviour:
   - "\u201CSo\u2026 you joke about crime scenes and dead bodies. That\u2019s a sign
     of either a great personality or deep trauma.\u201D  She glances at you over
     her shoulder."
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -926039197622087486, guid: 6e05be3d3d3015141b7f1b0a4bd0f1e2, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
@@ -1863,6 +1819,7 @@ MonoBehaviour:
     to send \u2018I\u2019m not dead\u2019 to someone.\u201D"
   - "She holds up a small, dead phone. \u201CI\u2019ll step around to plug it in
     if that\u2019s okay. Promise not to touch the sacred deep fryer.\u201D"
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
   character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
   background_img: {fileID: 0}
   nodeQuestion: 0
