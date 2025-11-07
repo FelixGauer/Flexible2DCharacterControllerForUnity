@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5795023689568748444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -259.19998, y: -195.40001}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -5795023689568748444}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -5795023689568748444}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -5795023689568748444}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 9042247886275941867}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'Text 1
+
+'
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: -7466423765388559510, guid: 820fc62dd43af184e9b394782791474e, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0992338d62592db47a0e60b4b1415517, type: 3}
+  m_Name: Chapter 2
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -5795023689568748444}
+  - {fileID: 9042247886275941867}
+--- !u!114 &9042247886275941867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -8, y: -200}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 9042247886275941867}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5795023689568748444}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 9042247886275941867}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeID: 2
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - text 2
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: 3218922175589578897, guid: da397680d5a6e9f40bfeeb9825ebb6d1, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes: []

@@ -1166,7 +1166,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0992338d62592db47a0e60b4b1415517, type: 3}
-  m_Name: New Dialog Tree Graph Script
+  m_Name: Chapter 1
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -5865896509538095507}

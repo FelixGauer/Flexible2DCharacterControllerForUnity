@@ -105362,7 +105362,7 @@ MonoBehaviour:
   writingAnimation: {fileID: 341846730}
   dialogText: {fileID: 341846728}
   charactername: {fileID: 1176219239}
-  dialogGraph: {fileID: 11400000, guid: ca4e234990ad57f4fbd3ec829fa42d10, type: 2}
+  dialogGraph: {fileID: 11400000, guid: b43ffd7c2395fb941bfbccfb995b7018, type: 2}
   currentNode: {fileID: 0}
   elementIndex: 0
 --- !u!1 &2053854841
