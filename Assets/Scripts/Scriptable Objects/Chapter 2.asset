@@ -1,5 +1,210 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9012017555054309067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4536, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -9012017555054309067}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 2173587607170567969}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -9012017555054309067}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -9012017555054309067}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 3268961714926049623}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru?
+  dialogText:
+  - '"You know what? Keep it."'
+  panelColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-7953692852807220884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1960, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -7953692852807220884}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 1519640723007218883}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -7953692852807220884}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -7953692852807220884}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 3384717210478916667}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'You scramble through your sheets to get to Harus phone as quickly as possible. '
+  - The phone screen shows you're being called by <Kiera>
+  - you pick up and hold the phone to your ear.
+  panelColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-6932488857521051691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3320, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -6932488857521051691}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5076618239245103724}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -6932488857521051691}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -6932488857521051691}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 5471356930288589809}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru?
+  dialogText:
+  - '"..."'
+  - '"Sorry, I don''t think that is very funny!"'
+  - '"Care to explain why you have my phone?"'
+  panelColor: {fileID: 11400000, guid: 1ecf091f86ec30a4aa2ca12ebaa25564, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &-5795023689568748444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +218,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -259.19998, y: -195.40001}
+  position: {x: -232, y: -200}
   ports:
     keys:
     - inputNode
@@ -54,12 +259,548 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   whostalking: MC
   dialogText:
-  - 'Text 1
-
-'
+  - You did not catch up with time for what felt for eternity, but when you did,
+    it hit you like a truck.
+  - You ran after her and shouted her name in the parking lot for a while. Then you
+    felt very stupid about it, and went back in to close up shop.
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-5794121213277876061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5064, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -5794121213277876061}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 3268961714926049623}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -5794121213277876061}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -5794121213277876061}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -4099841182418472366}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: A Phone
+  dialogText:
+  - ...you say over the beeping sound of the phone.
+  panelColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-5076618239245103724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3096, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -5076618239245103724}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 6271495982772168187}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -5076618239245103724}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -5076618239245103724}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -6932488857521051691}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"It''s me. MC. The fast food joint? We took a selfie infront of the broken ice-cream
+    machine?"'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-4099841182418472366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5320, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -4099841182418472366}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -5794121213277876061}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -4099841182418472366}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - Well, that was unnecessarily humiliating.
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes: []
+--- !u!114 &-3615243094046039102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 552, y: -200}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -3615243094046039102}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 2874811802256247352}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -3615243094046039102}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -3615243094046039102}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -1715345986193623119}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - But you didn't. You kinda messed it up... again.
+  - A chill had settled in bones and it did not go away until you reached your apartment,
+    sat down and felt....
   panelColor: {fileID: 0}
   character_img: {fileID: 0}
   background_img: {fileID: -7466423765388559510, guid: 820fc62dd43af184e9b394782791474e, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-3501289407372493913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1272, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -3501289407372493913}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 5962093207255532529}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -3501289407372493913}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -3501289407372493913}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 398604946299724876}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - You roll over in your sheets to turn off your phones alarm.
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-2639556798499812558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4040, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -2639556798499812558}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2493254552418874942}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -2639556798499812558}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2639556798499812558}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 2173587607170567969}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"I found it, I swear."'
+  - '"I was thinking how I could reach you to give it back."'
+  panelColor: {fileID: 11400000, guid: 1ecf091f86ec30a4aa2ca12ebaa25564, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-2493254552418874942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3800, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -2493254552418874942}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 5471356930288589809}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -2493254552418874942}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -2493254552418874942}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2639556798499812558}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru?
+  dialogText:
+  - "\u201CYou don\u2019t just\u2026 keep a locked phone and\u2014 and pretend you
+    know someone.\""
+  - You hear something that might be her talking to somebody else while covering
+    the speaker...
+  - ...or the wind.
+  - "\u201C\u2026so I\u2019m asking you again. Why do you have my phone?!!\""
+  panelColor: {fileID: 11400000, guid: 1ecf091f86ec30a4aa2ca12ebaa25564, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &-1715345986193623119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 792, y: -200}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: -1715345986193623119}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -3615243094046039102}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: -1715345986193623119}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: -1715345986193623119}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 5962093207255532529}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - Nothing....
+  - ...for quite some time.
+  - The rest of what was left of your night passes you by as expected.
+  - You stare at your own phone until the morning sky turns to dark blue, and you
+    fall into a semblance of sleep.
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: 3741284288491491305, guid: 4de78657e1a38a54aa9a8f935c9a01c0, type: 3}
   nodeQuestion: 0
   questionTexts: []
   questionObjects: []
@@ -81,6 +822,783 @@ MonoBehaviour:
   nodes:
   - {fileID: -5795023689568748444}
   - {fileID: 9042247886275941867}
+  - {fileID: 2874811802256247352}
+  - {fileID: -3615243094046039102}
+  - {fileID: -1715345986193623119}
+  - {fileID: 5962093207255532529}
+  - {fileID: -3501289407372493913}
+  - {fileID: 398604946299724876}
+  - {fileID: 1519640723007218883}
+  - {fileID: -7953692852807220884}
+  - {fileID: 3384717210478916667}
+  - {fileID: 7681499000677330424}
+  - {fileID: 8690005124051129802}
+  - {fileID: 6271495982772168187}
+  - {fileID: -5076618239245103724}
+  - {fileID: -6932488857521051691}
+  - {fileID: 5471356930288589809}
+  - {fileID: -2493254552418874942}
+  - {fileID: -2639556798499812558}
+  - {fileID: 2173587607170567969}
+  - {fileID: -9012017555054309067}
+  - {fileID: 3268961714926049623}
+  - {fileID: -5794121213277876061}
+  - {fileID: -4099841182418472366}
+--- !u!114 &398604946299724876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1496, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 398604946299724876}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -3501289407372493913}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 398604946299724876}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 398604946299724876}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 1519640723007218883}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: A Phone
+  dialogText:
+  - <BRRRWWWWWWWWWWWM!!!> <BRRRWWWWWWWWWWWM!!!>
+  panelColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &1519640723007218883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1736, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 1519640723007218883}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 398604946299724876}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 1519640723007218883}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 1519640723007218883}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -7953692852807220884}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - 'Your own phone lies dead in your hands. You didn''t even turn on the alarm. '
+  - 'It''s sunday in the early afternoon and somewhere in your room a phone is vibrating. '
+  - It's not yours...
+  - <!!!>
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &2173587607170567969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4312, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 2173587607170567969}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -2639556798499812558}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 2173587607170567969}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 2173587607170567969}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -9012017555054309067}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru?
+  dialogText:
+  - Another whispering pause...
+  panelColor: {fileID: 11400000, guid: 1ecf091f86ec30a4aa2ca12ebaa25564, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &2874811802256247352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 296, y: -200}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 2874811802256247352}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 9042247886275941867}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 2874811802256247352}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 2874811802256247352}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -3615243094046039102}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - Your mind played back a million scenarios that you could've done the whole thing
+    better, and she had gotten her phone and you'd call her up and be all "Remember
+    me?", all cool and stuff.
+  panelColor: {fileID: 0}
+  character_img: {fileID: 0}
+  background_img: {fileID: -4311529811443689793, guid: 73a6b6b077815b04d96a7166697454da, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &3268961714926049623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4824, y: -168}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 3268961714926049623}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -9012017555054309067}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 3268961714926049623}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 3268961714926049623}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -5794121213277876061}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"No. Wait!...."'
+  - '"I wanted...."'
+  - I wanted to see you again
+  panelColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &3384717210478916667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2200, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 3384717210478916667}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -7953692852807220884}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 3384717210478916667}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 3384717210478916667}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 7681499000677330424}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru
+  dialogText:
+  - '"..."'
+  - '"..."'
+  - '"Hello, who is this?"'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &5471356930288589809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3560, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 5471356930288589809}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -6932488857521051691}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 5471356930288589809}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 5471356930288589809}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -2493254552418874942}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"I.... was wondering that myself." '
+  - ... you say while listening to the voice in your head telling you how weak this
+    is in real-time.
+  - '"We took that selfie on my phone, you gave me your number '
+  panelColor: {fileID: 11400000, guid: 1ecf091f86ec30a4aa2ca12ebaa25564, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &5962093207255532529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1032, y: -200}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 5962093207255532529}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: -1715345986193623119}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 5962093207255532529}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 5962093207255532529}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -3501289407372493913}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: A Phone
+  dialogText:
+  - <BRRRWWWWWWWWWWWM!!!> <BRRRWWWWWWWWWWWM!!!>
+  panelColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 7949311872287513240, guid: f2331d96a414c1147812a7cf86bce364, type: 3}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &6271495982772168187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2872, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 6271495982772168187}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 8690005124051129802}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 6271495982772168187}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 6271495982772168187}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: -5076618239245103724}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: Haru
+  dialogText:
+  - '"..."'
+  - There is an additional second of silence from her that makes your heart sink
+    to your stomach.
+  - '"Sorry, but who are you?"'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &7681499000677330424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2424, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 7681499000677330424}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 3384717210478916667}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 7681499000677330424}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 7681499000677330424}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 8690005124051129802}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - ...you hear Harus grainy voice piercing  through the speaker.
+  - ...through your eardrum...
+  - ...through your prefrontal Cortex, right to where your spine connects to your
+    skull, where it leaves a shimmering streak of blue electricity.
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
+--- !u!114 &8690005124051129802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7468486e8f8720b42b99a2476f718fbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2648, y: -184}
+  ports:
+    keys:
+    - inputNode
+    - nextNodes
+    - nextNodes 0
+    values:
+    - _fieldName: inputNode
+      _node: {fileID: 8690005124051129802}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: nextNodes 0
+        node: {fileID: 7681499000677330424}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes
+      _node: {fileID: 8690005124051129802}
+      _typeQualifiedName: DialogNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 8690005124051129802}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 6271495982772168187}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  nodeID: 0
+  teleportLocation: {fileID: 0}
+  whostalking: MC
+  dialogText:
+  - '"This is MC. Mr. Existential Crisis."'
+  panelColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
+  background_img: {fileID: 0}
+  nodeQuestion: 0
+  questionTexts: []
+  questionObjects: []
+  inputNode: {fileID: 0}
+  nextNodes:
+  - {fileID: 0}
 --- !u!114 &9042247886275941867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,11 +1612,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -8, y: -200}
+  position: {x: 24, y: -200}
   ports:
     keys:
     - inputNode
     - nextNodes
+    - nextNodes 0
     values:
     - _fieldName: inputNode
       _node: {fileID: 9042247886275941867}
@@ -121,11 +1640,26 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: nextNodes 0
+      _node: {fileID: 9042247886275941867}
+      _typeQualifiedName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inputNode
+        node: {fileID: 2874811802256247352}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   nodeID: 2
   teleportLocation: {fileID: 0}
   whostalking: MC
   dialogText:
-  - text 2
+  - 'You thought about messaging her.  "But who do you send the message to, dumbass?",
+    you thought. '
+  - You thought you shoulda have fucked your shitty job at Meb Dodnalds and run after
+    her.
   panelColor: {fileID: 0}
   character_img: {fileID: 0}
   background_img: {fileID: 3218922175589578897, guid: da397680d5a6e9f40bfeeb9825ebb6d1, type: 3}
@@ -133,4 +1667,5 @@ MonoBehaviour:
   questionTexts: []
   questionObjects: []
   inputNode: {fileID: 0}
-  nextNodes: []
+  nextNodes:
+  - {fileID: 0}
