@@ -104412,9 +104412,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1503598999}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 4.387337}
+  m_LocalScale: {x: 10, y: 10, z: 4.387338}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1936010548}
@@ -104422,7 +104422,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420.34842, y: 9.510769}
+  m_AnchoredPosition: {x: -420.34842, y: 9.51077}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1503599001
@@ -104484,7 +104484,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1001 &1633575879
 PrefabInstance:
@@ -104882,7 +104882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -105110,14 +105110,14 @@ RectTransform:
   m_GameObject: {fileID: 1936010547}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09000002, y: 0.08000003, z: 0.2279287}
+  m_LocalScale: {x: 0.09000006, y: 0.08000005, z: 0.22792865}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1503599000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.5247803, y: -2.4657593}
+  m_AnchoredPosition: {x: -2.5247192, y: -2.4657564}
   m_SizeDelta: {x: 689.97656, y: 778.08203}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936010549
@@ -105179,7 +105179,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &1961504771
 GameObject:
@@ -105352,19 +105352,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9c18bee87e350458cadf5c6f387054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dsUI: {fileID: 2053854841}
-  questionPanel: {fileID: 282774037}
+  context:
+    speakerText: {fileID: 1176219239}
+    dialogText: {fileID: 341846728}
+    charImage: {fileID: 1503599001}
+    backgroundImage: {fileID: 1886472024}
+    charFrame: {fileID: 1936010549}
+    writing: {fileID: 341846730}
+  dialogGraph: {fileID: 11400000, guid: 598c6d78a67996447bf21f655e3bfc83, type: 2}
+  dsGroup: {fileID: 2053854849}
   playerForLocation: {fileID: 2044674853}
-  charIMG: {fileID: 1503598999}
-  backgroundIMG: {fileID: 1886472022}
-  defaultEmotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
-  charFrame: {fileID: 1936010549}
-  writingAnimation: {fileID: 341846730}
-  dialogText: {fileID: 341846728}
-  charactername: {fileID: 1176219239}
-  dialogGraph: {fileID: 11400000, guid: b43ffd7c2395fb941bfbccfb995b7018, type: 2}
-  currentNode: {fileID: 0}
-  elementIndex: 0
 --- !u!1 &2053854841
 GameObject:
   m_ObjectHideFlags: 0
@@ -105463,8 +105460,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1886472023}
-  - {fileID: 768909325}
   - {fileID: 1503599000}
+  - {fileID: 768909325}
   - {fileID: 2129930583}
   - {fileID: 282774038}
   m_Father: {fileID: 0}

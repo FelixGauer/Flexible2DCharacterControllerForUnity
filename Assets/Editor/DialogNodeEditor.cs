@@ -11,26 +11,24 @@ public class DialogNodeEditor_Custom : NodeEditor
     {
         serializedObject.Update();
 
-        // --- Draw your normal fields (unchanged) ---
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("nodeID"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("teleportLocation"));
+        // --- Current fields (kept simple & safe) ---
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("whostalking"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("character_img"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("background_img"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("panelColor"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("nodeQuestion"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionTexts"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("questionObjects"));
+        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("emotionColor"));
 
-        // --- Custom drawing for dialogText[] as large text areas ---
+        // Teleport options come from BaseStoryNode
+        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("canTeleport"));
+        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("teleportLocation"));
+
+        // --- Dialog lines as word-wrapped TextAreas ---
         var linesProp = serializedObject.FindProperty("dialogText");
         EditorGUILayout.Space(6);
         EditorGUILayout.LabelField("Dialog Lines", EditorStyles.boldLabel);
 
         if (linesProp != null && linesProp.isArray)
         {
-            GUIStyle wrapStyle = new GUIStyle(EditorStyles.textArea);
-            wrapStyle.wordWrap = true;
+            GUIStyle wrapStyle = new GUIStyle(EditorStyles.textArea) { wordWrap = true };
 
             for (int i = 0; i < linesProp.arraySize; i++)
             {
@@ -42,7 +40,7 @@ public class DialogNodeEditor_Custom : NodeEditor
                 elem.stringValue = EditorGUILayout.TextArea(
                     elem.stringValue,
                     wrapStyle,
-                    GUILayout.MinHeight(100)
+                    GUILayout.MinHeight(80)
                 );
 
                 EditorGUILayout.BeginHorizontal();
@@ -76,18 +74,16 @@ public class DialogNodeEditor_Custom : NodeEditor
             }
         }
 
+        var inputPort = target.GetInputPort("input");
+        if (inputPort != null)
+            NodeEditorGUILayout.PortField(inputPort);
 
-        // --- Input port ---
-        NodeEditorGUILayout.PortField(target.GetInputPort("inputNode"));
-
-        // --- Output ports (dynamic list) ---
-        NodeEditorGUILayout.DynamicPortList(
-            "nextNodes",
-            typeof(DialogNode),
-            serializedObject,
-            NodePort.IO.Output,
-            Node.ConnectionType.Multiple
-        );
+        // --- Ports: input(s) if you add later, and defaultNext output ---
+        EditorGUILayout.Space(6);
+        EditorGUILayout.LabelField("Next", EditorStyles.boldLabel);
+        var defaultNextPort = target.GetOutputPort("defaultNext");
+        if (defaultNextPort != null)
+            NodeEditorGUILayout.PortField(defaultNextPort);
 
         serializedObject.ApplyModifiedProperties();
     }
