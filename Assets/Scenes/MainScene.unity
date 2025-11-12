@@ -315,12 +315,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 44
   m_fontSizeBase: 43
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 50
+  m_fontSizeMax: 44
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -104640,7 +104640,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 1886472024}
     charFrame: {fileID: 1936010549}
     writing: {fileID: 341846730}
-  dialogGraph: {fileID: 11400000, guid: b43ffd7c2395fb941bfbccfb995b7018, type: 2}
+  dialogGraph: {fileID: 11400000, guid: 598c6d78a67996447bf21f655e3bfc83, type: 2}
   dsGroup: {fileID: 2053854849}
   playerForLocation: {fileID: 2044674853}
   questionPanel: {fileID: 1597324550}

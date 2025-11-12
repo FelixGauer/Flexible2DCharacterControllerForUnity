@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using XNode;
@@ -7,17 +7,26 @@ using XNodeEditor;
 [CustomNodeEditor(typeof(DialogNode))]
 public class DialogNodeEditor_Custom : NodeEditor
 {
+    // ⬇⬇⬇ EDIT THESE TWO NUMBERS ONCE ⬇⬇⬇
+    private const int NODE_WIDTH = 220;   // width of the node in the graph
+    private const float LINE_HEIGHT = 120f;  // min height of each dialog text area
+    // ⬆⬆⬆ EDIT THESE TWO NUMBERS ONCE ⬆⬆⬆
+
+    public override int GetWidth()
+    {
+        return NODE_WIDTH;
+    }
+
     public override void OnBodyGUI()
     {
         serializedObject.Update();
 
-        // --- Current fields (kept simple & safe) ---
+        // --- Standard fields ---
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("whostalking"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("character_img"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("background_img"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("emotionColor"));
 
-        // Teleport options come from BaseStoryNode
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("canTeleport"));
         NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("teleportLocation"));
 
@@ -40,7 +49,7 @@ public class DialogNodeEditor_Custom : NodeEditor
                 elem.stringValue = EditorGUILayout.TextArea(
                     elem.stringValue,
                     wrapStyle,
-                    GUILayout.MinHeight(80)
+                    GUILayout.MinHeight(LINE_HEIGHT) // ⬅ uses the global line height
                 );
 
                 EditorGUILayout.BeginHorizontal();
@@ -74,11 +83,11 @@ public class DialogNodeEditor_Custom : NodeEditor
             }
         }
 
+        // Ports
         var inputPort = target.GetInputPort("input");
         if (inputPort != null)
             NodeEditorGUILayout.PortField(inputPort);
 
-        // --- Ports: input(s) if you add later, and defaultNext output ---
         EditorGUILayout.Space(6);
         EditorGUILayout.LabelField("Next", EditorStyles.boldLabel);
         var defaultNextPort = target.GetOutputPort("defaultNext");
