@@ -172,11 +172,11 @@ MonoBehaviour:
   teleportLocation: {fileID: 0}
   canTeleport: 0
   whostalking: MC
-  prompt: Test question
+  prompt: Test questionkashd,amdbna,msbdna,sdbn
   options:
   - One
   choices:
-  - {fileID: 6975553589462477387}
+  - {fileID: 0}
   character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
   background_img: {fileID: -4835255913947700164, guid: f6305f0a96136294ca164d6d9f2df3a0, type: 3}
   emotionColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: Answer1
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 824, y: -296}
+  position: {x: 808, y: -136}
   ports:
     keys:
     - input
@@ -298,6 +298,7 @@ MonoBehaviour:
   whostalking: MC
   dialogText:
   - 1
-  character_img: {fileID: 0}
-  background_img: {fileID: 0}
-  emotionColor: {fileID: 0}
+  - asd
+  character_img: {fileID: 2312347270234414944, guid: 85800ce6165eaed4885bf78ced4a7392, type: 3}
+  background_img: {fileID: -5277683623362111763, guid: a62133cc4c2617a4c9640c515185102f, type: 3}
+  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}

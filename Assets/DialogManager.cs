@@ -1,6 +1,7 @@
-using TMPro;
 using System.Collections.Generic;   // <-- for List<>// if you reference TMP_Text in code here
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;   // for Button, Image, etc.
 using XNode;
 
@@ -67,6 +68,23 @@ public class DialogManager : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            var data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(data, results);
+            if (results.Count > 0)
+            {
+                Debug.Log("[Raycast] Top hits:");
+                foreach (var r in results) Debug.Log($" - {r.gameObject.name} (order={r.sortingOrder})");
+            }
+            else
+            {
+                Debug.Log("[Raycast] No UI hit");
+            }
+        }
+
         // block VN click-advance when a choice is active
         if (activeChoice == null && activeDialogue != null && Input.GetMouseButtonDown(0))
         {
@@ -190,26 +208,60 @@ public class DialogManager : MonoBehaviour
         if (questionPanel != null) questionPanel.SetActive(false);
     }
 
-    public void BeginChoice(ChoiceNode node)
-    {
-        activeDialogue = null;
-        activeChoice = node;
-        ClearChoiceUI();
-
-        if (questionPanel != null) questionPanel.SetActive(true);
-
-        // Show one button for test
-        if (node.options.Count > 0)
+        public void BeginChoice(ChoiceNode node)
         {
-            Button btn = Instantiate(choiceButtonPrefab, questionPanel.transform);
-            spawnedButtons.Add(btn);
-
-            TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
-            if (label) label.text = node.options[0];
-
-            btn.onClick.AddListener(() => OnTestChoice(node));
+        
+        if (dsGroup != null)
+        {
+            dsGroup.alpha = 1f;
+            dsGroup.interactable = true;        // <- force clicks allowed
+            dsGroup.blocksRaycasts = true;
         }
-    }
+
+            activeDialogue = null;
+            activeChoice = node;
+            ClearChoiceUI();
+
+            if (questionPanel != null) questionPanel.SetActive(true);
+
+            // Show one button for test
+            if (node.options.Count > 0)
+            {
+                Button btn = Instantiate(choiceButtonPrefab, questionPanel.transform);
+                spawnedButtons.Add(btn);
+
+                // set label
+                var label = btn.GetComponentInChildren<TMPro.TMP_Text>(true);
+                if (label == null)
+                {
+                    Debug.LogError("[Choice] No TMP_Text found under the button prefab. Check prefab hierarchy.");
+                }
+                else
+                {
+                    label.text = node.options[0];
+                    // DEBUG: confirm text we set
+                    Debug.Log($"[Choice] Set label to: {label.text}");
+                }
+
+                // DEBUG: confirm we created it
+                Debug.Log($"[Choice] Spawned button: {btn.name} under {questionPanel.name}");
+                Debug.Log($"[Choice] BeginChoice for node: {node.name}");
+                Debug.Log($"[Choice] Spawned {btn.name}, label found={(label != null)} under panel {questionPanel.name}");
+                if (label) label.text = node.options.Count > 0 ? node.options[0] : "(no option 0)";
+                btn.onClick.AddListener(() => { Debug.Log("[Choice] Button clicked"); OnTestChoice(node); });
+
+                // click listener with visual feedback
+                btn.onClick.AddListener(() =>
+                {
+                    Debug.Log($"[Choice] Button listeners: {btn.onClick.GetPersistentEventCount()} + runtime");
+                    Debug.Log("[Choice] Button clicked");
+                    btn.interactable = false;
+                    var img = btn.GetComponent<UnityEngine.UI.Image>();
+                    if (img) img.color = new Color(1f, 1f, 1f, 0.6f);
+                    OnTestChoice(node);
+                });
+            }
+        }
 
     private void OnTestChoice(ChoiceNode node)
     {
