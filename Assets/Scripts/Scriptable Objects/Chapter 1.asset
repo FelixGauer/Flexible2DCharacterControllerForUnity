@@ -76,7 +76,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: defaultNext
-        node: {fileID: 3605999594197167591}
+        node: {fileID: -1547260269757305202}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 3605999594197167591}
+        node: {fileID: -1547260269757305202}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   dialogText:
   - asdasda
   character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
-  background_img: {fileID: -5277683623362111763, guid: a62133cc4c2617a4c9640c515185102f, type: 3}
+  background_img: {fileID: 0}
   emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
 --- !u!114 &-1576221464984745668
 MonoBehaviour:
@@ -210,6 +210,59 @@ MonoBehaviour:
   character_img: {fileID: -7800718830943274979, guid: b83f1dbc0bbff9b4388ca340f4fd4ccf, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+--- !u!114 &-1547260269757305202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15c004f54ccfd84c85997b83eb0f370, type: 3}
+  m_Name: Animation
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1896, y: -280}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -1547260269757305202}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -3924904038553443212}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -1547260269757305202}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5007951339289988843}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+  fromOffset: {x: -800, y: 0}
+  slideDuration: 0.4
+  holdDuration: 1
 --- !u!114 &-289689671602862566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,8 +393,8 @@ MonoBehaviour:
   - {fileID: 493697529571599575}
   - {fileID: -3924904038553443212}
   - {fileID: 978583564274405872}
-  - {fileID: 3605999594197167591}
   - {fileID: -5007951339289988843}
+  - {fileID: -1547260269757305202}
 --- !u!114 &493697529571599575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,61 +551,10 @@ MonoBehaviour:
   canTeleport: 0
   whostalking: Ogd
   dialogText:
-  - ist
+  - 'asdsadasd '
   character_img: {fileID: 0}
   background_img: {fileID: -8771954873306940839, guid: 3cf78f4f12681f148838efb51e79d51b, type: 3}
   emotionColor: {fileID: 0}
---- !u!114 &3605999594197167591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f15c004f54ccfd84c85997b83eb0f370, type: 3}
-  m_Name: Animation
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1912, y: -232}
-  ports:
-    keys:
-    - input
-    - defaultNext
-    values:
-    - _fieldName: input
-      _node: {fileID: 3605999594197167591}
-      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: defaultNext
-        node: {fileID: -3924904038553443212}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: defaultNext
-      _node: {fileID: 3605999594197167591}
-      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -5007951339289988843}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  input: {fileID: 0}
-  defaultNext: {fileID: 0}
-  teleportLocation: {fileID: 0}
-  canTeleport: 0
-  character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
-  emotionColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
-  fromOffset: {x: -800, y: 0}
-  duration: 1
 --- !u!114 &6975553589462477387
 MonoBehaviour:
   m_ObjectHideFlags: 0

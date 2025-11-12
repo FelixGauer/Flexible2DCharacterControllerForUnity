@@ -239,23 +239,24 @@ public class DialogManager : MonoBehaviour
 
     private System.Collections.IEnumerator PlaySlideIn(AnimationNode node)
     {
-        // Ensure the char image is visible and set sprite
         if (context.charImage != null)
         {
             var go = context.charImage.gameObject;
             if (!go.activeSelf) go.SetActive(true);
             context.charImage.enabled = true;
+
             if (node.character_img != null)
                 context.charImage.sprite = node.character_img;
 
-            // Cache target position, set start position, then lerp to target
             RectTransform rt = context.charImage.rectTransform;
             Vector2 target = rt.anchoredPosition;
             Vector2 start = target + node.fromOffset;
             rt.anchoredPosition = start;
 
             float t = 0f;
-            float d = Mathf.Max(0.01f, node.duration);
+            float d = Mathf.Max(0.01f, node.slideDuration);
+
+            // --- slide in ---
             while (t < d)
             {
                 t += Time.deltaTime;
@@ -264,9 +265,13 @@ public class DialogManager : MonoBehaviour
                 yield return null;
             }
             rt.anchoredPosition = target;
+
+            // --- hold on screen ---
+            if (node.holdDuration > 0)
+                yield return new WaitForSeconds(node.holdDuration);
         }
 
-        // Advance using your normal next-node logic
+        // --- move on to next node ---
         CompleteNode();
     }
 
