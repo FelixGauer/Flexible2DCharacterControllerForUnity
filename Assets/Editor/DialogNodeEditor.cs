@@ -23,7 +23,7 @@ public class DialogNodeEditor_Custom : NodeEditor
 
         // --- Dialog lines as word-wrapped TextAreas ---
         var linesProp = serializedObject.FindProperty("dialogText");
-        EditorGUILayout.Space(6);
+        EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Dialog Lines", EditorStyles.boldLabel);
 
         if (linesProp != null && linesProp.isArray)
