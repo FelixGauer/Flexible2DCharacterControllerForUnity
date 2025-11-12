@@ -784,7 +784,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 11.59375
+  orthographic size: 10.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -104562,6 +104562,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1301960139076022574, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2044674861}
+    - targetCorrespondingSourceObject: {fileID: 1301960139076022574, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044674868}
   m_SourcePrefab: {fileID: 100100000, guid: 23d381eefe114ab4a95bd6201362d3e8, type: 3}
 --- !u!1 &1708696119
 GameObject:
@@ -105365,6 +105368,21 @@ MonoBehaviour:
   dialogGraph: {fileID: 11400000, guid: b43ffd7c2395fb941bfbccfb995b7018, type: 2}
   currentNode: {fileID: 0}
   elementIndex: 0
+--- !u!114 &2044674868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044674853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd71d0b3f8a77c499d8104ad6157b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceGraph: {fileID: 11400000, guid: b43ffd7c2395fb941bfbccfb995b7018, type: 2}
+  exportKey: 112
+  fileName: dialog_export.txt
 --- !u!1 &2053854841
 GameObject:
   m_ObjectHideFlags: 0
