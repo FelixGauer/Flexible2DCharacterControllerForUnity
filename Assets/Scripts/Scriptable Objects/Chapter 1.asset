@@ -51,6 +51,112 @@ MonoBehaviour:
   character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
   background_img: {fileID: -7930071906021335900, guid: 267aff00605d08142ba91011f8bd457b, type: 3}
   emotionColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
+--- !u!114 &-5007951339289988843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2184, y: -232}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -5007951339289988843}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 3605999594197167591}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -5007951339289988843}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: S
+  dialogText:
+  - 1123123
+  character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
+  background_img: {fileID: -6918361254452648332, guid: 581e002a017f0d346928568f749b6204, type: 3}
+  emotionColor: {fileID: 0}
+--- !u!114 &-3924904038553443212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1560, y: -248}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -3924904038553443212}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 6975553589462477387}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: 493697529571599575}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -3924904038553443212}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 3605999594197167591}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: IM AM GOD
+  dialogText:
+  - asdasda
+  character_img: {fileID: 3744488011480403688, guid: b31736dea710f7a40b90f2e7cb122101, type: 3}
+  background_img: {fileID: -5277683623362111763, guid: a62133cc4c2617a4c9640c515185102f, type: 3}
+  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
 --- !u!114 &-1576221464984745668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +230,8 @@ MonoBehaviour:
     - input
     - defaultNext
     - choices 0
+    - choices 1
+    - choices 2
     values:
     - _fieldName: choices
       _node: {fileID: -289689671602862566}
@@ -141,6 +249,9 @@ MonoBehaviour:
       connections:
       - fieldName: defaultNext
         node: {fileID: 1883811177831113136}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: 978583564274405872}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -167,19 +278,47 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: choices 1
+      _node: {fileID: -289689671602862566}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 493697529571599575}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 2
+      _node: {fileID: -289689671602862566}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 978583564274405872}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   input: {fileID: 0}
   defaultNext: {fileID: 0}
   teleportLocation: {fileID: 0}
   canTeleport: 0
   whostalking: MC
-  prompt: Test questionkashd,amdbna,msbdna,sdbn
-  options:
-  - One
-  choices:
-  - {fileID: 0}
   character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
   background_img: {fileID: -4835255913947700164, guid: f6305f0a96136294ca164d6d9f2df3a0, type: 3}
   emotionColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
+  prompt: Test questionkashd,amdbna,msbdna,sdbn
+  options:
+  - One
+  - Two
+  - Three
+  choices:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +337,118 @@ MonoBehaviour:
   - {fileID: 1883811177831113136}
   - {fileID: -289689671602862566}
   - {fileID: 6975553589462477387}
+  - {fileID: 493697529571599575}
+  - {fileID: -3924904038553443212}
+  - {fileID: 978583564274405872}
+  - {fileID: 3605999594197167591}
+  - {fileID: -5007951339289988843}
+--- !u!114 &493697529571599575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1208, y: -136}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 493697529571599575}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 1
+        node: {fileID: -289689671602862566}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 493697529571599575}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -3924904038553443212}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - 2
+  - 123123
+  character_img: {fileID: 5191031541360726387, guid: b7dc5f4f6e92d5e46a2844660c6f7a55, type: 3}
+  background_img: {fileID: 3218922175589578897, guid: da397680d5a6e9f40bfeeb9825ebb6d1, type: 3}
+  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+--- !u!114 &978583564274405872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1192, y: 536}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 978583564274405872}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 2
+        node: {fileID: -289689671602862566}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 978583564274405872}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -289689671602862566}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: Three
+  dialogText:
+  - 3
+  character_img: {fileID: 0}
+  background_img: {fileID: 2615630626479090855, guid: f653378b31a0e6241a9cd6acf302dfb9, type: 3}
+  emotionColor: {fileID: 0}
 --- !u!114 &1883811177831113136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +502,57 @@ MonoBehaviour:
   character_img: {fileID: 0}
   background_img: {fileID: -8771954873306940839, guid: 3cf78f4f12681f148838efb51e79d51b, type: 3}
   emotionColor: {fileID: 0}
+--- !u!114 &3605999594197167591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15c004f54ccfd84c85997b83eb0f370, type: 3}
+  m_Name: Animation
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1912, y: -232}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 3605999594197167591}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -3924904038553443212}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 3605999594197167591}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5007951339289988843}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
+  emotionColor: {fileID: 11400000, guid: cb1f22ff349987846a402be7c9a65da5, type: 2}
+  fromOffset: {x: -800, y: 0}
+  duration: 1
 --- !u!114 &6975553589462477387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +566,7 @@ MonoBehaviour:
   m_Name: Answer1
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 808, y: -136}
+  position: {x: 1208, y: -776}
   ports:
     keys:
     - input
@@ -286,7 +588,10 @@ MonoBehaviour:
       _node: {fileID: 6975553589462477387}
       _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: -3924904038553443212}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0

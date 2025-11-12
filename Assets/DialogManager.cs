@@ -69,21 +69,6 @@ public class DialogManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            var data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
-            var results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(data, results);
-            if (results.Count > 0)
-            {
-                Debug.Log("[Raycast] Top hits:");
-                foreach (var r in results) Debug.Log($" - {r.gameObject.name} (order={r.sortingOrder})");
-            }
-            else
-            {
-                Debug.Log("[Raycast] No UI hit");
-            }
-        }
 
         // block VN click-advance when a choice is active
         if (activeChoice == null && activeDialogue != null && Input.GetMouseButtonDown(0))
@@ -171,31 +156,18 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private void OnChoiceSelected(int index)
+    private void OnChoiceSelected(ChoiceNode node, int index)
     {
-        // get port: "choices 0", "choices 1", ...
         BaseStoryNode next = null;
-
-        if (activeChoice != null)
-        {
-            NodePort port = activeChoice.GetOutputPort($"choices {index}");
-            if (port != null && port.ConnectionCount > 0)
-            {
-                next = port.GetConnection(0).node as BaseStoryNode;
-            }
-        }
+        var port = node.GetOutputPort($"choices {index}");
+        if (port != null && port.ConnectionCount > 0)
+            next = port.GetConnection(0).node as BaseStoryNode;
 
         ClearChoiceUI();
         activeChoice = null;
 
-        if (next == null && currentNode != null)
-        {
-            // fallback to defaultNext logic
-            CompleteNode();
-            return;
-        }
-
-        AdvanceTo(next);
+        if (next != null) AdvanceTo(next);
+        else CompleteNode();
     }
 
     private void ClearChoiceUI()
@@ -208,60 +180,40 @@ public class DialogManager : MonoBehaviour
         if (questionPanel != null) questionPanel.SetActive(false);
     }
 
-        public void BeginChoice(ChoiceNode node)
+    public void BeginChoice(ChoiceNode node)
+    {
+        activeDialogue = null;
+        activeChoice = node;
+        ClearChoiceUI();
+
+        if (questionPanel != null) questionPanel.SetActive(true);
+
+        for (int i = 0; i < node.options.Count; i++)
         {
-        
-        if (dsGroup != null)
-        {
-            dsGroup.alpha = 1f;
-            dsGroup.interactable = true;        // <- force clicks allowed
-            dsGroup.blocksRaycasts = true;
-        }
+            Button btn = Instantiate(choiceButtonPrefab, questionPanel.transform);
+            spawnedButtons.Add(btn);
 
-            activeDialogue = null;
-            activeChoice = node;
-            ClearChoiceUI();
+            // label
+            var label = btn.GetComponentInChildren<TMPro.TMP_Text>(true);
+            if (label) label.text = node.options[i];
 
-            if (questionPanel != null) questionPanel.SetActive(true);
-
-            // Show one button for test
-            if (node.options.Count > 0)
+            // capture index for listener
+            int idx = i;
+            btn.onClick.AddListener(() =>
             {
-                Button btn = Instantiate(choiceButtonPrefab, questionPanel.transform);
-                spawnedButtons.Add(btn);
-
-                // set label
-                var label = btn.GetComponentInChildren<TMPro.TMP_Text>(true);
-                if (label == null)
-                {
-                    Debug.LogError("[Choice] No TMP_Text found under the button prefab. Check prefab hierarchy.");
-                }
-                else
-                {
-                    label.text = node.options[0];
-                    // DEBUG: confirm text we set
-                    Debug.Log($"[Choice] Set label to: {label.text}");
-                }
-
-                // DEBUG: confirm we created it
-                Debug.Log($"[Choice] Spawned button: {btn.name} under {questionPanel.name}");
-                Debug.Log($"[Choice] BeginChoice for node: {node.name}");
-                Debug.Log($"[Choice] Spawned {btn.name}, label found={(label != null)} under panel {questionPanel.name}");
-                if (label) label.text = node.options.Count > 0 ? node.options[0] : "(no option 0)";
-                btn.onClick.AddListener(() => { Debug.Log("[Choice] Button clicked"); OnTestChoice(node); });
-
-                // click listener with visual feedback
-                btn.onClick.AddListener(() =>
-                {
-                    Debug.Log($"[Choice] Button listeners: {btn.onClick.GetPersistentEventCount()} + runtime");
-                    Debug.Log("[Choice] Button clicked");
-                    btn.interactable = false;
-                    var img = btn.GetComponent<UnityEngine.UI.Image>();
-                    if (img) img.color = new Color(1f, 1f, 1f, 0.6f);
-                    OnTestChoice(node);
-                });
-            }
+                Debug.Log($"[Choice] Button {idx} clicked");
+                btn.interactable = false;
+                var img = btn.GetComponent<UnityEngine.UI.Image>();
+                if (img) img.color = new Color(1f, 1f, 1f, 0.6f);
+                OnChoiceSelected(node, idx);
+            });
         }
+
+        // ensure layout updates this frame
+        var rt = questionPanel.transform as RectTransform;
+        if (rt) UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+    }
+
 
     private void OnTestChoice(ChoiceNode node)
     {
@@ -275,6 +227,47 @@ public class DialogManager : MonoBehaviour
 
         if (next != null) AdvanceTo(next);
         else CompleteNode();
+    }
+
+    public void BeginAnimation(AnimationNode node)
+    {
+        activeDialogue = null;
+        activeChoice = null;
+        StopAllCoroutines();
+        StartCoroutine(PlaySlideIn(node));
+    }
+
+    private System.Collections.IEnumerator PlaySlideIn(AnimationNode node)
+    {
+        // Ensure the char image is visible and set sprite
+        if (context.charImage != null)
+        {
+            var go = context.charImage.gameObject;
+            if (!go.activeSelf) go.SetActive(true);
+            context.charImage.enabled = true;
+            if (node.character_img != null)
+                context.charImage.sprite = node.character_img;
+
+            // Cache target position, set start position, then lerp to target
+            RectTransform rt = context.charImage.rectTransform;
+            Vector2 target = rt.anchoredPosition;
+            Vector2 start = target + node.fromOffset;
+            rt.anchoredPosition = start;
+
+            float t = 0f;
+            float d = Mathf.Max(0.01f, node.duration);
+            while (t < d)
+            {
+                t += Time.deltaTime;
+                float p = Mathf.Clamp01(t / d);
+                rt.anchoredPosition = Vector2.Lerp(start, target, p);
+                yield return null;
+            }
+            rt.anchoredPosition = target;
+        }
+
+        // Advance using your normal next-node logic
+        CompleteNode();
     }
 
 }

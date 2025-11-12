@@ -8,6 +8,11 @@ public class ChoiceNode : BaseStoryNode
     [Header("Speaker")]
     public string whostalking;
 
+    [Header("Visuals")]
+    public Sprite character_img;
+    public Sprite background_img;
+    public CharacterColor emotionColor;
+
     [Header("UI")]
     [TextArea(2, 4)]
     public string prompt;
@@ -18,10 +23,7 @@ public class ChoiceNode : BaseStoryNode
     [Output(dynamicPortList = true)]
     public BaseStoryNode[] choices;
 
-    [Header("Visuals")]
-    public Sprite character_img;
-    public Sprite background_img;
-    public CharacterColor emotionColor;
+
 
     public override void Play(DialogContext ctx, DialogManager runner)
     {
