@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using System.Collections.Generic;   // <-- for List<>// if you reference TMP_Text in code here
 using TMPro;
 using UnityEngine;
@@ -128,7 +129,7 @@ public class DialogManager : MonoBehaviour
         }
 
         // 3) no outputs => end
-        Debug.Log("End of story � no connected outputs.");
+        Debug.Log("End of story – no connected outputs.");
     }
 
 
@@ -273,6 +274,48 @@ public class DialogManager : MonoBehaviour
 
         // --- move on to next node ---
         CompleteNode();
+    }
+
+    public void BeginWobble(WobbleNode node)
+    {
+        if (context == null || context.charImage == null) return;
+
+        // Run wobble alongside typing (don't StopAllCoroutines here)
+        StartCoroutine(PlayWobble(node));
+    }
+
+    private IEnumerator PlayWobble(WobbleNode node)
+    {
+        var img = context.charImage;
+        if (img == null) yield break;
+
+        RectTransform rt = img.rectTransform;
+        if (rt == null) yield break;
+
+        Vector3 baseScale = rt.localScale;
+
+        float duration = Mathf.Max(0.01f, node.wobbleDuration);
+        float t = 0f;
+
+        int cycles = Mathf.Max(1, node.wobbleCycles);
+        float maxScale = Mathf.Max(1f, node.wobbleScale);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float normalized = Mathf.Clamp01(t / duration);
+
+            // 0..1 over total time → cycles * full sine waves
+            // Fine tune animation here, else check out WobbleNode.cs for more detail
+            float angle = normalized * cycles * Mathf.PI * 1f;
+            float s = 1f + Mathf.Sin(angle) * (maxScale - 1f);
+
+            rt.localScale = baseScale * s;
+
+            yield return null;
+        }
+
+        rt.localScale = baseScale;
     }
 
 }

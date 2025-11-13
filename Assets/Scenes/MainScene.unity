@@ -629,7 +629,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.5
+  orthographic size: 0
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -104640,7 +104640,7 @@ MonoBehaviour:
     backgroundImage: {fileID: 1886472024}
     charFrame: {fileID: 1936010549}
     writing: {fileID: 341846730}
-  dialogGraph: {fileID: 11400000, guid: 598c6d78a67996447bf21f655e3bfc83, type: 2}
+  dialogGraph: {fileID: 11400000, guid: 986e40d201a02a84093c643ba9343b26, type: 2}
   dsGroup: {fileID: 2053854849}
   playerForLocation: {fileID: 2044674853}
   questionPanel: {fileID: 1597324550}

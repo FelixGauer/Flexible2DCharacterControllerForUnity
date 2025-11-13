@@ -1800,7 +1800,7 @@ MonoBehaviour:
   - "She pulls her jacket straight, eyes already drifting toward the door like she\u2019s
     halfway gone.  No glowing smile. No dramatic goodbye. You clench a little there."
   - "\u201CTake care of yourself, okay? Night shifts eat people alive.\u201D"
-  character_img: {fileID: -5365129548077109440, guid: a60307d3026a28a4e85fc9b480851209, type: 3}
+  character_img: {fileID: -4707300980396986800, guid: 216ec158df500d2449fc49a3ffb9dd4f, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 0}
 --- !u!114 &7675014886546515107
