@@ -1,0 +1,943 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7593997090194059594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Ch3 - Send her a message
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1384, y: 24}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -7593997090194059594}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 1
+        node: {fileID: -625557793160032119}
+        reroutePoints: []
+      - fieldName: choices 0
+        node: {fileID: 7350235455973448994}
+        reroutePoints: []
+      - fieldName: choices 1
+        node: {fileID: -98475514065481535}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -7593997090194059594}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -4615543767809537691}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - <"Just in case she'll read it.">
+  - You pull up the message window and hesitate for a second...
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+--- !u!114 &-6322840022939065324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -472, y: -648}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -6322840022939065324}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -6322840022939065324}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -625557793160032119}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - <"...">
+  - <"...........">
+  - You've quickly reached for your own phone and your thumb is hovering over the
+    screen.
+  character_img: {fileID: 0}
+  background_img: {fileID: 7949311872287513240, guid: f2331d96a414c1147812a7cf86bce364, type: 3}
+  emotionColor: {fileID: 0}
+--- !u!114 &-5721105627554005994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Ch 3 - Check selfie
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 152, y: 552}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -5721105627554005994}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 2
+        node: {fileID: -625557793160032119}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -5721105627554005994}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1032268370331758713}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - With the speed of an OCD cobra you find your way to your picture gallery.
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+--- !u!114 &-4942582558605413508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204d1bb33b4f156478e4930d14bc67fb, type: 3}
+  m_Name: Wobble
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 408, y: -552}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -4942582558605413508}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 2106396572425591995}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -4942582558605413508}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 459828688766331951}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: Your Phone
+  dialogText:
+  - '<"Boooop">
+
+'
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  wobbleDuration: 0.4
+  wobbleScale: 1.1
+  wobbleCycles: 1
+--- !u!114 &-4615543767809537691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1698.2302, y: 3.7703292}
+  ports:
+    keys:
+    - choices
+    - input
+    - defaultNext
+    - choices 0
+    - choices 1
+    - choices 2
+    - choices 3
+    values:
+    - _fieldName: choices
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -7593997090194059594}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: choices 0
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 1
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1011590733265875170}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 2
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1011590733265875170}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 3
+      _node: {fileID: -4615543767809537691}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 1011590733265875170}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  prompt: 
+  options:
+  - '"Hey"'
+  - '"Hello"'
+  - '"Haru."'
+  - '"MC here"'
+  choices:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-625557793160032119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -104, y: -88}
+  ports:
+    keys:
+    - choices
+    - input
+    - defaultNext
+    - choices 0
+    - choices 1
+    - choices 2
+    values:
+    - _fieldName: choices
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -6322840022939065324}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: choices 0
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 2106396572425591995}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 1
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7593997090194059594}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 2
+      _node: {fileID: -625557793160032119}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -5721105627554005994}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+  prompt: <"I should....">
+  options:
+  - Call her
+  - Write her a message
+  - Check the Selfie you took
+  choices:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-98475514065481535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 712, y: 568}
+  ports:
+    keys:
+    - choices
+    - input
+    - defaultNext
+    - choices 0
+    - choices 1
+    values:
+    - _fieldName: choices
+      _node: {fileID: -98475514065481535}
+      _typeQualifiedName: BaseStoryNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: -98475514065481535}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 1032268370331758713}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -98475514065481535}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: choices 0
+      _node: {fileID: -98475514065481535}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 2106396572425591995}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 1
+      _node: {fileID: -98475514065481535}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7593997090194059594}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+  prompt: <"Imma....">
+  options:
+  - Call her
+  - Send her a message
+  choices:
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0992338d62592db47a0e60b4b1415517, type: 3}
+  m_Name: Chapter 3
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -6322840022939065324}
+  - {fileID: -625557793160032119}
+  - {fileID: 2106396572425591995}
+  - {fileID: -4942582558605413508}
+  - {fileID: 459828688766331951}
+  - {fileID: 7350235455973448994}
+  - {fileID: -7593997090194059594}
+  - {fileID: -5721105627554005994}
+  - {fileID: 1032268370331758713}
+  - {fileID: -98475514065481535}
+  - {fileID: -4615543767809537691}
+  - {fileID: 1011590733265875170}
+  - {fileID: 5302625668519349833}
+--- !u!114 &459828688766331951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204d1bb33b4f156478e4930d14bc67fb, type: 3}
+  m_Name: Wobble
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 664, y: -552}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 459828688766331951}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -4942582558605413508}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 459828688766331951}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 7350235455973448994}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: Your Phone
+  dialogText:
+  - '<"Boooop">
+
+'
+  - 'A sultry electronic womens voice says:
+
+    "Your connection is not available."'
+  - As if that lessened the blow...
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  wobbleDuration: 0.4
+  wobbleScale: 1.1
+  wobbleCycles: 1
+--- !u!114 &1011590733265875170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1944, y: 392}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 1011590733265875170}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 1
+        node: {fileID: -4615543767809537691}
+        reroutePoints: []
+      - fieldName: choices 2
+        node: {fileID: -4615543767809537691}
+        reroutePoints: []
+      - fieldName: choices 3
+        node: {fileID: -4615543767809537691}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 1011590733265875170}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 5302625668519349833}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - <"Who starts their message like this?">
+  - <"Are you stupid or something?">
+  - You erase the first line and type "Hey"
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: e9d4dbe9d3aa1da4da419c7410b8377b, type: 2}
+--- !u!114 &1032268370331758713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 427.72073, y: 550.90814}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 1032268370331758713}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -5721105627554005994}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 1032268370331758713}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -98475514065481535}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: Your Phone
+  dialogText:
+  - There it is. You holding up the phone. Haru right next to you with a boat of
+    fries in her hand.
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+--- !u!114 &2106396572425591995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 152, y: -552}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: 2106396572425591995}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: choices 0
+        node: {fileID: -625557793160032119}
+        reroutePoints: []
+      - fieldName: choices 0
+        node: {fileID: -98475514065481535}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 2106396572425591995}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -4942582558605413508}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  dialogText:
+  - You pull up her number and your finger drops down on the "Call " button.
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+--- !u!114 &5302625668519349833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2184, y: 24}
+  ports:
+    keys:
+    - choices
+    - input
+    - defaultNext
+    values:
+    - _fieldName: choices
+      _node: {fileID: 5302625668519349833}
+      _typeQualifiedName: BaseStoryNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: 5302625668519349833}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 1011590733265875170}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 5302625668519349833}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
+  prompt: 
+  options:
+  - '"About last night..."'
+  - '"Sorry for the disruption"'
+  - '"I really didn''t steal your phone."'
+  choices:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &7350235455973448994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1000, y: -552}
+  ports:
+    keys:
+    - choices
+    - input
+    - defaultNext
+    - choices 0
+    values:
+    - _fieldName: choices
+      _node: {fileID: 7350235455973448994}
+      _typeQualifiedName: BaseStoryNode[], Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: input
+      _node: {fileID: 7350235455973448994}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 459828688766331951}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 7350235455973448994}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: choices 0
+      _node: {fileID: 7350235455973448994}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7593997090194059594}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: 
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
+  prompt: <"I'm gonna...">
+  options:
+  - Send her a message
+  choices:
+  - {fileID: 0}
