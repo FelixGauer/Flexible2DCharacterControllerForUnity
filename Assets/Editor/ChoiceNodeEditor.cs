@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using XNode;
@@ -7,9 +7,9 @@ using XNodeEditor;
 [CustomNodeEditor(typeof(ChoiceNode))]
 public class ChoiceNodeEditor_Custom : NodeEditor
 {
-    // Global width for all ChoiceNodes � change once here if needed
+    // You can keep this slim if you like
     private const int NODE_WIDTH = 220;
-    private const float OPTION_HEIGHT = 30f;
+    private const float OPTION_HEIGHT = 40f;
 
     public override int GetWidth()
     {
@@ -20,65 +20,90 @@ public class ChoiceNodeEditor_Custom : NodeEditor
     {
         serializedObject.Update();
 
-        // --- Standard fields (same order as DialogNode) ---
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("whostalking"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("character_img"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("background_img"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("emotionColor"));
+        var node = target as ChoiceNode;
+        var whosProp = serializedObject.FindProperty("whostalking");
+        var charProp = serializedObject.FindProperty("character_img");
+        var bgProp = serializedObject.FindProperty("background_img");
+        var colorProp = serializedObject.FindProperty("emotionColor");
+        var telBoolProp = serializedObject.FindProperty("canTeleport");
+        var telLocProp = serializedObject.FindProperty("teleportLocation");
+        var promptProp = serializedObject.FindProperty("prompt");
+        var optionsProp = serializedObject.FindProperty("options");
 
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("canTeleport"));
-        NodeEditorGUILayout.PropertyField(serializedObject.FindProperty("teleportLocation"));
+        // --- Standard fields (same order as DialogNode) ---
+        NodeEditorGUILayout.PropertyField(whosProp);
+        NodeEditorGUILayout.PropertyField(charProp);
+        NodeEditorGUILayout.PropertyField(bgProp);
+        NodeEditorGUILayout.PropertyField(colorProp);
+
+        NodeEditorGUILayout.PropertyField(telBoolProp);
+        NodeEditorGUILayout.PropertyField(telLocProp);
 
         // --- Prompt text ---
-        var promptProp = serializedObject.FindProperty("prompt");
         EditorGUILayout.Space(8);
-        EditorGUILayout.LabelField("Prompt", EditorStyles.boldLabel);
         if (promptProp != null)
         {
             EditorGUILayout.PropertyField(promptProp, GUIContent.none);
         }
 
-        // --- Options as text areas ---
-        var optionsProp = serializedObject.FindProperty("options");
+        // --- Options + their ports (port on its own line) ---
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
 
-        if (optionsProp != null && optionsProp.isArray)
+        if (optionsProp != null && optionsProp.isArray && node != null)
         {
             GUIStyle wrapStyle = new GUIStyle(EditorStyles.textArea) { wordWrap = true };
 
             for (int i = 0; i < optionsProp.arraySize; i++)
             {
                 var elem = optionsProp.GetArrayElementAtIndex(i);
+                NodePort port = node.GetOutputPort($"choices {i}");
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField($"Option {i}", EditorStyles.miniBoldLabel);
 
+                // Text for this option
                 elem.stringValue = EditorGUILayout.TextArea(
                     elem.stringValue,
                     wrapStyle,
                     GUILayout.MinHeight(OPTION_HEIGHT)
                 );
 
+                // Compact buttons in a row
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Insert Above"))
+                if (GUILayout.Button("+ Above", GUILayout.Width(24)))
                 {
                     optionsProp.InsertArrayElementAtIndex(i);
                     optionsProp.GetArrayElementAtIndex(i).stringValue = "";
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndVertical();
                     break;
                 }
-                if (GUILayout.Button("Remove"))
+                if (GUILayout.Button("Del", GUILayout.Width(24)))
                 {
                     optionsProp.DeleteArrayElementAtIndex(i);
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndVertical();
                     break;
                 }
-                if (GUILayout.Button("Add Below"))
+                if (GUILayout.Button("+ Below", GUILayout.Width(24)))
                 {
                     optionsProp.InsertArrayElementAtIndex(i + 1);
                     optionsProp.GetArrayElementAtIndex(i + 1).stringValue = "";
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndVertical();
                     break;
                 }
                 EditorGUILayout.EndHorizontal();
+
+                // Port on its own line, aligned to the right
+                if (port != null)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    NodeEditorGUILayout.PortField(new GUIContent("→"), port);
+                    EditorGUILayout.EndHorizontal();
+                }
 
                 EditorGUILayout.EndVertical();
             }
@@ -91,24 +116,13 @@ public class ChoiceNodeEditor_Custom : NodeEditor
             }
         }
 
-        // --- Node elements: dynamic outputs for choices ---
-        EditorGUILayout.Space(8);
-        EditorGUILayout.LabelField("Choice Outputs", EditorStyles.boldLabel);
-        NodeEditorGUILayout.DynamicPortList(
-            "choices",
-            typeof(BaseStoryNode),
-            serializedObject,
-            NodePort.IO.Output,
-            Node.ConnectionType.Multiple
-        );
-
         // --- Input port at the bottom ---
         EditorGUILayout.Space(6);
         var inputPort = target.GetInputPort("input");
         if (inputPort != null)
             NodeEditorGUILayout.PortField(inputPort);
 
-        // --- Optional: defaultNext port (currently commented out) ---
+        // --- Optional: defaultNext (kept, not drawn) ---
         /*
         EditorGUILayout.Space(6);
         EditorGUILayout.LabelField("Default Next", EditorStyles.boldLabel);

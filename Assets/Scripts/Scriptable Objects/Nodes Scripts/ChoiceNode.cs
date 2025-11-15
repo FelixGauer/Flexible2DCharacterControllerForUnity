@@ -36,6 +36,8 @@ public class ChoiceNode : BaseStoryNode
             ctx.SetFrameColor(emotionColor.uiColor);
 
         // show text
+        if (string.IsNullOrEmpty(prompt))
+            ctx.SetLine(prompt);
         if (!string.IsNullOrEmpty(prompt))
             ctx.SetLine(prompt);
 

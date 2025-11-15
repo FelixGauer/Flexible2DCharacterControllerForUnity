@@ -53,18 +53,18 @@ public class DialogNodeEditor_Custom : NodeEditor
                 );
 
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("Insert Above"))
+                if (GUILayout.Button("+ Above"))
                 {
                     linesProp.InsertArrayElementAtIndex(i);
                     linesProp.GetArrayElementAtIndex(i).stringValue = "";
                     break;
                 }
-                if (GUILayout.Button("Remove"))
+                if (GUILayout.Button("Del"))
                 {
                     linesProp.DeleteArrayElementAtIndex(i);
                     break;
                 }
-                if (GUILayout.Button("Add Below"))
+                if (GUILayout.Button("+ Below"))
                 {
                     linesProp.InsertArrayElementAtIndex(i + 1);
                     linesProp.GetArrayElementAtIndex(i + 1).stringValue = "";
