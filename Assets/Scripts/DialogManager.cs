@@ -30,6 +30,15 @@ public class DialogManager : MonoBehaviour
     public Button choiceButtonPrefab;
     private List<Button> spawnedButtons = new List<Button>();
 
+    [Header("Teleport Indicator")]
+    public RectTransform phoneIcon;        // assign in inspector (UI image)
+    public Vector2 phoneHiddenPos;         // off-screen position (anchored)
+    public Vector2 phoneShownPos;          // on-screen position (anchored)
+    public float phoneSlideDuration = 0.25f;
+
+    private bool phoneVisible = false;
+    private Coroutine phoneRoutine;
+
 
     void Start()
     {
@@ -67,7 +76,6 @@ public class DialogManager : MonoBehaviour
         context.writing.StartTyping(text); // removed callback
     }
 
-
     void Update()
     {
 
@@ -97,6 +105,7 @@ public class DialogManager : MonoBehaviour
         }
         currentNode = next;
         PlayCurrent();
+        UpdateTeleportIconForNode(currentNode);
     }
     public void CompleteNode()
     {
@@ -158,6 +167,27 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    // Used for SwitchGame from JumpNRun to VN
+    public void JumpToNode(BaseStoryNode node)
+    {
+        if (node == null)
+        {
+            Debug.LogWarning("[DialogManager] JumpToNode called with NULL node.");
+            return;
+        }
+
+        // Update the current node reference
+        currentNode = node;
+
+        // Reset VN state
+        lineIndex = 0;
+
+        UpdateTeleportIconForNode(currentNode);
+
+        // Play the node normally
+        node.Play(context, this);
+    }
+
     private void OnChoiceSelected(ChoiceNode node, int index)
     {
         BaseStoryNode next = null;
@@ -216,7 +246,6 @@ public class DialogManager : MonoBehaviour
         if (rt) UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
     }
 
-
     private void OnTestChoice(ChoiceNode node)
     {
         BaseStoryNode next = null;
@@ -239,6 +268,7 @@ public class DialogManager : MonoBehaviour
         StartCoroutine(PlaySlideIn(node));
     }
 
+    // Used in Animation Node
     private System.Collections.IEnumerator PlaySlideIn(AnimationNode node)
     {
         if (context.charImage != null)
@@ -319,25 +349,47 @@ public class DialogManager : MonoBehaviour
         rt.localScale = baseScale;
     }
 
-    public void JumpToNode(BaseStoryNode node)
+    // Used in Indicator animation
+    public void UpdateTeleportIconForNode(BaseStoryNode node)
     {
-        if (node == null)
+        bool shouldShow = node != null && node.canTeleport;
+
+        if (shouldShow == phoneVisible) return; // no change
+
+        phoneVisible = shouldShow;
+
+        if (phoneRoutine != null)
+            StopCoroutine(phoneRoutine);
+
+        phoneRoutine = StartCoroutine(AnimatePhoneIcon(shouldShow));
+    }
+
+    private System.Collections.IEnumerator AnimatePhoneIcon(bool show)
+    {
+        if (phoneIcon == null) yield break;
+
+        Vector2 start = phoneIcon.anchoredPosition;
+        Vector2 target = show ? phoneShownPos : phoneHiddenPos;
+        float dur = Mathf.Max(0.01f, phoneSlideDuration);
+        float t = 0f;
+
+        // ensure it's active when animating in
+        if (show && !phoneIcon.gameObject.activeSelf)
+            phoneIcon.gameObject.SetActive(true);
+
+        while (t < dur)
         {
-            Debug.LogWarning("[DialogManager] JumpToNode called with NULL node.");
-            return;
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / dur);
+            phoneIcon.anchoredPosition = Vector2.Lerp(start, target, p);
+            yield return null;
         }
 
-        // Update the current node reference
-        currentNode = node;
+        phoneIcon.anchoredPosition = target;
 
-        // Reset VN state
-        lineIndex = 0;
-
-        // Hide choice UI
-        ClearChoiceUI();
-
-        // Play the node normally
-        node.Play(context, this);
+        // hide GameObject completely when off-screen
+        if (!show)
+            phoneIcon.gameObject.SetActive(false);
     }
 }
 
