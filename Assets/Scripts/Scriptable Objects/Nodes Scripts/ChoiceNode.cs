@@ -15,8 +15,8 @@ public class ChoiceNode : BaseStoryNode
     [Header("Options (one per choice)")]
     public List<string> options = new List<string>();
 
-    [Output(dynamicPortList = true)]
-    public BaseStoryNode[] choices;
+    // ❌ NO [Output(dynamicPortList = true)] here anymore
+    // We manage dynamic ports manually instead
 
     [Header("Visuals")]
     public Sprite character_img;
@@ -33,14 +33,52 @@ public class ChoiceNode : BaseStoryNode
         runner.BeginChoice(this);
     }
 
-    // 🔑 This keeps ports in sync with the options list
+#if UNITY_EDITOR
     private void OnValidate()
     {
-        if (options == null) options = new List<string>();
+        // Ensure list is not null
+        if (options == null)
+            options = new List<string>();
 
-        if (choices == null || choices.Length != options.Count)
+        // Sync dynamic ports with options count
+        SyncChoicePorts();
+    }
+
+    private void SyncChoicePorts()
+    {
+        // 1) Remove extra ports
+        // DynamicPorts is all ports created via AddDynamicOutput/AddDynamicInput
+        var dynamicPorts = new List<NodePort>(DynamicPorts);
+        foreach (var p in dynamicPorts)
         {
-            System.Array.Resize(ref choices, options.Count);
+            // Our ports are named "choices 0", "choices 1", ...
+            if (p.fieldName.StartsWith("choices "))
+            {
+                string indexStr = p.fieldName.Substring("choices ".Length);
+                if (int.TryParse(indexStr, out int idx))
+                {
+                    if (idx >= options.Count)
+                    {
+                        RemoveDynamicPort(p);
+                    }
+                }
+            }
+        }
+
+        // 2) Ensure one port per option
+        for (int i = 0; i < options.Count; i++)
+        {
+            string portName = $"choices {i}";
+            if (GetOutputPort(portName) == null)
+            {
+                AddDynamicOutput(
+                    typeof(BaseStoryNode),
+                    Node.ConnectionType.Multiple,
+                    Node.TypeConstraint.None,
+                    portName
+                );
+            }
         }
     }
+#endif
 }

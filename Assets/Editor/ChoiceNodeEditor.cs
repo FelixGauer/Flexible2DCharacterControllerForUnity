@@ -39,6 +39,13 @@ public class ChoiceNodeEditor_Custom : NodeEditor
         NodeEditorGUILayout.PropertyField(telBoolProp);
         NodeEditorGUILayout.PropertyField(telLocProp);
 
+        // --- Prompt Text Area ---
+        EditorGUILayout.Space(8);
+        if (promptProp != null)
+        {
+            EditorGUILayout.PropertyField(promptProp, GUIContent.none);
+        }
+
         // --- Options + their ports (port on its own line) ---
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
