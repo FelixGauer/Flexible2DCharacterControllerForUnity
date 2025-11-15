@@ -259,7 +259,7 @@ MonoBehaviour:
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
-  prompt: 
+  prompt: ' '
   options:
   - Tell her the truth...
   - Make up a convinient lie
@@ -770,7 +770,7 @@ MonoBehaviour:
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
-  prompt: 
+  prompt: ' '
   options:
   - '"Hey"'
   - '"Hello"'
@@ -1965,7 +1965,7 @@ MonoBehaviour:
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
-  prompt: 
+  prompt: ' '
   options:
   - '"About last night..."'
   - '"Sorry for the disruption"'
