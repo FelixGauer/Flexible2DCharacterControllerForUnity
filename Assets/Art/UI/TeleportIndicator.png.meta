@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1a34e0cb49ebc66478eb96b002b2d813
+guid: 5e5f2e937248a0749ba383f535c35811
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8589733863318554599
-    second: smartphone_gallery_0
+      213: 4538064331234772678
+    second: TeleportIndicator_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: smartphone_gallery_0
+      name: TeleportIndicator_0
       rect:
         serializedVersion: 2
         x: 703
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 918f0c9cf822bc880800000000000000
-      internalID: -8589733863318554599
+      spriteID: 6c68e1f27717afe30800000000000000
+      internalID: 4538064331234772678
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      smartphone_gallery_0: -8589733863318554599
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

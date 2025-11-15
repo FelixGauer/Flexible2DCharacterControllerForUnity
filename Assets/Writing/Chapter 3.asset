@@ -1738,7 +1738,7 @@ MonoBehaviour:
   input: {fileID: 0}
   defaultNext: {fileID: 0}
   teleportLocation: {fileID: 0}
-  canTeleport: 0
+  canTeleport: 1
   whostalking: MC
   dialogText:
   - You pull up her number and your finger drops down on the "Call " button.

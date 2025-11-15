@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      room_dawn_light_off_0: 3961366746659187172
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -10,6 +10,7 @@ public class DialogManager : MonoBehaviour
 {
     public DialogContext context;
     public NodeGraph dialogGraph;
+
     private BaseStoryNode currentNode;
 
     // For dialogue typing
@@ -318,6 +319,26 @@ public class DialogManager : MonoBehaviour
         rt.localScale = baseScale;
     }
 
+    public void JumpToNode(BaseStoryNode node)
+    {
+        if (node == null)
+        {
+            Debug.LogWarning("[DialogManager] JumpToNode called with NULL node.");
+            return;
+        }
+
+        // Update the current node reference
+        currentNode = node;
+
+        // Reset VN state
+        lineIndex = 0;
+
+        // Hide choice UI
+        ClearChoiceUI();
+
+        // Play the node normally
+        node.Play(context, this);
+    }
 }
 
 
