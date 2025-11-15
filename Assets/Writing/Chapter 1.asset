@@ -1287,8 +1287,6 @@ MonoBehaviour:
   - "She says: \u201CYou know what\u2019s funny? You look at people like they\u2019re
     already leaving\u2026 even while they\u2019re standing in front of you.\u201D"
   - She finishes typing, taps the screen, and hands the phone back.
-  - "She steps back behind the counter again, gathering her food bag and the folded
-    flyer she set down earlier. She casually tucks the flyer into your chest pocket\u2014"
   character_img: {fileID: -9161298043115877563, guid: 6f5b357a0225308419df29447a66e28f, type: 3}
   background_img: {fileID: 0}
   emotionColor: {fileID: 0}

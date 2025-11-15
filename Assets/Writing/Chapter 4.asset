@@ -416,10 +416,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
-  m_Name: CH3 Start
+  m_Name: Start of Ch3 in 4
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -536, y: -648}
+  position: {x: -584, y: -760}
   ports:
     keys:
     - input
@@ -429,7 +429,10 @@ MonoBehaviour:
       _node: {fileID: -6322840022939065324}
       _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: -699167442561082351}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -526,7 +529,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
-  m_Name: Ch 3 - Check selfie
+  m_Name: Ch 3 in 4 - Check selfie
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -216, y: 440}
@@ -902,6 +905,59 @@ MonoBehaviour:
   wobbleDuration: 0.4
   wobbleScale: 1.1
   wobbleCycles: 1
+--- !u!114 &-699167442561082351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe57dab097eb26940b3a23ca17d61d7f, type: 3}
+  m_Name: Ch 4 Start
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -72, y: -2296}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    values:
+    - _fieldName: input
+      _node: {fileID: -699167442561082351}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: -699167442561082351}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6322840022939065324}
+        reroutePoints: []
+      - fieldName: input
+        node: {fileID: -625557793160032119}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: Test
+  dialogText:
+  - Test
+  character_img: {fileID: 0}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 0}
 --- !u!114 &-625557793160032119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,6 +987,9 @@ MonoBehaviour:
       connections:
       - fieldName: defaultNext
         node: {fileID: -6322840022939065324}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: -699167442561082351}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1202,10 +1261,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0992338d62592db47a0e60b4b1415517, type: 3}
-  m_Name: Chapter 3
+  m_Name: Chapter 4
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -6322840022939065324}
+  - {fileID: -699167442561082351}
   - {fileID: -625557793160032119}
   - {fileID: 2106396572425591995}
   - {fileID: -4942582558605413508}
@@ -1246,6 +1305,7 @@ MonoBehaviour:
   - {fileID: 8986562860577393277}
   - {fileID: 8871107607280697383}
   - {fileID: -4417991304161634035}
+  - {fileID: -699167442561082351}
 --- !u!114 &348403023911327896
 MonoBehaviour:
   m_ObjectHideFlags: 0

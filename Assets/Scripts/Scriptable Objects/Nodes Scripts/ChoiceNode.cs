@@ -28,7 +28,9 @@ public class ChoiceNode : BaseStoryNode
         ctx.SetSpeaker(whostalking);
         ctx.SetSprites(character_img, background_img);
         if (emotionColor != null) ctx.SetFrameColor(emotionColor.uiColor);
-        if (!string.IsNullOrEmpty(prompt)) ctx.SetLine(prompt);
+
+        // Always update the line, even if it's empty → clears previous dialog
+        ctx.SetLine(prompt ?? string.Empty);
 
         runner.BeginChoice(this);
     }
