@@ -89,7 +89,6 @@ public class DialogNodeEditor_Custom : NodeEditor
             NodeEditorGUILayout.PortField(inputPort);
 
         EditorGUILayout.Space(6);
-        EditorGUILayout.LabelField("Next", EditorStyles.boldLabel);
         var defaultNextPort = target.GetOutputPort("defaultNext");
         if (defaultNextPort != null)
             NodeEditorGUILayout.PortField(defaultNextPort);
