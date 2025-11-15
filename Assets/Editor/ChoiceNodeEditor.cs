@@ -39,13 +39,6 @@ public class ChoiceNodeEditor_Custom : NodeEditor
         NodeEditorGUILayout.PropertyField(telBoolProp);
         NodeEditorGUILayout.PropertyField(telLocProp);
 
-        // --- Prompt text ---
-        EditorGUILayout.Space(8);
-        if (promptProp != null)
-        {
-            EditorGUILayout.PropertyField(promptProp, GUIContent.none);
-        }
-
         // --- Options + their ports (port on its own line) ---
         EditorGUILayout.Space(8);
         EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
@@ -71,7 +64,7 @@ public class ChoiceNodeEditor_Custom : NodeEditor
 
                 // Compact buttons in a row
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("+ Above", GUILayout.Width(24)))
+                if (GUILayout.Button("+ Above"))
                 {
                     optionsProp.InsertArrayElementAtIndex(i);
                     optionsProp.GetArrayElementAtIndex(i).stringValue = "";
@@ -79,14 +72,14 @@ public class ChoiceNodeEditor_Custom : NodeEditor
                     EditorGUILayout.EndVertical();
                     break;
                 }
-                if (GUILayout.Button("Del", GUILayout.Width(24)))
+                if (GUILayout.Button("Del"))
                 {
                     optionsProp.DeleteArrayElementAtIndex(i);
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.EndVertical();
                     break;
                 }
-                if (GUILayout.Button("+ Below", GUILayout.Width(24)))
+                if (GUILayout.Button("+ Below"))
                 {
                     optionsProp.InsertArrayElementAtIndex(i + 1);
                     optionsProp.GetArrayElementAtIndex(i + 1).stringValue = "";
