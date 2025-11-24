@@ -91,7 +91,7 @@ MonoBehaviour:
   - Demean yourself...
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &-7917941070535236595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +405,7 @@ MonoBehaviour:
   - This is horrible...
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &-6322840022939065324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,7 +898,7 @@ MonoBehaviour:
   - You sure you wanna send it?
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
   wobbleDuration: 0.4
   wobbleScale: 1.1
   wobbleCycles: 1
@@ -1051,7 +1051,7 @@ MonoBehaviour:
   - But it's the truth.
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &-495732373667249322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   - You sure you wanna send it?
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
   wobbleDuration: 0.4
   wobbleScale: 1.1
   wobbleCycles: 1
@@ -1390,6 +1390,7 @@ MonoBehaviour:
   - '<"Boooop">
 
 '
+  - 
   - 'A sultry electronic womens voice says:
 
     "Your connection is not available."'
@@ -1511,8 +1512,8 @@ MonoBehaviour:
   - "Your message reads: \n\"Hey hey hey. Totally normal message here. Nothing weird.\nSo,
     uh\u2026\""
   - You scratch your cheek and feel the cringe radiate through the screen.
-  - "I didn\u2019t steal your phone. You just\u2026 left it. And I just\u2026 existed
-    near it."
+  - "\"I didn\u2019t steal your phone. You just\u2026 left it. And I just\u2026 existed
+    near it.\""
   - You read it back.
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
@@ -1688,7 +1689,7 @@ MonoBehaviour:
   - You don't even read it back.
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &2106396572425591995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1738,7 +1739,7 @@ MonoBehaviour:
   input: {fileID: 0}
   defaultNext: {fileID: 0}
   teleportLocation: {fileID: 0}
-  canTeleport: 1
+  canTeleport: 0
   whostalking: MC
   dialogText:
   - You pull up her number and your finger drops down on the "Call " button.
@@ -1802,7 +1803,7 @@ MonoBehaviour:
   - You sit there a moment, watching the sentence like it crawled out of a drain.
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &3540143334138674858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,7 +1860,7 @@ MonoBehaviour:
     them. \n\nBut they DO look good right now, right there."
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &3599226350226135823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,7 +1916,7 @@ MonoBehaviour:
   - "You squint at it. \n\nToo neat,\ntoo clean."
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &3875660298792674283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,7 +1952,10 @@ MonoBehaviour:
       _node: {fileID: 3875660298792674283}
       _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 5302625668519349833}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -2082,6 +2086,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: defaultNext
         node: {fileID: 6114030833420463923}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: 3875660298792674283}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2236,7 +2243,7 @@ MonoBehaviour:
   - Demean her...
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: ce77a67d105fdbb4a8623fd1ef3d64d4, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &6114030833420463923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2367,7 +2374,7 @@ MonoBehaviour:
   - This is horrible...
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &7350235455973448994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2546,7 +2553,7 @@ MonoBehaviour:
   - Haha
   character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
   background_img: {fileID: 0}
-  emotionColor: {fileID: 11400000, guid: cd168708e7c0a894287f788dc2acfb19, type: 2}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
 --- !u!114 &8319636343255899079
 MonoBehaviour:
   m_ObjectHideFlags: 0
