@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82393f67f3586a0409f90e0241059582, type: 3}
+  m_Name: Choice 4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+  position: {x: 2264, y: -72}
+  ports:
+    keys:
+    - input
+    - defaultNext
+    - choices 0
+    - choices 1
+    - choices 2
+    values:
+    - _fieldName: input
+      _node: {fileID: 11400000}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: defaultNext
+        node: {fileID: 1011590733265875170, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      - fieldName: choices 0
+        node: {fileID: -4615543767809537691, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: -6172011273474759243, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: 6114030833420463923, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      - fieldName: defaultNext
+        node: {fileID: 3875660298792674283, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: defaultNext
+      _node: {fileID: 11400000}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: choices 0
+      _node: {fileID: 11400000}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 810428130533610236, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 1
+      _node: {fileID: 11400000}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -6659058441192270213, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: choices 2
+      _node: {fileID: 11400000}
+      _typeQualifiedName: BaseStoryNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: -7917941070535236595, guid: 34e25eedae43998498bbc4f51d49494a, type: 2}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  input: {fileID: 0}
+  defaultNext: {fileID: 0}
+  teleportLocation: {fileID: 0}
+  canTeleport: 0
+  whostalking: MC
+  prompt: ' '
+  options:
+  - '"About last night..."'
+  - '"Sorry for the disruption"'
+  - '"Look..."'
+  character_img: {fileID: -8589733863318554599, guid: 1a34e0cb49ebc66478eb96b002b2d813, type: 3}
+  background_img: {fileID: 0}
+  emotionColor: {fileID: 11400000, guid: 662b19d1affcf0843bb175a4d786ec8f, type: 2}
